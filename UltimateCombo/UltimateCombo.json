@@ -4,7 +4,7 @@
     "Name": "Ultimate Combo",
     "Description": "",
     "InternalName": "UltimateCombo",
-    "AssemblyVersion": "1.0.0.02",
+    "AssemblyVersion": "1.0.0.03",
     "Tags": [
       "ultimate",
       "combo",
@@ -12,7 +12,7 @@
     ],
     "Punchline": "The only combo plugin you'll ever need!",
     "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
-    "IconUrl": "https://imgur.com/IhcukEi",
+    "IconUrl": "https://i.imgur.com/IhcukEi.png",
     "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip"
   }

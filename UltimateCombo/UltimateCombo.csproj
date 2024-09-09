@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Authors>Stack</Authors>
     <Company></Company>
-    <Version>1.0.0.02</Version>
+    <Version>1.0.0.03</Version>
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <Copyright></Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -48,8 +48,8 @@
     <DocumentationFile></DocumentationFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>preview</LangVersion>
-    <AssemblyVersion>1.0.0.02</AssemblyVersion>
-    <FileVersion>1.0.0.02</FileVersion>
+    <AssemblyVersion>1.0.0.03</AssemblyVersion>
+    <FileVersion>1.0.0.03</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
