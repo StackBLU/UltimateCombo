@@ -2,24 +2,17 @@
   {
     "Author": "Stack",
     "Name": "Ultimate Combo",
-    "Description": "A cleaner, more refined, combo plugin for FFXIV!",
+    "Description": "Join the discord to get tips or report bugs: https://discord.gg/yPxwkdqhHs",
     "InternalName": "UltimateCombo",
     "AssemblyVersion": "1.0.0.01",
-    "ApplicableVersion": "any",
     "Tags": [
       "ultimate",
       "combo",
       "ultimatecombo"
     ],
-    "DalamudApiLevel": 10,
-    "LoadRequiredState": 0,
-    "LoadSync": false,
-    "CanUnloadAsync": false,
-    "LoadPriority": 0,
-    "Punchline": "Trust me, you want this",
-    "AcceptsFeedback": true,
+    "Punchline": "The only combo plugin you'll ever need!",
     "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
-    "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
+    "IconUrl": "https://imgur.com/IhcukEi",
     "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip"
   }

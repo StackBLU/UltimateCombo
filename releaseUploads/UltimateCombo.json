@@ -3,7 +3,7 @@
   "Name": "Ultimate Combo",
   "InternalName": "UltimateCombo",
   "AssemblyVersion": "1.0.0.1",
-  "Description": "A cleaner, more refined, combo plugin for FFXIV!",
+  "Description": "Join the discord to get tips or report bugs: https://discord.gg/yPxwkdqhHs",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
   "Tags": [
@@ -16,7 +16,7 @@
   "LoadSync": false,
   "CanUnloadAsync": false,
   "LoadPriority": 0,
-  "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
-  "Punchline": "Trust me, you want this",
+  "IconUrl": "https://imgur.com/IhcukEi",
+  "Punchline": "The only combo plugin you'll ever need!",
   "AcceptsFeedback": true
 }
