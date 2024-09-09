@@ -16,7 +16,7 @@
   "LoadSync": false,
   "CanUnloadAsync": false,
   "LoadPriority": 0,
-  "IconUrl": "https://i.imgur.com/6e3BvWP.png",
+  "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
   "Punchline": "Trust me, you want this",
   "AcceptsFeedback": true
 }
