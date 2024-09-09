@@ -8,7 +8,7 @@
     <Copyright></Copyright>
     <PackageProjectUrl></PackageProjectUrl>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Configurations>Debug;Release</Configurations>
+    <Configurations>Release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,18 +29,7 @@
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\Release</OutputPath>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <Platforms>x64</Platforms>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Label="Documentation">
@@ -51,7 +40,7 @@
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageIcon>logo.png</PackageIcon>
-    <AssemblyVersion>1.0.0.11</AssemblyVersion>
+    <AssemblyVersion>1.0.0.12</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
