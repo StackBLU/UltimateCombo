@@ -4,6 +4,17 @@
     "Name": "Ultimate Combo",
     "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
     "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
-    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip"
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
+    "InternalName": "UltimateCombo",
+    "Description": "See github for a link to the discord, where you can ask questions and report bugs",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 10,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "LoadPriority": 0,
+    "IconUrl": "https://i.imgur.com/IhcukEi.png",
+    "Punchline": "The only combo plugin you'll ever need!",
+    "AcceptsFeedback": true
   }
 ]

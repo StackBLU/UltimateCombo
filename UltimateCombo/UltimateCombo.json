@@ -1,7 +1,16 @@
 {
-  "Name": "Ultimate Combo",
   "Author": "Stack",
+  "Name": "Ultimate Combo",
+  "InternalName": "UltimateCombo",
+  "Description": "See github for a link to the discord, where you can ask questions and report bugs",
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
+  "DalamudApiLevel": 10,
+  "LoadRequiredState": 0,
+  "LoadSync": false,
+  "CanUnloadAsync": false,
+  "LoadPriority": 0,
+  "IconUrl": "https://i.imgur.com/IhcukEi.png",
   "Punchline": "The only combo plugin you'll ever need!",
-  "Description": "",
-  "RepoUrl": "https://github.com/StackBLU/UltimateCombo"
+  "AcceptsFeedback": true
 }

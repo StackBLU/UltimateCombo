@@ -3,7 +3,7 @@
   "Name": "Ultimate Combo",
   "InternalName": "UltimateCombo",
   "AssemblyVersion": "1.0.0.4",
-  "Description": "",
+  "Description": "See github for a link to the discord, where you can ask questions and report bugs",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
   "DalamudApiLevel": 10,
@@ -11,6 +11,7 @@
   "LoadSync": false,
   "CanUnloadAsync": false,
   "LoadPriority": 0,
+  "IconUrl": "https://i.imgur.com/IhcukEi.png",
   "Punchline": "The only combo plugin you'll ever need!",
   "AcceptsFeedback": true
 }
