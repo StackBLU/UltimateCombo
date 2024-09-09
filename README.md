@@ -1,6 +1,4 @@
-<h2 align="center">Ultimate Combo</h2>
-
-<img src="/images/logoWide.png" width="500px">
+<img src="/images/logoWide.png" width="800px" align="center">
 
 <h2 align="center">Features</h2>
 
