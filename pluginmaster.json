@@ -4,7 +4,7 @@
     "Name": "Ultimate Combo",
     "Description": "A cleaner, more refined, combo plugin for FFXIV!",
     "InternalName": "UltimateCombo",
-    "AssemblyVersion": "1.0.0.0",
+    "AssemblyVersion": "1.0.0.01",
     "ApplicableVersion": "any",
     "Tags": [
       "ultimate",
