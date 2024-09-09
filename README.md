@@ -12,7 +12,7 @@ The following are just a few of the overall improvements:
 <h2 align="center">Installation</h2>
 
 * Copy the following repository link: <br>
-`https://raw.githubusercontent.com/StackBLU/Ultimate-Combo/main/pluginmaster.json`
+`https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/pluginmaster.json`
 * Type `/xlsettings` in the game chat window to open the Dalamud Settings window
 * Navigate to the "Experimental" tab
 * Paste the link you copied into the next available input box under "Custom Plugin Repositories"
