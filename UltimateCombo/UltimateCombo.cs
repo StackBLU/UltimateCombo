@@ -330,7 +330,7 @@ namespace UltimateCombo
 
 							string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-							using StreamWriter file = new($"{desktopPath}/StackDebug.txt", append: false);
+							using StreamWriter file = new($"{desktopPath}/UltimateComboDebug.txt", append: false);
 
 							file.WriteLine("START DEBUG LOG");
 							file.WriteLine("");
@@ -494,7 +494,7 @@ namespace UltimateCombo
 							}
 
 							file.WriteLine("END DEBUG LOG");
-							Service.ChatGui.Print("Please check your desktop for StackDebug.txt and upload this file where requested.");
+							Service.ChatGui.Print("Please check your desktop for UltimateComboDebug.txt and upload this file where requested.");
 
 							break;
 						}

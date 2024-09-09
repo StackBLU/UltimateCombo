@@ -11,7 +11,7 @@
     "DalamudApiLevel": 10,
     "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
     "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
-    "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
+    "IconUrl": "https://github.com/StackBLU/UltimateCombo/blob/330a796d2bc2419bad7e0aec2c464f6d032994ac/images/logo.png",
     "Tags": [
       "ultimate",
       "combo",
@@ -21,6 +21,7 @@
       "bluemage",
       "eureka",
       "bozja"
-    ]
+    ],
+    "AcceptsFeedback": false
   }
 ]

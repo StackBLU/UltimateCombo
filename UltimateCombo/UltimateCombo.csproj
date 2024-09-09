@@ -13,8 +13,8 @@
 
   <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-    <DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\StackCombo\$(version)</DalamudPluginPath>
-    <DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\StackCombo\</DalamudDevPlugins>
+    <DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\UltimateCombo\$(version)</DalamudPluginPath>
+    <DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\UltimateCombo\</DalamudDevPlugins>
     <AssemblyName>UltimateCombo</AssemblyName>
     <RootNamespace>UltimateCombo</RootNamespace>
     <PackageId>UltimateCombo</PackageId>
@@ -56,20 +56,9 @@
     <Version>1.0.0.10</Version>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="..\images\stack.png" Link="images\stack.png" CopyToOutputDirectory="PreserveNewest" Visible="true" />
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Optimize>True</Optimize>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\images\logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DalamudPackager" Version="2.1.13" />
