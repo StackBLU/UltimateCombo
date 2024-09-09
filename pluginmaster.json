@@ -1,0 +1,26 @@
+[
+  {
+    "Author": "Stack",
+    "Name": "StackCombo",
+    "Description": "A cleaner, more refined, combo plugin for FFXIV!",
+    "InternalName": "StackCombo",
+    "AssemblyVersion": "1.0.2.20",
+    "ApplicableVersion": "any",
+    "Tags": [
+      "stack",
+      "combo",
+      "stackcombo"
+    ],
+    "DalamudApiLevel": 10,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "LoadPriority": 0,
+    "Punchline": "Trust me, you want this",
+    "AcceptsFeedback": true,
+    "RepoUrl": "https://github.com/StackBLU/StackCombo",
+    "IconUrl": "https://i.imgur.com/6e3BvWP.png",
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/StackCombo/main/releaseUploads/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/StackCombo/main/releaseUploads/latest.zip"
+  }
+]
