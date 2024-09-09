@@ -1,4 +1,6 @@
-<img src="/images/logoWide.png" width="800px" align="center" href="https://github.com/StackBLU/UltimateCombo">
+<a href="https://github.com/StackBLU/UltimateCombo">
+	<img src="/images/logoWide.png" width="800px" align="center"></img>
+</a>
 
 <h2 align="center">Features</h2>
 
@@ -39,6 +41,6 @@ The following are just a few of the overall improvements:
 | `/uc debug <JOB>`| Outputs a debug file to your desktop containing only job-relevant options|
 
 <p align="center"><br>
-  Developed by:<br>
-  <a href="https://github.com/StackBLU"><img align="center" src="/images/stack.gif" width="250"</img></a>
+	Developed by:<br>
+	<a href="https://github.com/StackBLU"><img align="center" src="/images/stack.gif" width="250"</img></a>
 </p>
