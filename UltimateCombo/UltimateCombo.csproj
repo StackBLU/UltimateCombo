@@ -4,7 +4,6 @@
   <PropertyGroup>
     <Authors>Stack</Authors>
     <Company></Company>
-    <Version>1.0.0.03</Version>
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <Copyright></Copyright>
     <PackageProjectUrl></PackageProjectUrl>
@@ -48,8 +47,11 @@
     <DocumentationFile></DocumentationFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>preview</LangVersion>
-    <AssemblyVersion>1.0.0.03</AssemblyVersion>
-    <FileVersion>1.0.0.03</FileVersion>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageIcon>logo.png</PackageIcon>
+    <AssemblyVersion>1.0.0.04</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -59,6 +61,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Optimize>True</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\images\logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DalamudPackager" Version="2.1.13" />

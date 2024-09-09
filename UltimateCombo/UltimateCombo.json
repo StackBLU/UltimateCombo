@@ -1,19 +1,7 @@
-[
-  {
-    "Author": "Stack",
-    "Name": "Ultimate Combo",
-    "Description": "",
-    "InternalName": "UltimateCombo",
-    "AssemblyVersion": "1.0.0.03",
-    "Tags": [
-      "ultimate",
-      "combo",
-      "ultimatecombo"
-    ],
-    "Punchline": "The only combo plugin you'll ever need!",
-    "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
-    "IconUrl": "https://i.imgur.com/IhcukEi.png",
-    "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
-    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip"
-  }
-]
+{
+  "Name": "Ultimate Combo",
+  "Author": "Stack",
+  "Punchline": "The only combo plugin you'll ever need!",
+  "Description": "",
+  "RepoUrl": "https://github.com/StackBLU/UltimateCombo"
+}
