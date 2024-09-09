@@ -1,3 +1,7 @@
+<h2 align="center">Ultimate Combo</h2>
+
+<img src="/images/logoWide.png" width="500px">
+
 <h2 align="center">Features</h2>
 
 Ultimate Combo is based off of several combo plugins, but has completely new logic, features, and many quality of life improvements.<br>
