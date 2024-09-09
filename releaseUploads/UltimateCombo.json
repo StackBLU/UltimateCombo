@@ -2,7 +2,7 @@
   "Author": "Stack",
   "Name": "Ultimate Combo",
   "InternalName": "UltimateCombo",
-  "AssemblyVersion": "1.0.0.10",
+  "AssemblyVersion": "1.0.0.11",
   "Description": "Brand new combos like never before - 1 button mode included! Features extra functionality not in other combo plugins like PvP, Blue Mage, Eureka, and Bozja!",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
@@ -21,6 +21,9 @@
   "LoadSync": false,
   "CanUnloadAsync": false,
   "LoadPriority": 0,
+  "ImageUrls": [
+    "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logoWideSmall.png"
+  ],
   "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logoSmall.png",
   "Punchline": "The only combo plugin you'll ever need!",
   "AcceptsFeedback": false
