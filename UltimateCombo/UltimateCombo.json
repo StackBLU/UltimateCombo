@@ -1,16 +1,24 @@
 {
   "Author": "Stack",
   "Name": "Ultimate Combo",
-  "InternalName": "UltimateCombo",
-  "Description": "See github for a link to the discord, where you can ask questions and report bugs",
-  "ApplicableVersion": "any",
-  "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
-  "DalamudApiLevel": 10,
-  "LoadRequiredState": 0,
-  "LoadSync": false,
-  "CanUnloadAsync": false,
-  "LoadPriority": 0,
-  "IconUrl": "https://i.imgur.com/IhcukEi.png",
   "Punchline": "The only combo plugin you'll ever need!",
-  "AcceptsFeedback": true
+  "Description": "Brand new combos like never before - 1 button mode included! Features extra functionality not in other combo plugins, like PvP, BLU Mage, Eureka, and Bozja!",
+  "InternalName": "UltimateCombo",
+  "AssemblyVersion": "1.0.0.10",
+  "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
+  "ApplicableVersion": "any",
+  "DalamudApiLevel": 10,
+  "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
+  "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/releaseUploads/latest.zip",
+  "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
+  "Tags": [
+    "ultimate",
+    "combo",
+    "ultimatecombo",
+    "stack",
+    "blue",
+    "bluemage",
+    "eureka",
+    "bozja"
+  ]
 }
