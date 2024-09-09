@@ -133,7 +133,7 @@ namespace UltimateCombo
 
 			_ = Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
 			{
-				HelpMessage = "Open a window to edit custom combo settings.",
+				HelpMessage = "Opens the main plugin window, where you can enable and disable features, access settings, and more",
 				ShowInHelp = true,
 			});
 

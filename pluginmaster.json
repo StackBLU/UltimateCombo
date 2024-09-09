@@ -2,9 +2,9 @@
   {
     "Author": "Stack",
     "Name": "Ultimate Combo",
-    "Description": "Join the discord to get tips or report bugs: https://discord.gg/yPxwkdqhHs",
+    "Description": "",
     "InternalName": "UltimateCombo",
-    "AssemblyVersion": "1.0.0.01",
+    "AssemblyVersion": "1.0.0.02",
     "Tags": [
       "ultimate",
       "combo",
