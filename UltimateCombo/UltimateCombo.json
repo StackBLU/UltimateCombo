@@ -1,0 +1,22 @@
+{
+  "Author": "Stack",
+  "Name": "UltimateCombo",
+  "InternalName": "UltimateCombo",
+  "AssemblyVersion": "1.0.0.0",
+  "Description": "A cleaner, more refined, combo plugin for FFXIV!",
+  "ApplicableVersion": "any",
+  "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
+  "Tags": [
+    "stack",
+    "combo",
+    "ultimatecombo"
+  ],
+  "DalamudApiLevel": 10,
+  "LoadRequiredState": 0,
+  "LoadSync": false,
+  "CanUnloadAsync": false,
+  "LoadPriority": 0,
+  "IconUrl": "https://i.imgur.com/6e3BvWP.png",
+  "Punchline": "Trust me, you want this",
+  "AcceptsFeedback": true
+}

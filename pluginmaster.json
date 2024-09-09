@@ -1,15 +1,15 @@
 [
   {
     "Author": "Stack",
-    "Name": "StackCombo",
+    "Name": "Ultimate Combo",
     "Description": "A cleaner, more refined, combo plugin for FFXIV!",
-    "InternalName": "StackCombo",
-    "AssemblyVersion": "1.0.2.20",
+    "InternalName": "Ultimate Combo",
+    "AssemblyVersion": "1.0.0.0",
     "ApplicableVersion": "any",
     "Tags": [
-      "stack",
+      "ultimate",
       "combo",
-      "stackcombo"
+      "ultimatecombo"
     ],
     "DalamudApiLevel": 10,
     "LoadRequiredState": 0,
@@ -18,9 +18,9 @@
     "LoadPriority": 0,
     "Punchline": "Trust me, you want this",
     "AcceptsFeedback": true,
-    "RepoUrl": "https://github.com/StackBLU/StackCombo",
+    "RepoUrl": "https://github.com/StackBLU/Ultimate-Combo",
     "IconUrl": "https://i.imgur.com/6e3BvWP.png",
-    "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/StackCombo/main/releaseUploads/latest.zip",
-    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/StackCombo/main/releaseUploads/latest.zip"
+    "DownloadLinkInstall": "https://raw.githubusercontent.com/StackBLU/Ultimate-Combo/main/releaseUploads/latest.zip",
+    "DownloadLinkUpdate": "https://raw.githubusercontent.com/StackBLU/Ultimate-Combo/main/releaseUploads/latest.zip"
   }
 ]
