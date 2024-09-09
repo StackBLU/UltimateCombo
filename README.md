@@ -1,4 +1,4 @@
-<img src="/images/logoWide.png" width="800px" align="center">
+<img src="/images/logoWide.png" width="800px" align="center" href="https://github.com/StackBLU/UltimateCombo">
 
 <h2 align="center">Features</h2>
 
