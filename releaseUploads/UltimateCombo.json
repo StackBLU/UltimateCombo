@@ -21,7 +21,7 @@
   "LoadSync": false,
   "CanUnloadAsync": false,
   "LoadPriority": 0,
-  "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
+  "IconUrl": "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logoSmall.png",
   "Punchline": "The only combo plugin you'll ever need!",
   "AcceptsFeedback": false
 }
