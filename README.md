@@ -1,6 +1,14 @@
-<a href="https://github.com/StackBLU/UltimateCombo">
-	<img src="/images/logoWide.png" width="800px" align="center"></img>
-</a>
+<p align="center"><br>
+	<a href="https://github.com/StackBLU/UltimateCombo">
+	<img align="center" src="/images/logoWide.png" width="800px"</img>
+	</a>
+</p>
+<br>
+
+<p align="center"> 
+  <a href="https://discord.gg/yPxwkdqhHs" alt="Discord">
+    <img src="https://img.shields.io/discord/1277684496509964403?style=for-the-badge&logo=Discord&logoColor=ffffff&logoSize=auto&color=5865F2" /></a>
+</p>
 
 <h2 align="center">Features</h2>
 
@@ -33,8 +41,7 @@ Steps:
 * Press "Save and Close" at the bottom of the settings window
 * Navigate to the "All Plugins" tab and search for "Ultimate Combo"
 * Click on "Ultimate Combo" and select "Install"
-* Click on the settings cog (where you just clicked "Install") to open the configuration<br>
-  Alternatively, type `/uc` in the game chat window
+<p>If you experience any bugs or errors, please create an issue here on github, or join the <a href="https://discord.gg/yPxwkdqhHs">Discord</a></p>
 
 <h2 align="center">Commands</h2>
 
@@ -52,5 +59,7 @@ Steps:
 
 <p align="center"><br>
 	Developed by:<br>
-	<a href="https://github.com/StackBLU"><img align="center" src="/images/stack.gif" width="250"</img></a>
+	<a href="https://github.com/StackBLU">
+	<img align="center" src="/images/stack.gif" width="250px"</img>
+	</a>
 </p>
