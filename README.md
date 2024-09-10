@@ -39,7 +39,7 @@ The following are just a few of the overall improvements:
 | `/uc disableall`| Turns all options off|
 | `/uc enabled`| Prints a list of every enabled option into the game chat|
 | `/uc debug`| Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing|
-| `/uc debug <JOB>`| Outputs a debug file to your desktop containing only job-relevant options|
+| `/uc debug <jobShort>`| Outputs a debug file to your desktop containing only job-relevant options|
 
 <p align="center"><br>
 	Developed by:<br>

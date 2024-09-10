@@ -1,4 +1,4 @@
-using Dalamud.Game.ClientState.Statuses;
+﻿using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
@@ -24,8 +24,6 @@ namespace UltimateCombo
 {
 	public sealed partial class UltimateComboClass : IDalamudPlugin
 	{
-		private const string Command = "/uc";
-
 		private readonly ConfigWindow ConfigWindow;
 		internal static UltimateComboClass? P = null!;
 		internal WindowSystem ws;
@@ -131,10 +129,17 @@ namespace UltimateCombo
 			Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
 			Service.Interface.UiBuilder.OpenMainUi += OnOpenConfigUi;
 
-			_ = Service.CommandManager.AddHandler(Command, new CommandInfo(OnCommand)
+			_ = Service.CommandManager.AddHandler("/uc", new CommandInfo(OnCommand)
 			{
-				HelpMessage = "Opens the main plugin window, where you can enable and disable features, access settings, and more",
-				ShowInHelp = true,
+				HelpMessage = "Opens the main plugin window, where you can enable and disable options"
+				+ "\n/uc enable <featureName> → Turns a specific option on by referring to its internal name"
+				+ "\n/uc disable <featureName> → Turns a specific option off by referring to its internal name"
+				+ "\n/uc toggle <featureName> → Toggles a specific option by referring to its internal name"
+				+ "\n/uc enableall → Turns all options on"
+				+ "\n/uc disableall → Turns all options off"
+				+ "\n/uc enabled → Prints a list of every enabled option into the game chat"
+				+ "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
+				+ "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
 			});
 
 			Service.Framework.Update += OnFrameworkUpdate;
@@ -211,7 +216,7 @@ namespace UltimateCombo
 			ConfigWindow?.Dispose();
 
 			ws.RemoveAllWindows();
-			_ = Service.CommandManager.RemoveHandler(Command);
+			_ = Service.CommandManager.RemoveHandler("/uc");
 			Service.Framework.Update -= OnFrameworkUpdate;
 			Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
 			Service.Interface.UiBuilder.Draw -= DrawUI;
