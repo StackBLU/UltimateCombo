@@ -350,14 +350,11 @@ namespace UltimateCombo
 
 							using StreamWriter file = new($"{desktopPath}/UltimateComboDebug.txt", append: false);
 
-							file.WriteLine("START DEBUG LOG");
-							file.WriteLine("");
 							file.WriteLine($"Plugin Version: {GetType().Assembly.GetName().Version}");
 							file.WriteLine("");
 							file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");
 							file.WriteLine("");
 							file.WriteLine($"Current Job: " +
-								$"{Service.ClientState.LocalPlayer.ClassJob.GameData.Name} / " +
 								$"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +
 								$"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");
 							file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.Id}");
@@ -366,7 +363,7 @@ namespace UltimateCombo
 							file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");
 							file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
 							file.WriteLine("");
-							file.WriteLine($"START ENABLED FEATURES");
+							file.WriteLine($"Enabled Features:");
 
 							int i = 0;
 							if (string.IsNullOrEmpty(specificJob))
@@ -394,32 +391,29 @@ namespace UltimateCombo
 								}
 							}
 
-
-							file.WriteLine($"END ENABLED FEATURES");
 							file.WriteLine("");
-
-							file.WriteLine("START CONFIG SETTINGS");
+							file.WriteLine("Config Settings");
 							if (string.IsNullOrEmpty(specificJob))
 							{
-								file.WriteLine("---INT VALUES---");
+								file.WriteLine("---Integers---");
 								foreach (KeyValuePair<string, int> item in PluginConfiguration.CustomIntValues.OrderBy(x => x.Key))
 								{
 									file.WriteLine($"{item.Key.Trim()} - {item.Value}");
 								}
 								file.WriteLine("");
-								file.WriteLine("---FLOAT VALUES---");
+								file.WriteLine("---Floats---");
 								foreach (KeyValuePair<string, float> item in PluginConfiguration.CustomFloatValues.OrderBy(x => x.Key))
 								{
 									file.WriteLine($"{item.Key.Trim()} - {item.Value}");
 								}
 								file.WriteLine("");
-								file.WriteLine("---BOOL VALUES---");
+								file.WriteLine("---Bools---");
 								foreach (KeyValuePair<string, bool> item in PluginConfiguration.CustomBoolValues.OrderBy(x => x.Key))
 								{
 									file.WriteLine($"{item.Key.Trim()} - {item.Value}");
 								}
 								file.WriteLine("");
-								file.WriteLine("---BOOL ARRAY VALUES---");
+								file.WriteLine("---Bool Arrays---");
 								foreach (KeyValuePair<string, bool[]> item in PluginConfiguration.CustomBoolArrayValues.OrderBy(x => x.Key))
 								{
 									file.WriteLine($"{item.Key.Trim()} - {string.Join(", ", item.Value)}");
@@ -481,38 +475,28 @@ namespace UltimateCombo
 								}
 							}
 
-
-							file.WriteLine("END CONFIG SETTINGS");
 							file.WriteLine("");
 							file.WriteLine($"Redundant IDs found: {i}");
-
 							if (i > 0)
 							{
-								file.WriteLine($"START REDUNDANT IDs");
 								foreach (CustomComboPreset preset in Service.Configuration.EnabledActions.Where(x => int.TryParse(x.ToString(), out _)).OrderBy(x => x))
 								{
 									file.WriteLine($"{(int)preset}");
 								}
-
-								file.WriteLine($"END REDUNDANT IDs");
-								file.WriteLine("");
 							}
+
+							file.WriteLine("");
 
 							file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
-
 							if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
 							{
-								file.WriteLine($"START STATUS EFFECTS");
 								foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
 								{
-									file.WriteLine($"ID: {status.StatusId}, COUNT: {status.StackCount}, SOURCE: {status.SourceId} NAME: {ActionWatching.GetStatusName(status.StatusId)}");
+									file.WriteLine($"ID: {status.StatusId}, Count: {status.StackCount}, Source: {status.SourceId} Name: {ActionWatching.GetStatusName(status.StatusId)}");
 								}
-
-								file.WriteLine($"END STATUS EFFECTS");
 							}
 
-							file.WriteLine("END DEBUG LOG");
-							Service.ChatGui.Print("Please check your desktop for UltimateComboDebug.txt and upload this file where requested.");
+							Service.ChatGui.Print("Please check your desktop for UltimateComboDebug.txt and upload this file when submitting your bug report.");
 
 							break;
 						}
@@ -520,7 +504,7 @@ namespace UltimateCombo
 						catch (Exception ex)
 						{
 							Service.PluginLog.Error(ex, "Debug Log");
-							Service.ChatGui.Print("Unable to write Debug log.");
+							Service.ChatGui.Print("Unable to write Debug log. Type /xllog to see why.");
 							break;
 						}
 					}
