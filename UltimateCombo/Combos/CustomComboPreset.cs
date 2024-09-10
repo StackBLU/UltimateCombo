@@ -1966,6 +1966,14 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
 		SMN_ST_Lucid = 17005,
 
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
+		SMN_ST_SearingLight = 17006,
+
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
+		SMN_ST_RadiantAegis = 17007,
+
 		#endregion
 
 		#region AoE DPS

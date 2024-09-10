@@ -15,6 +15,15 @@ The following are just a few of the overall improvements:
 
 <h2 align="center">Installation</h2>
 
+You must have <a href="https://goatcorp.github.io/">XIVLauncher/Dalamud</a> installed.
+
+Ultimate Combo pairs very well with the following plugins:
+* <a href="https://github.com/UnknownX7/ReAction">ReAction</a>, for automatic target picking and turbo mode
+* <a href="https://github.com/FFXIV-CombatReborn/BossmodReborn">BossMod Reborn</a>, for slidecasting and lag reduction
+<p>You can find installation instructions for each respective plugin on its github page.</p>
+<br>
+
+Steps:
 * Copy the following repository link: <br>
 `https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/pluginmaster.json`
 * Type `/xlsettings` in the game chat window to open the Dalamud Settings window

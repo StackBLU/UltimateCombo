@@ -1,4 +1,6 @@
-﻿using UltimateCombo.ComboHelper.Functions;
+﻿using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 
@@ -20,6 +22,12 @@ namespace UltimateCombo.CustomCombo
 		public unsafe bool TryInvoke(uint actionID, byte level, uint lastComboMove, float comboTime, out uint newActionID)
 		{
 			newActionID = 0;
+
+			if (!Svc.ClientState.IsPvP && ActionManager.Instance()->QueuedActionType == ActionType.Action
+				&& ActionManager.Instance()->QueuedActionId != actionID)
+			{
+				return false;
+			}
 
 			if (!IsEnabled(Preset))
 			{

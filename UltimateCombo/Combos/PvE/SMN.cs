@@ -28,9 +28,9 @@ namespace UltimateCombo.Combos.PvE
 			TopazRuin1 = 25809,
 			TopazRuin2 = 25812,
 			TopazRuin3 = 25818,
-			EmeralRuin1 = 25810,
-			EmeralRuin2 = 25813,
-			EmeralRuin3 = 25819,
+			EmeraldRuin1 = 25810,
+			EmeraldRuin2 = 25813,
+			EmeraldRuin3 = 25819,
 			Outburst = 16511,
 			RubyOutburst = 25814,
 			TopazOutburst = 25815,
@@ -140,6 +140,17 @@ namespace UltimateCombo.Combos.PvE
 							return SearingLight;
 						}
 
+						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(OriginalHook(Necrotize))
+							&& Gauge.AetherflowStacks > 0)
+						{
+							if (Gauge.AetherflowStacks > 0)
+							{
+								return OriginalHook(Necrotize);
+							}
+
+							return EnergyDrain;
+						}
+
 						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(EnergyDrain))
 						{
 							return EnergyDrain;
@@ -171,7 +182,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (OriginalHook(Gemshine) is EmeralRuin1 or EmeralRuin2 or EmeralRuin3 or EmeraldRite)
+						if (OriginalHook(Gemshine) is EmeraldRuin1 or EmeraldRuin2 or EmeraldRuin3 or EmeraldRite)
 						{
 							return OriginalHook(Gemshine);
 						}
@@ -336,8 +347,10 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return OriginalHook(Necrotize);
 					}
+
 					return EnergyDrain;
 				}
+
 				return actionID;
 			}
 		}
