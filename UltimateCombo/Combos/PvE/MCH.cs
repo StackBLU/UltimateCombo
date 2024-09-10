@@ -40,7 +40,7 @@ namespace UltimateCombo.Combos.PvE
 			Flamethrower = 7418,
 			BlazingShot = 36978,
 			DoubleCheck = 36979,
-			CheckMate = 36980,
+			Checkmate = 36980,
 			Excavator = 36981,
 			FullMetalField = 36982;
 
@@ -323,7 +323,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is GaussRound or Ricochet or CheckMate or DoubleCheck) && IsEnabled(CustomComboPreset.MCH_GaussRicochet))
+				if ((actionID is GaussRound or Ricochet or Checkmate or DoubleCheck) && IsEnabled(CustomComboPreset.MCH_GaussRicochet))
 				{
 					if (ActionReady(OriginalHook(GaussRound)) && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet)))
 					{

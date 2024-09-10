@@ -112,11 +112,11 @@ namespace UltimateCombo.Combos
 		#region Utility
 
 		[ReplaceSkill(PLD.Requiescat, PLD.Imperator)]
-		[CustomComboInfo("Requiescat > Confiteor > Faith > Truth > Valor > Honor", "", PLD.JobID)]
+		[CustomComboInfo("Requiescat / Imperator > Confiteor > Faith > Truth > Valor > Honor", "", PLD.JobID)]
 		PLD_Blades = 11040,
 
 		[ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion, PLD.CircleOfScorn)]
-		[CustomComboInfo("Spirits Within > Circle of Scorn", "", PLD.JobID)]
+		[CustomComboInfo("Spirits Within & Circle of Scorn", "", PLD.JobID)]
 		PLD_ExpiScorn = 11041,
 
 		#endregion
@@ -747,7 +747,7 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(All.Swiftcast)]
+		[ReplaceSkill(AST.Ascend)]
 		[CustomComboInfo("Swiftcast > Raise", "", AST.JobID)]
 		AST_Raise_Alternative = 1060,
 
@@ -1681,8 +1681,8 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(MCH.GaussRound, MCH.Ricochet)]
-		[CustomComboInfo("Gauss Round / Ricochet", "", MCH.JobID)]
+		[ReplaceSkill(MCH.GaussRound, MCH.DoubleCheck, MCH.Ricochet, MCH.Checkmate)]
+		[CustomComboInfo("Gauss Round & Ricochet / Double Check & Checkmate", "", MCH.JobID)]
 		MCH_GaussRicochet = 8040,
 
 		[ReplaceSkill(MCH.Dismantle)]
@@ -1801,7 +1801,6 @@ namespace UltimateCombo.Combos
 
 
 		#endregion
-
 
 		#region Variant
 
@@ -2004,7 +2003,7 @@ namespace UltimateCombo.Combos
 		#region Utility
 
 		[ReplaceSkill(SMN.EnergyDrain, SMN.Fester, SMN.Necrotize)]
-		[CustomComboInfo("Energy Drain over Necrotize", "", SMN.JobID)]
+		[CustomComboInfo("Energy Drain > Fester / Necrotize", "", SMN.JobID)]
 		SMN_EnergyDrainNecro = 17040,
 
 		[ReplaceSkill(SMN.SummonBahamut, SMN.EnkindleBahamut, SMN.SummonPhoenix, SMN.EnkindlePhoenix, SMN.SummonSolarBahamut, SMN.EnkindleSolarBahamut)]

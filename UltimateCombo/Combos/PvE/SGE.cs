@@ -1,9 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Collections.Generic;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -319,10 +319,7 @@ namespace UltimateCombo.Combos.PvE
 						return All.Swiftcast;
 					}
 
-					if (ActionReady(Egeiro))
-					{
-						return Egeiro;
-					}
+					return Egeiro;
 				}
 
 				return actionID;

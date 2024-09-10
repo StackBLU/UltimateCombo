@@ -128,16 +128,44 @@ namespace UltimateCombo.Combos.PvE
 						return SummonCarbuncle;
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(EnergyDrain) && CanWeave(actionID))
+					if (CanWeave(actionID))
 					{
-						return EnergyDrain;
-					}
-
-					if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
-					{
-						if (CanWeave(actionID) && IsOffCooldown(OriginalHook(AstralFlow)))
+						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
-							return OriginalHook(AstralFlow);
+							return SearingFlash;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && ActionReady(SearingLight))
+						{
+							return SearingLight;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(EnergyDrain))
+						{
+							return EnergyDrain;
+						}
+
+						if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse)
+							|| WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
+						{
+							if (ActionReady(OriginalHook(AstralFlow)))
+							{
+								return OriginalHook(AstralFlow);
+							}
+						}
+
+						if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite)))
+						{
+							if (HasEffect(Buffs.TitansFavor))
+							{
+								return OriginalHook(AstralFlow);
+							}
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_ST_RadiantAegis)
+							&& GetRemainingCharges(RadiantAegis) == GetMaxCharges(RadiantAegis))
+						{
+							return RadiantAegis;
 						}
 					}
 
@@ -157,15 +185,15 @@ namespace UltimateCombo.Combos.PvE
 
 					if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite)))
 					{
-						if (CanWeave(actionID) && HasEffect(Buffs.TitansFavor))
-						{
-							return OriginalHook(AstralFlow);
-						}
-
 						if (OriginalHook(Gemshine) is TopazRuin1 or TopazRuin2 or TopazRuin3 or TopazRite)
 						{
 							return OriginalHook(Gemshine);
 						}
+					}
+
+					if (lastComboMove is CrimsonCyclone)
+					{
+						return OriginalHook(AstralFlow);
 					}
 
 					if (HasEffect(Buffs.IfritsFavor))
@@ -181,12 +209,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (lastComboMove is CrimsonCyclone)
-					{
-						return OriginalHook(AstralFlow);
-					}
-
-					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && ActionReady(Ruin4) && HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
+					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && ActionReady(Ruin4)
+						&& HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
 					{
 						return Ruin4;
 					}
@@ -196,6 +220,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Ruin3);
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -223,12 +248,14 @@ namespace UltimateCombo.Combos.PvE
 						return EnergySiphon;
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Painflare) && ActionReady(Painflare) && CanWeave(actionID) && Gauge.HasAetherflowStacks)
+					if (IsEnabled(CustomComboPreset.SMN_AoE_Painflare) && ActionReady(Painflare)
+						&& CanWeave(actionID) && Gauge.HasAetherflowStacks)
 					{
 						return Painflare;
 					}
 
-					if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
+					if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse)
+						|| WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
 					{
 						if (CanWeave(actionID) && IsOffCooldown(OriginalHook(AstralFlow)))
 						{
@@ -250,7 +277,8 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
-					if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite)) || WasLastSpell(OriginalHook(TopazCatastrophe)))
+					if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite))
+						|| WasLastSpell(OriginalHook(TopazCatastrophe)))
 					{
 						if (CanWeave(actionID) && HasEffect(Buffs.TitansFavor))
 						{
@@ -281,7 +309,8 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && ActionReady(Ruin4) && HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
+					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && ActionReady(Ruin4)
+						&& HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
 					{
 						return Ruin4;
 					}
@@ -342,10 +371,8 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return All.Swiftcast;
 					}
-					if (ActionReady(Resurrection))
-					{
-						return Resurrection;
-					}
+
+					return Resurrection;
 				}
 				return actionID;
 			}

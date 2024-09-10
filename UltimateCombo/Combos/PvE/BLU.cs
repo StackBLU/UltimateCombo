@@ -590,11 +590,13 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return All.Swiftcast;
 					}
+
 					if (IsSpellActive(AngelWhisper))
 					{
 						return AngelWhisper;
 					}
 				}
+
 				return actionID;
 			}
 		}

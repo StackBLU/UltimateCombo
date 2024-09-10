@@ -1,8 +1,8 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Collections.Generic;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -332,10 +332,7 @@ namespace UltimateCombo.Combos.PvE
 						return ThinAir;
 					}
 
-					if (ActionReady(Raise))
-					{
-						return Raise;
-					}
+					return Raise;
 				}
 
 				return actionID;
