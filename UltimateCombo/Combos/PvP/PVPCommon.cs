@@ -1,6 +1,7 @@
-﻿using UltimateCombo.Core;
+﻿using System.Collections.Generic;
+using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Core;
 using UltimateCombo.CustomCombo;
-using System.Collections.Generic;
 
 namespace UltimateCombo.Combos.PvP
 {
@@ -18,9 +19,10 @@ namespace UltimateCombo.Combos.PvP
 		internal class Config
 		{
 			public const string
-				EmergencyHealThreshold = "EmergencyHealThreshold",
-				EmergencyGuardThreshold = "EmergencyGuardThreshold",
 				QuickPurifyStatuses = "QuickPurifyStatuses";
+			public static UserInt
+				EmergencyHealThreshold = new("EmergencyHealThreshold", 90),
+				EmergencyGuardThreshold = new("EmergencyGuardThreshold", 50);
 		}
 
 		internal class Debuffs
@@ -81,7 +83,7 @@ namespace UltimateCombo.Combos.PvP
 			public static bool Execute()
 			{
 				uint jobMaxHp = LocalPlayer.MaxHp;
-				int threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyHealThreshold);
+				int threshold = GetOptionValue(Config.EmergencyHealThreshold);
 				uint maxHPThreshold = jobMaxHp - 15000;
 				float remainingPercentage = LocalPlayer.CurrentHp / (float)maxHPThreshold;
 
@@ -133,7 +135,7 @@ namespace UltimateCombo.Combos.PvP
 			public static bool Execute()
 			{
 				uint jobMaxHp = LocalPlayer.MaxHp;
-				int threshold = PluginConfiguration.GetCustomIntValue(Config.EmergencyGuardThreshold);
+				int threshold = GetOptionValue(Config.EmergencyGuardThreshold);
 				float remainingPercentage = LocalPlayer.CurrentHp / (float)jobMaxHp;
 
 				if (HasEffect(3180))

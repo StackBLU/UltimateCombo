@@ -1,16 +1,15 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Interface;
+﻿using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ImGuiNET;
+using System;
+using System.Numerics;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Combos.PvP;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
-using System;
-using System.Numerics;
 
 namespace UltimateCombo.Window.Functions
 {
@@ -499,8 +498,6 @@ namespace UltimateCombo.Window.Functions
 				Array.Resize(ref values, 7);
 			}
 
-			ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.ParsedPink);
-
 			if (ImGui.Checkbox($"Stun###{config}0", ref values[0]))
 			{
 				PluginConfiguration.SetCustomBoolArrayValue(config, values);
@@ -556,7 +553,6 @@ namespace UltimateCombo.Window.Functions
 			}
 
 			ImGui.Columns(1);
-			ImGui.PopStyleColor();
 			ImGui.Spacing();
 		}
 
@@ -1535,32 +1531,9 @@ namespace UltimateCombo.Window.Functions
 
 			#region PvP Global
 
-			IPlayerCharacter? pc = Service.ClientState.LocalPlayer;
-
 			if (preset == CustomComboPreset.PvP_EmergencyHeals && enabled)
 			{
-				if (pc != null)
-				{
-					uint maxHP = Service.ClientState.LocalPlayer?.MaxHp <= 15000 ? 0 : Service.ClientState.LocalPlayer.MaxHp - 15000;
-
-					if (maxHP > 0)
-					{
-						int setting = PluginConfiguration.GetCustomIntValue(PvPCommon.Config.EmergencyHealThreshold);
-						_ = (float)maxHP / 100 * setting;
-
-						UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
-					}
-
-					else
-					{
-						UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
-					}
-				}
-
-				else
-				{
-					UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
-				}
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
 			}
 
 			if (preset == CustomComboPreset.PvP_EmergencyGuard && enabled)
