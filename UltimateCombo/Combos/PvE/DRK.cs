@@ -85,7 +85,8 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow)) && Gauge.DarksideTimeRemaining == 0)
+						if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
+							&& Gauge.DarksideTimeRemaining == 0)
 						{
 							return OriginalHook(EdgeOfShadow);
 						}
@@ -95,7 +96,7 @@ namespace UltimateCombo.Combos.PvE
 							return LivingShadow;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
 							if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
 								&& (LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver) || Gauge.HasDarkArts))
@@ -113,8 +114,8 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(SaltedEarth);
 							}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer) && !WasLastAbility(Shadowbringer)
-								&& Gauge.ShadowTimeRemaining > 0)
+							if (IsEnabled(CustomComboPreset.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer)
+								&& !WasLastAbility(Shadowbringer) && Gauge.ShadowTimeRemaining > 0)
 							{
 								return Shadowbringer;
 							}
@@ -138,7 +139,8 @@ namespace UltimateCombo.Combos.PvE
 						return Disesteem;
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller) && ActionReady(OriginalHook(Bloodspiller)) && Gauge.DarksideTimeRemaining > 0
+					if (IsEnabled(CustomComboPreset.DRK_ST_Bloodspiller) && ActionReady(OriginalHook(Bloodspiller))
+						&& Gauge.DarksideTimeRemaining > 0
 						&& (HasEffect(Buffs.Delirium) || Gauge.Blood >= GetOptionValue(Config.DRK_BloodspillerGauge)))
 					{
 						return OriginalHook(Bloodspiller);
