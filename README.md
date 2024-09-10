@@ -29,7 +29,7 @@ The following are just a few of the overall improvements:
 
 <h2 align="center">Commands</h2>
 
-| **Commands**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | **Function** |
+| **Commands**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | **Function** |
 | :-- | :-- |
 | `/uc`| Opens the main plugin window, where you can enable and disable options|
 | `/uc enable <featureName>`| Turns a specific option on by referring to its internal name|
