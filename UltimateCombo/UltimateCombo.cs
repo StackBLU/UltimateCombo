@@ -234,19 +234,8 @@ namespace UltimateCombo
 
 			switch (argumentsParts[0].ToLower())
 			{
-				case "unsetall":
-					{
-						foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
-						{
-							_ = Service.Configuration.EnabledActions.Remove(preset);
-						}
 
-						Service.ChatGui.Print("All UNSET");
-						Service.Configuration.Save();
-						break;
-					}
-
-				case "set":
+				case "enable":
 					{
 						string? targetPreset = argumentsParts[1].ToLowerInvariant();
 						foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
@@ -257,7 +246,25 @@ namespace UltimateCombo
 							}
 
 							_ = Service.Configuration.EnabledActions.Add(preset);
-							Service.ChatGui.Print($"{preset} SET");
+							Service.ChatGui.Print($"{preset} enabled!");
+						}
+
+						Service.Configuration.Save();
+						break;
+					}
+
+				case "disable":
+					{
+						string? targetPreset = argumentsParts[1].ToLowerInvariant();
+						foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
+						{
+							if (!preset.ToString().Equals(targetPreset, StringComparison.InvariantCultureIgnoreCase))
+							{
+								continue;
+							}
+
+							_ = Service.Configuration.EnabledActions.Remove(preset);
+							Service.ChatGui.Print($"{preset} disabled!");
 						}
 
 						Service.Configuration.Save();
@@ -277,11 +284,11 @@ namespace UltimateCombo
 							if (!Service.Configuration.EnabledActions.Remove(preset))
 							{
 								_ = Service.Configuration.EnabledActions.Add(preset);
-								Service.ChatGui.Print($"{preset} SET");
+								Service.ChatGui.Print($"{preset} enabled!");
 							}
 							else
 							{
-								Service.ChatGui.Print($"{preset} UNSET");
+								Service.ChatGui.Print($"{preset} disabled!");
 							}
 						}
 
@@ -289,20 +296,26 @@ namespace UltimateCombo
 						break;
 					}
 
-				case "unset":
+				case "disableall":
 					{
-						string? targetPreset = argumentsParts[1].ToLowerInvariant();
 						foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
 						{
-							if (!preset.ToString().Equals(targetPreset, StringComparison.InvariantCultureIgnoreCase))
-							{
-								continue;
-							}
-
 							_ = Service.Configuration.EnabledActions.Remove(preset);
-							Service.ChatGui.Print($"{preset} UNSET");
 						}
 
+						Service.ChatGui.Print("All presets disabled!");
+						Service.Configuration.Save();
+						break;
+					}
+
+				case "enableall":
+					{
+						foreach (CustomComboPreset preset in Enum.GetValues<CustomComboPreset>())
+						{
+							_ = Service.Configuration.EnabledActions.Add(preset);
+						}
+
+						Service.ChatGui.Print("All presets enabled!");
 						Service.Configuration.Save();
 						break;
 					}
@@ -506,6 +519,7 @@ namespace UltimateCombo
 							break;
 						}
 					}
+
 				default:
 					ConfigWindow.IsOpen = !ConfigWindow.IsOpen;
 					PvEFeatures.HasToOpenJob = true;

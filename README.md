@@ -9,7 +9,7 @@ The following are just a few of the overall improvements:
 * Fresh, custom, and smooth PvE combo logic, updated for Dawntrail, for all classes
 * Intuitive UI
 * Better controller support
-* BLU Mage combos for all mimicries
+* Blue Mage combos for all mimicries
 * Variant / Bozja / Eureka logic (beta)
 * Crazy overpowered PvP combos (beta)
 
@@ -31,12 +31,13 @@ The following are just a few of the overall improvements:
 
 | **Commands**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | **Function** |
 | :-- | :-- |
-| `/uc`| Opens the main plugin window, where you can enable and disable features, access settings, and more|
+| `/uc`| Opens the main plugin window, where you can enable and disable options|
+| `/uc enable <featureName>`| Turns a specific option on by referring to its internal name|
+| `/uc disable <featureName>`| Turn a specific option off by referring to its internal name|
+| `/uc toggle <featureName>`| Toggles a specific option by referring to its internal name|
+| `/uc enableall`| Turns all options on|
+| `/uc disableall`| Turns all options off|
 | `/uc enabled`| Prints a list of every enabled option into the game chat|
-| `/uc set`| Turns a specific option **on** by referring to its internal name|
-| `/uc unset`| Turn a specific option **off** by referring to its internal name|
-| `/uc unsetall`| Turns all features and options **off**|
-| `/uc toggle`| Toggles a specific option **on** or **off** by referring to its internal name|
 | `/uc debug`| Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing|
 | `/uc debug <JOB>`| Outputs a debug file to your desktop containing only job-relevant options|
 
