@@ -667,7 +667,7 @@ namespace UltimateCombo.Combos
 
 		#region Single Target DPS
 
-		[ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic, AST.Combust, AST.Combust2, AST.Combust3, AST.Gravity, AST.Gravity2)]
+		[ReplaceSkill(AST.Malefic, AST.Malefic2, AST.Malefic3, AST.Malefic4, AST.FallMalefic)]
 		[CustomComboInfo("Single Target DPS", "", AST.JobID)]
 		AST_ST_DPS = 1000,
 
@@ -680,24 +680,28 @@ namespace UltimateCombo.Combos
 		AST_ST_DPS_AutoDraw = 1002,
 
 		[ParentCombo(AST_ST_DPS)]
+		[CustomComboInfo("Play I (The Balance & The Spear)", "", AST.JobID)]
+		AST_ST_DPS_AutoPlay = 1003,
+
+		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_ST_DPS_Lightspeed = 1003,
+		AST_ST_DPS_Lightspeed = 1004,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_ST_DPS_Divination = 1004,
+		AST_ST_DPS_Divination = 1005,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_ST_DPS_SunSign = 1005,
+		AST_ST_DPS_SunSign = 1006,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_ST_DPS_Lucid = 1006,
+		AST_ST_DPS_Lucid = 1007,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_ST_DPS_Swiftcast = 1007,
+		AST_ST_DPS_Swiftcast = 1008,
 
 		#endregion
 
@@ -712,24 +716,28 @@ namespace UltimateCombo.Combos
 		AST_AoE_DPS_AutoDraw = 1021,
 
 		[ParentCombo(AST_AoE_DPS)]
+		[CustomComboInfo("Play I (The Balance & The Spear)", "", AST.JobID)]
+		AST_AoE_DPS_AutoPlay = 1022,
+
+		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_AoE_DPS_Lightspeed = 1022,
+		AST_AoE_DPS_Lightspeed = 1023,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_AoE_DPS_Divination = 1023,
+		AST_AoE_DPS_Divination = 1024,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_AoE_DPS_SunSign = 1024,
+		AST_AoE_DPS_SunSign = 1025,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_AoE_DPS_Lucid = 1025,
+		AST_AoE_DPS_Lucid = 1026,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_AoE_DPS_Swiftcast = 1026,
+		AST_AoE_DPS_Swiftcast = 1027,
 
 		#endregion
 
@@ -742,6 +750,30 @@ namespace UltimateCombo.Combos
 		[ParentCombo(AST_ST_Heals)]
 		[CustomComboInfo("Aspected Benefic", "", AST.JobID)]
 		AST_ST_Heals_AspectedBenefic = 1041,
+
+		#endregion
+
+		#region AoE Heals
+
+		[ReplaceSkill(AST.Helios, AST.AspectedHelios, AST.HeliosConjuction)]
+		[CustomComboInfo("AoE Heals", "", AST.JobID)]
+		AST_AoE_Heals = 1050,
+
+		[ParentCombo(AST_AoE_Heals)]
+		[CustomComboInfo("Horoscope", "", AST.JobID)]
+		AST_AoE_Heals_Horoscope = 1051,
+
+		[ParentCombo(AST_AoE_Heals)]
+		[CustomComboInfo("Neutral Sect", "", AST.JobID)]
+		AST_AoE_Heals_NeutralSect = 1052,
+
+		[ParentCombo(AST_AoE_Heals)]
+		[CustomComboInfo("Sun Sign", "", AST.JobID)]
+		AST_AoE_Heals_SunSign = 1053,
+
+		[ParentCombo(AST_AoE_Heals)]
+		[CustomComboInfo("Helios", "", AST.JobID)]
+		AST_AoE_Heals_Helios = 1054,
 
 		#endregion
 

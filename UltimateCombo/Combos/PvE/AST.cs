@@ -1,10 +1,10 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Collections.Generic;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -48,6 +48,7 @@ namespace UltimateCombo.Combos.PvE
 			CelestialOpposition = 16553,
 			CelestialIntersection = 16556,
 			Horoscope = 16557,
+			NeutralSect = 16559,
 			Exaltation = 25873,
 			Macrocosmos = 25874,
 			Synastry = 3612,
@@ -102,6 +103,12 @@ namespace UltimateCombo.Combos.PvE
 				{ Combust3, Debuffs.Combust3 }
 			};
 
+		internal static Dictionary<uint, ushort>
+			HeliosList = new() {
+				{ AspectedHelios,  Buffs.AspectedHelios  },
+				{ HeliosConjuction, Buffs.HeliosConjunction }
+			};
+
 		public static ASTGauge Gauge
 		{
 			get
@@ -133,6 +140,14 @@ namespace UltimateCombo.Combos.PvE
 						return All.LucidDreaming;
 					}
 
+					if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
+						&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
+						&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving)
+						&& CanWeave(actionID))
+					{
+						return Lightspeed;
+					}
+
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
@@ -141,25 +156,26 @@ namespace UltimateCombo.Combos.PvE
 							return All.LucidDreaming;
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
-							&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-							&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving))
-						{
-							return Lightspeed;
-						}
-
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
-						{
-							return Oracle;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 							{
 								return Lightspeed;
 							}
+
 							return Divination;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
+							&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
+							&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+						{
+							return OriginalHook(Play1);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
+						{
+							return Oracle;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
@@ -176,6 +192,7 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return OriginalHook(MinorArcana);
 							}
+
 							return OriginalHook(AstralDraw);
 						}
 
@@ -227,18 +244,26 @@ namespace UltimateCombo.Combos.PvE
 							return Lightspeed;
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
-						{
-							return Oracle;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && ActionReady(Divination))
 						{
 							if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 							{
 								return Lightspeed;
 							}
+
 							return Divination;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
+							&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
+							&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+						{
+							return OriginalHook(Play1);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
+						{
+							return Oracle;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))
@@ -296,6 +321,47 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
+		internal class AST_AoE_Heals : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_AoE_Heals;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Helios or AspectedHelios or HeliosConjuction) && IsEnabled(CustomComboPreset.AST_AoE_Heals))
+				{
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_Horoscope) && ActionReady(Horoscope) && !HasEffect(Buffs.HoroscopeHelios))
+					{
+						return Horoscope;
+					}
+
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_NeutralSect) && ActionReady(NeutralSect))
+					{
+						return NeutralSect;
+					}
+
+					if (ActionReady(Helios)
+						&& (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
+						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 5
+						|| HasEffect(Buffs.NeutralSect)
+						|| HasEffect(Buffs.Horoscope)))
+					{
+						return OriginalHook(AspectedHelios);
+					}
+
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched))
+					{
+						return SunSign;
+					}
+
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_Helios))
+					{
+						return Helios;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
 		internal class AST_Raise_Alternative : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Raise_Alternative;
@@ -342,8 +408,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (actionID is Play1)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE) && !Gauge.DrawnCards.Any(x => x is CardType.SPEAR)
-						&& Gauge.DrawnCards.All(x => x is CardType.NONE))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE) && !Gauge.DrawnCards.Any(x => x is CardType.SPEAR))
 					{
 						return OriginalHook(AstralDraw);
 					}
@@ -353,8 +418,7 @@ namespace UltimateCombo.Combos.PvE
 
 				if (actionID is Play2)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.ARROW) && !Gauge.DrawnCards.Any(x => x is CardType.BOLE)
-						&& Gauge.DrawnCards.All(x => x is CardType.NONE))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.ARROW) && !Gauge.DrawnCards.Any(x => x is CardType.BOLE))
 					{
 						return OriginalHook(AstralDraw);
 					}
@@ -364,8 +428,7 @@ namespace UltimateCombo.Combos.PvE
 
 				if (actionID is Play3)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.SPIRE) && !Gauge.DrawnCards.Any(x => x is CardType.EWER)
-						&& Gauge.DrawnCards.All(x => x is CardType.NONE))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.SPIRE) && !Gauge.DrawnCards.Any(x => x is CardType.EWER))
 					{
 						return OriginalHook(AstralDraw);
 					}
