@@ -135,13 +135,14 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Dia);
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+					if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery))
 					{
-						if ((IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery_Save)
-							&& Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3)
+						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery_Save)
+							&& ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
 						{
 							return AfflatusMisery;
 						}
+
 						if (!IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery_Save))
 						{
 							return AfflatusMisery;
@@ -188,20 +189,16 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return PresenceOfMind;
 						}
-
-						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving)
-						{
-							return All.Swiftcast;
-						}
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery))
 					{
-						if ((IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery_Save)
-							&& Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3)
+						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery_Save)
+							&& ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
 						{
 							return AfflatusMisery;
 						}
+
 						if (!IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery_Save))
 						{
 							return AfflatusMisery;
@@ -218,7 +215,13 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Glare4;
 					}
+
+					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast))
+					{
+						return All.Swiftcast;
+					}
 				}
+
 				return actionID;
 			}
 		}

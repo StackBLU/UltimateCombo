@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -128,7 +129,7 @@ namespace UltimateCombo.Combos.PvE
 						return SummonCarbuncle;
 					}
 
-					if (CanWeave(actionID))
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
@@ -140,8 +141,13 @@ namespace UltimateCombo.Combos.PvE
 							return SearingLight;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(OriginalHook(Necrotize))
-							&& Gauge.AetherflowStacks > 0)
+						if (IsEnabled(CustomComboPreset.SMN_ST_LuxSolaris) && ActionReady(LuxSolaris)
+							&& GetBuffRemainingTime(Buffs.RefulgentLux) <= 3)
+						{
+							return LuxSolaris;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_EnergyDrainNecro) && ActionReady(EnergyDrain))
 						{
 							if (Gauge.AetherflowStacks > 0)
 							{
@@ -151,38 +157,35 @@ namespace UltimateCombo.Combos.PvE
 							return EnergyDrain;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(EnergyDrain))
+						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(OriginalHook(Necrotize))
+							&& Gauge.AetherflowStacks > 0)
 						{
-							return EnergyDrain;
+							return OriginalHook(Necrotize);
 						}
 
-						if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse)
-							|| WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
+						if (IsEnabled(CustomComboPreset.SMN_ST_Astral) && ActionReady(OriginalHook(AstralFlow))
+							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
 						{
-							if (ActionReady(OriginalHook(AstralFlow)))
-							{
-								return OriginalHook(AstralFlow);
-							}
+							return OriginalHook(AstralFlow);
 						}
 
-						if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite)))
+						if (HasEffect(Buffs.TitansFavor)
+							&& (WasLastSpell(OriginalHook(SummonTitan)) || WasLastSpell(OriginalHook(TopazRite))))
 						{
-							if (HasEffect(Buffs.TitansFavor))
-							{
-								return OriginalHook(AstralFlow);
-							}
+							return OriginalHook(AstralFlow);
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_RadiantAegis)
-							&& GetRemainingCharges(RadiantAegis) == GetMaxCharges(RadiantAegis))
+						if (IsEnabled(CustomComboPreset.SMN_ST_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
+							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0)
 						{
-							return RadiantAegis;
+							return OriginalHook(EnkindleBahamut);
 						}
 					}
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (OriginalHook(Gemshine) is EmeraldRuin1 or EmeraldRuin2 or EmeraldRuin3 or EmeraldRite)
+						if (OriginalHook(Gemshine) is EmeraldRuin1 or EmeraldRuin2 or EmeraldRuin3 or EmeraldRite
+							&& Gauge.Attunement > 0)
 						{
 							return OriginalHook(Gemshine);
 						}
@@ -191,12 +194,14 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.Swiftcast;
 						}
+
 						return OriginalHook(AstralFlow);
 					}
 
-					if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite)))
+					if (WasLastSpell(OriginalHook(SummonTitan)) || WasLastSpell(OriginalHook(TopazRite)))
 					{
-						if (OriginalHook(Gemshine) is TopazRuin1 or TopazRuin2 or TopazRuin3 or TopazRite)
+						if (OriginalHook(Gemshine) is TopazRuin1 or TopazRuin2 or TopazRuin3 or TopazRite
+							&& Gauge.Attunement > 0)
 						{
 							return OriginalHook(Gemshine);
 						}
@@ -209,7 +214,8 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.IfritsFavor))
 					{
-						if (OriginalHook(Gemshine) is RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite)
+						if (OriginalHook(Gemshine) is RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite
+							&& Gauge.Attunement > 0)
 						{
 							return OriginalHook(Gemshine);
 						}
@@ -220,10 +226,34 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.SMN_ST_SummonElements) && Gauge.AttunmentTimerRemaining == 0
+						&& Gauge.SummonTimerRemaining == 0)
+					{
+						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)
+						{
+							return OriginalHook(SummonGaruda);
+						}
+
+						if (ActionReady(OriginalHook(SummonTitan)) && Gauge.IsTitanReady)
+						{
+							return OriginalHook(SummonTitan);
+						}
+
+						if (ActionReady(OriginalHook(SummonIfrit)) && Gauge.IsIfritReady)
+						{
+							return OriginalHook(SummonIfrit);
+						}
+					}
+
 					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && ActionReady(Ruin4)
 						&& HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
 					{
 						return Ruin4;
+					}
+
+					if (IsEnabled(CustomComboPreset.SMN_ST_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))
+					{
+						return OriginalHook(SummonBahamut);
 					}
 
 					if (ActionReady(OriginalHook(Ruin3)))
@@ -367,8 +397,10 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return OriginalHook(EnkindleBahamut);
 					}
+
 					return SummonBahamut;
 				}
+
 				return actionID;
 			}
 		}

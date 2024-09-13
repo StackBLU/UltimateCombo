@@ -312,7 +312,7 @@ namespace UltimateCombo.Combos.PvE
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Raise;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Egeiro)
+				if (actionID is Egeiro && IsEnabled(CustomComboPreset.SGE_Raise))
 				{
 					if (IsOffCooldown(All.Swiftcast))
 					{

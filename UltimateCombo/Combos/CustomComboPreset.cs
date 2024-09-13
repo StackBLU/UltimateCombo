@@ -1991,20 +1991,32 @@ namespace UltimateCombo.Combos
 		SMN_ST_Astral = 17003,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Ruin IV Mobility", "", SMN.JobID)]
+		[CustomComboInfo("Ruin IV", "", SMN.JobID)]
 		SMN_ST_Ruin4 = 17004,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_ST_Lucid = 17005,
+		[CustomComboInfo("Aethercharge / Dreadwyrm Trance / Summon Bahamut > Summon Phoenix > Summon Solar Bahamut", "", SMN.JobID)]
+		SMN_ST_SummonBahaPhoenix = 17005,
+
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Summon Garuda & Summon Titan & Summon Ifrit", "", SMN.JobID)]
+		SMN_ST_SummonElements = 17006,
+
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Enkindle Bahamut > Enkindle Phoenix > Enkindle Solar Bahamut", "", SMN.JobID)]
+		SMN_ST_Enkindle = 17007,
+
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Searing Light > Searing Flash", "", SMN.JobID)]
+		SMN_ST_SearingLight = 17008,
+
+		[ParentCombo(SMN_ST_DPS)]
+		[CustomComboInfo("Lux Solaris", "", SMN.JobID)]
+		SMN_ST_LuxSolaris = 17009,
 
 		[ParentCombo(SMN_ST_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_ST_SearingLight = 17006,
-
-		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_ST_RadiantAegis = 17007,
+		SMN_ST_Lucid = 17010,
 
 		#endregion
 

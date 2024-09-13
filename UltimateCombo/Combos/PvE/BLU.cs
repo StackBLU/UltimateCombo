@@ -127,7 +127,7 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				BLU_Lucid = new("BLU_Lucid", 7500),
-				BLU_ManaGain = new("BLU_ManaGain", 7500),
+				BLU_ManaGain = new("BLU_ManaGain", 2000),
 				BLU_TreasurePomcure = new("BLU_TreasurePomcure", 75),
 				BLU_TreasureGobskin = new("BLU_TreasureGobskin", 5);
 		}
@@ -549,7 +549,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return MightyGuard;
 					}
-					if (!HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil))
+					if (!HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil))
 					{
 						return ToadOil;
 					}

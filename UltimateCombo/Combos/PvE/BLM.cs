@@ -1,10 +1,10 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Collections.Generic;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -254,8 +254,8 @@ namespace UltimateCombo.Combos.PvE
 							return Fire3;
 						}
 
-						if ((ActionReady(Fire) && LocalPlayer.CurrentMp >= 1600 && Gauge.InAstralFire)
-							|| (LocalPlayer.CurrentMp >= 800 && !Gauge.InAstralFire))
+						if (ActionReady(Fire) && ((LocalPlayer.CurrentMp >= 1600 && Gauge.InAstralFire)
+							|| (LocalPlayer.CurrentMp >= 800 && !Gauge.InAstralFire)))
 						{
 							return Fire;
 						}
@@ -300,9 +300,9 @@ namespace UltimateCombo.Combos.PvE
 						return Blizzard4;
 					}
 
-					if ((ActionReady(Blizzard3) && Gauge.InAstralFire && LocalPlayer.CurrentMp == 0)
+					if (ActionReady(Blizzard3) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp == 0)
 						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800
-						&& !WasLastAbility(Manafont)))
+						&& !WasLastAbility(Manafont))))
 					{
 						return Blizzard3;
 					}
@@ -312,12 +312,13 @@ namespace UltimateCombo.Combos.PvE
 						return Fire4;
 					}
 
-					if ((ActionReady(Fire3) && !Gauge.InAstralFire && !Gauge.InUmbralIce)
-						|| (Gauge.InUmbralIce && LocalPlayer.CurrentMp == 10000) || WasLastSpell(Blizzard4))
+					if (ActionReady(Fire3) && ((!Gauge.InAstralFire && !Gauge.InUmbralIce)
+						|| (Gauge.InUmbralIce && LocalPlayer.CurrentMp == 10000) || WasLastSpell(Blizzard4)))
 					{
 						return Fire3;
 					}
 				}
+
 				return actionID;
 			}
 		}

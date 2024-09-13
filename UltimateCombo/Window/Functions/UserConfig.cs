@@ -1171,12 +1171,12 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.AST_ST_DPS_AutoDraw && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_OverwriteCards, "Ignore Arrow/Spire/Bole/Ewer", "");
+				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
 			}
 
 			if (preset is CustomComboPreset.AST_AoE_DPS_AutoDraw && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_DPS_OverwriteCards, "Ignore Arrow/Spire/Bole/Ewer", "");
+				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
 			}
 
 			#endregion

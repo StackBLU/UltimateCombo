@@ -123,8 +123,8 @@ namespace UltimateCombo.Combos.PvE
 				AST_ST_DPS_Lucid = new("AST_ST_DPS_Lucid", 7500),
 				AST_AoE_DPS_Lucid = new("AST_AoE_DPS_Lucid", 7500);
 			public static UserBool
-				AST_ST_DPS_OverwriteCards = new("AST_ST_DPS_OverwriteCards"),
-				AST_AoE_DPS_OverwriteCards = new("AST_AoE_DPS_OverwriteCards");
+				AST_ST_DPS_UseDefenseCards = new("AST_ST_DPS_UseDefenseCards"),
+				AST_AoE_DPS_UseDefenseCards = new("AST_AoE_DPS_UseDefenseCards");
 		}
 
 		internal class AST_ST_DPS : CustomComboClass
@@ -183,9 +183,23 @@ namespace UltimateCombo.Combos.PvE
 							return SunSign;
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
+							&& Config.AST_ST_DPS_UseDefenseCards
+							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
+						{
+							return OriginalHook(Play2);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
+							&& Config.AST_ST_DPS_UseDefenseCards
+							&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
+						{
+							return OriginalHook(Play3);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
 							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
-							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && Config.AST_ST_DPS_OverwriteCards)))
+							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_ST_DPS_UseDefenseCards)))
 						{
 							if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
 								|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
@@ -271,15 +285,30 @@ namespace UltimateCombo.Combos.PvE
 							return SunSign;
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
+							&& Config.AST_AoE_DPS_UseDefenseCards
+							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
+						{
+							return OriginalHook(Play2);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
+							&& Config.AST_AoE_DPS_UseDefenseCards
+							&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
+						{
+							return OriginalHook(Play3);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
 							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
-							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && Config.AST_AoE_DPS_OverwriteCards)))
+							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_AoE_DPS_UseDefenseCards)))
 						{
 							if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
 								|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
 							{
 								return OriginalHook(MinorArcana);
 							}
+
 							return OriginalHook(AstralDraw);
 						}
 
@@ -338,6 +367,11 @@ namespace UltimateCombo.Combos.PvE
 						return NeutralSect;
 					}
 
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched))
+					{
+						return SunSign;
+					}
+
 					if (ActionReady(Helios)
 						&& (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
 						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 5
@@ -345,11 +379,6 @@ namespace UltimateCombo.Combos.PvE
 						|| HasEffect(Buffs.Horoscope)))
 					{
 						return OriginalHook(AspectedHelios);
-					}
-
-					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched))
-					{
-						return SunSign;
 					}
 
 					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_Helios))
