@@ -7,7 +7,7 @@
 
 <p align="center"> 
   <a href="https://discord.gg/yPxwkdqhHs" alt="Discord">
-    <img src="https://img.shields.io/discord/1277684496509964403?style=for-the-badge&logo=Discord&logoColor=ffffff&logoSize=auto&color=5865F2" /></a>
+    <img src="https://img.shields.io/discord/1277684496509964403?style=for-the-badge&logo=Discord&logoColor=ffffff&label=&logoSize=auto&color=5865F2" /></a>
 </p>
 
 <h2 align="center">Features</h2>
