@@ -124,7 +124,7 @@ namespace UltimateCombo.Combos.PvE
 						return All.LucidDreaming;
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_Reminder) && !HasPetPresent())
+					if (IsEnabled(CustomComboPreset.SMN_ST_Reminder) && !HasPetPresent())
 					{
 						return SummonCarbuncle;
 					}
@@ -141,13 +141,8 @@ namespace UltimateCombo.Combos.PvE
 							return SearingLight;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_LuxSolaris) && ActionReady(LuxSolaris)
-							&& GetBuffRemainingTime(Buffs.RefulgentLux) <= 3)
-						{
-							return LuxSolaris;
-						}
-
-						if (IsEnabled(CustomComboPreset.SMN_EnergyDrainNecro) && ActionReady(EnergyDrain))
+						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain)
+							&& (ActionReady(EnergyDrain) || Gauge.AetherflowStacks > 0))
 						{
 							if (Gauge.AetherflowStacks > 0)
 							{
@@ -157,39 +152,29 @@ namespace UltimateCombo.Combos.PvE
 							return EnergyDrain;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain) && ActionReady(OriginalHook(Necrotize))
-							&& Gauge.AetherflowStacks > 0)
-						{
-							return OriginalHook(Necrotize);
-						}
-
 						if (IsEnabled(CustomComboPreset.SMN_ST_Astral) && ActionReady(OriginalHook(AstralFlow))
-							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
-						{
-							return OriginalHook(AstralFlow);
-						}
-
-						if (HasEffect(Buffs.TitansFavor)
-							&& (WasLastSpell(OriginalHook(SummonTitan)) || WasLastSpell(OriginalHook(TopazRite))))
+							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)
+							|| HasEffect(Buffs.TitansFavor)))
 						{
 							return OriginalHook(AstralFlow);
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_ST_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
-							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0)
+							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0
+							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
 						{
 							return OriginalHook(EnkindleBahamut);
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_ST_Lucid) && ActionReady(All.LucidDreaming)
+							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SMN_ST_Lucid))
+						{
+							return All.LucidDreaming;
 						}
 					}
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (OriginalHook(Gemshine) is EmeraldRuin1 or EmeraldRuin2 or EmeraldRuin3 or EmeraldRite
-							&& Gauge.Attunement > 0)
-						{
-							return OriginalHook(Gemshine);
-						}
-
 						if (ActionReady(All.Swiftcast))
 						{
 							return All.Swiftcast;
@@ -198,32 +183,19 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
-					if (WasLastSpell(OriginalHook(SummonTitan)) || WasLastSpell(OriginalHook(TopazRite)))
-					{
-						if (OriginalHook(Gemshine) is TopazRuin1 or TopazRuin2 or TopazRuin3 or TopazRite
-							&& Gauge.Attunement > 0)
-						{
-							return OriginalHook(Gemshine);
-						}
-					}
-
 					if (lastComboMove is CrimsonCyclone)
 					{
 						return OriginalHook(AstralFlow);
 					}
 
-					if (HasEffect(Buffs.IfritsFavor))
+					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
 					{
-						if (OriginalHook(Gemshine) is RubyRuin1 or RubyRuin2 or RubyRuin3 or RubyRite
-							&& Gauge.Attunement > 0)
-						{
-							return OriginalHook(Gemshine);
-						}
+						return OriginalHook(AstralFlow);
+					}
 
-						if (ActionReady(CrimsonCyclone))
-						{
-							return OriginalHook(AstralFlow);
-						}
+					if (Gauge.AttunmentTimerRemaining > 0 && Gauge.Attunement > 0)
+					{
+						return OriginalHook(Gemshine);
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_ST_SummonElements) && Gauge.AttunmentTimerRemaining == 0
@@ -279,75 +251,97 @@ namespace UltimateCombo.Combos.PvE
 						return All.LucidDreaming;
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_Reminder) && !HasPetPresent())
+					if (IsEnabled(CustomComboPreset.SMN_AoE_Reminder) && !HasPetPresent())
 					{
 						return SummonCarbuncle;
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_AoE_EnergySiphon) && ActionReady(EnergyDrain) && CanWeave(actionID))
+					if (CanWeave(actionID))
 					{
-						return EnergySiphon;
-					}
+						if (IsEnabled(CustomComboPreset.SMN_AoE_SearingLight) && HasEffect(Buffs.RubysGlimmer))
+						{
+							return SearingFlash;
+						}
 
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Painflare) && ActionReady(Painflare)
-						&& CanWeave(actionID) && Gauge.HasAetherflowStacks)
-					{
-						return Painflare;
-					}
+						if (IsEnabled(CustomComboPreset.SMN_AoE_SearingLight) && ActionReady(SearingLight))
+						{
+							return SearingLight;
+						}
 
-					if (WasLastSpell(OriginalHook(SummonBahamut)) || WasLastSpell(AstralImpulse)
-						|| WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse))
-					{
-						if (CanWeave(actionID) && IsOffCooldown(OriginalHook(AstralFlow)))
+						if (IsEnabled(CustomComboPreset.SMN_AoE_EnergySiphon)
+							&& (ActionReady(EnergySiphon) || Gauge.AetherflowStacks > 0))
+						{
+							if (Gauge.AetherflowStacks > 0)
+							{
+								return OriginalHook(Painflare);
+							}
+
+							return EnergySiphon;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_AoE_Astral) && ActionReady(OriginalHook(AstralFlow))
+							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)
+							|| HasEffect(Buffs.TitansFavor)))
 						{
 							return OriginalHook(AstralFlow);
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_AoE_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
+							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0
+							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
+						{
+							return OriginalHook(EnkindleBahamut);
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_AoE_Lucid) && ActionReady(All.LucidDreaming)
+							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SMN_ST_Lucid))
+						{
+							return All.LucidDreaming;
 						}
 					}
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (OriginalHook(PreciousBrilliance) is EmeraldOutburst or EmeraldDisaster or EmeraldCatastrophe)
-						{
-							return OriginalHook(PreciousBrilliance);
-						}
-
 						if (ActionReady(All.Swiftcast))
 						{
 							return All.Swiftcast;
 						}
+
 						return OriginalHook(AstralFlow);
-					}
-
-					if (WasLastSpell(OriginalHook(SummonTitan2)) || WasLastSpell(OriginalHook(TopazRite))
-						|| WasLastSpell(OriginalHook(TopazCatastrophe)))
-					{
-						if (CanWeave(actionID) && HasEffect(Buffs.TitansFavor))
-						{
-							return OriginalHook(AstralFlow);
-						}
-
-						if (OriginalHook(PreciousBrilliance) is TopazOutburst or TopazDisaster or TopazCatastrophe)
-						{
-							return OriginalHook(PreciousBrilliance);
-						}
-					}
-
-					if (HasEffect(Buffs.IfritsFavor))
-					{
-						if (OriginalHook(PreciousBrilliance) is RubyOutburst or RubyDisaster or RubyCatastrophe)
-						{
-							return OriginalHook(PreciousBrilliance);
-						}
-
-						if (ActionReady(CrimsonCyclone))
-						{
-							return OriginalHook(AstralFlow);
-						}
 					}
 
 					if (lastComboMove is CrimsonCyclone)
 					{
 						return OriginalHook(AstralFlow);
+					}
+
+					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
+					{
+						return OriginalHook(AstralFlow);
+					}
+
+					if (Gauge.AttunmentTimerRemaining > 0 && Gauge.Attunement > 0)
+					{
+						return OriginalHook(PreciousBrilliance);
+					}
+
+					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonElements) && Gauge.AttunmentTimerRemaining == 0
+						&& Gauge.SummonTimerRemaining == 0)
+					{
+						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)
+						{
+							return OriginalHook(SummonGaruda);
+						}
+
+						if (ActionReady(OriginalHook(SummonTitan)) && Gauge.IsTitanReady)
+						{
+							return OriginalHook(SummonTitan);
+						}
+
+						if (ActionReady(OriginalHook(SummonIfrit)) && Gauge.IsIfritReady)
+						{
+							return OriginalHook(SummonIfrit);
+						}
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && ActionReady(Ruin4)
@@ -356,22 +350,28 @@ namespace UltimateCombo.Combos.PvE
 						return Ruin4;
 					}
 
+					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))
+					{
+						return OriginalHook(SummonBahamut);
+					}
+
 					if (ActionReady(OriginalHook(Tridisaster)))
 					{
 						return OriginalHook(Tridisaster);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class SMN_EnergyDrainNecro : CustomComboClass
+		internal class SMN_EnergyDrain : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMN_EnergyDrainNecro;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMN_EnergyDrain;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is EnergyDrain or Fester or Necrotize) && IsEnabled(CustomComboPreset.SMN_EnergyDrainNecro))
+				if ((actionID is EnergyDrain or Fester or Necrotize) && IsEnabled(CustomComboPreset.SMN_EnergyDrain))
 				{
 					if (Gauge.AetherflowStacks > 0)
 					{
@@ -379,6 +379,26 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					return EnergyDrain;
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SMN_EnergySiphon : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMN_EnergySiphon;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is EnergySiphon or Painflare) && IsEnabled(CustomComboPreset.SMN_EnergySiphon))
+				{
+					if (Gauge.AetherflowStacks > 0)
+					{
+						return Painflare;
+					}
+
+					return EnergySiphon;
 				}
 
 				return actionID;
@@ -412,13 +432,14 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (actionID is Resurrection && IsEnabled(CustomComboPreset.SMN_Raise))
 				{
-					if (IsOffCooldown(All.Swiftcast))
+					if (ActionReady(All.Swiftcast))
 					{
 						return All.Swiftcast;
 					}
 
 					return Resurrection;
 				}
+
 				return actionID;
 			}
 		}

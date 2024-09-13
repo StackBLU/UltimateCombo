@@ -1979,7 +1979,7 @@ namespace UltimateCombo.Combos
 		SMN_ST_DPS = 17000,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Energy Drain", "", SMN.JobID)]
+		[CustomComboInfo("Energy Drain > Fester / Necrotize", "", SMN.JobID)]
 		SMN_ST_EnergyDrain = 17001,
 
 		[ParentCombo(SMN_ST_DPS)]
@@ -2011,12 +2011,12 @@ namespace UltimateCombo.Combos
 		SMN_ST_SearingLight = 17008,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Lux Solaris", "", SMN.JobID)]
-		SMN_ST_LuxSolaris = 17009,
+		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
+		SMN_ST_Lucid = 17009,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_ST_Lucid = 17010,
+		[CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
+		SMN_ST_Reminder = 17010,
 
 		#endregion
 
@@ -2027,28 +2027,44 @@ namespace UltimateCombo.Combos
 		SMN_AoE_DPS = 17020,
 
 		[ParentCombo(SMN_AoE_DPS)]
-		[CustomComboInfo("Energy Siphon", "", SMN.JobID)]
+		[CustomComboInfo("Energy Siphon > Painflare", "", SMN.JobID)]
 		SMN_AoE_EnergySiphon = 17021,
 
 		[ParentCombo(SMN_AoE_DPS)]
-		[CustomComboInfo("Pain Flare", "", SMN.JobID)]
-		SMN_AoE_Painflare = 17022,
-
-		[ParentCombo(SMN_AoE_DPS)]
 		[CustomComboInfo("Precious Brilliance", "", SMN.JobID)]
-		SMN_AoE_PreciousBrilliance = 17023,
+		SMN_AoE_Gemshine = 17022,
 
 		[ParentCombo(SMN_AoE_DPS)]
 		[CustomComboInfo("Astral Flow", "", SMN.JobID)]
-		SMN_AoE_Astral = 17024,
+		SMN_AoE_Astral = 17023,
 
 		[ParentCombo(SMN_AoE_DPS)]
-		[CustomComboInfo("Ruin IV Mobility", "", SMN.JobID)]
-		SMN_AoE_Ruin4 = 17025,
+		[CustomComboInfo("Ruin IV", "", SMN.JobID)]
+		SMN_AoE_Ruin4 = 17024,
 
 		[ParentCombo(SMN_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SCH.JobID)]
-		SMN_AoE_Lucid = 17026,
+		[CustomComboInfo("Aethercharge / Dreadwyrm Trance / Summon Bahamut > Summon Phoenix > Summon Solar Bahamut", "", SMN.JobID)]
+		SMN_AoE_SummonBahaPhoenix = 17025,
+
+		[ParentCombo(SMN_AoE_DPS)]
+		[CustomComboInfo("Summon Garuda & Summon Titan & Summon Ifrit", "", SMN.JobID)]
+		SMN_AoE_SummonElements = 17026,
+
+		[ParentCombo(SMN_AoE_DPS)]
+		[CustomComboInfo("Enkindle Bahamut > Enkindle Phoenix > Enkindle Solar Bahamut", "", SMN.JobID)]
+		SMN_AoE_Enkindle = 17027,
+
+		[ParentCombo(SMN_AoE_DPS)]
+		[CustomComboInfo("Searing Light > Searing Flash", "", SMN.JobID)]
+		SMN_AoE_SearingLight = 17028,
+
+		[ParentCombo(SMN_AoE_DPS)]
+		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
+		SMN_AoE_Lucid = 17029,
+
+		[ParentCombo(SMN_AoE_DPS)]
+		[CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
+		SMN_AoE_Reminder = 17030,
 
 		#endregion
 
@@ -2056,19 +2072,19 @@ namespace UltimateCombo.Combos
 
 		[ReplaceSkill(SMN.EnergyDrain, SMN.Fester, SMN.Necrotize)]
 		[CustomComboInfo("Energy Drain > Fester / Necrotize", "", SMN.JobID)]
-		SMN_EnergyDrainNecro = 17040,
+		SMN_EnergyDrain = 17040,
+
+		[ReplaceSkill(SMN.EnergySiphon, SMN.Painflare)]
+		[CustomComboInfo("Energy Siphon > Painflare", "", SMN.JobID)]
+		SMN_EnergySiphon = 17041,
 
 		[ReplaceSkill(SMN.SummonBahamut, SMN.EnkindleBahamut, SMN.SummonPhoenix, SMN.EnkindlePhoenix, SMN.SummonSolarBahamut, SMN.EnkindleSolarBahamut)]
 		[CustomComboInfo("Summon > Enkindle", "", SMN.JobID)]
-		SMN_Enkindle = 17041,
+		SMN_Enkindle = 17042,
 
 		[ReplaceSkill(SMN.Resurrection)]
 		[CustomComboInfo("Swiftcast > Raise", "", SMN.JobID)]
-		SMN_Raise = 17042,
-
-		[ReplaceSkill(SMN.Ruin, SMN.Ruin2, SMN.Ruin3)]
-		[CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
-		SMN_Reminder = 17043,
+		SMN_Raise = 17043,
 
 		#endregion
 

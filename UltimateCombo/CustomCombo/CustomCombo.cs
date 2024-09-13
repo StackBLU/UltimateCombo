@@ -1,4 +1,6 @@
-﻿using UltimateCombo.ComboHelper.Functions;
+﻿using ECommons.DalamudServices;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 
@@ -21,11 +23,11 @@ namespace UltimateCombo.CustomCombo
 		{
 			newActionID = 0;
 
-			/*if (!Svc.ClientState.IsPvP && ActionManager.Instance()->QueuedActionType == ActionType.Action
+			if (!Svc.ClientState.IsPvP && ActionManager.Instance()->QueuedActionType == ActionType.Action
 				&& ActionManager.Instance()->QueuedActionId != actionID)
 			{
 				return false;
-			}*/
+			}
 
 			if (!IsEnabled(Preset))
 			{
