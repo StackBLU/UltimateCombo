@@ -115,18 +115,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
 					{
-						if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DNC_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
 						{
 							return Devilment;
@@ -152,12 +140,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return FanDance1;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.Improvisation))
@@ -287,18 +269,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
 					{
-						if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DNC_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.DNC_AoE_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
 						{
 							return Devilment;
@@ -324,12 +294,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return FanDance2;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.Improvisation))

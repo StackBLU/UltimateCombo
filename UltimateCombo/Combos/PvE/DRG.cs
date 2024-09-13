@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -92,18 +91,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
-						if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRG_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge)
 							&& (HasEffect(Buffs.LanceCharge) || GetMaxCharges(LifeSurge) == GetRemainingCharges(LifeSurge)) && !HasEffect(Buffs.LifeSurge)
 							&& (((WasLastWeaponskill(WheelingThrust) || WasLastWeaponskill(FangAndClaw)) && LevelChecked(Drakesbane))
@@ -170,12 +157,6 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_Variant_Cure))
-					{
-						return Variant.VariantCure;
-					}
-
 					if (comboTime > 0)
 					{
 						if (lastComboMove is TrueThrust or RaidenThrust)
@@ -231,18 +212,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.DRG_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRG_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.DRG_AoE_LanceCharge) && ActionReady(LanceCharge))
 						{
 							return LanceCharge;
@@ -296,12 +265,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return WyrmwindThrust;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRG_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (comboTime > 0)

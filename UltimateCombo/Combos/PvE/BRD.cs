@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -94,18 +93,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
 					{
-						if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && InCombat())
 						{
 							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ARMY || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 12000)
@@ -168,12 +155,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Bloodletter);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.BRD_ST_Apex) && HasEffect(Buffs.BlastArrowReady))
@@ -245,18 +226,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.BRD_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Songs) && InCombat())
 						{
 							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ARMY || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 12000)
@@ -318,12 +287,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(RainOfDeath);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.BRD_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BRD_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.BRD_AoE_Apex) && HasEffect(Buffs.BlastArrowReady))

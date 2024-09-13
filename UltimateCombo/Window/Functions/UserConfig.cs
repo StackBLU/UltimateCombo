@@ -1148,6 +1148,16 @@ namespace UltimateCombo.Window.Functions
 		}
 	}
 
+	public static class SliderIncrements
+	{
+		public const uint
+			Ones = 1,
+			Fives = 5,
+			Tens = 10,
+			Hundreds = 100,
+			Thousands = 1000;
+	}
+
 	public static class UserConfigItems
 	{
 		internal static void Draw(CustomComboPreset preset, bool enabled)
@@ -1156,6 +1166,15 @@ namespace UltimateCombo.Window.Functions
 			{
 				return;
 			}
+
+			#region All
+
+			if (preset is CustomComboPreset.All_Variant_Cure && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, All.Config.All_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
 
 			#region ASTROLOGIAN
 
@@ -1183,14 +1202,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region BLACK MAGE
 
-			#region Variant
 
-			if (preset is CustomComboPreset.BLM_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BLM.Config.BLM_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1220,27 +1232,13 @@ namespace UltimateCombo.Window.Functions
 
 			#region BARD
 
-			#region Variant
 
-			if (preset is CustomComboPreset.BRD_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BRD.Config.BRD_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
 			#region DANCER
 
-			#region Variant
 
-			if (preset is CustomComboPreset.DNC_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, DNC.Config.DNC_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1281,27 +1279,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
 
-			#region Variant
-
-			if (preset is CustomComboPreset.DRK_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
-
 			#endregion
 
 			#region DRAGOON
 
-			#region Variant
 
-			if (preset is CustomComboPreset.DRG_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, DRG.Config.DRG_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1316,15 +1298,6 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(0, 100, GNB.Config.GNB_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
-
-			#region Variant
-
-			if (preset is CustomComboPreset.GNB_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, GNB.Config.GNB_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1345,40 +1318,15 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Hypercharge, "Heat Threshold", 150, SliderIncrements.Fives);
 			}
 
-			#region Variant
-
-			if (preset is CustomComboPreset.MCH_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
-
 			#endregion
 
 			#region MONK
 
-			#region Variant
 
-			if (preset is CustomComboPreset.MNK_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, MNK.Config.MNK_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
 			#region NINJA
-
-			#region Variant
-
-			if (preset is CustomComboPreset.NIN_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, NIN.Config.NIN_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#region PvP
 
@@ -1407,15 +1355,6 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 			}
-
-			#region Variant
-
-			if (preset is CustomComboPreset.PCT_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, PCT.Config.PCT_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1451,27 +1390,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
 
-			#region Variant
-
-			if (preset is CustomComboPreset.PLD_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
-
 			#endregion
 
 			#region REAPER
 
-			#region Variant
 
-			if (preset is CustomComboPreset.RPR_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, RPR.Config.RPR_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1486,15 +1409,6 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(1000, 10000, RDM.Config.RDM_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 			}
-
-			#region Variant
-
-			if (preset is CustomComboPreset.RDM_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, RDM.Config.RDM_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1534,14 +1448,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region SAMURAI
 
-			#region Variant
 
-			if (preset is CustomComboPreset.SAM_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, SAM.Config.SAM_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1571,27 +1478,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(1000, 10000, SMN.Config.SMN_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
-			#region Variant
-
-			if (preset is CustomComboPreset.SMN_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, SMN.Config.SMN_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
-
 			#endregion
 
 			#region VIPER
 
-			#region Variant
 
-			if (preset is CustomComboPreset.VPR_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, VPR.Config.VPR_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1621,15 +1512,6 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
-
-			#region Variant
-
-			if (preset is CustomComboPreset.WAR_Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
 
 			#endregion
 
@@ -1685,15 +1567,5 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 		}
-	}
-
-	public static class SliderIncrements
-	{
-		public const uint
-			Ones = 1,
-			Fives = 5,
-			Tens = 10,
-			Hundreds = 100,
-			Thousands = 1000;
 	}
 }

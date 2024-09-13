@@ -2,9 +2,9 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Concurrent;
+using UltimateCombo.Services;
 using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
 
 namespace UltimateCombo.Data
@@ -98,14 +98,6 @@ namespace UltimateCombo.Data
 			};
 
 			return cooldownCache[actionID] = data;
-		}
-
-		/// <summary> Get the maximum number of charges for an action. </summary>
-		/// <param name="actionID"> Action ID to check. </param>
-		/// <returns> Max number of charges at current level. </returns>
-		internal unsafe ushort GetMaxCharges(uint actionID)
-		{
-			return GetCooldown(actionID).MaxCharges;
 		}
 
 		/// <summary> Get the resource cost of an action. </summary>

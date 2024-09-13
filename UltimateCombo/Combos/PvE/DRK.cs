@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -87,18 +86,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
-							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
-						{
-							return Variant.VariantSpiritDart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
 							&& Gauge.DarksideTimeRemaining == 0)
 						{
@@ -146,12 +133,6 @@ namespace UltimateCombo.Combos.PvE
 								return Oblation;
 							}
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn) && ActionWatching.NumberOfGcdsUsed >= 2)
@@ -207,18 +188,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.DRK_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
-							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
-						{
-							return Variant.VariantSpiritDart;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if ((IsEnabled(CustomComboPreset.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
 							&& LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)) || Gauge.HasDarkArts)
 						{
@@ -251,12 +220,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Oblation;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.DRK_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.DRK_AoE_LivingShadow) && HasEffect(Buffs.Scorn))

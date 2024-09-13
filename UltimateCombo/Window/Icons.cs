@@ -30,7 +30,7 @@ namespace UltimateCombo.Window
 
 			if (iconNum == 62100)
 			{
-				iconNum = 62145;
+				iconNum = 62146;
 			}
 
 			IDalamudTextureWrap? icon = GetTextureFromIconId(iconNum);

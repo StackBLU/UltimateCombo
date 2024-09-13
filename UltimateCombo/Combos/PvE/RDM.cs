@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -124,18 +123,6 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedRedoublement) || (WasLastWeaponskill(EnchantedRedoublement)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
 							&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
 						{
@@ -197,12 +184,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (ActionReady(Resolution) && WasLastSpell(Scorch))
@@ -322,18 +303,6 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedMoulinetTrois) || (WasLastWeaponskill(EnchantedMoulinetTrois)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (IsEnabled(CustomComboPreset.RDM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Swift) && ActionReady(All.Swiftcast)
 								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
 						{
@@ -385,12 +354,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.RDM_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.RDM_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (ActionReady(Resolution) && WasLastSpell(Scorch))

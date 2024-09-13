@@ -7,7 +7,12 @@ namespace UltimateCombo.Combos.PvE.Content
 		public const uint
 			VariantUltimatum = 29730,
 			VariantRaise = 29731,
-			VariantRaise2 = 29734;
+			VariantRaise2 = 29734,
+
+			//Don't use these for logic - they are just for the ReplaceSkill icon
+			VariantCure_Image = 29729,
+			VariantSpiritDart_Image = 29732,
+			VariantRampart_Image = 29733;
 
 		//1069 = The Sil'dihn Subterrane
 		//1137 = Mount Rokkon

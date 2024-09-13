@@ -1,17 +1,16 @@
 ﻿using Dalamud.Utility;
-using UltimateCombo.Attributes;
-using UltimateCombo.Combos;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UltimateCombo.Attributes;
+using UltimateCombo.Combos;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Core
 {
 	internal static class PresetStorage
 	{
 		private static HashSet<CustomComboPreset>? PvPCombos;
-		private static HashSet<CustomComboPreset>? VariantCombos;
 		private static HashSet<CustomComboPreset>? BozjaCombos;
 		private static HashSet<CustomComboPreset>? EurekaCombos;
 		private static Dictionary<CustomComboPreset, CustomComboPreset[]>? ConflictingCombos;
@@ -21,10 +20,6 @@ namespace UltimateCombo.Core
 		{
 			PvPCombos = Enum.GetValues<CustomComboPreset>()
 				.Where(preset => preset.GetAttribute<PvPCustomComboAttribute>() != default)
-				.ToHashSet();
-
-			VariantCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<VariantAttribute>() != default)
 				.ToHashSet();
 
 			BozjaCombos = Enum.GetValues<CustomComboPreset>()
@@ -55,11 +50,6 @@ namespace UltimateCombo.Core
 		public static bool IsPvP(CustomComboPreset preset)
 		{
 			return PvPCombos.Contains(preset);
-		}
-
-		public static bool IsVariant(CustomComboPreset preset)
-		{
-			return VariantCombos.Contains(preset);
 		}
 
 		public static bool IsBozja(CustomComboPreset preset)

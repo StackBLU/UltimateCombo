@@ -41,7 +41,7 @@ namespace UltimateCombo.CustomCombo
 				classJobID = FSH.JobID;
 			}
 
-			if (JobID != ADV.JobID && JobID != classJobID && ClassID != classJobID)
+			if (JobID != All.JobID && JobID != classJobID && ClassID != classJobID)
 			{
 				return false;
 			}

@@ -3,25 +3,23 @@ using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System.Linq;
+using System.Numerics;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
 using UltimateCombo.Window.Functions;
-using System.Linq;
-using System.Numerics;
 
 namespace UltimateCombo.Window.Tabs
 {
 	internal class PvPFeatures : ConfigWindow
 	{
+		internal static bool HasToOpenJob = true;
 		internal static string OpenJob = string.Empty;
 
 		internal static new void Draw()
 		{
-			PvEFeatures.HasToOpenJob = true;
-
 			int i = 1;
-
 			float indentwidth = 12f.Scale();
 			float indentwidth2 = indentwidth + 42f.Scale();
 
@@ -33,18 +31,26 @@ namespace UltimateCombo.Window.Tabs
 					string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
 					byte id = groupedPresets[jobName].First().Info.JobID;
 					IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
-					using ImRaii.IEndObject disabled = ImRaii.Disabled(DisabledJobsPVP.Any(x => x == id));
-					if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
+
+					if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
+						icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
 					{
 						OpenJob = jobName;
 					}
+
 					ImGui.SameLine(indentwidth);
+
 					if (icon != null)
 					{
 						ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
 						ImGui.SameLine(indentwidth2);
 					}
-					ImGui.Text($"{header}");
+
+					ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
+					ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
+					_ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
+					ImGui.PopStyleColor();
+					ImGui.PopStyleVar();
 				}
 			}
 			else
@@ -52,7 +58,8 @@ namespace UltimateCombo.Window.Tabs
 				byte id = groupedPresets[OpenJob].First().Info.JobID;
 				IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-				using (ImRaii.IEndObject headingTab = ImRaii.Child("PvPHeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
+				using (ImRaii.IEndObject headingTab = ImRaii.Child("PvPHeadingTab",
+					new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
 				{
 					if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
 					{

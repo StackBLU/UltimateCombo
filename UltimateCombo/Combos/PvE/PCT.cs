@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -119,18 +118,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.PCT_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn
 							&& ActionWatching.NumberOfGcdsUsed >= 3)
 						{
@@ -197,12 +184,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.PCT_ST_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
@@ -309,18 +290,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.PCT_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.PCT_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn
 							&& ActionWatching.NumberOfGcdsUsed >= 3)
 						{
@@ -387,12 +356,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.PCT_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PCT_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.PCT_AoE_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0

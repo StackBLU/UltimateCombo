@@ -1,4 +1,6 @@
-﻿using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
+using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -64,105 +66,160 @@ namespace UltimateCombo.Combos.PvE
 				Feint = 1195;
 		}
 
-		internal class ALL_Tank_Reprisal : CustomComboClass
+		public static class Config
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Tank_Reprisal;
+			public static UserInt
+				All_Variant_Cure = new("All_Variant_Cure", 50);
+		}
+
+		internal class All_Tank_Reprisal : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Tank_Reprisal;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Reprisal && IsEnabled(CustomComboPreset.ALL_Tank_Reprisal))
+				if (actionID is Reprisal && IsEnabled(CustomComboPreset.All_Tank_Reprisal))
 				{
 					if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
 					{
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class ALL_Caster_Addle : CustomComboClass
+		internal class All_Caster_Addle : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Caster_Addle;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Caster_Addle;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Addle && IsEnabled(CustomComboPreset.ALL_Caster_Addle))
+				if (actionID is Addle && IsEnabled(CustomComboPreset.All_Caster_Addle))
 				{
 					if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
 					{
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class ALL_Melee_Feint : CustomComboClass
+		internal class All_Melee_Feint : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_Feint;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Melee_Feint;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Feint && IsEnabled(CustomComboPreset.ALL_Melee_Feint))
+				if (actionID is Feint && IsEnabled(CustomComboPreset.All_Melee_Feint))
 				{
 					if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
 					{
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class ALL_Melee_TrueNorth : CustomComboClass
+		internal class All_Melee_TrueNorth : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Melee_TrueNorth;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Melee_TrueNorth;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is TrueNorth && IsEnabled(CustomComboPreset.ALL_Melee_TrueNorth))
+				if (actionID is TrueNorth && IsEnabled(CustomComboPreset.All_Melee_TrueNorth))
 				{
 					if (HasEffect(Buffs.TrueNorth))
 					{
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class ALL_Ranged_Mitigation : CustomComboClass
+		internal class All_Ranged_Mitigation : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Ranged_Mitigation;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Ranged_Mitigation;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba) && IsEnabled(CustomComboPreset.ALL_Ranged_Mitigation))
+				if ((actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba) && IsEnabled(CustomComboPreset.All_Ranged_Mitigation))
 				{
-					if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician) || HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
+					if ((HasEffectAny(BRD.Buffs.Troubadour) || HasEffectAny(MCH.Buffs.Tactician)
+						|| HasEffectAny(DNC.Buffs.ShieldSamba)) && IsOffCooldown(actionID))
 					{
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
 
-		internal class ALL_Raise_Protection : CustomComboClass
+		internal class All_Raise_Protection : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.ALL_Raise_Protection;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Raise_Protection;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro or SMN.Resurrection or RDM.Verraise or BLU.AngelWhisper)
-					&& IsEnabled(CustomComboPreset.ALL_Raise_Protection))
+				if ((actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro
+					or SMN.Resurrection or RDM.Verraise or BLU.AngelWhisper)
+					&& IsEnabled(CustomComboPreset.All_Raise_Protection))
 				{
 					if (TargetHasEffectAny(Buffs.Raise1) || TargetHasEffectAny(Buffs.Raise2))
 					{
 						return OriginalHook(11);
 					}
 				}
+
+				return actionID;
+			}
+		}
+
+		internal class All_Variant : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Variant;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.All_Variant))
+				{
+					if (IsEnabled(CustomComboPreset.All_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_Variant_Cure))
+					{
+						return Variant.VariantCure;
+					}
+
+					if (CanWeave(actionID))
+					{
+						if (IsEnabled(CustomComboPreset.All_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+						&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
+						if (IsEnabled(CustomComboPreset.All_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.All_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+					}
+				}
+
 				return actionID;
 			}
 		}

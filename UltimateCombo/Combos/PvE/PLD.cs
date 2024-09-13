@@ -100,18 +100,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
-						if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
-							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
-						{
-							return Variant.VariantSpiritDart;
-						}
-
-						if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
 						{
 							return FightOrFlight;
@@ -161,12 +149,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Sheltron);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (ActionWatching.NumberOfGcdsUsed > 2)
@@ -230,18 +212,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
-							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
-						{
-							return Variant.VariantSpiritDart;
-						}
-
-						if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.PLD_AoE_FightOrFlight) && ActionReady(FightOrFlight))
 						{
 							return FightOrFlight;
@@ -286,12 +256,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Sheltron);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && HasEffect(Buffs.Requiescat)

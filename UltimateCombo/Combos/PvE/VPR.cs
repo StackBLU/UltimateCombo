@@ -1,7 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvE
@@ -106,18 +105,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.VPR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.VPR_ST_Uncoiled) && HasEffect(Buffs.PoisedForTwinfang))
 						{
 							return UncoiledTwinfang;
@@ -157,12 +144,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return SerpentsIre;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) && HasEffect(Buffs.Reawakened))
@@ -311,18 +292,6 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.VPR_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.VPR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.VPR_AoE_Uncoiled) && HasEffect(Buffs.PoisedForTwinfang))
 						{
 							return UncoiledTwinfang;
@@ -362,12 +331,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return SerpentsIre;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.VPR_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.VPR_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) && HasEffect(Buffs.Reawakened))

@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -106,18 +105,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
-						if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.RPR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && Gauge.VoidShroud == 2)
 						{
 							return LemuresSlice;
@@ -150,12 +137,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return BloodStalk;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.RPR_ST_ShadowOfDeath) && ActionReady(ShadowOfDeath)
@@ -252,18 +233,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.RPR_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
-						if (IsEnabled(CustomComboPreset.RPR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-							&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
 						if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) && Gauge.VoidShroud == 2)
 						{
 							return LemuresScythe;
@@ -296,12 +265,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return GrimSwathe;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.RPR_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.RPR_Variant_Cure))
-					{
-						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.RPR_AoE_WhorlOfDeath) && ActionReady(WhorlOfDeath)
