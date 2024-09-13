@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -79,7 +80,8 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				GNB_ST_Invuln = new("GNB_ST_Invuln", 10),
-				GNB_AoE_Invuln = new("GNB_AoE_Invuln", 10);
+				GNB_AoE_Invuln = new("GNB_AoE_Invuln", 10),
+				GNB_Variant_Cure = new("GNB_Variant_Cure", 50);
 		}
 
 		internal class GNB_ST_DPS : CustomComboClass
@@ -97,6 +99,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
 					{
+						if (IsEnabled(CustomComboPreset.GNB_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0)
 						{
 							return Bloodfest;
@@ -122,6 +136,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Aurora;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (ActionReady(Continuation)
@@ -201,6 +221,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.GNB_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0)
 						{
 							return Bloodfest;
@@ -216,6 +248,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Aurora;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.GNB_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToRaze))

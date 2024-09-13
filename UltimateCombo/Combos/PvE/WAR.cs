@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -64,7 +65,8 @@ namespace UltimateCombo.Combos.PvE
 				WAR_FellCleaveGauge = new("WAR_FellCleaveGauge", 50),
 				WAR_DecimateGauge = new("WAR_DecimateGauge", 50),
 				WAR_ST_Invuln = new("WAR_ST_Invuln", 10),
-				WAR_AoE_Invuln = new("WAR_AoE_Invuln", 10);
+				WAR_AoE_Invuln = new("WAR_AoE_Invuln", 10),
+				WAR_Variant_Cure = new("WAR_Variant_Cure", 50);
 		}
 
 		internal class WAR_ST_DPS : CustomComboClass
@@ -91,6 +93,18 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
 						&& ActionWatching.NumberOfGcdsUsed >= 2)
 					{
+						if (IsEnabled(CustomComboPreset.WAR_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 						{
 							return OriginalHook(InnerRelease);
@@ -106,6 +120,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Upheaval;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.WAR_ST_FellCleave) && ActionReady(OriginalHook(FellCleave)) && ActionWatching.NumberOfGcdsUsed >= 2
@@ -170,6 +190,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh))
 					{
+						if (IsEnabled(CustomComboPreset.WAR_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.WAR_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 						{
 							return OriginalHook(InnerRelease);
@@ -179,6 +211,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Orogeny;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.WAR_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.WAR_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.WAR_AoE_Decimate) && ActionReady(OriginalHook(Decimate)) && HasEffect(Buffs.SurgingTempest)

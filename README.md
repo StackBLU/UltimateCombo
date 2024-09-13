@@ -49,7 +49,7 @@ Steps:
 | :-- | :-- |
 | `/uc`| Opens the main plugin window, where you can enable and disable options|
 | `/uc enable <featureName>`| Turns a specific option on by referring to its internal name|
-| `/uc disable <featureName>`| Turn a specific option off by referring to its internal name|
+| `/uc disable <featureName>`| Turns a specific option off by referring to its internal name|
 | `/uc toggle <featureName>`| Toggles a specific option by referring to its internal name|
 | `/uc enableall`| Turns all options on|
 | `/uc disableall`| Turns all options off|

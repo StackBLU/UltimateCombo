@@ -1,9 +1,10 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Linq;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -74,7 +75,8 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-
+			public static UserInt
+				MNK_Variant_Cure = new("MNK_Variant_Cure", 50);
 		}
 
 		internal class MNK_ST_DPS : CustomComboClass
@@ -100,6 +102,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.MNK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.MNK_ST_Fire) && ActionReady(RiddleOfFire) && ActionWatching.NumberOfGcdsUsed >= 3)
 						{
 							return RiddleOfFire;
@@ -129,6 +143,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(SteelPeak);
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.MNK_ST_Fire) && ActionReady(FiresReply) && HasEffect(Buffs.FiresRumination))
@@ -285,6 +305,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.MNK_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.MNK_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.MNK_AoE_Fire) && ActionReady(RiddleOfFire))
 						{
 							return RiddleOfFire;
@@ -312,6 +344,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(HowlingFist);
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.MNK_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.MNK_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.MNK_AoE_Fire) && ActionReady(FiresReply) && HasEffect(Buffs.FiresRumination))

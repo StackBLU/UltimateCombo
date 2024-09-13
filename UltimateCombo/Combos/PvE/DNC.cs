@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvE
@@ -95,7 +96,8 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-
+			public static UserInt
+				DNC_Variant_Cure = new("DNC_Variant_Cure", 50);
 		}
 
 		internal class DNC_ST_DPS : CustomComboClass
@@ -113,12 +115,21 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
 					{
-						if (HasEffect(Buffs.TechnicalFinish))
+						if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
 						{
-							if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
-							{
-								return Devilment;
-							}
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.DNC_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
+						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
+						{
+							return Devilment;
 						}
 
 						if (IsEnabled(CustomComboPreset.DNC_ST_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2))
@@ -141,6 +152,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return FanDance1;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.Improvisation))
@@ -270,12 +287,21 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
 					{
-						if (HasEffect(Buffs.TechnicalFinish))
+						if (IsEnabled(CustomComboPreset.DNC_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
 						{
-							if (IsEnabled(CustomComboPreset.DNC_AoE_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
-							{
-								return Devilment;
-							}
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.DNC_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
+						if (IsEnabled(CustomComboPreset.DNC_AoE_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
+						{
+							return Devilment;
 						}
 
 						if (IsEnabled(CustomComboPreset.DNC_AoE_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2))
@@ -298,6 +324,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return FanDance2;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.DNC_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DNC_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.Improvisation))

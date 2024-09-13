@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -77,7 +78,8 @@ namespace UltimateCombo.Combos.PvE
 			public static UserInt
 				MCH_ST_Hypercharge = new("MCH_ST_Hypercharge", 50),
 				MCH_ST_Queen = new("MCH_ST_Queen", 50),
-				MCH_AoE_Hypercharge = new("MCH_AoE_Hypercharge", 50);
+				MCH_AoE_Hypercharge = new("MCH_AoE_Hypercharge", 50),
+				MCH_Variant_Cure = new("MCH_Variant_Cure", 50);
 		}
 
 		internal class MCH_ST_DPS : CustomComboClass
@@ -90,6 +92,18 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
+						if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.MCH_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer))
 						{
 							return BarrelStabilizer;
@@ -154,6 +168,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Hypercharge;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.MCH_ST_HeatBlast) && ActionReady(OriginalHook(Heatblast)) && HasEffect(Buffs.Overheated))
@@ -227,6 +247,18 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.MCH_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.MCH_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.MCH_AoE_Barrel) && ActionReady(BarrelStabilizer))
 						{
 							return BarrelStabilizer;
@@ -275,6 +307,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Hypercharge;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.MCH_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.MCH_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.MCH_AoE_Crossbow) && ActionReady(AutoCrossbow) && HasEffect(Buffs.Overheated))

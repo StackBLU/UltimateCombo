@@ -104,7 +104,8 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-
+			public static UserInt
+				BLM_Variant_Cure = new("BLM_Variant_Cure", 50);
 		}
 
 		public static PublicContentBozja BozjaContent = new();
@@ -124,6 +125,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.BLM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
 							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
 							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
@@ -154,6 +167,12 @@ namespace UltimateCombo.Combos.PvE
 								return LeyLines;
 							}
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar)
@@ -341,6 +360,18 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.BLM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.BLM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.BLM_AoE_Swiftcast) && ActionReady(All.Swiftcast)
 							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast))
 						{
@@ -364,6 +395,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return LeyLines;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.BLM_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLM_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_AoE_FlareStar) && ActionReady(FlareStar)

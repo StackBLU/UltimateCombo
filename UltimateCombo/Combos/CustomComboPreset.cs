@@ -123,7 +123,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", PLD.JobID)]
+		PLD_Variant_Cure = 11060,
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", PLD.JobID)]
+		PLD_Variant_SpiritDart = 11061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", PLD.JobID)]
+		PLD_Variant_Ultimatum = 11062,
 
 		#endregion
 
@@ -211,7 +224,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", WAR.JobID)]
+		WAR_Variant_Cure = 18060,
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", WAR.JobID)]
+		WAR_Variant_SpiritDart = 18061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", WAR.JobID)]
+		WAR_Variant_Ultimatum = 18062,
 
 		#endregion
 
@@ -315,7 +341,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", DRK.JobID)]
+		DRK_Variant_Cure = 5060,
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", DRK.JobID)]
+		DRK_Variant_SpiritDart = 5061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", DRK.JobID)]
+		DRK_Variant_Ultimatum = 5062,
 
 		#endregion
 
@@ -409,7 +448,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", GNB.JobID)]
+		GNB_Variant_Cure = 7060,
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", GNB.JobID)]
+		GNB_Variant_SpiritDart = 7061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", GNB.JobID)]
+		GNB_Variant_Ultimatum = 7062,
 
 		#endregion
 
@@ -567,7 +619,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", WHM.JobID)]
+		WHM_Variant_SpiritDart = 19080,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", WHM.JobID)]
+		WHM_Variant_Rampart = 19081,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", WHM.JobID)]
+		WHM_Variant_Ultimatum = 19082,
 
 		#endregion
 
@@ -657,7 +722,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", SCH.JobID)]
+		SCH_Variant_SpiritDart = 16080,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", SCH.JobID)]
+		SCH_Variant_Rampart = 16081,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", SCH.JobID)]
+		SCH_Variant_Ultimatum = 16082,
 
 		#endregion
 
@@ -795,7 +873,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", AST.JobID)]
+		AST_Variant_SpiritDart = 1080,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", AST.JobID)]
+		AST_Variant_Rampart = 1081,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", AST.JobID)]
+		AST_Variant_Ultimatum = 1082,
 
 		#endregion
 
@@ -911,11 +1002,11 @@ namespace UltimateCombo.Combos
 
 		[ReplaceSkill(SGE.Prognosis, SGE.EukrasianPrognosis)]
 		[CustomComboInfo("AoE Heals", "", SGE.JobID)]
-		SGE_AoE_Heals = 14060,
+		SGE_AoE_Heals = 14050,
 
 		[ParentCombo(SGE_AoE_Heals)]
 		[CustomComboInfo("Pepsis", "", SGE.JobID)]
-		SGE_AoE_Heals_Pepsis = 14061,
+		SGE_AoE_Heals_Pepsis = 14051,
 
 		#endregion
 
@@ -923,17 +1014,30 @@ namespace UltimateCombo.Combos
 
 		[ReplaceSkill(SGE.Egeiro)]
 		[CustomComboInfo("Swiftcast > Raise", "", SGE.JobID)]
-		SGE_Raise = 14080,
+		SGE_Raise = 14060,
 
 		[ReplaceSkill(SGE.Kerachole, SGE.Panhaima, SGE.Philosophia)]
 		[CustomComboInfo("Spell Overlap Protection", "", SGE.JobID)]
-		SGE_OverProtect = 14083,
+		SGE_OverProtect = 14061,
 
 		#endregion
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29732)]
+		[CustomComboInfo("Variant Spirit Dart", "", SGE.JobID)]
+		SGE_Variant_SpiritDart = 14080,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", SGE.JobID)]
+		SGE_Variant_Rampart = 14081,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", SGE.JobID)]
+		SGE_Variant_Ultimatum = 14082,
 
 		#endregion
 
@@ -1021,7 +1125,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", MNK.JobID)]
+		MNK_Variant_Cure = 9060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", MNK.JobID)]
+		MNK_Variant_Rampart = 9061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", MNK.JobID)]
+		MNK_Variant_Ultimatum = 9062,
 
 		#endregion
 
@@ -1114,7 +1231,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", DRG.JobID)]
+		DRG_Variant_Cure = 6060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", DRG.JobID)]
+		DRG_Variant_Rampart = 6061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", DRG.JobID)]
+		DRG_Variant_Ultimatum = 6062,
 
 		#endregion
 
@@ -1218,7 +1348,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", NIN.JobID)]
+		NIN_Variant_Cure = 10060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", NIN.JobID)]
+		NIN_Variant_Rampart = 10061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", NIN.JobID)]
+		NIN_Variant_Ultimatum = 10062,
 
 		#endregion
 
@@ -1318,7 +1461,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", SAM.JobID)]
+		SAM_Variant_Cure = 15060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", SAM.JobID)]
+		SAM_Variant_Rampart = 15061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", SAM.JobID)]
+		SAM_Variant_Ultimatum = 15062,
 
 		#endregion
 
@@ -1424,7 +1580,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", RPR.JobID)]
+		RPR_Variant_Cure = 12060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", RPR.JobID)]
+		RPR_Variant_Rampart = 12061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", RPR.JobID)]
+		RPR_Variant_Ultimatum = 12062,
 
 		#endregion
 
@@ -1507,7 +1676,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", VPR.JobID)]
+		VPR_Variant_Cure = 30060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", VPR.JobID)]
+		VPR_Variant_Rampart = 30061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", VPR.JobID)]
+		VPR_Variant_Ultimatum = 30062,
 
 		#endregion
 
@@ -1619,7 +1801,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", BRD.JobID)]
+		BRD_Variant_Cure = 3060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", BRD.JobID)]
+		BRD_Variant_Rampart = 3061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", BRD.JobID)]
+		BRD_Variant_Ultimatum = 3062,
 
 		#endregion
 
@@ -1725,7 +1920,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", MCH.JobID)]
+		MCH_Variant_Cure = 8060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", MCH.JobID)]
+		MCH_Variant_Rampart = 8061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", MCH.JobID)]
+		MCH_Variant_Ultimatum = 8062,
 
 		#endregion
 
@@ -1836,7 +2044,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", DNC.JobID)]
+		DNC_Variant_Cure = 4060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", DNC.JobID)]
+		DNC_Variant_Rampart = 4061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", DNC.JobID)]
+		DNC_Variant_Ultimatum = 4062,
 
 		#endregion
 
@@ -1952,19 +2173,31 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
-		#region Bozja
+		#region Variant
 
-		[Bozja]
-		[BozjaParent(BLM_ST_DPS)]
-		[ReplaceSkill(Bozja.FlareStar)]
-		[CustomComboInfo("Lost Flare Star", "", BLM.JobID)]
-		BLM_Bozja_LFS = 2060,
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", BLM.JobID)]
+		BLM_Variant_Cure = 2060,
+
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", BLM.JobID)]
+		BLM_Variant_Rampart = 2061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", BLM.JobID)]
+		BLM_Variant_Ultimatum = 2062,
 
 		#endregion
 
-		#region Variant
+		#region Bozja
 
-
+		[Bozja]
+		[ReplaceSkill(Bozja.FlareStar)]
+		[CustomComboInfo("Lost Flare Star", "", BLM.JobID)]
+		BLM_Bozja_LFS = 2070,
 
 		#endregion
 
@@ -2090,7 +2323,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", SMN.JobID)]
+		SMN_Variant_Cure = 17060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", SMN.JobID)]
+		SMN_Variant_Rampart = 17061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", SMN.JobID)]
+		SMN_Variant_Ultimatum = 17062,
 
 		#endregion
 
@@ -2208,7 +2454,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", RDM.JobID)]
+		RDM_Variant_Cure = 13060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", RDM.JobID)]
+		RDM_Variant_Rampart = 13061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", RDM.JobID)]
+		RDM_Variant_Ultimatum = 13062,
 
 		#endregion
 
@@ -2320,7 +2579,20 @@ namespace UltimateCombo.Combos
 
 		#region Variant
 
+		[Variant]
+		[ReplaceSkill(29729)]
+		[CustomComboInfo("Variant Cure", "", PCT.JobID)]
+		PCT_Variant_Cure = 20060,
 
+		[Variant]
+		[ReplaceSkill(29733)]
+		[CustomComboInfo("Variant Rampart", "", PCT.JobID)]
+		PCT_Variant_Rampart = 20061,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", PCT.JobID)]
+		PCT_Variant_Ultimatum = 20062,
 
 		#endregion
 

@@ -2,7 +2,7 @@
 
 namespace UltimateCombo.Attributes
 {
-	/// <summary> Attribute designating variant combos. </summary>
+	/// <summary> Attribute designating Eureka combos. </summary>
 	[AttributeUsage(AttributeTargets.Field)]
 	internal class VariantAttribute : Attribute
 	{

@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -82,7 +83,8 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-
+			public static UserInt
+				SAM_Variant_Cure = new("SAM_Variant_Cure", 50);
 		}
 
 		internal class SAM_ST_DPS : CustomComboClass
@@ -101,6 +103,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
+						if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;
@@ -135,6 +149,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Shinten;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.SAM_ST_Kaeshi) && WasLastWeaponskill(OgiNamikiri))
@@ -233,6 +253,18 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.SAM_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAM_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;
@@ -265,6 +297,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Kyuten;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.SAM_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.SAM_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.SAM_AoE_Kaeshi) && WasLastWeaponskill(OgiNamikiri))

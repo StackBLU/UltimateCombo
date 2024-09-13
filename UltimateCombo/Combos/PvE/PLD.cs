@@ -1,8 +1,9 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Linq;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -75,7 +76,8 @@ namespace UltimateCombo.Combos.PvE
 				PLD_AoE_Sheltron = new("PLD_AoE_Sheltron", 100),
 				PLD_AoE_Intervention = new("PLD_AoE_Intervention", 50),
 				PLD_ST_Invuln = new("PLD_ST_Invuln", 10),
-				PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10);
+				PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10),
+				PLD_Variant_Cure = new("PLD_Variant_Cure", 50);
 		}
 
 		internal class PLD_ST_DPS : CustomComboClass
@@ -98,6 +100,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
+						if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
 						{
 							return FightOrFlight;
@@ -147,6 +161,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Sheltron);
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (ActionWatching.NumberOfGcdsUsed > 2)
@@ -210,6 +230,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.PLD_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.PLD_AoE_FightOrFlight) && ActionReady(FightOrFlight))
 						{
 							return FightOrFlight;
@@ -254,6 +286,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Sheltron);
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.PLD_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && HasEffect(Buffs.Requiescat)

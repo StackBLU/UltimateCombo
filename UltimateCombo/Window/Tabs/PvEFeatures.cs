@@ -3,12 +3,12 @@ using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System.Linq;
+using System.Numerics;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
 using UltimateCombo.Window.Functions;
-using System.Linq;
-using System.Numerics;
 
 namespace UltimateCombo.Window.Tabs
 {
@@ -84,7 +84,7 @@ namespace UltimateCombo.Window.Tabs
 
 						if (groupedPresets[OpenJob].Any(x => PresetStorage.IsVariant(x.Preset)))
 						{
-							if (ImGui.BeginTabItem("Variant Dungeons"))
+							if (ImGui.BeginTabItem("Variant"))
 							{
 								DrawVariantContents(OpenJob);
 								ImGui.EndTabItem();

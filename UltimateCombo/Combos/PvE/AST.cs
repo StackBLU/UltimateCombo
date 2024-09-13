@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -150,6 +151,24 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
+						if (IsEnabled(CustomComboPreset.AST_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
 							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_ST_DPS_Lucid))
 						{
@@ -245,6 +264,24 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.AST_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
+							&& ActionReady(Variant.VariantSpiritDart) && !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
+						{
+							return Variant.VariantSpiritDart;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming)
 							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_AoE_DPS_Lucid))
 						{

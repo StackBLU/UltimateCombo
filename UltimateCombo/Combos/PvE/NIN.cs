@@ -1,8 +1,9 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
-using System.Collections.Generic;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -115,6 +116,12 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
+		public static class Config
+		{
+			public static UserInt
+				NIN_Variant_Cure = new("NIN_Variant_Cure", 50);
+		}
+
 		internal class NIN_ST_DPS : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_ST_DPS;
@@ -136,6 +143,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
 					{
+						if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.NIN_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.NIN_ST_Kassatsu) && ActionReady(Kassatsu))
 						{
 							return Kassatsu;
@@ -192,6 +211,12 @@ namespace UltimateCombo.Combos.PvE
 								return Bhavacakra;
 							}
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras))
@@ -340,6 +365,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
 					{
+						if (IsEnabled(CustomComboPreset.NIN_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.NIN_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.NIN_AoE_Kassatsu) && ActionReady(Kassatsu))
 						{
 							return Kassatsu;
@@ -386,6 +423,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Assassinate);
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.NIN_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.NIN_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras))

@@ -1,4 +1,4 @@
-﻿using UltimateCombo.Services;
+﻿using ECommons.DalamudServices;
 
 namespace UltimateCombo.Combos.PvE.Content
 {
@@ -8,14 +8,16 @@ namespace UltimateCombo.Combos.PvE.Content
 			VariantUltimatum = 29730,
 			VariantRaise = 29731,
 			VariantRaise2 = 29734;
+
 		//1069 = The Sil'dihn Subterrane
 		//1137 = Mount Rokkon
 		//1176 = Aloalo Island
+
 		public static uint VariantCure
 		{
 			get
 			{
-				return Service.ClientState.TerritoryType switch
+				return Svc.ClientState.TerritoryType switch
 				{
 					1069 => 29729,
 					1137 or 1176 => 33862,
@@ -28,7 +30,7 @@ namespace UltimateCombo.Combos.PvE.Content
 		{
 			get
 			{
-				return Service.ClientState.TerritoryType switch
+				return Svc.ClientState.TerritoryType switch
 				{
 					1069 => 29732,
 					1137 or 1176 => 33863,
@@ -41,7 +43,7 @@ namespace UltimateCombo.Combos.PvE.Content
 		{
 			get
 			{
-				return Service.ClientState.TerritoryType switch
+				return Svc.ClientState.TerritoryType switch
 				{
 					1069 => 29733,
 					1137 or 1176 => 33864,

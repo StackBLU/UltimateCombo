@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -108,7 +109,8 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				SMN_ST_Lucid = new("SMN_ST_Lucid", 7500),
-				SMN_AoE_Lucid = new("SMN_AoE_Lucid", 7500);
+				SMN_AoE_Lucid = new("SMN_AoE_Lucid", 7500),
+				SMN_Variant_Cure = new("SMN_Variant_Cure", 50);
 		}
 
 		internal class SMN_ST_DPS : CustomComboClass
@@ -131,6 +133,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
 					{
+						if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
 							return SearingFlash;
@@ -171,6 +185,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.GarudasFavor))
@@ -258,6 +278,18 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.SMN_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
+							&& ActionReady(Variant.VariantRampart))
+						{
+							return Variant.VariantRampart;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMN_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
+							&& ActionReady(Variant.VariantUltimatum))
+						{
+							return Variant.VariantUltimatum;
+						}
+
 						if (IsEnabled(CustomComboPreset.SMN_AoE_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
 							return SearingFlash;
@@ -298,6 +330,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.LucidDreaming;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.SMN_Variant_Cure) && IsEnabled(Variant.VariantCure)
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.SMN_Variant_Cure))
+					{
+						return Variant.VariantCure;
 					}
 
 					if (HasEffect(Buffs.GarudasFavor))
