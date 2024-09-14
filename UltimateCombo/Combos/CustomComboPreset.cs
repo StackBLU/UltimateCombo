@@ -2280,7 +2280,8 @@ namespace UltimateCombo.Combos
 			"Ultravibration = Quasar\n" +
 			"Hydro Pull = Sea Shanty\n" +
 			"You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
-			"You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.", "", BLU.JobID)]
+			"You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.\n" +
+			"When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
 		BLU_Treasure_AutoSpell = 70041,
 
 		[ParentCombo(BLU_Treasure)]

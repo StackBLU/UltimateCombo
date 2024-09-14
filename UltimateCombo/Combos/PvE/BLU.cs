@@ -644,7 +644,7 @@ namespace UltimateCombo.Combos.PvE
 							return MightyGuard;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell)
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell) && CurrentTarget == null
 							&& IsOffCooldown(ShockStrike) && IsOffCooldown(GlassDance) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
@@ -770,16 +770,20 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return All.Swiftcast;
 							}
+
 							return AngelsSnack;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Pomcure) && PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure) && IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Pomcure)
+							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure)
+							&& IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
 							&& !HasEffect(Buffs.AngelsSnack))
 						{
 							if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast))
 							{
 								return All.Swiftcast;
 							}
+
 							return Pomcure;
 						}
 
