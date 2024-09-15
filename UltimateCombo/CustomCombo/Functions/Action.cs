@@ -1,7 +1,6 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
-using System.Linq;
 
 namespace UltimateCombo.ComboHelper.Functions
 {
@@ -101,56 +100,9 @@ namespace UltimateCombo.ComboHelper.Functions
 			return Service.Configuration.ActiveBLUSpells.Contains(id);
 		}
 
-		public static uint CalcBestAction(uint original, params uint[] actions)
-		{
-			static (uint ActionID, CooldownData Data) Compare(
-				uint original,
-				(uint ActionID, CooldownData Data) a1,
-				(uint ActionID, CooldownData Data) a2)
-			{
-				return !a1.Data.IsCooldown && !a2.Data.IsCooldown
-					? original == a1.ActionID ? a1 : a2
-					: a1.Data.IsCooldown && a2.Data.IsCooldown
-					? a1.Data.HasCharges && a2.Data.HasCharges
-						? a1.Data.RemainingCharges == a2.Data.RemainingCharges
-							? a1.Data.ChargeCooldownRemaining < a2.Data.ChargeCooldownRemaining
-								? a1 : a2
-							: a1.Data.RemainingCharges > a2.Data.RemainingCharges
-							? a1 : a2
-						: a1.Data.HasCharges
-							? a1.Data.RemainingCharges > 0
-													? a1
-													: a1.Data.ChargeCooldownRemaining < a2.Data.CooldownRemaining
-													? a1 : a2
-							: a2.Data.HasCharges
-													? a2.Data.RemainingCharges > 0
-																			? a2
-																			: a2.Data.ChargeCooldownRemaining < a1.Data.CooldownRemaining
-																			? a2 : a1
-													: a1.Data.CooldownRemaining < a2.Data.CooldownRemaining
-																			? a1 : a2
-					: a1.Data.IsCooldown ? a2 : a1;
-			}
-
-			static (uint ActionID, CooldownData Data) Selector(uint actionID)
-			{
-				return (actionID, GetCooldown(actionID));
-			}
-
-			return actions
-				.Select(Selector)
-				.Aggregate((a1, a2) => Compare(original, a1, a2))
-				.ActionID;
-		}
-
 		public static bool CanWeave(uint actionID, double weaveTime = 0.6)
 		{
 			return (GetCooldown(actionID).CooldownRemaining > weaveTime) || HasSilence() || HasPacification();
-		}
-
-		public static bool CanDelayedWeave(uint actionID, double start = 1.25, double end = 0.5)
-		{
-			return GetCooldown(actionID).CooldownRemaining <= start && GetCooldown(actionID).CooldownRemaining >= end;
 		}
 
 		public static unsafe float ComboTimer

@@ -44,13 +44,12 @@ namespace UltimateCombo.Window.Tabs
 					{
 						ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
 						ImGui.SameLine(indentwidth2);
+						ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
+						ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
+						_ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
+						ImGui.PopStyleColor();
+						ImGui.PopStyleVar();
 					}
-
-					ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
-					ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
-					_ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
-					ImGui.PopStyleColor();
-					ImGui.PopStyleVar();
 				}
 			}
 			else

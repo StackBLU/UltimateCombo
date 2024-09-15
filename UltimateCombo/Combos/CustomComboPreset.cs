@@ -648,24 +648,28 @@ namespace UltimateCombo.Combos
 		AST_ST_DPS_AutoPlay = 1003,
 
 		[ParentCombo(AST_ST_DPS)]
+		[CustomComboInfo("Minor Arcana (Lord of Crowns & Lady of Crowns)", "", AST.JobID)]
+		AST_ST_DPS_MinorArcana = 1004,
+
+		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_ST_DPS_Lightspeed = 1004,
+		AST_ST_DPS_Lightspeed = 1005,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_ST_DPS_Divination = 1005,
+		AST_ST_DPS_Divination = 1006,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_ST_DPS_SunSign = 1006,
+		AST_ST_DPS_SunSign = 1007,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_ST_DPS_Lucid = 1007,
+		AST_ST_DPS_Lucid = 1008,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_ST_DPS_Swiftcast = 1008,
+		AST_ST_DPS_Swiftcast = 1009,
 
 		#endregion
 
@@ -684,24 +688,28 @@ namespace UltimateCombo.Combos
 		AST_AoE_DPS_AutoPlay = 1022,
 
 		[ParentCombo(AST_AoE_DPS)]
+		[CustomComboInfo("Minor Arcana (Lord of Crowns & Lady of Crowns)", "", AST.JobID)]
+		AST_AoE_DPS_MinorArcana = 1023,
+
+		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_AoE_DPS_Lightspeed = 1023,
+		AST_AoE_DPS_Lightspeed = 1024,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_AoE_DPS_Divination = 1024,
+		AST_AoE_DPS_Divination = 1025,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_AoE_DPS_SunSign = 1025,
+		AST_AoE_DPS_SunSign = 1026,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_AoE_DPS_Lucid = 1026,
+		AST_AoE_DPS_Lucid = 1027,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_AoE_DPS_Swiftcast = 1027,
+		AST_AoE_DPS_Swiftcast = 1028,
 
 		#endregion
 
@@ -2028,6 +2036,10 @@ namespace UltimateCombo.Combos
 		[ParentCombo(RDM_ST_DPS)]
 		[CustomComboInfo("Lucid Dreaming", "", RDM.JobID)]
 		RDM_ST_Lucid = 13010,
+
+		[ParentCombo(RDM_ST_DPS)]
+		[CustomComboInfo("Verthunder & Veraero Start", "", RDM.JobID)]
+		RDM_ST_Opener = 13011,
 
 		#endregion
 

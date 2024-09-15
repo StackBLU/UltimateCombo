@@ -257,7 +257,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if ((actionID is Fire or Aero or Water or Blizzard or Stone or Thunder)
+				if ((actionID is Fire2 or Aero2 or Water2 or Blizzard2 or Stone2 or Thunder2)
 					&& IsEnabled(CustomComboPreset.PCT_AoE_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.PCT_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)

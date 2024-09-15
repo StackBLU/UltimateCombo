@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -174,6 +173,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play1);
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
+							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+						{
+							return OriginalHook(MinorArcana);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
 						{
 							return Oracle;
@@ -276,6 +281,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play1);
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
+							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+						{
+							return OriginalHook(MinorArcana);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
 						{
 							return Oracle;
@@ -368,7 +379,7 @@ namespace UltimateCombo.Combos.PvE
 						return NeutralSect;
 					}
 
-					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched))
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched) && CanWeave(actionID))
 					{
 						return SunSign;
 					}

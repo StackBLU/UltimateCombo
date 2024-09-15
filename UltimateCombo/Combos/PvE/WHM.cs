@@ -135,7 +135,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Dia);
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery))
+					if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
 					{
 						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Misery_Save)
 							&& ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
@@ -191,7 +191,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery))
+					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
 					{
 						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery_Save)
 							&& ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
@@ -234,7 +234,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Cure1 or Cure2) && IsEnabled(CustomComboPreset.WHM_ST_Heals))
 				{
-					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Tetragrammaton) && ActionReady(Tetragrammaton) && CanWeave(actionID))
+					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Tetragrammaton) && ActionReady(Tetragrammaton))
 					{
 						return Tetragrammaton;
 					}
@@ -254,7 +254,7 @@ namespace UltimateCombo.Combos.PvE
 						return Regen;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir) && CanWeave(actionID))
+					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
 					{
 						return ThinAir;
 					}
@@ -294,7 +294,7 @@ namespace UltimateCombo.Combos.PvE
 						return AfflatusRapture;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir) && CanWeave(actionID))
+					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
 					{
 						return ThinAir;
 					}
