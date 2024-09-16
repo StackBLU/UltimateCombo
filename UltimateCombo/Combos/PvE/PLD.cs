@@ -1,7 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -210,6 +209,11 @@ namespace UltimateCombo.Combos.PvE
 						return HallowedGround;
 					}
 
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange())
+					{
+						return Intervene;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.PLD_AoE_FightOrFlight) && ActionReady(FightOrFlight))
@@ -230,6 +234,11 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.PLD_AoE_CircleOfScorn) && ActionReady(CircleOfScorn) && InMeleeRange())
 						{
 							return CircleOfScorn;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_AoE_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
+						{
+							return Intervene;
 						}
 
 						if (IsEnabled(CustomComboPreset.PLD_AoE_Intervention) && CurrentTarget.TargetObject != LocalPlayer
@@ -262,11 +271,6 @@ namespace UltimateCombo.Combos.PvE
 						&& LocalPlayer.CurrentMp >= 1000)
 					{
 						return OriginalHook(Confiteor);
-					}
-
-					if (IsEnabled(CustomComboPreset.PLD_AoE_FightOrFlight) && HasEffect(Buffs.GoringBladeReady))
-					{
-						return GoringBlade;
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_AoE_HolyCircle) && ActionReady(HolyCircle)

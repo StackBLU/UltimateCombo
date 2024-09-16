@@ -93,7 +93,7 @@ namespace UltimateCombo.Combos.PvE
 						return All.LucidDreaming;
 					}
 
-					if (!InCombat())
+					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
 						if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && !Gauge.CreatureMotifDrawn)
 						{
@@ -119,7 +119,7 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID) && InCombat())
 					{
 						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn
-							&& ActionWatching.NumberOfGcdsUsed >= 3)
+							&& ActionWatching.NumberOfGcdsUsed >= 2)
 						{
 							return OriginalHook(ScenicMuse);
 						}
@@ -186,21 +186,6 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_ST_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
-						&& (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
-						|| (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
-					{
-						if (HasEffect(Buffs.MonochromeTones))
-						{
-							return CometInBlack;
-						}
-
-						if (!HasEffect(Buffs.HammerTime))
-						{
-							return HolyInWhite;
-						}
-					}
-
 					if (IsEnabled(CustomComboPreset.PCT_ST_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck)
 						&& !HasEffect(Buffs.SubtractivePalette))
 					{
@@ -241,6 +226,21 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(LandscapeMotif);
 					}
 
+					if (IsEnabled(CustomComboPreset.PCT_ST_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
+						&& (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
+						|| (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
+					{
+						if (HasEffect(Buffs.MonochromeTones))
+						{
+							return CometInBlack;
+						}
+
+						if (!HasEffect(Buffs.HammerTime))
+						{
+							return HolyInWhite;
+						}
+					}
+
 					if (HasEffect(Buffs.SubtractivePalette))
 					{
 						return OriginalHook(Blizzard);
@@ -265,7 +265,7 @@ namespace UltimateCombo.Combos.PvE
 						return All.LucidDreaming;
 					}
 
-					if (!InCombat())
+					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
 						if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && !Gauge.CreatureMotifDrawn)
 						{
@@ -290,8 +290,8 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn
-							&& ActionWatching.NumberOfGcdsUsed >= 3)
+						if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(ScenicMuse))
+							&& Gauge.LandscapeMotifDrawn)
 						{
 							return OriginalHook(ScenicMuse);
 						}
@@ -358,21 +358,6 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_AoE_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
-						&& (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
-						|| (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
-					{
-						if (HasEffect(Buffs.MonochromeTones))
-						{
-							return CometInBlack;
-						}
-
-						if (!HasEffect(Buffs.HammerTime))
-						{
-							return HolyInWhite;
-						}
-					}
-
 					if (IsEnabled(CustomComboPreset.PCT_AoE_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck)
 						&& !HasEffect(Buffs.SubtractivePalette))
 					{
@@ -411,6 +396,21 @@ namespace UltimateCombo.Combos.PvE
 						&& GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15)
 					{
 						return OriginalHook(LandscapeMotif);
+					}
+
+					if (IsEnabled(CustomComboPreset.PCT_AoE_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
+						&& (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
+						|| (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
+					{
+						if (HasEffect(Buffs.MonochromeTones))
+						{
+							return CometInBlack;
+						}
+
+						if (!HasEffect(Buffs.HammerTime))
+						{
+							return HolyInWhite;
+						}
 					}
 
 					if (HasEffect(Buffs.SubtractivePalette))

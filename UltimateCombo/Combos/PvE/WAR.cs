@@ -117,9 +117,14 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(FellCleave);
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_ST_PrimalRend) && ActionReady(OriginalHook(PrimalRend)))
+					if (IsEnabled(CustomComboPreset.WAR_ST_PrimalRend) && HasEffect(Buffs.PrimalRuinationReady))
 					{
-						return OriginalHook(PrimalRend);
+						return PrimalRuination;
+					}
+
+					if (IsEnabled(CustomComboPreset.WAR_ST_PrimalRend) && HasEffect(Buffs.PrimalRendReady))
+					{
+						return PrimalRend;
 					}
 
 					if (comboTime > 0)
@@ -169,11 +174,22 @@ namespace UltimateCombo.Combos.PvE
 						return Infuriate;
 					}
 
+					if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange())
+					{
+						return Onslaught;
+					}
+
 					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh))
 					{
 						if (IsEnabled(CustomComboPreset.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 						{
 							return OriginalHook(InnerRelease);
+						}
+
+						if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught)
+							&& InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+						{
+							return Onslaught;
 						}
 
 						if (IsEnabled(CustomComboPreset.WAR_AoE_Orogeny) && ActionReady(Orogeny) & InActionRange(Orogeny))
@@ -189,9 +205,14 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Decimate);
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_AoE_PrimalRend) && ActionReady(OriginalHook(PrimalRend)))
+					if (IsEnabled(CustomComboPreset.WAR_AoE_PrimalRend) && HasEffect(Buffs.PrimalRuinationReady))
 					{
-						return OriginalHook(PrimalRend);
+						return PrimalRuination;
+					}
+
+					if (IsEnabled(CustomComboPreset.WAR_AoE_PrimalRend) && HasEffect(Buffs.PrimalRendReady))
+					{
+						return PrimalRend;
 					}
 
 					if (comboTime > 0)

@@ -1,6 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 
@@ -220,7 +219,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && ActionReady(Ruin4)
-						&& HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
+						&& HasEffect(Buffs.FurtherRuin)
+						&& ((!Gauge.IsGarudaReady && !Gauge.IsTitanReady && !Gauge.IsIfritReady) || IsMoving))
 					{
 						return Ruin4;
 					}
@@ -282,7 +282,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Astral) && ActionReady(OriginalHook(AstralFlow))
-							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)
+							&& (WasLastSpell(AstralFlare) || WasLastSpell(BrandOfPurgatory) || WasLastSpell(UmbralFlare)
 							|| HasEffect(Buffs.TitansFavor)))
 						{
 							return OriginalHook(AstralFlow);
@@ -290,7 +290,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
 							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0
-							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
+							&& (WasLastSpell(AstralFlare) || WasLastSpell(BrandOfPurgatory) || WasLastSpell(UmbralFlare)))
 						{
 							return OriginalHook(EnkindleBahamut);
 						}
@@ -347,7 +347,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && ActionReady(Ruin4)
-						&& HasEffect(Buffs.FurtherRuin) && Gauge.SummonTimerRemaining == 0)
+						&& HasEffect(Buffs.FurtherRuin)
+						&& ((!Gauge.IsGarudaReady && !Gauge.IsTitanReady && !Gauge.IsIfritReady) || IsMoving))
 					{
 						return Ruin4;
 					}

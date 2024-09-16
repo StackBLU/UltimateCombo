@@ -36,6 +36,7 @@ namespace UltimateCombo.Combos.PvE
 			Oblation = 25754,
 			Shadowbringer = 25757,
 			Disesteem = 36932,
+			Shadowstride = 36926,
 			Unmend = 3624;
 
 		public static class Buffs
@@ -82,6 +83,11 @@ namespace UltimateCombo.Combos.PvE
 						&& ActionReady(LivingDead))
 					{
 						return LivingDead;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange())
+					{
+						return Shadowstride;
 					}
 
 					if (CanWeave(actionID))

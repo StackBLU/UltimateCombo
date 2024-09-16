@@ -44,6 +44,7 @@ namespace UltimateCombo.Combos.PvE
 			NobleBlood = 36938,
 			ReignOfBeasts = 36937,
 			FatedBrand = 36936,
+			Trajectory = 36934,
 			LightningShot = 16143;
 
 		public static class Buffs
@@ -118,7 +119,7 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(BlastingZone);
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_AutoAurora) && ActionReady(Aurora) && PlayerHealthPercentageHp() < 100
+						if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora) && PlayerHealthPercentageHp() < 100
 							&& !HasEffect(Buffs.Aurora))
 						{
 							return Aurora;
@@ -200,6 +201,11 @@ namespace UltimateCombo.Combos.PvE
 						return Superbolide;
 					}
 
+					if (IsEnabled(CustomComboPreset.GNB_AoE_Trajectory) && ActionReady(Trajectory) && !InMeleeRange())
+					{
+						return Trajectory;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0)
@@ -212,7 +218,17 @@ namespace UltimateCombo.Combos.PvE
 							return NoMercy;
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_AoE_AutoAurora) && PlayerHealthPercentageHp() < 100 && ActionReady(Aurora)
+						if (IsEnabled(CustomComboPreset.GNB_AoE_BlastingZone) && ActionReady(OriginalHook(BlastingZone)))
+						{
+							return OriginalHook(BlastingZone);
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_AoE_BowShock) && ActionReady(BowShock))
+						{
+							return BowShock;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && PlayerHealthPercentageHp() < 100 && ActionReady(Aurora)
 							&& !HasEffect(Buffs.Aurora) && CanWeave(actionID))
 						{
 							return Aurora;

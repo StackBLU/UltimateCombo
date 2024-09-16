@@ -96,16 +96,20 @@ namespace UltimateCombo.Combos
 		PLD_AoE_HolyCircle = 11026,
 
 		[ParentCombo(PLD_AoE_DPS)]
+		[CustomComboInfo("Intervene", "", PLD.JobID)]
+		PLD_AoE_Intervene = 11027,
+
+		[ParentCombo(PLD_AoE_DPS)]
 		[CustomComboInfo("Sheltron", "", PLD.JobID)]
-		PLD_AoE_Sheltron = 11027,
+		PLD_AoE_Sheltron = 11028,
 
 		[ParentCombo(PLD_AoE_DPS)]
 		[CustomComboInfo("Intervention", "", PLD.JobID)]
-		PLD_AoE_Intervention = 11028,
+		PLD_AoE_Intervention = 11029,
 
 		[ParentCombo(PLD_AoE_DPS)]
 		[CustomComboInfo("Hallowed Ground", "", PLD.JobID)]
-		PLD_AoE_Invuln = 11029,
+		PLD_AoE_Invuln = 11030,
 
 		#endregion
 
@@ -176,24 +180,28 @@ namespace UltimateCombo.Combos
 		WAR_AoE_Orogeny = 18021,
 
 		[ParentCombo(WAR_AoE_DPS)]
+		[CustomComboInfo("Onslaught", "", WAR.JobID)]
+		WAR_AoE_Onslaught = 18022,
+
+		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Steel Cyclone / Decimate & Chaotic Cyclone", "", WAR.JobID)]
-		WAR_AoE_Decimate = 18022,
+		WAR_AoE_Decimate = 18023,
 
 		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Infuriate", "", WAR.JobID)]
-		WAR_AoE_Infuriate = 18023,
+		WAR_AoE_Infuriate = 18024,
 
 		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Berserk / Inner Release > Primal Wrath", "", WAR.JobID)]
-		WAR_AoE_InnerRelease = 18024,
+		WAR_AoE_InnerRelease = 18025,
 
 		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Primal Rend > Primal Ruination", "", WAR.JobID)]
-		WAR_AoE_PrimalRend = 18025,
+		WAR_AoE_PrimalRend = 18026,
 
 		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Holmgang", "", WAR.JobID)]
-		WAR_AoE_Invuln = 18026,
+		WAR_AoE_Invuln = 18027,
 
 		#endregion
 
@@ -286,12 +294,16 @@ namespace UltimateCombo.Combos
 		DRK_AoE_Shadowbringer = 5027,
 
 		[ParentCombo(DRK_AoE_DPS)]
+		[CustomComboInfo("Shadowstride", "", DRK.JobID)]
+		DRK_AoE_Shadowstride = 5028,
+
+		[ParentCombo(DRK_AoE_DPS)]
 		[CustomComboInfo("Oblation", "", DRK.JobID)]
-		DRK_AoE_Oblation = 5028,
+		DRK_AoE_Oblation = 5029,
 
 		[ParentCombo(DRK_AoE_DPS)]
 		[CustomComboInfo("Living Dead", "", DRK.JobID)]
-		DRK_AoE_Invuln = 5029,
+		DRK_AoE_Invuln = 5030,
 
 		#endregion
 
@@ -341,7 +353,7 @@ namespace UltimateCombo.Combos
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Aurora", "", GNB.JobID)]
-		GNB_ST_AutoAurora = 7008,
+		GNB_ST_Aurora = 7008,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Superbolide", "", GNB.JobID)]
@@ -360,24 +372,36 @@ namespace UltimateCombo.Combos
 		GNB_AoE_NoMercy = 7021,
 
 		[ParentCombo(GNB_AoE_DPS)]
+		[CustomComboInfo("Danger Zone / Blasting Zone", "", GNB.JobID)]
+		GNB_AoE_BlastingZone = 7022,
+
+		[ParentCombo(GNB_AoE_DPS)]
+		[CustomComboInfo("Bow Shock", "", GNB.JobID)]
+		GNB_AoE_BowShock = 7023,
+
+		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Fated Circle > Fated Brand", "", GNB.JobID)]
-		GNB_AoE_Fated = 7022,
+		GNB_AoE_Fated = 7024,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Double Down", "", GNB.JobID)]
-		GNB_AoE_DoubleDown = 7023,
+		GNB_AoE_DoubleDown = 7025,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Bloodfest > Reign of Beasts > Noble Blood > Lion Heart", "", GNB.JobID)]
-		GNB_AoE_Bloodfest = 7024,
+		GNB_AoE_Bloodfest = 7026,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Aurora", "", GNB.JobID)]
-		GNB_AoE_AutoAurora = 7025,
+		GNB_AoE_Aurora = 7027,
+
+		[ParentCombo(GNB_AoE_DPS)]
+		[CustomComboInfo("Trajectory", "", GNB.JobID)]
+		GNB_AoE_Trajectory = 7028,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Superbolide", "", GNB.JobID)]
-		GNB_AoE_Invuln = 7026,
+		GNB_AoE_Invuln = 7029,
 
 		#endregion
 

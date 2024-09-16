@@ -259,17 +259,18 @@ namespace UltimateCombo.Combos.PvE
 							return BattleVoice;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantFinale))
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
 						{
 							return RadiantFinale;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Raging) && ActionReady(RagingStrikes))
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Raging) && ActionReady(RagingStrikes)
+							&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RagingStrikes)))
 						{
 							return RagingStrikes;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(Barrage))
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
 						{
 							return Barrage;
 						}
