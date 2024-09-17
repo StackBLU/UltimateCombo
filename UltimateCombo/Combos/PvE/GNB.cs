@@ -104,19 +104,22 @@ namespace UltimateCombo.Combos.PvE
 							return Bloodfest;
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return NoMercy;
-						}
+							if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
+							{
+								return NoMercy;
+							}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
-						{
-							return BowShock;
-						}
+							if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
+							{
+								return BowShock;
+							}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(OriginalHook(BlastingZone)))
-						{
-							return OriginalHook(BlastingZone);
+							if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(OriginalHook(BlastingZone)))
+							{
+								return OriginalHook(BlastingZone);
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora) && PlayerHealthPercentageHp() < 100

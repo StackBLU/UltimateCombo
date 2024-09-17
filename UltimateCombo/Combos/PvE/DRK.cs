@@ -85,11 +85,6 @@ namespace UltimateCombo.Combos.PvE
 						return LivingDead;
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange())
-					{
-						return Shadowstride;
-					}
-
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
@@ -191,6 +186,11 @@ namespace UltimateCombo.Combos.PvE
 						&& ActionReady(LivingDead))
 					{
 						return LivingDead;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange())
+					{
+						return Shadowstride;
 					}
 
 					if (CanWeave(actionID))

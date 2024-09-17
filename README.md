@@ -27,8 +27,11 @@ You must have <a href="https://goatcorp.github.io/">XIVLauncher/Dalamud</a> inst
 
 Ultimate Combo pairs very well with the following plugins:
 * <a href="https://github.com/UnknownX7/ReAction">ReAction</a>, for automatic target picking and turbo mode
-* <a href="https://github.com/FFXIV-CombatReborn/BossmodReborn">BossMod Reborn</a>, for slidecasting and lag reduction
+* <a href="https://github.com/FFXIV-CombatReborn/BossmodReborn">BossMod Reborn</a>, for lag reduction
+* <a href="https://github.com/PunishXIV/Avarice">Avarice</a>, for positional tells
+* <a href="https://github.com/PunishXIV/Orbwalker">Orbwalker</a>, for slidecasting
 <p>You can find installation instructions for the above plugins on their github page.</p>
+<p>For recommended settings for each plugin, check the <tt>#recommended-settings</tt> channel in the <a href="https://discord.gg/yPxwkdqhHs">Discord</a></p>
 <br>
 
 Steps:
