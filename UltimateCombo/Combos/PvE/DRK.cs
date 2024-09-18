@@ -136,7 +136,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn) && ActionWatching.NumberOfGcdsUsed >= 2)
+					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn) && ActionWatching.NumberOfGcdsUsed >= 2
+						&& HasEffect(Buffs.Delirium))
 					{
 						return Disesteem;
 					}
@@ -229,7 +230,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_AoE_LivingShadow) && HasEffect(Buffs.Scorn))
+					if (IsEnabled(CustomComboPreset.DRK_AoE_LivingShadow) && HasEffect(Buffs.Scorn) && HasEffect(Buffs.Delirium))
 					{
 						return Disesteem;
 					}

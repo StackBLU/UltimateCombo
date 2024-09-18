@@ -265,6 +265,16 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return WyrmwindThrust;
 						}
+
+						if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && ActionReady(OriginalHook(HighJump)))
+						{
+							return OriginalHook(HighJump);
+						}
+
+						if (IsEnabled(CustomComboPreset.DRG_AoE_HighJump) && ActionReady(MirageDive) && HasEffect(Buffs.DiveReady))
+						{
+							return MirageDive;
+						}
 					}
 
 					if (comboTime > 0)

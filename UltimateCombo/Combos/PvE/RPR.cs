@@ -120,7 +120,8 @@ namespace UltimateCombo.Combos.PvE
 							return ArcaneCircle;
 						}
 
-						if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && ActionReady(Enshroud) && (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost))
+						if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && ActionReady(Enshroud)
+							&& (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost))
 							&& !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.ImmortalSacrifice))
 						{
 							return Enshroud;
@@ -152,7 +153,8 @@ namespace UltimateCombo.Combos.PvE
 						return HarvestMoon;
 					}
 
-					if (IsEnabled(CustomComboPreset.RPR_ST_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle) && HasEffect(Buffs.ImmortalSacrifice)
+					if (IsEnabled(CustomComboPreset.RPR_ST_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle)
+						&& HasEffect(Buffs.ImmortalSacrifice)
 						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
 					{
 						return PlentifulHarvest;
@@ -248,8 +250,9 @@ namespace UltimateCombo.Combos.PvE
 							return ArcaneCircle;
 						}
 
-						if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) && ActionReady(Enshroud) && (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost))
-							&& !HasEffect(Buffs.Enshrouded))
+						if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) && ActionReady(Enshroud)
+							&& (Gauge.Shroud >= 50 || HasEffect(Buffs.IdealHost))
+							&& !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.ImmortalSacrifice))
 						{
 							return Enshroud;
 						}
@@ -280,7 +283,9 @@ namespace UltimateCombo.Combos.PvE
 						return HarvestMoon;
 					}
 
-					if (IsEnabled(CustomComboPreset.RPR_AoE_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle) && HasEffect(Buffs.ImmortalSacrifice))
+					if (IsEnabled(CustomComboPreset.RPR_AoE_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle)
+						&& HasEffect(Buffs.ImmortalSacrifice)
+						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
 					{
 						return PlentifulHarvest;
 					}

@@ -1071,16 +1071,20 @@ namespace UltimateCombo.Combos
 		DRG_AoE_Wyrmwind = 6024,
 
 		[ParentCombo(DRG_AoE_DPS)]
-		[CustomComboInfo("Stardiver > Starcross", "", DRG.JobID)]
-		DRG_AoE_Stardiver = 6025,
+		[CustomComboInfo("Jump / High Jump > Mirage Dive", "", DRG.JobID)]
+		DRG_AoE_HighJump = 6025,
 
 		[ParentCombo(DRG_AoE_DPS)]
 		[CustomComboInfo("Dragonfire Dive > Rise of the Dragon", "", DRG.JobID)]
 		DRG_AoE_Dragonfire = 6026,
 
 		[ParentCombo(DRG_AoE_DPS)]
+		[CustomComboInfo("Stardiver > Starcross", "", DRG.JobID)]
+		DRG_AoE_Stardiver = 6027,
+
+		[ParentCombo(DRG_AoE_DPS)]
 		[CustomComboInfo("Battle Litany", "", DRG.JobID)]
-		DRG_AoE_BattleLitany = 6027,
+		DRG_AoE_BattleLitany = 6028,
 
 		#endregion
 
@@ -1157,28 +1161,32 @@ namespace UltimateCombo.Combos
 		NIN_AoE_Trick = 10022,
 
 		[ParentCombo(NIN_AoE_DPS)]
+		[CustomComboInfo("Mug / Dokumori", "", NIN.JobID)]
+		NIN_AoE_Mug = 10023,
+
+		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Assassinate / Dream Within a Dream", "", NIN.JobID)]
-		NIN_AoE_Assassinate = 10023,
+		NIN_AoE_Assassinate = 10024,
 
 		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Hellfrog Medium & Deathfrog Medium", "", NIN.JobID)]
-		NIN_AoE_Hellfrog = 10024,
+		NIN_AoE_Hellfrog = 10025,
 
 		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Kassatsu", "", NIN.JobID)]
-		NIN_AoE_Kassatsu = 10025,
+		NIN_AoE_Kassatsu = 10026,
 
 		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Bunshin > Phantom Kamaitachi", "", NIN.JobID)]
-		NIN_AoE_Bunshin = 10026,
+		NIN_AoE_Bunshin = 10027,
 
 		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Ten Chi Jin > Tenri Jindo", "", NIN.JobID)]
-		NIN_AoE_TenChiJin = 10027,
+		NIN_AoE_TenChiJin = 10028,
 
 		[ParentCombo(NIN_AoE_DPS)]
 		[CustomComboInfo("Meisui", "", NIN.JobID)]
-		NIN_AoE_Meisui = 10028,
+		NIN_AoE_Meisui = 10029,
 
 		#endregion
 

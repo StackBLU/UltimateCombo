@@ -173,22 +173,6 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play1);
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
-							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
-						{
-							return OriginalHook(MinorArcana);
-						}
-
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
-						{
-							return Oracle;
-						}
-
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
-						{
-							return SunSign;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
 							&& Config.AST_ST_DPS_UseDefenseCards
 							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
@@ -203,6 +187,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play3);
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
+							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+						{
+							return OriginalHook(MinorArcana);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
 							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
 							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_ST_DPS_UseDefenseCards)))
@@ -214,6 +204,16 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							return OriginalHook(AstralDraw);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
+						{
+							return Oracle;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
+						{
+							return SunSign;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Buffs.Lightspeed))
@@ -281,22 +281,6 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play1);
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
-							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
-						{
-							return OriginalHook(MinorArcana);
-						}
-
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
-						{
-							return Oracle;
-						}
-
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))
-						{
-							return SunSign;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
 							&& Config.AST_AoE_DPS_UseDefenseCards
 							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
@@ -311,6 +295,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Play3);
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
+							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+						{
+							return OriginalHook(MinorArcana);
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
 							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
 							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_AoE_DPS_UseDefenseCards)))
@@ -322,6 +312,16 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							return OriginalHook(AstralDraw);
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
+						{
+							return Oracle;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))
+						{
+							return SunSign;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast)

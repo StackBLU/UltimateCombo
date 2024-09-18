@@ -63,7 +63,7 @@ namespace UltimateCombo.Combos.PvE
 			TCJHuton = 2269,
 			TCJDoton = 18880,
 			TCJSuiton = 18881,
-			DeathfrogMedium = 36960,
+			DeathfrogMedium = 36959,
 			ZeshoMeppo = 36960,
 			TenriJindo = 36961;
 
@@ -130,14 +130,32 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush) && IsEnabled(CustomComboPreset.NIN_ST_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && !InCombat() && GetRemainingCharges(Ten) != GetMaxCharges(Ten)
-						&& !HasEffect(Buffs.Mudra))
+						&& !HasEffect(Buffs.Mudra) && ActionReady(Hide) && !WasLastAbility(Suiton))
 					{
 						return Hide;
 					}
 
-					if (HasEffect(Buffs.Hidden))
+					if (HasEffect(Buffs.Hidden) && ActionReady(Shukuchi) && CurrentTarget == null)
 					{
 						return Shukuchi;
+					}
+
+					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && ActionReady(Ten)
+						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+					{
+						if (OriginalHook(Ninjutsu) is Suiton)
+						{
+							return OriginalHook(Ninjutsu);
+						}
+						if (WasLastAbility(ChiCombo))
+						{
+							return JinCombo;
+						}
+						if (WasLastAbility(Ten))
+						{
+							return ChiCombo;
+						}
+						return Ten;
 					}
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
@@ -159,7 +177,8 @@ namespace UltimateCombo.Combos.PvE
 								return Bunshin;
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack)) && HasEffect(Buffs.ShadowWalker))
+							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
+								&& HasEffect(Buffs.ShadowWalker))
 							{
 								return OriginalHook(TrickAttack);
 							}
@@ -175,6 +194,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
+								&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu)
 								&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
 								|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))))
 							{
@@ -186,21 +206,22 @@ namespace UltimateCombo.Combos.PvE
 								return Meisui;
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && HasEffect(Buffs.Higi))
+							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && HasEffect(Buffs.Higi) && Gauge.Ninki > 50)
 							{
 								return ZeshoMeppo;
 							}
 
 							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && ActionReady(Bhavacakra)
 								&& (Gauge.Ninki >= 70
-								|| (Gauge.Ninki >= 50 && (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])))))
+								|| (Gauge.Ninki >= 50 && (TargetHasEffect(TrickList[OriginalHook(TrickAttack)])
+								|| TargetHasEffect(MugList[OriginalHook(Mug)])))))
 							{
 								return Bhavacakra;
 							}
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras))
+					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && InCombat())
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
@@ -220,7 +241,8 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (HasEffect(Buffs.Kassatsu) && (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || !LevelChecked(HyoshoRanryu)))
+						if (HasEffect(Buffs.Kassatsu) && (TargetHasEffect(TrickList[OriginalHook(TrickAttack)])
+							|| !LevelChecked(HyoshoRanryu)))
 						{
 							if (LevelChecked(HyoshoRanryu))
 							{
@@ -246,7 +268,7 @@ namespace UltimateCombo.Combos.PvE
 							return TenCombo;
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15 && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (GetCooldownRemainingTime(Meisui) > 15 || !LevelChecked(Meisui))
 							&& ActionWatching.NumberOfGcdsUsed >= 2 && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
@@ -263,7 +285,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (((GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15)
 							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))) && !HasEffect(Buffs.ShadowWalker)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
 							if (OriginalHook(Ninjutsu) is Suiton)
 							{
@@ -334,14 +356,32 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(CustomComboPreset.NIN_AoE_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && !InCombat() && GetRemainingCharges(Ten) != GetMaxCharges(Ten)
-						&& !HasEffect(Buffs.Mudra))
+						&& !HasEffect(Buffs.Mudra) && ActionReady(Hide) && !WasLastAbility(Huton))
 					{
 						return Hide;
 					}
 
-					if (WasLastAbility(Hide) || HasEffect(Buffs.Hidden))
+					if (HasEffect(Buffs.Hidden) && ActionReady(Shukuchi) && CurrentTarget == null)
 					{
 						return Shukuchi;
+					}
+
+					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && ActionReady(Ten)
+						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+					{
+						if (OriginalHook(Ninjutsu) is Huton)
+						{
+							return OriginalHook(Ninjutsu);
+						}
+						if (WasLastAbility(JinCombo))
+						{
+							return TenCombo;
+						}
+						if (WasLastAbility(Chi))
+						{
+							return JinCombo;
+						}
+						return Chi;
 					}
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
@@ -351,7 +391,13 @@ namespace UltimateCombo.Combos.PvE
 							return Kassatsu;
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_Trick) && ActionReady(OriginalHook(TrickAttack)) && HasEffect(Buffs.ShadowWalker))
+						if (IsEnabled(CustomComboPreset.NIN_AoE_Mug) && ActionReady(OriginalHook(Mug)))
+						{
+							return OriginalHook(Mug);
+						}
+
+						if (IsEnabled(CustomComboPreset.NIN_AoE_Trick) && ActionReady(OriginalHook(TrickAttack))
+							&& HasEffect(Buffs.ShadowWalker))
 						{
 							return OriginalHook(TrickAttack);
 						}
@@ -362,13 +408,15 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
+							&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu)
 							&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
 							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))))
 						{
 							return TenChiJin;
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_Meisui) && ActionReady(Meisui) && HasEffect(Buffs.ShadowWalker) && Gauge.Ninki <= 50)
+						if (IsEnabled(CustomComboPreset.NIN_AoE_Meisui) && ActionReady(Meisui)
+							&& HasEffect(Buffs.ShadowWalker) && Gauge.Ninki <= 50)
 						{
 							return Meisui;
 						}
@@ -378,7 +426,7 @@ namespace UltimateCombo.Combos.PvE
 							return Bunshin;
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_Hellfrog) && HasEffect(Buffs.Higi))
+						if (IsEnabled(CustomComboPreset.NIN_AoE_Hellfrog) && HasEffect(Buffs.Higi) && Gauge.Ninki > 50)
 						{
 							return DeathfrogMedium;
 						}
@@ -394,7 +442,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras))
+					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && InCombat())
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
@@ -446,7 +494,7 @@ namespace UltimateCombo.Combos.PvE
 							return ChiCombo;
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15 && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (GetCooldownRemainingTime(Meisui) > 15 || !LevelChecked(Meisui))
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
@@ -467,7 +515,7 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return OriginalHook(Ninjutsu);
 							}
-							if (WasLastAbility(Jin))
+							if (WasLastAbility(JinCombo))
 							{
 								return ChiCombo;
 							}
@@ -478,9 +526,9 @@ namespace UltimateCombo.Combos.PvE
 							return Ten;
 						}
 
-						if ((GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
+						if (((GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15)
 							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))) && !HasEffect(Buffs.ShadowWalker)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
 							if (OriginalHook(Ninjutsu) is Huton)
 							{
