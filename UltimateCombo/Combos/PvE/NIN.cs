@@ -178,7 +178,8 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
-								&& HasEffect(Buffs.ShadowWalker))
+								&& HasEffect(Buffs.ShadowWalker)
+								&& (GetCooldownRemainingTime(OriginalHook(Mug)) > 30 || TargetHasEffect(MugList[OriginalHook(Mug)])))
 							{
 								return OriginalHook(TrickAttack);
 							}
@@ -188,7 +189,8 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Assassinate);
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo))
+							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo)
+								&& TargetHasEffect(MugList[OriginalHook(Mug)]))
 							{
 								return TenriJindo;
 							}
@@ -268,8 +270,8 @@ namespace UltimateCombo.Combos.PvE
 							return TenCombo;
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15 && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& (GetCooldownRemainingTime(Meisui) > 15 || !LevelChecked(Meisui))
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20
+							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& ActionWatching.NumberOfGcdsUsed >= 2 && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
 							if (OriginalHook(Ninjutsu) is Raiton)
@@ -283,9 +285,9 @@ namespace UltimateCombo.Combos.PvE
 							return Ten;
 						}
 
-						if (((GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15)
-							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))) && !HasEffect(Buffs.ShadowWalker)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker)
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten))
+							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
 							if (OriginalHook(Ninjutsu) is Suiton)
 							{
@@ -310,10 +312,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.NIN_ST_Raiju) && HasEffect(Buffs.RaijuReady))
 					{
-						if (!InActionRange(FleetingRaiju))
-						{
-							return ForkedRaiju;
-						}
 						return FleetingRaiju;
 					}
 
@@ -397,12 +395,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.NIN_AoE_Trick) && ActionReady(OriginalHook(TrickAttack))
-							&& HasEffect(Buffs.ShadowWalker))
+							&& HasEffect(Buffs.ShadowWalker)
+							&& (GetCooldownRemainingTime(OriginalHook(Mug)) > 30 || TargetHasEffect(MugList[OriginalHook(Mug)])))
 						{
 							return OriginalHook(TrickAttack);
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && HasEffect(Buffs.TenriJindo))
+						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && HasEffect(Buffs.TenriJindo)
+							&& TargetHasEffect(MugList[OriginalHook(Mug)]))
 						{
 							return TenriJindo;
 						}
@@ -494,8 +494,8 @@ namespace UltimateCombo.Combos.PvE
 							return ChiCombo;
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15 && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& (GetCooldownRemainingTime(Meisui) > 15 || !LevelChecked(Meisui))
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15
+							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
 							if (HasEffect(Buffs.Doton))
@@ -526,8 +526,7 @@ namespace UltimateCombo.Combos.PvE
 							return Ten;
 						}
 
-						if (((GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15)
-							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))) && !HasEffect(Buffs.ShadowWalker)
+						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker)
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
 							if (OriginalHook(Ninjutsu) is Huton)
