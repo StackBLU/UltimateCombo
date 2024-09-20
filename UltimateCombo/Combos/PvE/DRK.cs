@@ -189,7 +189,8 @@ namespace UltimateCombo.Combos.PvE
 						return LivingDead;
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange()
+						&& !InCombat())
 					{
 						return Shadowstride;
 					}

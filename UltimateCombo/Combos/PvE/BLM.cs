@@ -157,13 +157,30 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines) &&
+						(ActionReady(All.Swiftcast) || ActionReady(Triplecast))
+						&& !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+						&& ActionWatching.NumberOfGcdsUsed > 10)
+					{
+						if (ActionReady(All.Swiftcast))
+						{
+							return All.Swiftcast;
+						}
+
+						if (ActionReady(Triplecast))
+						{
+							return Triplecast;
+						}
+					}
+
 					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar)
 						&& LocalPlayer.CurrentMp == 0 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
 					{
 						return FlareStar;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0)
+					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
+						&& HasEffect(Buffs.LeyLines))
 					{
 						return Manafont;
 					}
@@ -343,7 +360,7 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.BLM_AoE_Swiftcast) && ActionReady(All.Swiftcast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast))
+							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire)
 						{
 							return All.Swiftcast;
 						}
@@ -367,13 +384,30 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines) &&
+						(ActionReady(All.Swiftcast) || ActionReady(Triplecast))
+						&& !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+						&& ActionWatching.NumberOfGcdsUsed > 10)
+					{
+						if (ActionReady(All.Swiftcast))
+						{
+							return All.Swiftcast;
+						}
+
+						if (ActionReady(Triplecast))
+						{
+							return Triplecast;
+						}
+					}
+
 					if (IsEnabled(CustomComboPreset.BLM_AoE_FlareStar) && ActionReady(FlareStar)
 						&& LocalPlayer.CurrentMp == 0 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
 					{
 						return FlareStar;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_AoE_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
+						&& HasEffect(Buffs.LeyLines))
 					{
 						return Manafont;
 					}

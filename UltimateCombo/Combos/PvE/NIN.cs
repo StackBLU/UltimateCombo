@@ -196,7 +196,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
-								&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu)
+								&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && !IsMoving
 								&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
 								|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))))
 							{
@@ -208,7 +208,8 @@ namespace UltimateCombo.Combos.PvE
 								return Meisui;
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && HasEffect(Buffs.Higi) && Gauge.Ninki > 50)
+							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && HasEffect(Buffs.Higi) && Gauge.Ninki > 50
+								&& TargetHasEffect(TrickList[OriginalHook(TrickAttack)]))
 							{
 								return ZeshoMeppo;
 							}
@@ -319,9 +320,10 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (lastComboActionID is GustSlash)
 						{
-							if ((ActionReady(AeolianEdge) && (Gauge.Kazematoi > 0 || !LevelChecked(ArmorCrush))
-								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])))
-								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush))
+							if (ActionReady(AeolianEdge)
+								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])
+								|| EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 10
+								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
 							{
 								return AeolianEdge;
 							}
@@ -408,7 +410,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
-							&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu)
+							&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && !IsMoving
 							&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
 							|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))))
 						{

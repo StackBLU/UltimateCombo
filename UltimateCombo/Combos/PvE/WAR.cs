@@ -174,7 +174,8 @@ namespace UltimateCombo.Combos.PvE
 						return Infuriate;
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange()
+						&& !InCombat())
 					{
 						return Onslaught;
 					}

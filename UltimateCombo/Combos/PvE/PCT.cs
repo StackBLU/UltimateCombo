@@ -197,7 +197,7 @@ namespace UltimateCombo.Combos.PvE
 						return RainbowDrip;
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && ActionReady(OriginalHook(CreatureMotif))
+					if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
 						&& !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1)
 						|| GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))))
@@ -211,7 +211,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(HammerStamp);
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_ST_Hammer) && ActionReady(OriginalHook(WeaponMotif))
+					if (IsEnabled(CustomComboPreset.PCT_ST_Hammer) && ActionReady(OriginalHook(WeaponMotif)) && !IsMoving
 						&& !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1)
 						|| GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))))
@@ -219,7 +219,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(WeaponMotif);
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(LandscapeMotif))
+					if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(LandscapeMotif)) && !IsMoving
 						&& !Gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15)
 					{
@@ -369,7 +369,7 @@ namespace UltimateCombo.Combos.PvE
 						return RainbowDrip;
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && ActionReady(OriginalHook(CreatureMotif))
+					if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
 						&& !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1)
 						|| GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))))
@@ -383,7 +383,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(HammerStamp);
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_AoE_Hammer) && ActionReady(OriginalHook(WeaponMotif))
+					if (IsEnabled(CustomComboPreset.PCT_AoE_Hammer) && ActionReady(OriginalHook(WeaponMotif)) && !IsMoving
 						&& !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1)
 						|| GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))))
@@ -391,7 +391,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(WeaponMotif);
 					}
 
-					if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(LandscapeMotif))
+					if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(LandscapeMotif)) && !IsMoving
 						&& !Gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
 						&& GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15)
 					{

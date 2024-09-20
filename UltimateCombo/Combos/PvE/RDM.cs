@@ -105,6 +105,11 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Jolt or Jolt2 or Jolt3 or Verthunder or Verthunder3 or Veraero or Veraero3 or Verfire or Verstone)
 					&& IsEnabled(CustomComboPreset.RDM_ST_DPS))
 				{
+					if (LocalPlayer.IsDead && ActionWatching.LastWeaponskill != 0)
+					{
+						ActionWatching.LastWeaponskill = 0;
+					}
+
 					if (IsEnabled(CustomComboPreset.RDM_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
 					{
 						return All.LucidDreaming;
@@ -125,6 +130,7 @@ namespace UltimateCombo.Combos.PvE
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
 						if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
+							&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
 							&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
 						{
 							return All.Swiftcast;
@@ -302,6 +308,11 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(CustomComboPreset.RDM_AoE_DPS))
 				{
+					if (LocalPlayer.IsDead && ActionWatching.LastWeaponskill != 0)
+					{
+						ActionWatching.LastWeaponskill = 0;
+					}
+
 					if (IsEnabled(CustomComboPreset.RDM_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
 					{
 						return All.LucidDreaming;
@@ -315,8 +326,25 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedMoulinetTrois) || (WasLastWeaponskill(EnchantedMoulinetTrois)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						{
+							if (IsEnabled(CustomComboPreset.RDM_AoE_Embolden) && ActionReady(Embolden))
+							{
+								return Embolden;
+							}
+
+							if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && ActionReady(Manafication)
+								&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
+								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
+								&& Gauge.ManaStacks == 0)
+							{
+								return Manafication;
+							}
+						}
+
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Swift) && ActionReady(All.Swiftcast)
-								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
+							&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
+							&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
 						{
 							return All.Swiftcast;
 						}
@@ -342,19 +370,6 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && HasEffect(Buffs.PrefulugenceReady))
 						{
 							return Prefulgence;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_AoE_Embolden) && ActionReady(Embolden))
-						{
-							return Embolden;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && ActionReady(Manafication)
-							&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
-							&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
-							&& Gauge.ManaStacks == 0)
-						{
-							return Manafication;
 						}
 
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Contre) && ActionReady(ContreSixte))

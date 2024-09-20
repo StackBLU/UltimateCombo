@@ -204,7 +204,8 @@ namespace UltimateCombo.Combos.PvE
 						return Superbolide;
 					}
 
-					if (IsEnabled(CustomComboPreset.GNB_AoE_Trajectory) && ActionReady(Trajectory) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.GNB_AoE_Trajectory) && ActionReady(Trajectory) && !InMeleeRange()
+						&& !InCombat())
 					{
 						return Trajectory;
 					}

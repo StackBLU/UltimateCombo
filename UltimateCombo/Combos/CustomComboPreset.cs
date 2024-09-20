@@ -24,12 +24,12 @@ namespace UltimateCombo.Combos
 		PLD_ST_FightOrFlight = 11001,
 
 		[ParentCombo(PLD_ST_DPS)]
-		[CustomComboInfo("Expiacion", "", PLD.JobID)]
-		PLD_ST_SpiritsWithin = 11002,
+		[CustomComboInfo("Circle of Scorn", "", PLD.JobID)]
+		PLD_ST_CircleOfScorn = 11002,
 
 		[ParentCombo(PLD_ST_DPS)]
-		[CustomComboInfo("Circle of Scorn", "", PLD.JobID)]
-		PLD_ST_CircleOfScorn = 11003,
+		[CustomComboInfo("Spirits Within / Expiacion", "", PLD.JobID)]
+		PLD_ST_SpiritsWithin = 11003,
 
 		[ParentCombo(PLD_ST_DPS)]
 		[CustomComboInfo("Atonement > Supplication > Sepulchre", "", PLD.JobID)]
@@ -76,12 +76,12 @@ namespace UltimateCombo.Combos
 		PLD_AoE_FightOrFlight = 11021,
 
 		[ParentCombo(PLD_AoE_DPS)]
-		[CustomComboInfo("Expiacion", "", PLD.JobID)]
-		PLD_AoE_SpiritsWithin = 11022,
+		[CustomComboInfo("Circle of Scorn", "", PLD.JobID)]
+		PLD_AoE_CircleOfScorn = 11022,
 
 		[ParentCombo(PLD_AoE_DPS)]
-		[CustomComboInfo("Circle of Scorn", "", PLD.JobID)]
-		PLD_AoE_CircleOfScorn = 11023,
+		[CustomComboInfo("Spirits Within / Expiacion", "", PLD.JobID)]
+		PLD_AoE_SpiritsWithin = 11023,
 
 		[ParentCombo(PLD_AoE_DPS)]
 		[CustomComboInfo("Requisecat / Imperator > Blade of Honor", "", PLD.JobID)]
@@ -119,8 +119,8 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Requiescat / Imperator > Confiteor > Faith > Truth > Valor > Honor", "", PLD.JobID)]
 		PLD_Blades = 11040,
 
-		[ReplaceSkill(PLD.SpiritsWithin, PLD.Expiacion, PLD.CircleOfScorn)]
-		[CustomComboInfo("Spirits Within & Circle of Scorn", "", PLD.JobID)]
+		[ReplaceSkill(PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
+		[CustomComboInfo("Circle of Scorn & Spirits Within / Expiacion", "", PLD.JobID)]
 		PLD_ExpiScorn = 11041,
 
 		#endregion

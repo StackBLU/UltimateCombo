@@ -39,6 +39,8 @@ namespace UltimateCombo.Combos.PvE
 			Intervene = 16461,
 			Guardian = 36920,
 			BladeOfHonor = 36922,
+			Supplication = 36918,
+			Sepulchre = 36919,
 			Sheltron = 3542;
 
 		public static class Buffs
@@ -87,7 +89,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is FastBlade or RiotBlade or RageOfHalone or RoyalAuthority) && IsEnabled(CustomComboPreset.PLD_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.PLD_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_ST_Invuln) && ActionReady(HallowedGround))
+					if (IsEnabled(CustomComboPreset.PLD_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_ST_Invuln)
+						&& ActionReady(HallowedGround))
 					{
 						return HallowedGround;
 					}
@@ -97,7 +100,7 @@ namespace UltimateCombo.Combos.PvE
 						return HolySpirit;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || WasLastWeaponskill(RoyalAuthority)))
 					{
 						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
 						{
@@ -109,14 +112,15 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Imperator);
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_ST_SpiritsWithin) && ActionReady(OriginalHook(Expiacion)) && InActionRange(OriginalHook(Expiacion)))
-						{
-							return OriginalHook(Expiacion);
-						}
-
 						if (IsEnabled(CustomComboPreset.PLD_ST_CircleOfScorn) && ActionReady(CircleOfScorn) && InMeleeRange())
 						{
 							return CircleOfScorn;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_ST_SpiritsWithin) && ActionReady(OriginalHook(Expiacion))
+							&& InActionRange(OriginalHook(Expiacion)))
+						{
+							return OriginalHook(Expiacion);
 						}
 
 						if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
@@ -150,21 +154,25 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (ActionWatching.NumberOfGcdsUsed > 2)
+					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor))
+						&& HasEffect(Buffs.Requiescat) && LocalPlayer.CurrentMp >= 1000)
 					{
-						if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor)) && HasEffect(Buffs.Requiescat)
-							&& LocalPlayer.CurrentMp >= 1000)
-						{
-							return OriginalHook(Confiteor);
-						}
+						return OriginalHook(Confiteor);
+					}
 
-						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && HasEffect(Buffs.GoringBladeReady))
-						{
-							return GoringBlade;
-						}
+					if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && HasEffect(Buffs.GoringBladeReady)
+						&& WasLastSpell(BladeOfValor))
+					{
+						return GoringBlade;
+					}
 
+					if ((!HasEffect(Buffs.FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) > 5)
+						|| (GetCooldownRemainingTime(OriginalHook(Imperator)) > 20 && !HasEffect(Buffs.Requiescat))
+						|| (lastComboActionID is RiotBlade && HasEffect(Buffs.SepulchreReady))
+						|| HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady))
+					{
 						if (IsEnabled(CustomComboPreset.PLD_ST_Atonement) && ActionReady(OriginalHook(Atonement))
-							&& (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady)))
+						&& (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady)))
 						{
 							return OriginalHook(Atonement);
 						}
@@ -190,8 +198,10 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(RoyalAuthority);
 						}
 					}
+
 					return FastBlade;
 				}
+
 				return actionID;
 			}
 		}
@@ -204,12 +214,14 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is TotalEclipse or Prominence) && IsEnabled(CustomComboPreset.PLD_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_AoE_Invuln) && ActionReady(HallowedGround))
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_AoE_Invuln)
+						&& ActionReady(HallowedGround))
 					{
 						return HallowedGround;
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange()
+						&& !InCombat())
 					{
 						return Intervene;
 					}
@@ -226,14 +238,15 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Imperator);
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_AoE_SpiritsWithin) && ActionReady(OriginalHook(Expiacion)) && InActionRange(OriginalHook(Expiacion)))
-						{
-							return OriginalHook(Expiacion);
-						}
-
 						if (IsEnabled(CustomComboPreset.PLD_AoE_CircleOfScorn) && ActionReady(CircleOfScorn) && InMeleeRange())
 						{
 							return CircleOfScorn;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_AoE_SpiritsWithin) && ActionReady(OriginalHook(Expiacion))
+							&& InActionRange(OriginalHook(Expiacion)))
+						{
+							return OriginalHook(Expiacion);
 						}
 
 						if (IsEnabled(CustomComboPreset.PLD_AoE_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
@@ -267,8 +280,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && HasEffect(Buffs.Requiescat)
-						&& LocalPlayer.CurrentMp >= 1000)
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor))
+						&& HasEffect(Buffs.Requiescat) && LocalPlayer.CurrentMp >= 1000)
 					{
 						return OriginalHook(Confiteor);
 					}
@@ -285,6 +298,7 @@ namespace UltimateCombo.Combos.PvE
 						return Prominence;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -301,11 +315,13 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return OriginalHook(Confiteor);
 					}
+
 					if (ActionReady(OriginalHook(Imperator)))
 					{
 						return OriginalHook(Imperator);
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -316,17 +332,19 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if ((actionID is SpiritsWithin or Expiacion or CircleOfScorn) && IsEnabled(CustomComboPreset.PLD_ExpiScorn))
+				if ((actionID is CircleOfScorn or SpiritsWithin or Expiacion) && IsEnabled(CustomComboPreset.PLD_ExpiScorn))
 				{
-					if (ActionReady(OriginalHook(Expiacion)))
-					{
-						return Expiacion;
-					}
 					if (ActionReady(CircleOfScorn))
 					{
 						return CircleOfScorn;
 					}
+
+					if (ActionReady(OriginalHook(Expiacion)))
+					{
+						return Expiacion;
+					}
 				}
+
 				return actionID;
 			}
 		}
