@@ -32,6 +32,7 @@ namespace UltimateCombo.Combos.PvE
 			MeikyoShisui = 7499,
 			Seigan = 7501,
 			ThirdEye = 7498,
+			Tengentsu = 36962,
 			Iaijutsu = 7867,
 			TsubameGaeshi = 16483,
 			KaeshiHiganbana = 16484,
@@ -95,13 +96,19 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Hakaze or Gyofu or Jinpu or Gekko or Shifu or Kasha or Yukikaze)
 					&& IsEnabled(CustomComboPreset.SAM_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui))
+					if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
+						&& ActionReady(MeikyoShisui))
 					{
 						return MeikyoShisui;
 					}
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
 					{
+						if (IsEnabled(CustomComboPreset.SAM_ST_Shield) && ActionReady(OriginalHook(ThirdEye)))
+						{
+							return OriginalHook(ThirdEye);
+						}
+
 						if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;
@@ -217,6 +224,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 					}
+
 					return OriginalHook(Hakaze);
 				}
 
@@ -232,13 +240,19 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Fuga or Fuko or Mangetsu or Oka) && IsEnabled(CustomComboPreset.SAM_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui))
+					if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
+						&& ActionReady(MeikyoShisui))
 					{
 						return MeikyoShisui;
 					}
 
 					if (CanWeave(actionID))
 					{
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Shield) && ActionReady(OriginalHook(ThirdEye)))
+						{
+							return OriginalHook(ThirdEye);
+						}
+
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;

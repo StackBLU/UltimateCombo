@@ -15,6 +15,7 @@ namespace UltimateCombo.Combos.PvE
 		internal const uint
 			Malefic = 3596,
 			Malefic2 = 3598,
+			EarthlyStar = 7439,
 			Malefic3 = 7442,
 			Malefic4 = 16555,
 			FallMalefic = 25871,
@@ -135,9 +136,9 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Malefic or Malefic2 or Malefic3 or Malefic4 or FallMalefic) && IsEnabled(CustomComboPreset.AST_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+					if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) && ActionReady(EarthlyStar) && !InCombat())
 					{
-						return All.LucidDreaming;
+						return EarthlyStar;
 					}
 
 					if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
@@ -150,12 +151,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_ST_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
@@ -211,6 +206,11 @@ namespace UltimateCombo.Combos.PvE
 							return Oracle;
 						}
 
+						if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) && ActionReady(EarthlyStar))
+						{
+							return EarthlyStar;
+						}
+
 						if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
 						{
 							return SunSign;
@@ -244,19 +244,13 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Gravity or Gravity2) && IsEnabled(CustomComboPreset.AST_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
+					if (IsEnabled(CustomComboPreset.AST_AoE_DPS_EarthlyStar) && ActionReady(EarthlyStar) && !InCombat())
 					{
-						return All.LucidDreaming;
+						return EarthlyStar;
 					}
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.AST_AoE_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed)
 							&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
 							&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving))
@@ -317,6 +311,11 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
 						{
 							return Oracle;
+						}
+
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_EarthlyStar) && ActionReady(EarthlyStar))
+						{
+							return EarthlyStar;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))

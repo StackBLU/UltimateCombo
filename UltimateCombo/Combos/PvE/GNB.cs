@@ -92,14 +92,23 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is KeenEdge or BrutalShell or SolidBarrel) && IsEnabled(CustomComboPreset.GNB_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.GNB_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_ST_Invuln) && ActionReady(Superbolide))
+					if (IsEnabled(CustomComboPreset.GNB_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_ST_Invuln)
+						&& ActionReady(Superbolide))
 					{
 						return Superbolide;
 					}
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
 					{
-						if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0)
+						if (ActionReady(Continuation)
+							&& (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)
+							|| HasEffect(Buffs.ReadyToGouge) || HasEffect(Buffs.ReadyToBlast)))
+						{
+							return OriginalHook(Continuation);
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
+							&& (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
 						{
 							return Bloodfest;
 						}
@@ -129,13 +138,6 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (ActionReady(Continuation)
-						&& (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)
-						|| HasEffect(Buffs.ReadyToGouge) || HasEffect(Buffs.ReadyToBlast)))
-					{
-						return OriginalHook(Continuation);
-					}
-
 					if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0
 						&& Gauge.AmmoComboStep == 0)
 					{
@@ -158,8 +160,9 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(GnashingFang);
 					}
 
-					if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts) && HasEffect(Buffs.NoMercy)
-						&& (HasEffect(Buffs.ReadyToReign) || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
+					if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts)
+						&& ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
+						|| WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
 					{
 						return OriginalHook(ReignOfBeasts);
 					}
@@ -184,8 +187,10 @@ namespace UltimateCombo.Combos.PvE
 							return SolidBarrel;
 						}
 					}
+
 					return KeenEdge;
 				}
+
 				return actionID;
 			}
 		}
@@ -212,7 +217,13 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0)
+						if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToRaze))
+						{
+							return OriginalHook(Continuation);
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
+							&& (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
 						{
 							return Bloodfest;
 						}
@@ -239,18 +250,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToRaze))
-					{
-						return OriginalHook(Continuation);
-					}
-
 					if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2)
 					{
 						return DoubleDown;
 					}
 
 					if (IsEnabled(CustomComboPreset.GNB_AoE_Bloodfest) && ActionReady(ReignOfBeasts)
-						&& (HasEffect(Buffs.ReadyToReign) || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
+						&& ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
+						|| WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
 					{
 						return OriginalHook(ReignOfBeasts);
 					}
@@ -267,6 +274,7 @@ namespace UltimateCombo.Combos.PvE
 						return DemonSlaughter;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -284,6 +292,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}

@@ -99,19 +99,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Stone1 or Stone2 or Stone3 or Stone4 or Glare1 or Glare3) && IsEnabled(CustomComboPreset.WHM_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
-						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.WHM_ST_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
 						{
 							return PresenceOfMind;
@@ -172,19 +161,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Holy or Holy3) && IsEnabled(CustomComboPreset.WHM_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.WHM_AoE_DPS_Lucid) && CanWeave(actionID))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
 						{
 							return PresenceOfMind;

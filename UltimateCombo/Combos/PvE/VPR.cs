@@ -81,7 +81,7 @@ namespace UltimateCombo.Combos.PvE
 				HonedSteel = 3672;
 		}
 
-		private static VPRGauge Gauge
+		public static VPRGauge Gauge
 		{
 			get
 			{

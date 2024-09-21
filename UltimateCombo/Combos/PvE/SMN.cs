@@ -120,11 +120,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Ruin or Ruin2 or Ruin3) && IsEnabled(CustomComboPreset.SMN_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SMN_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (IsEnabled(CustomComboPreset.SMN_ST_Reminder) && !HasPetPresent())
 					{
 						return SummonCarbuncle;
@@ -165,12 +160,6 @@ namespace UltimateCombo.Combos.PvE
 							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
 						{
 							return OriginalHook(EnkindleBahamut);
-						}
-
-						if (IsEnabled(CustomComboPreset.SMN_ST_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SMN_ST_Lucid))
-						{
-							return All.LucidDreaming;
 						}
 					}
 
@@ -248,11 +237,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Outburst or Tridisaster) && IsEnabled(CustomComboPreset.SMN_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (IsEnabled(CustomComboPreset.SMN_AoE_Reminder) && !HasPetPresent())
 					{
 						return SummonCarbuncle;
@@ -293,12 +277,6 @@ namespace UltimateCombo.Combos.PvE
 							&& (WasLastSpell(AstralFlare) || WasLastSpell(BrandOfPurgatory) || WasLastSpell(UmbralFlare)))
 						{
 							return OriginalHook(EnkindleBahamut);
-						}
-
-						if (IsEnabled(CustomComboPreset.SMN_AoE_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SMN_ST_Lucid))
-						{
-							return All.LucidDreaming;
 						}
 					}
 

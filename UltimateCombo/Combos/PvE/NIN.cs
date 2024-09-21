@@ -107,7 +107,7 @@ namespace UltimateCombo.Combos.PvE
 				{ Dokumori, Debuffs.Dokumori }
 			};
 
-		private static NINGauge Gauge
+		public static NINGauge Gauge
 		{
 			get
 			{
@@ -321,8 +321,9 @@ namespace UltimateCombo.Combos.PvE
 						if (lastComboActionID is GustSlash)
 						{
 							if (ActionReady(AeolianEdge)
+								&& ((Gauge.Kazematoi >= 1
 								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])
-								|| EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 10
+								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 10 && EnemyHealthCurrentHp() != 44)))
 								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
 							{
 								return AeolianEdge;

@@ -104,19 +104,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Ruin or Broil or Broil2 or Broil3 or Broil4) && IsEnabled(CustomComboPreset.SCH_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SCH_ST_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
 							&& Gauge.SeraphTimer < 5000)
 						{
@@ -187,19 +176,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is ArtOfWar or ArtOfWarII) && IsEnabled(CustomComboPreset.SCH_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SCH_AoE_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
 						{
 							return Aetherflow;

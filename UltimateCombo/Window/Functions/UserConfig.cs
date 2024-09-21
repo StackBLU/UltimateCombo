@@ -1174,19 +1174,34 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, All.Config.All_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
+			if (preset is CustomComboPreset.All_SecondWind && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, All.Config.All_SecondWind, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.All_Bloodbath && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, All.Config.All_Bloodbath, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.All_Healer_Lucid && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 10000, All.Config.All_Healer_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+			}
+
+			if (preset is CustomComboPreset.All_Mage_Lucid && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 10000, All.Config.All_Mage_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+			}
+
+			if (preset is CustomComboPreset.All_BLU_Lucid && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 10000, All.Config.All_BLU_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
+			}
+
 			#endregion
 
 			#region ASTROLOGIAN
-
-			if (preset is CustomComboPreset.AST_ST_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, AST.Config.AST_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
-
-			if (preset is CustomComboPreset.AST_AoE_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, AST.Config.AST_AoE_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			if (preset is CustomComboPreset.AST_ST_DPS_AutoDraw && enabled)
 			{
@@ -1346,15 +1361,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region PICTOMANCER
 
-			if (preset is CustomComboPreset.PCT_ST_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_ST_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
-			if (preset is CustomComboPreset.PCT_AoE_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, PCT.Config.PCT_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			#endregion
 
@@ -1400,29 +1407,11 @@ namespace UltimateCombo.Window.Functions
 
 			#region RED MAGE
 
-			if (preset is CustomComboPreset.RDM_ST_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, RDM.Config.RDM_ST_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
-			if (preset is CustomComboPreset.RDM_AoE_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, RDM.Config.RDM_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			#endregion
 
 			#region SAGE
-
-			if (preset is CustomComboPreset.SGE_ST_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SGE.Config.SGE_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
-
-			if (preset is CustomComboPreset.SGE_AoE_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SGE.Config.SGE_AoE_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			if (preset is CustomComboPreset.SGE_ST_DPS_Rhizo && enabled)
 			{
@@ -1454,29 +1443,13 @@ namespace UltimateCombo.Window.Functions
 
 			#region SCHOLAR
 
-			if (preset is CustomComboPreset.SCH_ST_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SCH.Config.SCH_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
-			if (preset is CustomComboPreset.SCH_AoE_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SCH.Config.SCH_AoE_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			#endregion
 
 			#region SUMMONER
 
-			if (preset == CustomComboPreset.SMN_ST_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SMN.Config.SMN_ST_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
-			if (preset == CustomComboPreset.SMN_AoE_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, SMN.Config.SMN_AoE_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			#endregion
 
@@ -1516,16 +1489,6 @@ namespace UltimateCombo.Window.Functions
 			#endregion
 
 			#region WHITE MAGE
-
-			if (preset == CustomComboPreset.WHM_ST_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, WHM.Config.WHM_ST_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
-
-			if (preset == CustomComboPreset.WHM_AoE_DPS_Lucid && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, WHM.Config.WHM_AoE_DPS_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
-			}
 
 			if (preset == CustomComboPreset.WHM_Raise && enabled)
 			{

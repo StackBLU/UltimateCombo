@@ -179,8 +179,7 @@ namespace UltimateCombo.Combos.PvE
 						return Perfectio;
 					}
 
-					if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) && ActionReady(Gibbet)
-						&& (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)))
+					if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) && (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)))
 					{
 						if (HasEffect(Buffs.EnhancedGibbet))
 						{

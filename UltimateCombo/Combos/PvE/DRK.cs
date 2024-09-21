@@ -137,7 +137,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn) && ActionWatching.NumberOfGcdsUsed >= 2
-						&& HasEffect(Buffs.Delirium))
+						&& (HasEffect(Buffs.Delirium) || GetBuffRemainingTime(Buffs.Scorn) <= 3))
 					{
 						return Disesteem;
 					}

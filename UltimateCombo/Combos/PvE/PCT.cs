@@ -88,11 +88,6 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Fire or Aero or Water or Blizzard or Stone or Thunder)
 					&& IsEnabled(CustomComboPreset.PCT_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.PCT_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
 						if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && !Gauge.CreatureMotifDrawn)
@@ -178,12 +173,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return All.Swiftcast;
 						}
-
-						if (IsEnabled(CustomComboPreset.PCT_ST_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.PCT_ST_Lucid))
-						{
-							return All.LucidDreaming;
-						}
 					}
 
 					if (IsEnabled(CustomComboPreset.PCT_ST_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck)
@@ -260,11 +249,6 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Fire2 or Aero2 or Water2 or Blizzard2 or Stone2 or Thunder2)
 					&& IsEnabled(CustomComboPreset.PCT_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.PCT_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
 						if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && !Gauge.CreatureMotifDrawn)
@@ -349,12 +333,6 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving)
 						{
 							return All.Swiftcast;
-						}
-
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.PCT_AoE_Lucid))
-						{
-							return All.LucidDreaming;
 						}
 					}
 

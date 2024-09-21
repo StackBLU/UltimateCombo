@@ -518,16 +518,9 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is GoblinPunch or SonicBoom or ChocoMeteor) && IsEnabled(CustomComboPreset.BLU_ManaGain) && !HasEffect(Buffs.PhantomFlurry))
+				if ((actionID is GoblinPunch or SonicBoom or ChocoMeteor) && IsEnabled(CustomComboPreset.BLU_ManaGain)
+					&& !HasEffect(Buffs.PhantomFlurry))
 				{
-					if (ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-					if (ActionReady(All.LucidDreaming) && CanWeave(actionID) && LocalPlayer.CurrentMp <= GetOptionValue(Config.BLU_Lucid))
-					{
-						return All.LucidDreaming;
-					}
 					if (LocalPlayer.CurrentMp <= GetOptionValue(Config.BLU_ManaGain) && IsSpellActive(BloodDrain))
 					{
 						return BloodDrain;

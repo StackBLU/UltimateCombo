@@ -452,10 +452,6 @@ namespace UltimateCombo.Combos
 		WHM_ST_DPS_Misery_Save = 19006,
 
 		[ParentCombo(WHM_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", WHM.JobID)]
-		WHM_ST_DPS_Lucid = 19007,
-
-		[ParentCombo(WHM_ST_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", WHM.JobID)]
 		WHM_ST_DPS_Swiftcast = 19008,
 
@@ -486,10 +482,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(WHM_AoE_DPS_Misery)]
 		[CustomComboInfo("Save Misery", "", WHM.JobID)]
 		WHM_AoE_DPS_Misery_Save = 19025,
-
-		[ParentCombo(WHM_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", WHM.JobID)]
-		WHM_AoE_DPS_Lucid = 19026,
 
 		[ParentCombo(WHM_AoE_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", WHM.JobID)]
@@ -607,10 +599,6 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Fairy Reminder", "", SCH.JobID)]
 		SCH_ST_DPS_Fairy = 16008,
 
-		[ParentCombo(SCH_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SCH.JobID)]
-		SCH_ST_DPS_Lucid = 16009,
-
 		#endregion
 
 		#region AoE DPS
@@ -630,10 +618,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SCH_AoE_DPS)]
 		[CustomComboInfo("Fairy Reminder", "", SCH.JobID)]
 		SCH_AoE_DPS_Fairy = 16023,
-
-		[ParentCombo(SCH_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SCH.JobID)]
-		SCH_AoE_DPS_Lucid = 16024,
 
 		#endregion
 
@@ -676,24 +660,24 @@ namespace UltimateCombo.Combos
 		AST_ST_DPS_MinorArcana = 1004,
 
 		[ParentCombo(AST_ST_DPS)]
+		[CustomComboInfo("Earthly Star", "", AST.JobID)]
+		AST_ST_DPS_EarthlyStar = 1005,
+
+		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_ST_DPS_Lightspeed = 1005,
+		AST_ST_DPS_Lightspeed = 1006,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_ST_DPS_Divination = 1006,
+		AST_ST_DPS_Divination = 1007,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_ST_DPS_SunSign = 1007,
-
-		[ParentCombo(AST_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_ST_DPS_Lucid = 1008,
+		AST_ST_DPS_SunSign = 1008,
 
 		[ParentCombo(AST_ST_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_ST_DPS_Swiftcast = 1009,
+		AST_ST_DPS_Swiftcast = 1010,
 
 		#endregion
 
@@ -716,24 +700,24 @@ namespace UltimateCombo.Combos
 		AST_AoE_DPS_MinorArcana = 1023,
 
 		[ParentCombo(AST_AoE_DPS)]
+		[CustomComboInfo("Earthly Star", "", AST.JobID)]
+		AST_AoE_DPS_EarthlyStar = 1024,
+
+		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Lightspeed", "", AST.JobID)]
-		AST_AoE_DPS_Lightspeed = 1024,
+		AST_AoE_DPS_Lightspeed = 1025,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Divination > Oracle", "", AST.JobID)]
-		AST_AoE_DPS_Divination = 1025,
+		AST_AoE_DPS_Divination = 1026,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Sun Sign", "", AST.JobID)]
-		AST_AoE_DPS_SunSign = 1026,
-
-		[ParentCombo(AST_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", AST.JobID)]
-		AST_AoE_DPS_Lucid = 1027,
+		AST_AoE_DPS_SunSign = 1027,
 
 		[ParentCombo(AST_AoE_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-		AST_AoE_DPS_Swiftcast = 1028,
+		AST_AoE_DPS_Swiftcast = 1029,
 
 		#endregion
 
@@ -832,10 +816,6 @@ namespace UltimateCombo.Combos
 		SGE_ST_DPS_Kardia = 14008,
 
 		[ParentCombo(SGE_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SGE.JobID)]
-		SGE_ST_DPS_Lucid = 14009,
-
-		[ParentCombo(SGE_ST_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", SGE.JobID)]
 		SGE_ST_DPS_Swiftcast = 14010,
 
@@ -874,10 +854,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SGE_AoE_DPS)]
 		[CustomComboInfo("Kardia", "", SGE.JobID)]
 		SGE_AoE_DPS_Kardia = 14027,
-
-		[ParentCombo(SGE_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SGE.JobID)]
-		SGE_AoE_DPS_Lucid = 14028,
 
 		#endregion
 
@@ -1242,6 +1218,10 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Ogi Namikiri > Kaeshi Namikiri", "", SAM.JobID)]
 		SAM_ST_Kaeshi = 15009,
 
+		[ParentCombo(SAM_ST_DPS)]
+		[CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
+		SAM_ST_Shield = 15010,
+
 		#endregion
 
 		#region AoE DPS
@@ -1281,6 +1261,10 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SAM_AoE_DPS)]
 		[CustomComboInfo("Ogi Namikiri > Kaeshi Namikiri", "", SAM.JobID)]
 		SAM_AoE_Kaeshi = 15028,
+
+		[ParentCombo(SAM_AoE_DPS)]
+		[CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
+		SAM_AoE_Shield = 15029,
 
 		#endregion
 
@@ -1942,10 +1926,6 @@ namespace UltimateCombo.Combos
 		SMN_ST_SearingLight = 17008,
 
 		[ParentCombo(SMN_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_ST_Lucid = 17009,
-
-		[ParentCombo(SMN_ST_DPS)]
 		[CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
 		SMN_ST_Reminder = 17010,
 
@@ -1988,10 +1968,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SMN_AoE_DPS)]
 		[CustomComboInfo("Searing Light > Searing Flash", "", SMN.JobID)]
 		SMN_AoE_SearingLight = 17028,
-
-		[ParentCombo(SMN_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", SMN.JobID)]
-		SMN_AoE_Lucid = 17029,
 
 		[ParentCombo(SMN_AoE_DPS)]
 		[CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
@@ -2066,10 +2042,6 @@ namespace UltimateCombo.Combos
 		RDM_ST_Swift = 13009,
 
 		[ParentCombo(RDM_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", RDM.JobID)]
-		RDM_ST_Lucid = 13010,
-
-		[ParentCombo(RDM_ST_DPS)]
 		[CustomComboInfo("Verthunder & Veraero Start", "", RDM.JobID)]
 		RDM_ST_Opener = 13011,
 
@@ -2112,10 +2084,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(RDM_AoE_DPS)]
 		[CustomComboInfo("Swiftcast", "", RDM.JobID)]
 		RDM_AoE_Swift = 13028,
-
-		[ParentCombo(RDM_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", RDM.JobID)]
-		RDM_AoE_Lucid = 13029,
 
 		#endregion
 
@@ -2181,10 +2149,6 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Swiftcast Movement", "", PCT.JobID)]
 		PCT_ST_Swiftcast = 20009,
 
-		[ParentCombo(PCT_ST_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", PCT.JobID)]
-		PCT_ST_Lucid = 20010,
-
 		#endregion
 
 		#region AoE DPS
@@ -2228,10 +2192,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(PCT_AoE_DPS)]
 		[CustomComboInfo("Swiftcast Movement", "", PCT.JobID)]
 		PCT_AoE_Swiftcast = 20029,
-
-		[ParentCombo(PCT_AoE_DPS)]
-		[CustomComboInfo("Lucid Dreaming", "", PCT.JobID)]
-		PCT_AoE_Lucid = 20030,
 
 		#endregion
 
@@ -2298,7 +2258,7 @@ namespace UltimateCombo.Combos
 
 		[BlueInactive(BLU.GoblinPunch, BLU.BloodDrain, BLU.ChocoMeteor)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor)]
-		[CustomComboInfo("Lucid Dreaming and Blood Drain", "", BLU.JobID)]
+		[CustomComboInfo("Blood Drain", "", BLU.JobID)]
 		BLU_ManaGain = 70031,
 
 		[BlueInactive(BLU.AngelWhisper)]
@@ -2873,6 +2833,8 @@ namespace UltimateCombo.Combos
 
 		#region ALL - 100000
 
+		#region Protections
+
 		[ReplaceSkill(All.Reprisal)]
 		[CustomComboInfo("Reprisal Protection", "", All.JobID)]
 		All_Tank_Reprisal = 100001,
@@ -2897,28 +2859,76 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Raise Protection", "", All.JobID)]
 		All_Raise_Protection = 100006,
 
+		#endregion
+
+		#region Role Actions
+
+		[CustomComboInfo("Role Actions - Only takes effect after 15 GCDs currently (after your opener, ideally)", "", All.JobID)]
+		All_RoleActions = 100020,
+
+		[ReplaceSkill(All.TrueNorth)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("True North", "", All.JobID)]
+		All_TrueNorth = 100021,
+
+		[ReplaceSkill(All.SecondWind)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Second Wind", "", All.JobID)]
+		All_SecondWind = 100022,
+
+		[ReplaceSkill(All.Bloodbath)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Bloodbath", "", All.JobID)]
+		All_Bloodbath = 100023,
+
+		[ReplaceSkill(All.LucidDreaming)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
+		All_Healer_Lucid = 100024,
+
+		[ReplaceSkill(All.LucidDreaming)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
+		All_Mage_Lucid = 100025,
+
+		[ReplaceSkill(All.LucidDreaming)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
+		All_BLU_Lucid = 100026,
+
+		[ReplaceSkill(All.ArmsLength)]
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Arm's Length", "", All.JobID)]
+		All_ArmsLength = 100027,
+
+		#endregion
+
+		#region Variant
+
 		[CustomComboInfo("Variant Dungeon Skills", "", All.JobID)]
-		All_Variant = 100007,
+		All_Variant = 100040,
 
 		[ReplaceSkill(Variant.VariantCure_Image)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Cure", "", All.JobID)]
-		All_Variant_Cure = 100008,
+		All_Variant_Cure = 100041,
 
 		[ReplaceSkill(Variant.VariantUltimatum)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
-		All_Variant_Ultimatum = 100009,
+		All_Variant_Ultimatum = 100042,
 
 		[ReplaceSkill(Variant.VariantSpiritDart_Image)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
-		All_Variant_SpiritDart = 100010,
+		All_Variant_SpiritDart = 100043,
 
 		[ReplaceSkill(Variant.VariantRampart_Image)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Rampart", "", All.JobID)]
-		All_Variant_Rampart = 100011,
+		All_Variant_Rampart = 100044,
+
+		#endregion
 
 		#endregion
 

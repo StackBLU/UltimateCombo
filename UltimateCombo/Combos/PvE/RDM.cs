@@ -110,11 +110,6 @@ namespace UltimateCombo.Combos.PvE
 						ActionWatching.LastWeaponskill = 0;
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_ST_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat()
 						&& !HasEffect(Buffs.MagickedSwordPlay) && Gauge.ManaStacks == 0)
 					{
@@ -185,12 +180,6 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && HasEffect(Buffs.PrefulugenceReady))
 						{
 							return Prefulgence;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_ST_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.RDM_ST_Lucid))
-						{
-							return All.LucidDreaming;
 						}
 					}
 
@@ -313,11 +302,6 @@ namespace UltimateCombo.Combos.PvE
 						ActionWatching.LastWeaponskill = 0;
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_AoE_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID)
 						&& (!WasLastWeaponskill(EnchantedMoulinet) || (WasLastWeaponskill(EnchantedMoulinet)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
@@ -375,12 +359,6 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Contre) && ActionReady(ContreSixte))
 						{
 							return ContreSixte;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_AoE_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.RDM_AoE_Lucid))
-						{
-							return All.LucidDreaming;
 						}
 					}
 

@@ -1,11 +1,11 @@
 using Dalamud.Hooking;
 using FFXIVClientStructs.FFXIV.Client.Game;
-using UltimateCombo.CustomCombo;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UltimateCombo.CustomCombo;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Core
 {

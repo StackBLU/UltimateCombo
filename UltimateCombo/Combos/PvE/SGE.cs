@@ -121,19 +121,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dosis or Dosis2 or Dosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
 					{
-						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Lucid) && ActionReady(All.LucidDreaming)
-						&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_ST_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
 							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || !IsInParty()))
 						{
@@ -204,19 +193,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dyskrasia or Dyskrasia2) && IsEnabled(CustomComboPreset.SGE_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming) && LocalPlayer.CurrentMp <= 1000)
-					{
-						return All.LucidDreaming;
-					}
-
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Lucid) && ActionReady(All.LucidDreaming)
-							&& LocalPlayer.CurrentMp <= GetOptionValue(Config.SGE_AoE_DPS_Lucid))
-						{
-							return All.LucidDreaming;
-						}
-
 						if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
 							&& !TargetsTargetHasEffect(Buffs.Kardion))
 						{

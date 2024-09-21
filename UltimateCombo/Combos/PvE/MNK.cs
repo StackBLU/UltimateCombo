@@ -53,7 +53,7 @@ namespace UltimateCombo.Combos.PvE
 				TwinSnakes = 101,
 				OpoOpoForm = 107,
 				RaptorForm = 108,
-				CoerlForm = 109,
+				CoeurlForm = 109,
 				PerfectBalance = 110,
 				RiddleOfFire = 1181,
 				LeadenFist = 1861,
@@ -64,7 +64,7 @@ namespace UltimateCombo.Combos.PvE
 				FiresRumination = 3843;
 		}
 
-		private static MNKGauge Gauge
+		public static MNKGauge Gauge
 		{
 			get
 			{
@@ -94,7 +94,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist) && Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange()
 						&& (!InCombat() || (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm)
-						&& !HasEffect(Buffs.CoerlForm) && !HasEffect(Buffs.PerfectBalance))))
+						&& !HasEffect(Buffs.CoeurlForm) && !HasEffect(Buffs.PerfectBalance))))
 					{
 						return FormShift;
 					}
@@ -237,7 +237,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (HasEffect(Buffs.CoerlForm))
+					if (HasEffect(Buffs.CoeurlForm))
 					{
 						if ((ActionReady(OriginalHook(SnapPunch)) && Gauge.CoeurlFury >= 1) || !LevelChecked(Demolish))
 						{
@@ -279,7 +279,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist) && Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange()
 						&& (!InCombat() || (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm)
-						&& !HasEffect(Buffs.CoerlForm) && !HasEffect(Buffs.PerfectBalance))))
+						&& !HasEffect(Buffs.CoeurlForm) && !HasEffect(Buffs.PerfectBalance))))
 					{
 						return FormShift;
 					}
@@ -381,7 +381,7 @@ namespace UltimateCombo.Combos.PvE
 						return FourPointFury;
 					}
 
-					if (ActionReady(Rockbreaker) && HasEffect(Buffs.CoerlForm))
+					if (ActionReady(Rockbreaker) && HasEffect(Buffs.CoeurlForm))
 					{
 						return Rockbreaker;
 					}

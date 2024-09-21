@@ -2,11 +2,11 @@
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
-using UltimateCombo.Data;
-using UltimateCombo.Services;
 using System;
 using System.Linq;
 using System.Numerics;
+using UltimateCombo.Data;
+using UltimateCombo.Services;
 using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
 
 namespace UltimateCombo.ComboHelper.Functions
@@ -139,7 +139,7 @@ namespace UltimateCombo.ComboHelper.Functions
 			}
 			//AI
 			return OurTarget is IBattleNpc
-&& (OurTarget as IBattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
+				   && (OurTarget as IBattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
 		}
 
 		/// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
@@ -211,8 +211,8 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool TargetNeedsPositionals()
 		{
-			return HasBattleTarget()
-&& ActionWatching.BNpcSheet.TryGetValue(CurrentTarget.DataId, out Lumina.Excel.GeneratedSheets.BNpcBase? bnpc) && !bnpc.Unknown10;
+			return HasBattleTarget() && ActionWatching.BNpcSheet.TryGetValue(CurrentTarget.DataId,
+				out Lumina.Excel.GeneratedSheets.BNpcBase? bnpc) && !bnpc.Unknown10;
 		}
 
 		/// <summary> Attempts to target the given party member </summary>

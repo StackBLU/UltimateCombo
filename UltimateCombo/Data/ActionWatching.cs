@@ -1,16 +1,18 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using Lumina.Excel.GeneratedSheets;
-using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Data
 {
@@ -223,6 +225,19 @@ namespace UltimateCombo.Data
 			SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
 		}
 
+		public static async Task CheckWeaponSheathedAsync()
+		{
+			await Task.Delay(7500);
+			if (!CustomComboFunctions.LocalPlayer.StatusFlags.HasFlag(StatusFlags.WeaponOut))
+			{
+				CombatActions.Clear();
+				LastAbility = 0;
+				LastAction = 0;
+				LastWeaponskill = 0;
+				LastSpell = 0;
+				Service.ChatGui.Print("Combat instance reset!");
+			}
+		}
 
 		public static void Enable()
 		{
@@ -233,13 +248,9 @@ namespace UltimateCombo.Data
 
 		private static void ResetActions(ConditionFlag flag, bool value)
 		{
-			if (flag == ConditionFlag.InCombat && !value)
+			if (flag == ConditionFlag.InCombat && value == false)
 			{
-				CombatActions.Clear();
-				LastAbility = 0;
-				LastAction = 0;
-				LastWeaponskill = 0;
-				LastSpell = 0;
+				_ = CheckWeaponSheathedAsync();
 			}
 		}
 
@@ -287,6 +298,7 @@ namespace UltimateCombo.Data
 
 			return $"#{index} ";
 		}
+
 		public static string GetStatusName(uint id)
 		{
 			return StatusSheet.TryGetValue(id, out Lumina.Excel.GeneratedSheets.Status? status) ? (string)status.Name : "Unknown Status";

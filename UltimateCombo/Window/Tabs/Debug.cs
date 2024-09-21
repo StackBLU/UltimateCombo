@@ -1,14 +1,14 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using ImGuiNET;
+using System;
+using System.Linq;
+using System.Numerics;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
-using System;
-using System.Linq;
-using System.Numerics;
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace UltimateCombo.Window.Tabs
@@ -52,6 +52,7 @@ namespace UltimateCombo.Window.Tabs
 				ImGui.TextUnformatted($"Target Object Kind: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
 				ImGui.TextUnformatted($"Target is Battle Char: {Service.ClientState.LocalPlayer.TargetObject is IBattleChara}");
 				ImGui.TextUnformatted($"In Combat: {CustomComboFunctions.InCombat()}");
+				ImGui.TextUnformatted($"Combo Time: {Math.Round(CustomComboFunctions.ComboTimer, 2)}");
 				ImGui.TextUnformatted($"# of GCDs used: {ActionWatching.NumberOfGcdsUsed}");
 				ImGui.TextUnformatted($"In Melee Range: {CustomComboFunctions.InMeleeRange()}");
 				ImGui.TextUnformatted($"Distance from Target: {CustomComboFunctions.GetTargetDistance()}");

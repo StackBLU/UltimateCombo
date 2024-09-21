@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using UltimateCombo.Services;
 using System.IO;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Data
 {
@@ -28,7 +28,7 @@ namespace UltimateCombo.Data
 
 		}
 
-		public static bool IsFromSlothRepo()
+		public static bool IsFromUltimateRepo()
 		{
 			RepoCheck? repo = FetchCurrentRepo();
 			return repo is not null

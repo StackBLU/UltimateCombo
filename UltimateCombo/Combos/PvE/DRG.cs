@@ -167,6 +167,7 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return OriginalHook(Disembowel);
 							}
+
 							return OriginalHook(VorpalThrust);
 						}
 
@@ -174,6 +175,7 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(ChaosThrust);
 						}
+
 						if ((lastComboMove is ChaosThrust or ChaoticSpring) && ActionReady(WheelingThrust))
 						{
 							return WheelingThrust;
