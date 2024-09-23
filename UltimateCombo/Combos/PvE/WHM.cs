@@ -83,11 +83,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			internal static UserInt
-				WHM_ST_DPS_Lucid = new("WHM_ST_DPS_Lucid", 7500),
-				WHM_AoE_DPS_Lucid = new("WHM_AoE_DPS_Lucid", 7500);
 			internal static UserBool
-				WHM_ST_Heals_TetraWeave = new("WHM_ST_Heals_TetraWeave"),
 				WHM_Raise_ThinAir = new("WHM_Raise_ThinAir");
 		}
 

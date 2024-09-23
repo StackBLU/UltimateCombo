@@ -104,8 +104,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				BLM_Variant_Cure = new("BLM_Variant_Cure", 50);
+
 		}
 
 		public static PublicContentBozja BozjaContent = new();

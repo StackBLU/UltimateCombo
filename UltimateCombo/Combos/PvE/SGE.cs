@@ -99,19 +99,10 @@ namespace UltimateCombo.Combos.PvE
 		public static class Config
 		{
 			public static UserInt
-				SGE_ST_DPS_Lucid = new("SGE_ST_DPS_Lucid", 7500),
 				SGE_ST_DPS_Rhizo = new("SGE_ST_DPS_Rhizo", 0),
 				SGE_ST_DPS_AddersgallProtect = new("SGE_ST_DPS_AddersgallProtect", 3),
-				SGE_AoE_DPS_Lucid = new("SGE_AoE_Phlegma_Lucid", 7500),
 				SGE_AoE_DPS_Rhizo = new("SGE_AoE_DPS_Rhizo", 0),
 				SGE_AoE_DPS_AddersgallProtect = new("SGE_AoE_DPS_AddersgallProtect", 3);
-		}
-
-		internal static class Traits
-		{
-			internal const ushort
-				EnhancedKerachole = 375,
-				OffensiveMagicMasteryII = 376;
 		}
 
 		internal class SGE_ST_DPS : CustomComboClass

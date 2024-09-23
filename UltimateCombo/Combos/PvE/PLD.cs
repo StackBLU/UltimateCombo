@@ -77,8 +77,7 @@ namespace UltimateCombo.Combos.PvE
 				PLD_AoE_Sheltron = new("PLD_AoE_Sheltron", 100),
 				PLD_AoE_Intervention = new("PLD_AoE_Intervention", 50),
 				PLD_ST_Invuln = new("PLD_ST_Invuln", 10),
-				PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10),
-				PLD_Variant_Cure = new("PLD_Variant_Cure", 50);
+				PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10);
 		}
 
 		internal class PLD_ST_DPS : CustomComboClass
@@ -123,34 +122,38 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Expiacion);
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
+						if (GetCooldownRemainingTime(CircleOfScorn) > 2 && GetCooldownRemainingTime(OriginalHook(Expiacion)) > 2
+							&& GetCooldownRemainingTime(FightOrFlight) > 2 && GetCooldownRemainingTime(OriginalHook(Imperator)) > 2)
 						{
-							return Intervene;
-						}
-
-						if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && CurrentTarget.TargetObject != LocalPlayer
-							&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
-							&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
-						{
-							if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
-								&& !WasLastAbility(OriginalHook(Sentinel)))
+							if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
 							{
-								return All.Rampart;
+								return Intervene;
 							}
 
-							if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
+							if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && CurrentTarget.TargetObject != LocalPlayer
+								&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
+								&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
 							{
-								return OriginalHook(Sentinel);
+								if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
+									&& !WasLastAbility(OriginalHook(Sentinel)))
+								{
+									return All.Rampart;
+								}
+
+								if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
+								{
+									return OriginalHook(Sentinel);
+								}
+
+								return Intervention;
 							}
 
-							return Intervention;
-						}
-
-						if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) &&
-							ActionReady(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-							Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
-						{
-							return OriginalHook(Sheltron);
+							if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) &&
+								ActionReady(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
+								Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
+							{
+								return OriginalHook(Sheltron);
+							}
 						}
 					}
 

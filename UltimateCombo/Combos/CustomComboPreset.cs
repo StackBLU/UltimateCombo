@@ -2863,7 +2863,7 @@ namespace UltimateCombo.Combos
 
 		#region Role Actions
 
-		[CustomComboInfo("Role Actions - Only takes effect after 15 GCDs currently (after your opener, ideally)", "", All.JobID)]
+		[CustomComboInfo("Role Actions", "", All.JobID)]
 		All_RoleActions = 100020,
 
 		[ReplaceSkill(All.TrueNorth)]

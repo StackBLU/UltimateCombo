@@ -83,8 +83,9 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				SAM_Variant_Cure = new("SAM_Variant_Cure", 50);
+			internal static UserBool
+				SAM_ST_SaveKenkiDash = new("SAM_ST_SaveKenkiDash"),
+				SAM_AoE_SaveKenkiDash = new("SAM_AoE_SaveKenkiDash");
 		}
 
 		internal class SAM_ST_DPS : CustomComboClass
@@ -138,7 +139,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) && ActionReady(Shinten)
-							&& ((Gauge.Kenki >= 25 && (GetCooldownRemainingTime(Ikishoten) > 15 || GetCooldownRemainingTime(Ikishoten) < 5))
+							&& ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
+							|| (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
 							|| Gauge.Kenki == 100))
 						{
 							return Shinten;
@@ -279,8 +281,9 @@ namespace UltimateCombo.Combos.PvE
 							return Guren;
 						}
 
-						if (IsEnabled(CustomComboPreset.SAM_AoE_Kyuten) && ActionReady(Shinten)
-							&& ((Gauge.Kenki >= 25 && (GetCooldownRemainingTime(Ikishoten) > 15 || GetCooldownRemainingTime(Ikishoten) < 5))
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Kyuten) && ActionReady(Kyuten)
+							&& ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
+							|| (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
 							|| Gauge.Kenki == 100))
 						{
 							return Kyuten;

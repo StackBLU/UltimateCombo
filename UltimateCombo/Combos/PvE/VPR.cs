@@ -91,8 +91,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				VPR_Variant_Cure = new("VPR_Variant_Cure", 50);
+
 		}
 
 		internal class VPR_ST_DPS : CustomComboClass
@@ -148,22 +147,22 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) && HasEffect(Buffs.Reawakened))
 					{
-						if (Gauge.AnguineTribute is 5)
+						if (Gauge.AnguineTribute is 5 || (Gauge.AnguineTribute is 4 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(SteelMaw);
 						}
 
-						if (Gauge.AnguineTribute is 4)
+						if (Gauge.AnguineTribute is 4 || (Gauge.AnguineTribute is 3 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(ReavingMaw);
 						}
 
-						if (Gauge.AnguineTribute is 3)
+						if (Gauge.AnguineTribute is 3 || (Gauge.AnguineTribute is 2 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(HuntersDen);
 						}
 
-						if (Gauge.AnguineTribute is 2)
+						if (Gauge.AnguineTribute is 2 || (Gauge.AnguineTribute is 1 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(SwiftskinsDen);
 						}
@@ -335,22 +334,22 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) && HasEffect(Buffs.Reawakened))
 					{
-						if (Gauge.AnguineTribute is 5)
+						if (Gauge.AnguineTribute is 5 || (Gauge.AnguineTribute is 4 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(SteelMaw);
 						}
 
-						if (Gauge.AnguineTribute is 4)
+						if (Gauge.AnguineTribute is 4 || (Gauge.AnguineTribute is 3 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(ReavingMaw);
 						}
 
-						if (Gauge.AnguineTribute is 3)
+						if (Gauge.AnguineTribute is 3 || (Gauge.AnguineTribute is 2 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(HuntersDen);
 						}
 
-						if (Gauge.AnguineTribute is 2)
+						if (Gauge.AnguineTribute is 2 || (Gauge.AnguineTribute is 1 && !LevelChecked(Ouroboros)))
 						{
 							return OriginalHook(SwiftskinsDen);
 						}

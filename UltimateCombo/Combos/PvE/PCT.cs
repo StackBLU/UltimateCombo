@@ -73,10 +73,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				PCT_ST_Lucid = new("PCT_ST_Lucid", 7500),
-				PCT_AoE_Lucid = new("PCT_AoE_Lucid", 7500),
-				PCT_Variant_Cure = new("PCT_Variant_Cure", 50);
+
 		}
 
 		internal class PCT_ST_DPS : CustomComboClass

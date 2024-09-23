@@ -79,8 +79,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				BRD_Variant_Cure = new("BRD_Variant_Cure", 50);
+
 		}
 
 		internal class BRD_ST_DPS : CustomComboClass

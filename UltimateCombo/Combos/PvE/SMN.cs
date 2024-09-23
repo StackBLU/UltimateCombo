@@ -106,10 +106,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				SMN_ST_Lucid = new("SMN_ST_Lucid", 7500),
-				SMN_AoE_Lucid = new("SMN_AoE_Lucid", 7500),
-				SMN_Variant_Cure = new("SMN_Variant_Cure", 50);
+
 		}
 
 		internal class SMN_ST_DPS : CustomComboClass

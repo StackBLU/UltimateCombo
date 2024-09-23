@@ -86,8 +86,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				RPR_Variant_Cure = new("RPR_Variant_Cure", 50);
+
 		}
 
 		internal class RPR_ST_DPS : CustomComboClass

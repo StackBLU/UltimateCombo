@@ -1225,11 +1225,6 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.BLU_ManaGain && enabled)
 			{
-				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_Lucid, "Lucid Dreaming MP Threshold", 150, SliderIncrements.Hundreds);
-			}
-
-			if (preset is CustomComboPreset.BLU_ManaGain && enabled)
-			{
 				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, "Blood Drain MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
@@ -1437,7 +1432,15 @@ namespace UltimateCombo.Window.Functions
 
 			#region SAMURAI
 
+			if (preset is CustomComboPreset.SAM_ST_Shinten && enabled)
+			{
+				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_ST_SaveKenkiDash, "Save 10 Kenki for Gyoten (dash)", "");
+			}
 
+			if (preset is CustomComboPreset.SAM_AoE_Kyuten && enabled)
+			{
+				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_AoE_SaveKenkiDash, "Save 10 Kenki for Gyoten (dash)", "");
+			}
 
 			#endregion
 

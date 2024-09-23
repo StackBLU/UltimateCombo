@@ -1,4 +1,5 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
 
@@ -127,6 +128,31 @@ namespace UltimateCombo.ComboHelper.Functions
 			{
 				return ActionManager.Instance()->Combo.Action;
 			}
+		}
+
+		public static unsafe bool AutoSheatheState()
+		{
+			return UIState.Instance()->WeaponState.AutoSheatheState;
+		}
+
+		public static unsafe float AutoSheathTimer()
+		{
+			return UIState.Instance()->WeaponState.AutoSheathTimer;
+		}
+
+		public static unsafe bool IsAutoAttacking()
+		{
+			return UIState.Instance()->WeaponState.IsAutoAttacking;
+		}
+
+		public static unsafe bool IsUnsheathed()
+		{
+			return UIState.Instance()->WeaponState.IsUnsheathed;
+		}
+
+		public static unsafe float SheatheCooldown()
+		{
+			return UIState.Instance()->WeaponState.SheatheCooldown;
 		}
 
 		public static unsafe bool UseAction(ActionType actionType, uint actionID)

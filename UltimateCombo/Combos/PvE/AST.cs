@@ -120,9 +120,6 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				AST_ST_DPS_Lucid = new("AST_ST_DPS_Lucid", 7500),
-				AST_AoE_DPS_Lucid = new("AST_AoE_DPS_Lucid", 7500);
 			public static UserBool
 				AST_ST_DPS_UseDefenseCards = new("AST_ST_DPS_UseDefenseCards"),
 				AST_AoE_DPS_UseDefenseCards = new("AST_AoE_DPS_UseDefenseCards");

@@ -90,10 +90,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			internal static UserInt
-				RDM_ST_Lucid = new("RDM_ST_Lucid", 7500),
-				RDM_AoE_Lucid = new("RDM_AoE_Lucid", 7500),
-				RDM_Variant_Cure = new("RDM_Variant_Cure", 50);
+
 		}
 
 		internal class RDM_ST_DPS : CustomComboClass

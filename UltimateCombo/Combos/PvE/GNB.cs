@@ -80,8 +80,7 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				GNB_ST_Invuln = new("GNB_ST_Invuln", 10),
-				GNB_AoE_Invuln = new("GNB_AoE_Invuln", 10),
-				GNB_Variant_Cure = new("GNB_Variant_Cure", 50);
+				GNB_AoE_Invuln = new("GNB_AoE_Invuln", 10);
 		}
 
 		internal class GNB_ST_DPS : CustomComboClass

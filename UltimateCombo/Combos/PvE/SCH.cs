@@ -91,9 +91,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				SCH_ST_DPS_Lucid = new("SCH_ST_DPS_LucidOption", 7500),
-				SCH_AoE_DPS_Lucid = new("SCH_ST_DPS_LucidOption", 7500);
+
 		}
 
 		internal class SCH_ST_DPS : CustomComboClass

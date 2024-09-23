@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvE
@@ -96,8 +95,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				DNC_Variant_Cure = new("DNC_Variant_Cure", 50);
+
 		}
 
 		internal class DNC_ST_DPS : CustomComboClass

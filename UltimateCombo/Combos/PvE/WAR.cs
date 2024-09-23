@@ -64,8 +64,7 @@ namespace UltimateCombo.Combos.PvE
 				WAR_FellCleaveGauge = new("WAR_FellCleaveGauge", 50),
 				WAR_DecimateGauge = new("WAR_DecimateGauge", 50),
 				WAR_ST_Invuln = new("WAR_ST_Invuln", 10),
-				WAR_AoE_Invuln = new("WAR_AoE_Invuln", 10),
-				WAR_Variant_Cure = new("WAR_Variant_Cure", 50);
+				WAR_AoE_Invuln = new("WAR_AoE_Invuln", 10);
 		}
 
 		internal class WAR_ST_DPS : CustomComboClass

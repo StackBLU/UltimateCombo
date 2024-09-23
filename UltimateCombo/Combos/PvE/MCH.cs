@@ -77,8 +77,7 @@ namespace UltimateCombo.Combos.PvE
 			public static UserInt
 				MCH_ST_Hypercharge = new("MCH_ST_Hypercharge", 50),
 				MCH_ST_Queen = new("MCH_ST_Queen", 50),
-				MCH_AoE_Hypercharge = new("MCH_AoE_Hypercharge", 50),
-				MCH_Variant_Cure = new("MCH_Variant_Cure", 50);
+				MCH_AoE_Hypercharge = new("MCH_AoE_Hypercharge", 50);
 		}
 
 		internal class MCH_ST_DPS : CustomComboClass

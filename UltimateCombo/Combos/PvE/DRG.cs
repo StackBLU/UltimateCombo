@@ -76,8 +76,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				DRG_Variant_Cure = new("DRG_Variant_Cure", 50);
+
 		}
 
 		internal class DRG_ST_DPS : CustomComboClass

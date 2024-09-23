@@ -2,6 +2,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -201,7 +202,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (IsEnabled(CustomComboPreset.All_RoleActions))
 				{
-					if (CanDelayedWeave(actionID))
+					if (CanDelayedWeave(actionID)
+						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(VPR.Buffs.Reawakened))
 					{
 						if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(TrueNorth) && IsEnabled(TrueNorth)
 							&& TargetNeedsPositionals() && !HasEffect(Buffs.TrueNorth))
@@ -320,7 +322,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (CanWeave(actionID) && !HasEffect(NIN.Buffs.Mudra))
+					if (CanWeave(actionID)
+						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(VPR.Buffs.Reawakened))
 					{
 						if (IsEnabled(CustomComboPreset.All_SecondWind) && ActionReady(SecondWind) && IsEnabled(SecondWind)
 							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_SecondWind))
@@ -360,7 +363,8 @@ namespace UltimateCombo.Combos.PvE
 							return LucidDreaming;
 						}
 
-						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength))
+						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength)
+							&& ActionWatching.NumberOfGcdsUsed >= 5)
 						{
 							return ArmsLength;
 						}
@@ -370,6 +374,24 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		/*internal class All_Choco : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Choco;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.All_Choco))
+				{
+					if (CanWeave(actionID))
+					{
+
+					}
+				}
+
+				return actionID;
+			}
+		}*/
 
 		internal class All_Variant : CustomComboClass
 		{

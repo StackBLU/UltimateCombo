@@ -1,5 +1,4 @@
 ﻿using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Hooking;
 using ECommons.DalamudServices;
@@ -40,11 +39,6 @@ namespace UltimateCombo.Data
 		private static readonly Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
 		private static void ReceiveActionEffectDetour(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
 		{
-			if (!CustomComboFunctions.InCombat())
-			{
-				CombatActions.Clear();
-			}
-
 			ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
 			ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
@@ -225,20 +219,6 @@ namespace UltimateCombo.Data
 			SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
 		}
 
-		public static async Task CheckWeaponSheathedAsync(ConditionFlag flag, bool value)
-		{
-			await Task.Delay(7500);
-			if ((!CustomComboFunctions.LocalPlayer.StatusFlags.HasFlag(StatusFlags.WeaponOut) && !CustomComboFunctions.InCombat())
-				|| ((flag is ConditionFlag.Mounted or ConditionFlag.Mounting) && value is false))
-			{
-				CombatActions.Clear();
-				LastAbility = 0;
-				LastAction = 0;
-				LastWeaponskill = 0;
-				LastSpell = 0;
-			}
-		}
-
 		public static void Enable()
 		{
 			ReceiveActionEffectHook?.Enable();
@@ -246,19 +226,32 @@ namespace UltimateCombo.Data
 			Svc.Condition.ConditionChange += ResetActions;
 		}
 
-		private static void ResetActions(ConditionFlag flag, bool value)
-		{
-			if (flag == ConditionFlag.InCombat && value == false)
-			{
-				_ = CheckWeaponSheathedAsync(flag, value);
-			}
-		}
-
 		public static void Disable()
 		{
 			ReceiveActionEffectHook.Disable();
 			SendActionHook?.Disable();
 			Svc.Condition.ConditionChange -= ResetActions;
+		}
+
+		private static void ResetActions(ConditionFlag flag, bool value)
+		{
+			if (flag is ConditionFlag.InCombat && value == false)
+			{
+				_ = CheckWeaponSheathedAsync();
+			}
+		}
+
+		public static async Task CheckWeaponSheathedAsync()
+		{
+			await Task.Delay((((int)CustomComboFunctions.AutoSheathTimer() + 1) * 1000) + 500);
+			if (!CustomComboFunctions.IsUnsheathed() && !CustomComboFunctions.InCombat())
+			{
+				CombatActions.Clear();
+				LastAbility = 0;
+				LastAction = 0;
+				LastWeaponskill = 0;
+				LastSpell = 0;
+			}
 		}
 
 		public static int GetLevel(uint id)

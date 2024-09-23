@@ -117,8 +117,7 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-			public static UserInt
-				NIN_Variant_Cure = new("NIN_Variant_Cure", 50);
+
 		}
 
 		internal class NIN_ST_DPS : CustomComboClass

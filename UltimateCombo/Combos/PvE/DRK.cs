@@ -67,8 +67,7 @@ namespace UltimateCombo.Combos.PvE
 				DRK_QuietusGauge = new("DRK_QuietusGauge", 50),
 				DRK_AoE_Abyssal = new("DRK_AoE_Abyssal", 50),
 				DRK_ST_Invuln = new("DRK_ST_Invuln", 10),
-				DRK_AoE_Invuln = new("DRK_AoE_Invuln", 10),
-				DRK_Variant_Cure = new("DRK_Variant_Cure", 50);
+				DRK_AoE_Invuln = new("DRK_AoE_Invuln", 10);
 		}
 
 		internal class DRK_ST_DPS : CustomComboClass
