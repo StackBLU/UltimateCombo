@@ -366,37 +366,24 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && ActionReady(Triplecast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire)
+							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
+							&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
+							|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1 && GetCooldownChargeRemainingTime(Triplecast) < 10)
+							|| IsMoving || HasEffect(Buffs.LeyLines)))
 						{
 							return Triplecast;
 						}
 
 						if (IsEnabled(CustomComboPreset.BLM_AoE_Amplifier) && ActionReady(Amplifier)
-							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level) && Gauge.EnochianTimer > 15000
+							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
 							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
 						{
 							return Amplifier;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines) && Gauge.InAstralFire)
+						if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines))
 						{
 							return LeyLines;
-						}
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines) &&
-						(ActionReady(All.Swiftcast) || ActionReady(Triplecast))
-						&& !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
-						&& ActionWatching.NumberOfGcdsUsed > 10)
-					{
-						if (ActionReady(All.Swiftcast))
-						{
-							return All.Swiftcast;
-						}
-
-						if (ActionReady(Triplecast))
-						{
-							return Triplecast;
 						}
 					}
 
@@ -463,6 +450,7 @@ namespace UltimateCombo.Combos.PvE
 
 					return OriginalHook(Blizzard2);
 				}
+
 				return actionID;
 			}
 		}

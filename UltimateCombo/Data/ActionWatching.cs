@@ -225,17 +225,17 @@ namespace UltimateCombo.Data
 			SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
 		}
 
-		public static async Task CheckWeaponSheathedAsync()
+		public static async Task CheckWeaponSheathedAsync(ConditionFlag flag, bool value)
 		{
 			await Task.Delay(7500);
-			if (!CustomComboFunctions.LocalPlayer.StatusFlags.HasFlag(StatusFlags.WeaponOut))
+			if ((!CustomComboFunctions.LocalPlayer.StatusFlags.HasFlag(StatusFlags.WeaponOut) && !CustomComboFunctions.InCombat())
+				|| ((flag is ConditionFlag.Mounted or ConditionFlag.Mounting) && value is false))
 			{
 				CombatActions.Clear();
 				LastAbility = 0;
 				LastAction = 0;
 				LastWeaponskill = 0;
 				LastSpell = 0;
-				Service.ChatGui.Print("Combat instance reset!");
 			}
 		}
 
@@ -250,7 +250,7 @@ namespace UltimateCombo.Data
 		{
 			if (flag == ConditionFlag.InCombat && value == false)
 			{
-				_ = CheckWeaponSheathedAsync();
+				_ = CheckWeaponSheathedAsync(flag, value);
 			}
 		}
 

@@ -2,7 +2,6 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
-using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -200,7 +199,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.All_RoleActions) && ActionWatching.NumberOfGcdsUsed >= 15)
+				if (IsEnabled(CustomComboPreset.All_RoleActions))
 				{
 					if (CanDelayedWeave(actionID))
 					{
