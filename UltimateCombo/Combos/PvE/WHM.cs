@@ -213,7 +213,8 @@ namespace UltimateCombo.Combos.PvE
 						return Tetragrammaton;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
+						&& Gauge.Lily >= 1)
 					{
 						return AfflatusMisery;
 					}
@@ -258,7 +259,8 @@ namespace UltimateCombo.Combos.PvE
 						return PlenaryIndulgence;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
+						&& Gauge.Lily >= 1)
 					{
 						return AfflatusMisery;
 					}
@@ -285,31 +287,6 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					return Medica1;
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class WHM_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHM_Raise;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is Raise && IsEnabled(CustomComboPreset.WHM_Raise))
-				{
-					if (IsOffCooldown(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
-
-					if (ActionReady(ThinAir) && Config.WHM_Raise_ThinAir && !HasEffect(Buffs.ThinAir))
-					{
-						return ThinAir;
-					}
-
-					return Raise;
 				}
 
 				return actionID;

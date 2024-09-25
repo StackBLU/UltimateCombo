@@ -38,7 +38,8 @@ namespace UltimateCombo.Combos.PvE
 			PrizeCatch = 26806,
 			VitalSight = 26870,
 			BaitedBreath = 26871,
-			ElectricCurrent = 26872;
+			ElectricCurrent = 26872,
+			Rest = 37047;
 
 		internal static class Buffs
 		{
@@ -52,16 +53,48 @@ namespace UltimateCombo.Combos.PvE
 
 		internal static class Debuffs
 		{
-			internal const ushort
-				Placeholder = 0;
+
 		}
 
-		internal class FSH_Swim : CustomComboClass
+		internal class FSH_CastRest : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_Swim;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_CastRest;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (HasCondition(ConditionFlag.Diving))
+				if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastRest))
+				{
+					if (HasCondition(ConditionFlag.Fishing))
+					{
+						return Rest;
+					}
+				}
+				return actionID;
+			}
+		}
+
+		internal class FSH_CastHook : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_CastHook;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastHook))
+				{
+					if (HasCondition(ConditionFlag.Fishing))
+					{
+						return Hook;
+					}
+				}
+				return actionID;
+			}
+		}
+
+		internal class FSH_FishingToSpearfishing : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.FSH_FishingToSpearfishing;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.FSH_FishingToSpearfishing) && HasCondition(ConditionFlag.Diving)
+					&& !HasCondition(ConditionFlag.Fishing))
 				{
 					if (actionID is Cast && IsEnabled(CustomComboPreset.FSH_CastGig))
 					{

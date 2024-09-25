@@ -68,7 +68,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool ActionReady(uint id)
 		{
-			return LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 3);
+			return LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 5);
 		}
 
 		public static bool WasLastAction(uint id)

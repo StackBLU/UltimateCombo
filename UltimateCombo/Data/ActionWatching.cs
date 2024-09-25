@@ -95,8 +95,6 @@ namespace UltimateCombo.Data
 				SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
 				TimeLastActionUsed = DateTime.Now;
 				ActionType = actionType;
-
-				//Dalamud.Logging.PluginLog.Debug($"{actionId} {sequence} {a5} {a6} {a7} {a8} {a9}");
 			}
 			catch (Exception ex)
 			{
@@ -238,6 +236,16 @@ namespace UltimateCombo.Data
 			if (flag is ConditionFlag.InCombat && value == false)
 			{
 				_ = CheckWeaponSheathedAsync();
+			}
+
+			if ((flag is ConditionFlag.BetweenAreas or ConditionFlag.Unconscious or ConditionFlag.Mounted or ConditionFlag.BeingMoved)
+				&& value == false)
+			{
+				CombatActions.Clear();
+				LastAbility = 0;
+				LastAction = 0;
+				LastWeaponskill = 0;
+				LastSpell = 0;
 			}
 		}
 

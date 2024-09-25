@@ -107,7 +107,7 @@ namespace UltimateCombo.Combos.PvE
 						ActionWatching.LastWeaponskill = 0;
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat()
+					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat() && ActionReady(OriginalHook(Verthunder3))
 						&& !HasEffect(Buffs.MagickedSwordPlay) && Gauge.ManaStacks == 0)
 					{
 						return OriginalHook(Verthunder3);
@@ -558,30 +558,6 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return EnchantedMoulinet;
 					}
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class RDM_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDM_Raise;
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is Verraise && IsEnabled(CustomComboPreset.RDM_Raise))
-				{
-					if (IsOffCooldown(All.Swiftcast) && !HasEffect(Buffs.Dualcast))
-					{
-						return All.Swiftcast;
-					}
-
-					if (!HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Dualcast))
-					{
-						return OriginalHook(11);
-					}
-
-					return Verraise;
 				}
 
 				return actionID;

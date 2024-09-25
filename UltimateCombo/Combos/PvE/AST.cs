@@ -399,26 +399,6 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
-		internal class AST_Raise_Alternative : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Raise_Alternative;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is Ascend && IsEnabled(CustomComboPreset.AST_Raise_Alternative))
-				{
-					if (ActionReady(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
-
-					return Ascend;
-				}
-
-				return actionID;
-			}
-		}
-
 		internal class AST_Lightspeed_Protection : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_Lightspeed_Protection;

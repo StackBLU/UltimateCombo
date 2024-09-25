@@ -1434,12 +1434,12 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.SAM_ST_Shinten && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_ST_SaveKenkiDash, "Save 10 Kenki for Gyoten (dash)", "");
+				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_ST_SaveKenkiDash, "Save 10 Kenki for Gyoten", "");
 			}
 
 			if (preset is CustomComboPreset.SAM_AoE_Kyuten && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_AoE_SaveKenkiDash, "Save 10 Kenki for Gyoten (dash)", "");
+				UserConfig.DrawAdditionalBoolChoice(SAM.Config.SAM_AoE_SaveKenkiDash, "Save 10 Kenki for Gyoten", "");
 			}
 
 			#endregion
@@ -1493,10 +1493,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region WHITE MAGE
 
-			if (preset == CustomComboPreset.WHM_Raise && enabled)
-			{
-				UserConfig.DrawAdditionalBoolChoice(WHM.Config.WHM_Raise_ThinAir, "Use Thin Air", "");
-			}
+
 
 			#region PvP
 

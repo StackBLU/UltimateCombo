@@ -551,9 +551,7 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(WHM.Raise)]
-		[CustomComboInfo("Swiftcast > Raise", "", WHM.JobID)]
-		WHM_Raise = 19073,
+
 
 		#endregion
 
@@ -622,10 +620,6 @@ namespace UltimateCombo.Combos
 		#endregion
 
 		#region Utility
-
-		[ReplaceSkill(SCH.Resurrection)]
-		[CustomComboInfo("Swiftcast > Raise", "", SCH.JobID)]
-		SCH_Raise = 16040,
 
 		[ReplaceSkill(SCH.Lustrate)]
 		[CustomComboInfo("Lustrate > Excogitation", "", SCH.JobID)]
@@ -759,10 +753,6 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(AST.Ascend)]
-		[CustomComboInfo("Swiftcast > Raise", "", AST.JobID)]
-		AST_Raise_Alternative = 1060,
-
 		[ReplaceSkill(AST.Lightspeed)]
 		[CustomComboInfo("Lightspeed Overwrite Protection", "", AST.JobID)]
 		AST_Lightspeed_Protection = 1061,
@@ -886,10 +876,6 @@ namespace UltimateCombo.Combos
 		#endregion
 
 		#region Utility
-
-		[ReplaceSkill(SGE.Egeiro)]
-		[CustomComboInfo("Swiftcast > Raise", "", SGE.JobID)]
-		SGE_Raise = 14060,
 
 		[ReplaceSkill(SGE.Kerachole, SGE.Panhaima, SGE.Philosophia)]
 		[CustomComboInfo("Spell Overlap Protection", "", SGE.JobID)]
@@ -1989,10 +1975,6 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Summon > Enkindle", "", SMN.JobID)]
 		SMN_Enkindle = 17042,
 
-		[ReplaceSkill(SMN.Resurrection)]
-		[CustomComboInfo("Swiftcast > Raise", "", SMN.JobID)]
-		SMN_Raise = 17043,
-
 		#endregion
 
 		#endregion
@@ -2096,10 +2078,6 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(RDM.Moulinet, RDM.EnchantedMoulinet, RDM.EnchantedMoulinetDeux, RDM.EnchantedMoulinetTrois)]
 		[CustomComboInfo("Melee AoE Combo", "", RDM.JobID)]
 		RDM_AoE_Melee = 13041,
-
-		[ReplaceSkill(RDM.Verraise)]
-		[CustomComboInfo("Verraise", "", RDM.JobID)]
-		RDM_Raise = 13042,
 
 		#endregion
 
@@ -2261,11 +2239,6 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Blood Drain", "", BLU.JobID)]
 		BLU_ManaGain = 70031,
 
-		[BlueInactive(BLU.AngelWhisper)]
-		[ReplaceSkill(BLU.AngelWhisper)]
-		[CustomComboInfo("Swiftcast > Angel Whisper", "", BLU.JobID)]
-		BLU_Raise = 70032,
-
 		[BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
 		[CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
@@ -2342,7 +2315,25 @@ namespace UltimateCombo.Combos
 
 		#region BLACK MAGE - 112000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(BLMPvP.Fire, BLMPvP.Fire4, BLMPvP.Flare, BLMPvP.Blizzard, BLMPvP.Blizzard4, BLMPvP.Freeze)]
+		[CustomComboInfo("Combo Mode", "", BLM.JobID)]
+		BLMPvP_Combo = 112000,
 
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Burst", "", BLM.JobID)]
+		BLMPvP_Burst = 112001,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Soul Resonance", "", BLM.JobID)]
+		BLMPvP_SoulResonance = 112002,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Foul", "", BLM.JobID)]
+		BLMPvP_Foul = 112003,
 
 		#endregion
 
@@ -2786,147 +2777,161 @@ namespace UltimateCombo.Combos
 
 		#region FISHING - 51000
 
-		[CustomComboInfo("Fishing skills to Spearfishing skills when underwater\n ", "", FSH.JobID)]
-		FSH_Swim = 51008,
+		[ConflictingCombos(FSH_CastHook)]
+		[ReplaceSkill(FSH.Cast, FSH.Rest)]
+		[CustomComboInfo("Cast to Rest", "", FSH.JobID)]
+		FSH_CastRest = 51000,
 
+		[ConflictingCombos(FSH_CastRest)]
+		[ReplaceSkill(FSH.Cast, FSH.Hook)]
+		[CustomComboInfo("Cast to Hook", "", FSH.JobID)]
+		FSH_CastHook = 51001,
+
+		[CustomComboInfo("Fishing skills to Spearfishing skills when underwater", "", FSH.JobID)]
+		FSH_FishingToSpearfishing = 51002,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.Cast, FSH.Gig)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Cast to Gig", "", FSH.JobID)]
 		FSH_CastGig = 51003,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.SurfaceSlap, FSH.VeteranTrade)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Surface Slap to Veteran Trade", "", FSH.JobID)]
 		FSH_SurfaceTrade = 51004,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.PrizeCatch, FSH.NaturesBounty)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Prize Catch to Nature's Bounty", "", FSH.JobID)]
 		FSH_PrizeBounty = 51005,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.Snagging, FSH.Salvage)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Snagging to Salvage", "", FSH.JobID)]
 		FSH_SnaggingSalvage = 51006,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.CastLight, FSH.ElectricCurrent)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Cast Light to Electric Current", "", FSH.JobID)]
 		FSH_CastLight_ElectricCurrent = 51007,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.Mooch, FSH.SharkEye)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
-		FSH_Mooch_SharkEye = 51009,
+		FSH_Mooch_SharkEye = 51008,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.FishEyes, FSH.VitalSight)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Fish Eyes to Vital Sight", "", FSH.JobID)]
-		FSH_FishEyes_VitalSight = 51010,
+		FSH_FishEyes_VitalSight = 51009,
 
+		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.Chum, FSH.BaitedBreath)]
-		[ParentCombo(FSH_Swim)]
 		[CustomComboInfo("Chum to Baited Breath", "", FSH.JobID)]
-		FSH_Chum_BaitedBreath = 51011,
+		FSH_Chum_BaitedBreath = 51010,
 
 		#endregion
 
 		#region ALL - 100000
 
-		#region Protections
+		#region Role Actions
 
-		[ReplaceSkill(All.Reprisal)]
-		[CustomComboInfo("Reprisal Protection", "", All.JobID)]
-		All_Tank_Reprisal = 100001,
+		[ReplaceSkill(All.TrueNorth, All.SecondWind, All.Bloodbath, All.LucidDreaming, All.ArmsLength)]
+		[CustomComboInfo("Role Actions", "", All.JobID)]
+		All_RoleActions = 100000,
 
-		[ReplaceSkill(All.Feint)]
-		[CustomComboInfo("Feint Protection", "", All.JobID)]
-		All_Melee_Feint = 100002,
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("True North", "", All.JobID)]
+		All_TrueNorth = 100001,
 
-		[ReplaceSkill(All.TrueNorth)]
-		[CustomComboInfo("True North Protection", "", All.JobID)]
-		All_Melee_TrueNorth = 100003,
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Second Wind", "", All.JobID)]
+		All_SecondWind = 100002,
 
-		[ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
-		[CustomComboInfo("Ranged Mitigation Protection", "", All.JobID)]
-		All_Ranged_Mitigation = 100004,
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Bloodbath", "", All.JobID)]
+		All_Bloodbath = 100003,
 
-		[ReplaceSkill(All.Addle)]
-		[CustomComboInfo("Addle Protection", "", All.JobID)]
-		All_Caster_Addle = 100005,
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
+		All_Healer_Lucid = 100004,
 
-		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
-		[CustomComboInfo("Raise Protection", "", All.JobID)]
-		All_Raise_Protection = 100006,
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
+		All_Mage_Lucid = 100005,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
+		All_BLU_Lucid = 100006,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Arm's Length", "", All.JobID)]
+		All_ArmsLength = 100007,
 
 		#endregion
 
-		#region Role Actions
+		#region Protections
 
-		[CustomComboInfo("Role Actions", "", All.JobID)]
-		All_RoleActions = 100020,
+		[ReplaceSkill(All.Reprisal, All.Feint, All.Addle)]
+		[CustomComboInfo("Mitigation Overwrite Protection", "", All.JobID)]
+		All_MitigationProtections = 100020,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Reprisal", "", All.JobID)]
+		All_Tank_Reprisal = 100021,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Feint", "", All.JobID)]
+		All_Melee_Feint = 100022,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Addle", "", All.JobID)]
+		All_Caster_Addle = 100023,
 
 		[ReplaceSkill(All.TrueNorth)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("True North", "", All.JobID)]
-		All_TrueNorth = 100021,
+		[CustomComboInfo("True North Protection", "", All.JobID)]
+		All_Melee_TrueNorth = 100024,
 
-		[ReplaceSkill(All.SecondWind)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Second Wind", "", All.JobID)]
-		All_SecondWind = 100022,
+		[ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
+		[CustomComboInfo("Ranged Mitigation Protection", "", All.JobID)]
+		All_Ranged_Mitigation = 100025,
 
-		[ReplaceSkill(All.Bloodbath)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Bloodbath", "", All.JobID)]
-		All_Bloodbath = 100023,
+		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
+		[CustomComboInfo("Swift Raise (Includes Thin Air for WHM and Dualcast for RDM)", "", All.JobID)]
+		All_SwiftRaise = 100026,
 
-		[ReplaceSkill(All.LucidDreaming)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
-		All_Healer_Lucid = 100024,
-
-		[ReplaceSkill(All.LucidDreaming)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
-		All_Mage_Lucid = 100025,
-
-		[ReplaceSkill(All.LucidDreaming)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
-		All_BLU_Lucid = 100026,
-
-		[ReplaceSkill(All.ArmsLength)]
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Arm's Length", "", All.JobID)]
-		All_ArmsLength = 100027,
+		[ParentCombo(All_SwiftRaise)]
+		[CustomComboInfo("Raise Protection", "", All.JobID)]
+		All_Raise_Protection = 100027,
 
 		#endregion
 
 		#region Variant
 
+		[ReplaceSkill(Variant.VariantCure_Image, Variant.VariantUltimatum, Variant.VariantRaise,
+			Variant.VariantSpiritDart_Image, Variant.VariantRampart_Image)]
 		[CustomComboInfo("Variant Dungeon Skills", "", All.JobID)]
 		All_Variant = 100040,
 
-		[ReplaceSkill(Variant.VariantCure_Image)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Cure", "", All.JobID)]
 		All_Variant_Cure = 100041,
 
-		[ReplaceSkill(Variant.VariantUltimatum)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
 		All_Variant_Ultimatum = 100042,
 
-		[ReplaceSkill(Variant.VariantSpiritDart_Image)]
+		[ParentCombo(All_Variant)]
+		[CustomComboInfo("Variant Raise", "", All.JobID)]
+		All_Variant_Raise = 100043,
+
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
-		All_Variant_SpiritDart = 100043,
+		All_Variant_SpiritDart = 100044,
 
-		[ReplaceSkill(Variant.VariantRampart_Image)]
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Rampart", "", All.JobID)]
-		All_Variant_Rampart = 100044,
+		All_Variant_Rampart = 100045,
 
 		#endregion
 

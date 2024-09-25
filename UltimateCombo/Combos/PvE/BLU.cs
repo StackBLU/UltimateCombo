@@ -570,29 +570,6 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
-		internal class BLU_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_Raise;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is AngelWhisper && IsEnabled(CustomComboPreset.BLU_Raise))
-				{
-					if (IsOffCooldown(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
-
-					if (IsSpellActive(AngelWhisper))
-					{
-						return AngelWhisper;
-					}
-				}
-
-				return actionID;
-			}
-		}
-
 		internal class BLU_PhantomEnder : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLU_PhantomEnder;
@@ -636,7 +613,8 @@ namespace UltimateCombo.Combos.PvE
 							return MightyGuard;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell) && CurrentTarget == null
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell)
+							&& CurrentTarget == null && !InCombat() && !IsCasting()
 							&& IsOffCooldown(ShockStrike) && IsOffCooldown(GlassDance) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
@@ -707,7 +685,8 @@ namespace UltimateCombo.Combos.PvE
 							return MightyGuard;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell) && Svc.DutyState.IsDutyStarted
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_AutoSpell)
+							&& CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
 							&& IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
 							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(GlassDance)
 							|| !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
@@ -747,11 +726,6 @@ namespace UltimateCombo.Combos.PvE
 									}
 								}
 							}
-						}
-
-						if (!IsSpellActive(ShockStrike) || !IsSpellActive(GlassDance) || !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty))
-						{
-							return OriginalHook(11);
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_AngelsSnack)

@@ -44,6 +44,17 @@ namespace UltimateCombo.ComboHelper.Functions
 			return FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 		}
 
+		public static byte FindTargetEffectStacks(ushort effectID)
+		{
+			Status? effect = FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
+			if (effect == null)
+			{
+				return 0;
+			}
+
+			return effect.StackCount;
+		}
+
 		public static Status? FindTargetsTargetEffect(ushort effectID)
 		{
 			return FindEffect(effectID, CurrentTarget.TargetObject, LocalPlayer?.GameObjectId);

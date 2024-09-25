@@ -112,7 +112,10 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dosis or Dosis2 or Dosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2
+						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
+						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
+						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
 							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || !IsInParty()))
@@ -184,7 +187,10 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dyskrasia or Dyskrasia2) && IsEnabled(CustomComboPreset.SGE_AoE_DPS))
 				{
-					if (CanWeave(actionID))
+					if (CanWeave(actionID)
+						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
+						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
+						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
 							&& !TargetsTargetHasEffect(Buffs.Kardion))
@@ -244,16 +250,20 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Diagnosis or EukrasianDiagnosis) && IsEnabled(CustomComboPreset.SGE_ST_Heals))
 				{
-					if (IsEnabled(CustomComboPreset.SGE_ST_Heals_Krasis) && ActionReady(Krasis))
+					if (!HasEffect(Buffs.Eukrasia))
 					{
-						return Krasis;
-					}
+						if (IsEnabled(CustomComboPreset.SGE_ST_Heals_Krasis) && ActionReady(Krasis))
+						{
+							return Krasis;
+						}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_Heals_Haima) && ActionReady(Haima))
-					{
-						return Haima;
+						if (IsEnabled(CustomComboPreset.SGE_ST_Heals_Haima) && ActionReady(Haima))
+						{
+							return Haima;
+						}
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -266,29 +276,10 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Prognosis or EukrasianPrognosis or EukrasianPrognosis2) && IsEnabled(CustomComboPreset.SGE_AoE_Heals))
 				{
 					if (IsEnabled(CustomComboPreset.SGE_AoE_Heals_Pepsis) && ActionReady(Pepsis)
-						&& HasEffect(Buffs.EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis) && !WasLastAction(Prognosis)
-						&& !WasLastAction(EukrasianPrognosis2))
+						&& HasEffect(Buffs.EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis2))
 					{
 						return Pepsis;
 					}
-				}
-				return actionID;
-			}
-		}
-
-		internal class SGE_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_Raise;
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is Egeiro && IsEnabled(CustomComboPreset.SGE_Raise))
-				{
-					if (IsOffCooldown(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
-
-					return Egeiro;
 				}
 
 				return actionID;
@@ -310,6 +301,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 						return OriginalHook(11);
 					}
+
 					if (actionID is Panhaima && ActionReady(Panhaima))
 					{
 						if (!HasEffectAny(Buffs.Panhaima))
@@ -318,6 +310,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 						return OriginalHook(11);
 					}
+
 					if (actionID is Philosophia && ActionReady(Philosophia))
 					{
 						if (!HasEffectAny(Buffs.Eudaimonia))
@@ -327,6 +320,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}

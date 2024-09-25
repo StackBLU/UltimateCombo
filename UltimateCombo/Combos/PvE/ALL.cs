@@ -54,8 +54,7 @@ namespace UltimateCombo.Combos.PvE
 				LucidDreaming = 1204,
 				TrueNorth = 1250,
 				Sprint = 50,
-				Raise1 = 148,
-				Raise2 = 1140;
+				Raise = 148;
 		}
 
 		public static class Debuffs
@@ -72,15 +71,16 @@ namespace UltimateCombo.Combos.PvE
 		public static class Config
 		{
 			public static UserInt
-				All_SecondWind = new("All_SecondWind", 50),
-				All_Bloodbath = new("All_Bloodbath", 25),
+				All_SecondWind = new("All_SecondWind", 30),
+				All_Bloodbath = new("All_Bloodbath", 50),
 				All_Healer_Lucid = new("All_Healer_Lucid", 7500),
 				All_Mage_Lucid = new("All_Mage_Lucid", 7500),
 				All_BLU_Lucid = new("All_BLU_Lucid", 7500),
 				All_Variant_Cure = new("All_Variant_Cure", 50);
 
 			public static UserBool
-				All_BLM_Lucid = new("All_BLM_Lucid", false);
+				All_BLM_Lucid = new("All_BLM_Lucid", false),
+				All_SwiftRaise = new("All_SwiftRaise", false);
 		}
 
 		internal class All_Tank_Reprisal : CustomComboClass
@@ -184,9 +184,64 @@ namespace UltimateCombo.Combos.PvE
 					or SMN.Resurrection or RDM.Verraise or BLU.AngelWhisper)
 					&& IsEnabled(CustomComboPreset.All_Raise_Protection))
 				{
-					if (TargetHasEffectAny(Buffs.Raise1) || TargetHasEffectAny(Buffs.Raise2))
+					if (TargetHasEffectAny(Buffs.Raise))
 					{
 						return OriginalHook(11);
+					}
+
+					if (ActionReady(Swiftcast))
+					{
+						return Swiftcast;
+					}
+
+					if (LocalPlayer.ClassJob.Id == AST.JobID)
+					{
+						if (ActionReady(AST.Lightspeed) && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast))
+						{
+							return AST.Lightspeed;
+						}
+
+						return AST.Ascend;
+					}
+
+					if (LocalPlayer.ClassJob.Id == BLU.JobID)
+					{
+						return BLU.AngelWhisper;
+					}
+
+					if (LocalPlayer.ClassJob.Id == RDM.JobID)
+					{
+						if (!HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
+						{
+							return OriginalHook(11);
+						}
+
+						return RDM.Verraise;
+					}
+
+					if (LocalPlayer.ClassJob.Id == SCH.JobID)
+					{
+						return SCH.Resurrection;
+					}
+
+					if (LocalPlayer.ClassJob.Id == SGE.JobID)
+					{
+						return SGE.Egeiro;
+					}
+
+					if (LocalPlayer.ClassJob.Id == SMN.JobID)
+					{
+						return SMN.Resurrection;
+					}
+
+					if (LocalPlayer.ClassJob.Id == WHM.JobID)
+					{
+						if (ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
+						{
+							return WHM.ThinAir;
+						}
+
+						return WHM.Raise;
 					}
 				}
 
@@ -338,13 +393,22 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) || LocalPlayer.CurrentMp <= 1000)
-							&& (LocalPlayer.ClassJob.Id == WHM.JobID
-							|| LocalPlayer.ClassJob.Id == SCH.JobID
-							|| LocalPlayer.ClassJob.Id == AST.JobID
-							|| LocalPlayer.ClassJob.Id == SGE.JobID))
+							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) || LocalPlayer.CurrentMp <= 1000))
 						{
-							return LucidDreaming;
+							if (LocalPlayer.ClassJob.Id == SGE.JobID)
+							{
+								if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis) && !WasLastSpell(SGE.EukrasianPrognosis2)
+									&& !WasLastSpell(SGE.EukrasianDosis) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
+									&& !WasLastSpell(SGE.EukrasianDyskrasia))
+								{
+									return LucidDreaming;
+								}
+							}
+
+							if (LocalPlayer.ClassJob.Id is WHM.JobID or SCH.JobID or AST.JobID)
+							{
+								return LucidDreaming;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
@@ -405,6 +469,18 @@ namespace UltimateCombo.Combos.PvE
 						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_Variant_Cure))
 					{
 						return Variant.VariantCure;
+					}
+
+					if (IsEnabled(CustomComboPreset.All_Variant_Raise) && IsEnabled(Variant.VariantCure)
+						&& (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro
+						or SMN.Resurrection or RDM.Verraise))
+					{
+						if (ActionReady(Swiftcast))
+						{
+							return Swiftcast;
+						}
+
+						return Variant.VariantRaise;
 					}
 
 					if (CanWeave(actionID))

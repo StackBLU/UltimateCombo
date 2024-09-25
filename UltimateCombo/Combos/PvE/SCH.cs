@@ -221,24 +221,5 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
-
-		internal class SCH_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_Raise;
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (actionID is Resurrection && IsEnabled(CustomComboPreset.SCH_Raise))
-				{
-					if (ActionReady(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
-
-					return Resurrection;
-				}
-
-				return actionID;
-			}
-		}
 	}
 }
