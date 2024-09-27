@@ -268,8 +268,10 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (LocalPlayer.ClassJob.Id == MNK.JobID)
 							{
-								if (actionID is not MNK.ArmOfTheDestroyer and not MNK.ShadowOfTheDestroyer
-									and not MNK.FourPointFury and not MNK.Rockbreaker)
+								if (actionID
+									is MNK.Bootshine or MNK.LeapingOpo or MNK.TrueStrike
+									or MNK.RisingRaptor or MNK.SnapPunch or MNK.PouncingCoeurl
+									or MNK.DragonKick or MNK.TwinSnakes or MNK.Demolish)
 								{
 									if (HasEffect(MNK.Buffs.CoeurlForm) && MNK.Gauge.CoeurlFury == 0 && LevelChecked(MNK.Demolish)
 									&& !OnTargetsRear())
@@ -287,7 +289,11 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == DRG.JobID)
 							{
-								if (actionID is not DRG.DoomSpike and not DRG.SonicThrust and not DRG.CoerthanTorment)
+								if (actionID
+									is DRG.TrueThrust or DRG.VorpalThrust or DRG.LanceBarrage
+									or DRG.Disembowel or DRG.SpiralBlow or DRG.FullThrust
+									or DRG.HeavensThrust or DRG.ChaosThrust or DRG.ChaoticSpring
+									or DRG.FangAndClaw or DRG.WheelingThrust)
 								{
 									if ((lastComboMove is DRG.Disembowel or DRG.SpiralBlow or DRG.ChaosThrust or DRG.ChaoticSpring)
 										&& LevelChecked(DRG.ChaosThrust) && !OnTargetsRear())
@@ -305,7 +311,8 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == NIN.JobID)
 							{
-								if (lastComboMove is NIN.GustSlash && actionID is not NIN.DeathBlossom and not NIN.HakkeMujinsatsu)
+								if (lastComboMove is NIN.GustSlash
+									&& (actionID is NIN.SpinningEdge or NIN.GustSlash or NIN.AeolianEdge or NIN.ArmorCrush))
 								{
 									if (ActionReady(NIN.AeolianEdge) && !OnTargetsRear()
 										&& ((NIN.Gauge.Kazematoi >= 1
@@ -326,7 +333,9 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == SAM.JobID)
 							{
-								if (actionID is not SAM.Fuga and not SAM.Fuko and not SAM.Mangetsu and not SAM.Oka)
+								if (actionID
+									is SAM.Hakaze or SAM.Gyofu or SAM.Jinpu
+									or SAM.Gekko or SAM.Shifu or SAM.Kasha or SAM.Yukikaze)
 								{
 									if (HasEffect(SAM.Buffs.MeikyoShisui)
 										|| (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Jinpu && !OnTargetsRear()))
@@ -344,7 +353,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == RPR.JobID)
 							{
-								if (actionID is not RPR.SpinningScythe and not RPR.NightmareScythe)
+								if (actionID is RPR.Slice or RPR.WaxingSlice or RPR.InfernalSlice)
 								{
 									if (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Executioner))
 									{
@@ -363,7 +372,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == VPR.JobID)
 							{
-								if (actionID is not VPR.SteelMaw and not VPR.ReavingMaw)
+								if (actionID is VPR.SteelFangs or VPR.ReavingFangs)
 								{
 									if (VPR.Gauge.DreadCombo.HasFlag(DreadCombo.Dreadwinder))
 									{

@@ -98,7 +98,7 @@ namespace UltimateCombo.Combos.PvE
 					&& IsEnabled(CustomComboPreset.SAM_ST_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
-						&& ActionReady(MeikyoShisui))
+						&& ActionReady(MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
 					{
 						return MeikyoShisui;
 					}
@@ -257,7 +257,7 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Fuga or Fuko or Mangetsu or Oka) && IsEnabled(CustomComboPreset.SAM_AoE_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
-						&& ActionReady(MeikyoShisui))
+						&& ActionReady(MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
 					{
 						return MeikyoShisui;
 					}
