@@ -1199,6 +1199,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 10000, All.Config.All_BLU_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
+			if (preset is CustomComboPreset.All_Choco && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, All.Config.All_Choco, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
 			#endregion
 
 			#region ASTROLOGIAN

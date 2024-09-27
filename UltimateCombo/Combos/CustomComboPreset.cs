@@ -1205,8 +1205,12 @@ namespace UltimateCombo.Combos
 		SAM_ST_Kaeshi = 15009,
 
 		[ParentCombo(SAM_ST_DPS)]
+		[CustomComboInfo("Hagakure", "", SAM.JobID)]
+		SAM_ST_Hagakure = 15010,
+
+		[ParentCombo(SAM_ST_DPS)]
 		[CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
-		SAM_ST_Shield = 15010,
+		SAM_ST_Shield = 15011,
 
 		#endregion
 
@@ -1249,8 +1253,12 @@ namespace UltimateCombo.Combos
 		SAM_AoE_Kaeshi = 15028,
 
 		[ParentCombo(SAM_AoE_DPS)]
+		[CustomComboInfo("Hagakure", "", SAM.JobID)]
+		SAM_AoE_Hagakure = 15029,
+
+		[ParentCombo(SAM_AoE_DPS)]
 		[CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
-		SAM_AoE_Shield = 15029,
+		SAM_AoE_Shield = 15030,
 
 		#endregion
 
@@ -2834,39 +2842,42 @@ namespace UltimateCombo.Combos
 
 		#region ALL - 100000
 
+		[CustomComboInfo("Auto Chocobo Stance", "", All.JobID)]
+		All_Choco = 100000,
+
 		#region Role Actions
 
 		[ReplaceSkill(All.TrueNorth, All.SecondWind, All.Bloodbath, All.LucidDreaming, All.ArmsLength)]
 		[CustomComboInfo("Role Actions", "", All.JobID)]
-		All_RoleActions = 100000,
+		All_RoleActions = 100010,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("True North", "", All.JobID)]
-		All_TrueNorth = 100001,
+		All_TrueNorth = 100011,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Second Wind", "", All.JobID)]
-		All_SecondWind = 100002,
+		All_SecondWind = 100012,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Bloodbath", "", All.JobID)]
-		All_Bloodbath = 100003,
+		All_Bloodbath = 100013,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
-		All_Healer_Lucid = 100004,
+		All_Healer_Lucid = 100014,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
-		All_Mage_Lucid = 100005,
+		All_Mage_Lucid = 100015,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
-		All_BLU_Lucid = 100006,
+		All_BLU_Lucid = 100016,
 
 		[ParentCombo(All_RoleActions)]
 		[CustomComboInfo("Arm's Length", "", All.JobID)]
-		All_ArmsLength = 100007,
+		All_ArmsLength = 100017,
 
 		#endregion
 
@@ -2874,35 +2885,35 @@ namespace UltimateCombo.Combos
 
 		[ReplaceSkill(All.Reprisal, All.Feint, All.Addle)]
 		[CustomComboInfo("Mitigation Overwrite Protection", "", All.JobID)]
-		All_MitigationProtections = 100020,
+		All_MitigationProtections = 100030,
 
 		[ParentCombo(All_MitigationProtections)]
 		[CustomComboInfo("Reprisal", "", All.JobID)]
-		All_Tank_Reprisal = 100021,
+		All_Tank_Reprisal = 100031,
 
 		[ParentCombo(All_MitigationProtections)]
 		[CustomComboInfo("Feint", "", All.JobID)]
-		All_Melee_Feint = 100022,
+		All_Melee_Feint = 100032,
 
 		[ParentCombo(All_MitigationProtections)]
 		[CustomComboInfo("Addle", "", All.JobID)]
-		All_Caster_Addle = 100023,
+		All_Caster_Addle = 100033,
 
 		[ReplaceSkill(All.TrueNorth)]
 		[CustomComboInfo("True North Protection", "", All.JobID)]
-		All_Melee_TrueNorth = 100024,
+		All_Melee_TrueNorth = 100034,
 
 		[ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
 		[CustomComboInfo("Ranged Mitigation Protection", "", All.JobID)]
-		All_Ranged_Mitigation = 100025,
+		All_Ranged_Mitigation = 100035,
 
 		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
 		[CustomComboInfo("Swift Raise (Includes Thin Air for WHM and Dualcast for RDM)", "", All.JobID)]
-		All_SwiftRaise = 100026,
+		All_SwiftRaise = 100036,
 
 		[ParentCombo(All_SwiftRaise)]
 		[CustomComboInfo("Raise Protection", "", All.JobID)]
-		All_Raise_Protection = 100027,
+		All_Raise_Protection = 100037,
 
 		#endregion
 
@@ -2911,27 +2922,27 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(Variant.VariantCure_Image, Variant.VariantUltimatum, Variant.VariantRaise,
 			Variant.VariantSpiritDart_Image, Variant.VariantRampart_Image)]
 		[CustomComboInfo("Variant Dungeon Skills", "", All.JobID)]
-		All_Variant = 100040,
+		All_Variant = 100050,
 
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Cure", "", All.JobID)]
-		All_Variant_Cure = 100041,
+		All_Variant_Cure = 100051,
 
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
-		All_Variant_Ultimatum = 100042,
+		All_Variant_Ultimatum = 100052,
 
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Raise", "", All.JobID)]
-		All_Variant_Raise = 100043,
+		All_Variant_Raise = 100053,
 
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
-		All_Variant_SpiritDart = 100044,
+		All_Variant_SpiritDart = 100054,
 
 		[ParentCombo(All_Variant)]
 		[CustomComboInfo("Variant Rampart", "", All.JobID)]
-		All_Variant_Rampart = 100045,
+		All_Variant_Rampart = 100055,
 
 		#endregion
 

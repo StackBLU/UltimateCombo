@@ -1,4 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Enums;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
@@ -76,6 +78,7 @@ namespace UltimateCombo.Combos.PvE
 				All_Healer_Lucid = new("All_Healer_Lucid", 7500),
 				All_Mage_Lucid = new("All_Mage_Lucid", 7500),
 				All_BLU_Lucid = new("All_BLU_Lucid", 7500),
+				All_Choco = new("All_Choco", 35),
 				All_Variant_Cure = new("All_Variant_Cure", 50);
 
 			public static UserBool
@@ -265,37 +268,44 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (LocalPlayer.ClassJob.Id == MNK.JobID)
 							{
-								if (HasEffect(MNK.Buffs.CoeurlForm) && MNK.Gauge.CoeurlFury == 0 && LevelChecked(MNK.Demolish)
+								if (actionID is not MNK.ArmOfTheDestroyer and not MNK.ShadowOfTheDestroyer
+									and not MNK.FourPointFury and not MNK.Rockbreaker)
+								{
+									if (HasEffect(MNK.Buffs.CoeurlForm) && MNK.Gauge.CoeurlFury == 0 && LevelChecked(MNK.Demolish)
 									&& !OnTargetsRear())
-								{
-									return TrueNorth;
-								}
+									{
+										return TrueNorth;
+									}
 
-								if (HasEffect(MNK.Buffs.CoeurlForm) && (MNK.Gauge.CoeurlFury >= 1 || !LevelChecked(MNK.Demolish))
-									&& !OnTargetsFlank())
-								{
-									return TrueNorth;
+									if (HasEffect(MNK.Buffs.CoeurlForm) && (MNK.Gauge.CoeurlFury >= 1 || !LevelChecked(MNK.Demolish))
+										&& !OnTargetsFlank())
+									{
+										return TrueNorth;
+									}
 								}
 							}
 
 							if (LocalPlayer.ClassJob.Id == DRG.JobID)
 							{
-								if ((lastComboMove is DRG.Disembowel or DRG.SpiralBlow or DRG.ChaosThrust or DRG.ChaoticSpring)
-									&& LevelChecked(DRG.ChaosThrust) && !OnTargetsRear())
+								if (actionID is not DRG.DoomSpike and not DRG.SonicThrust and not DRG.CoerthanTorment)
 								{
-									return TrueNorth;
-								}
+									if ((lastComboMove is DRG.Disembowel or DRG.SpiralBlow or DRG.ChaosThrust or DRG.ChaoticSpring)
+										&& LevelChecked(DRG.ChaosThrust) && !OnTargetsRear())
+									{
+										return TrueNorth;
+									}
 
-								if ((lastComboMove is DRG.FullThrust or DRG.HeavensThrust)
-									&& LevelChecked(DRG.FangAndClaw) && !OnTargetsFlank())
-								{
-									return TrueNorth;
+									if ((lastComboMove is DRG.FullThrust or DRG.HeavensThrust)
+										&& LevelChecked(DRG.FangAndClaw) && !OnTargetsFlank())
+									{
+										return TrueNorth;
+									}
 								}
 							}
 
 							if (LocalPlayer.ClassJob.Id == NIN.JobID)
 							{
-								if (lastComboMove is NIN.GustSlash)
+								if (lastComboMove is NIN.GustSlash && actionID is not NIN.DeathBlossom and not NIN.HakkeMujinsatsu)
 								{
 									if (ActionReady(NIN.AeolianEdge) && !OnTargetsRear()
 										&& ((NIN.Gauge.Kazematoi >= 1
@@ -316,62 +326,71 @@ namespace UltimateCombo.Combos.PvE
 
 							if (LocalPlayer.ClassJob.Id == SAM.JobID)
 							{
-								if (HasEffect(SAM.Buffs.MeikyoShisui)
-									|| (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Jinpu && !OnTargetsRear()))
+								if (actionID is not SAM.Fuga and not SAM.Fuko and not SAM.Mangetsu and not SAM.Oka)
 								{
-									return TrueNorth;
-								}
+									if (HasEffect(SAM.Buffs.MeikyoShisui)
+										|| (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Jinpu && !OnTargetsRear()))
+									{
+										return TrueNorth;
+									}
 
-								if (HasEffect(SAM.Buffs.MeikyoShisui)
-									|| (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Shifu && !OnTargetsFlank()))
-								{
-									return TrueNorth;
+									if (HasEffect(SAM.Buffs.MeikyoShisui)
+										|| (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Shifu && !OnTargetsFlank()))
+									{
+										return TrueNorth;
+									}
 								}
 							}
 
 							if (LocalPlayer.ClassJob.Id == RPR.JobID)
 							{
-								if (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Executioner))
+								if (actionID is not RPR.SpinningScythe and not RPR.NightmareScythe)
 								{
-									if (HasEffect(RPR.Buffs.EnhancedGibbet) && !OnTargetsRear())
+									if (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Executioner))
 									{
-										return TrueNorth;
-									}
+										if (HasEffect(RPR.Buffs.EnhancedGibbet) && !OnTargetsRear())
+										{
+											return TrueNorth;
+										}
 
-									if (HasEffect(RPR.Buffs.EnhancedGallows) && !OnTargetsFlank())
-									{
-										return TrueNorth;
+										if (HasEffect(RPR.Buffs.EnhancedGallows) && !OnTargetsFlank())
+										{
+											return TrueNorth;
+										}
 									}
 								}
 							}
 
 							if (LocalPlayer.ClassJob.Id == VPR.JobID)
 							{
-								if (VPR.Gauge.DreadCombo.HasFlag(DreadCombo.Dreadwinder))
+								if (actionID is not VPR.SteelMaw and not VPR.ReavingMaw)
 								{
-									if (GetBuffRemainingTime(VPR.Buffs.Swiftscaled) <= GetBuffRemainingTime(VPR.Buffs.HuntersInstinct)
-										&& !OnTargetsRear())
+									if (VPR.Gauge.DreadCombo.HasFlag(DreadCombo.Dreadwinder))
+									{
+										if (GetBuffRemainingTime(VPR.Buffs.Swiftscaled) <= GetBuffRemainingTime(VPR.Buffs.HuntersInstinct)
+											&& !OnTargetsRear())
+										{
+											return TrueNorth;
+										}
+
+										if (GetBuffRemainingTime(VPR.Buffs.HuntersInstinct) < GetBuffRemainingTime(VPR.Buffs.Swiftscaled)
+											&& !OnTargetsFlank())
+										{
+											return TrueNorth;
+										}
+									}
+
+									if ((HasEffect(VPR.Buffs.HindstungVenom) || HasEffect(VPR.Buffs.HindsbaneVenom))
+										&& (lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting) && !OnTargetsRear())
 									{
 										return TrueNorth;
 									}
 
-									if (GetBuffRemainingTime(VPR.Buffs.HuntersInstinct) < GetBuffRemainingTime(VPR.Buffs.Swiftscaled)
-										&& !OnTargetsFlank())
+									if ((HasEffect(VPR.Buffs.FlankstungVenom) || HasEffect(VPR.Buffs.FlanksbaneVenom))
+										&& (lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting) && !OnTargetsFlank())
 									{
 										return TrueNorth;
 									}
-								}
-
-								if ((HasEffect(VPR.Buffs.HindstungVenom) || HasEffect(VPR.Buffs.HindsbaneVenom))
-									&& (lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting) && !OnTargetsRear())
-								{
-									return TrueNorth;
-								}
-
-								if ((HasEffect(VPR.Buffs.FlankstungVenom) || HasEffect(VPR.Buffs.FlanksbaneVenom))
-									&& (lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting) && !OnTargetsFlank())
-								{
-									return TrueNorth;
 								}
 							}
 						}
@@ -439,23 +458,33 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
-		/*internal class All_Choco : CustomComboClass
+		internal class All_Choco : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Choco;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			protected override unsafe uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.All_Choco))
-				{
-					if (CanWeave(actionID))
-					{
+				//6 is Attack Mode
+				//7 is Healing Mode
 
+				if (IsEnabled(CustomComboPreset.All_Choco) && HasCompanionPresent())
+				{
+					if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7 && !ActionQueued()
+						&& PlayerHealthPercentageHp() < GetOptionValue(Config.All_Choco))
+					{
+						_ = UseAction(ActionType.BuddyAction, 7);
+					}
+
+					if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6 && !ActionQueued()
+						&& PlayerHealthPercentageHp() >= GetOptionValue(Config.All_Choco))
+					{
+						_ = UseAction(ActionType.BuddyAction, 6);
 					}
 				}
 
 				return actionID;
 			}
-		}*/
+		}
 
 		internal class All_Variant : CustomComboClass
 		{

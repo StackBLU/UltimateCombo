@@ -238,8 +238,9 @@ namespace UltimateCombo.Data
 				_ = CheckWeaponSheathedAsync();
 			}
 
-			if ((flag is ConditionFlag.BetweenAreas or ConditionFlag.Unconscious or ConditionFlag.Mounted or ConditionFlag.BeingMoved)
-				&& value == false)
+			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas
+				or ConditionFlag.Jumping61 or ConditionFlag.Mounted
+				or ConditionFlag.Unconscious)
 			{
 				CombatActions.Clear();
 				LastAbility = 0;

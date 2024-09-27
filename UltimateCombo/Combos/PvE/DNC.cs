@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -111,7 +112,8 @@ namespace UltimateCombo.Combos.PvE
 						return ClosedPosition;
 					}
 
-					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
+					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep)
+						&& ActionWatching.NumberOfGcdsUsed >= 10)
 					{
 						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
 						{

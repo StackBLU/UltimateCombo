@@ -97,6 +97,11 @@ namespace UltimateCombo.Combos.PvE
 						return Superbolide;
 					}
 
+					if (!InCombat() && ActionReady(LightningShot))
+					{
+						return LightningShot;
+					}
+
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
 					{
 						if (ActionReady(Continuation)
@@ -112,7 +117,7 @@ namespace UltimateCombo.Combos.PvE
 							return Bloodfest;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
 							if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
 							{

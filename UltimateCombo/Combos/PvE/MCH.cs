@@ -88,11 +88,20 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is SplitShot or SlugShot or CleanShot or HeatedSplitShot or HeatedSlugShot or HeatedCleanShot) && IsEnabled(CustomComboPreset.MCH_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
+					if (IsEnabled(CustomComboPreset.MCH_ST_Reassemble) && ActionReady(Reassemble) && !InCombat()
+						&& !HasEffect(Buffs.Reassembled))
 					{
-						if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer))
+						return Reassemble;
+					}
+
+					if (CanWeave(actionID))
+					{
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return BarrelStabilizer;
+							if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer))
+							{
+								return BarrelStabilizer;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_ST_Queen) && ActionReady(OriginalHook(AutomatonQueen))
@@ -101,19 +110,25 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(AutomatonQueen);
 						}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Reassemble) && !HasEffect(Buffs.Reassembled)
-							&& ActionReady(Reassemble) && !HasEffect(Buffs.Overheated)
-							&& (ActionReady(Drill) || GetCooldownRemainingTime(Drill) < 1
-							|| ActionReady(OriginalHook(AirAnchor)) || GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1
-							|| ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 1))
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
-							return Reassemble;
+							if (IsEnabled(CustomComboPreset.MCH_ST_Reassemble) && !HasEffect(Buffs.Reassembled)
+								&& ActionReady(Reassemble) && !HasEffect(Buffs.Overheated)
+								&& (ActionReady(Drill) || GetCooldownRemainingTime(Drill) < 1
+								|| ActionReady(OriginalHook(AirAnchor)) || GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1
+								|| ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 1))
+							{
+								return Reassemble;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire) && ActionReady(Wildfire)
-							&& (HasEffect(Buffs.Hypercharged) || HasEffect(Buffs.Overheated)))
+						if (ActionWatching.NumberOfGcdsUsed >= 5)
 						{
-							return Wildfire;
+							if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire) && ActionReady(Wildfire)
+								&& (HasEffect(Buffs.Hypercharged) || HasEffect(Buffs.Overheated)))
+							{
+								return Wildfire;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_ST_GaussRico) && ActionReady(OriginalHook(GaussRound))
@@ -147,10 +162,10 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_ST_Hypercharge) && !HasEffect(Buffs.Overheated) && ActionReady(Hypercharge)
-						&& (GetCooldownRemainingTime(Drill) > 5 || !LevelChecked(Drill) || !IsEnabled(CustomComboPreset.MCH_ST_Drill))
-						&& (GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 5 || !LevelChecked(OriginalHook(AirAnchor)) || !IsEnabled(CustomComboPreset.MCH_ST_AirAnchor))
-						&& (GetCooldownRemainingTime(Chainsaw) > 5 || !LevelChecked(Chainsaw) || !IsEnabled(CustomComboPreset.MCH_ST_Chainsaw))
-						&& (Gauge.Heat >= GetOptionValue(Config.MCH_ST_Hypercharge) || HasEffect(Buffs.Hypercharged)))
+							&& (GetCooldownRemainingTime(Drill) > 5 || !LevelChecked(Drill) || !IsEnabled(CustomComboPreset.MCH_ST_Drill))
+							&& (GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 5 || !LevelChecked(OriginalHook(AirAnchor)) || !IsEnabled(CustomComboPreset.MCH_ST_AirAnchor))
+							&& (GetCooldownRemainingTime(Chainsaw) > 5 || !LevelChecked(Chainsaw) || !IsEnabled(CustomComboPreset.MCH_ST_Chainsaw))
+							&& (Gauge.Heat >= GetOptionValue(Config.MCH_ST_Hypercharge) || HasEffect(Buffs.Hypercharged)))
 						{
 							return Hypercharge;
 						}

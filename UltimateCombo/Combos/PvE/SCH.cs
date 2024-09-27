@@ -102,44 +102,51 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Ruin or Broil or Broil2 or Broil3 or Broil4) && IsEnabled(CustomComboPreset.SCH_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
+					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						{
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
+							{
+								return Aetherflow;
+							}
+						}
+
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						{
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
 							&& Gauge.SeraphTimer < 5000)
-						{
-							return OriginalHook(SummonSeraph);
-						}
-
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
-						{
-							return Aetherflow;
-						}
-
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation) && HasPetPresent() && Gauge.Aetherflow == 0
-							&& Gauge.SeraphTimer == 0)
-						{
-							return Dissipation;
-						}
-
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
-						{
-							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
 							{
-								return ChainStratagem;
+								return OriginalHook(SummonSeraph);
 							}
 
-							if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
+								&& HasPetPresent() && Gauge.Aetherflow == 0
+								&& Gauge.SeraphTimer == 0)
 							{
-								return BanefulImpaction;
+								return Dissipation;
 							}
-						}
 
-						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
-						{
-							if (((GetCooldownRemainingTime(Aetherflow) <= 10f || GetCooldownRemainingTime(Dissipation) <= 10f)
-							&& !HasEffect(Buffs.Dissipation)) || TargetHasEffect(Debuffs.ChainStratagem))
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
 							{
-								return EnergyDrain;
+								if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
+								{
+									return ChainStratagem;
+								}
+
+								if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
+								{
+									return BanefulImpaction;
+								}
+							}
+
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
+							{
+								if (((GetCooldownRemainingTime(Aetherflow) <= 10f || GetCooldownRemainingTime(Dissipation) <= 10f)
+								&& !HasEffect(Buffs.Dissipation)) || TargetHasEffect(Debuffs.ChainStratagem))
+								{
+									return EnergyDrain;
+								}
 							}
 						}
 					}
@@ -149,9 +156,12 @@ namespace UltimateCombo.Combos.PvE
 						return SummonEos;
 					}
 
-					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis)) && ActionWatching.NumberOfGcdsUsed >= 3
+					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
+						&& ActionWatching.NumberOfGcdsUsed >= 1
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(BioList[OriginalHook(Biolysis)]) || GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3))
+						&& (!TargetHasEffect(BioList[OriginalHook(Biolysis)])
+						|| GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
+						|| ActionWatching.NumberOfGcdsUsed == 11))
 					{
 						return OriginalHook(Biolysis);
 					}

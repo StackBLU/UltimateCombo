@@ -621,35 +621,38 @@ namespace UltimateCombo.Combos.PvE
 						{
 							for (int i = 0; i < 24; i++)
 							{
-								if (GetActiveBlueMageActionInSlot(20) == ShockStrike)
+								if (!ActionQueued())
 								{
-									if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
+									if (GetActiveBlueMageActionInSlot(20) == ShockStrike)
 									{
-										AssignBlueMageActionToSlot(20, RamsVoice);
+										if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
+										{
+											AssignBlueMageActionToSlot(20, RamsVoice);
+										}
 									}
-								}
 
-								if (GetActiveBlueMageActionInSlot(21) == GlassDance)
-								{
-									if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
+									if (GetActiveBlueMageActionInSlot(21) == GlassDance)
 									{
-										AssignBlueMageActionToSlot(21, Missile);
+										if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
+										{
+											AssignBlueMageActionToSlot(21, Missile);
+										}
 									}
-								}
 
-								if (GetActiveBlueMageActionInSlot(22) == Quasar)
-								{
-									if (IsOffCooldown(Quasar) && IsSpellActive(Quasar))
+									if (GetActiveBlueMageActionInSlot(22) == Quasar)
 									{
-										AssignBlueMageActionToSlot(22, Ultravibration);
+										if (IsOffCooldown(Quasar) && IsSpellActive(Quasar))
+										{
+											AssignBlueMageActionToSlot(22, Ultravibration);
+										}
 									}
-								}
 
-								if (GetActiveBlueMageActionInSlot(23) == SeaShanty)
-								{
-									if (IsOffCooldown(SeaShanty) && IsSpellActive(SeaShanty))
+									if (GetActiveBlueMageActionInSlot(23) == SeaShanty)
 									{
-										AssignBlueMageActionToSlot(23, HydroPull);
+										if (IsOffCooldown(SeaShanty) && IsSpellActive(SeaShanty))
+										{
+											AssignBlueMageActionToSlot(23, HydroPull);
+										}
 									}
 								}
 							}
@@ -693,36 +696,39 @@ namespace UltimateCombo.Combos.PvE
 						{
 							for (int i = 0; i < 24; i++)
 							{
-								if (GetActiveBlueMageActionInSlot(20) == RamsVoice)
+								if (!ActionQueued())
 								{
-									if (IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice))
+									if (GetActiveBlueMageActionInSlot(20) == RamsVoice)
 									{
-										AssignBlueMageActionToSlot(20, ShockStrike);
+										if (IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice))
+										{
+											AssignBlueMageActionToSlot(20, ShockStrike);
+										}
 									}
-								}
 
 
-								if (GetActiveBlueMageActionInSlot(21) == Missile)
-								{
-									if (IsOffCooldown(Missile) && IsSpellActive(Missile))
+									if (GetActiveBlueMageActionInSlot(21) == Missile)
 									{
-										AssignBlueMageActionToSlot(21, GlassDance);
+										if (IsOffCooldown(Missile) && IsSpellActive(Missile))
+										{
+											AssignBlueMageActionToSlot(21, GlassDance);
+										}
 									}
-								}
 
-								if (GetActiveBlueMageActionInSlot(22) == Ultravibration)
-								{
-									if (IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration))
+									if (GetActiveBlueMageActionInSlot(22) == Ultravibration)
 									{
-										AssignBlueMageActionToSlot(22, Quasar);
+										if (IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration))
+										{
+											AssignBlueMageActionToSlot(22, Quasar);
+										}
 									}
-								}
 
-								if (GetActiveBlueMageActionInSlot(23) == HydroPull)
-								{
-									if (IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
+									if (GetActiveBlueMageActionInSlot(23) == HydroPull)
 									{
-										AssignBlueMageActionToSlot(23, SeaShanty);
+										if (IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
+										{
+											AssignBlueMageActionToSlot(23, SeaShanty);
+										}
 									}
 								}
 							}

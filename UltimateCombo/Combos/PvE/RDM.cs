@@ -113,7 +113,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Verthunder3);
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2
+					if (CanWeave(actionID)
 						&& (!WasLastWeaponskill(EnchantedRiposte) || (WasLastWeaponskill(EnchantedRiposte)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
 							&& (!WasLastWeaponskill(EnchantedZwerchhau) || (WasLastWeaponskill(EnchantedZwerchhau)
@@ -121,62 +121,71 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedRedoublement) || (WasLastWeaponskill(EnchantedRedoublement)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
-							&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
-							&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return All.Swiftcast;
+							if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
+								&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
+								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
+							{
+								return All.Swiftcast;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Fleche) && ActionReady(Fleche))
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
-							return Fleche;
+							if (IsEnabled(CustomComboPreset.RDM_ST_Fleche) && ActionReady(Fleche))
+							{
+								return Fleche;
+							}
+
+							if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && ActionReady(Acceleration)
+								&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && Gauge.ManaStacks == 0
+								&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
+								&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15))
+							{
+								return Acceleration;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && ActionReady(Acceleration)
-							&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && Gauge.ManaStacks == 0
-							&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
-							&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15))
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
-							return Acceleration;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && ActionReady(Embolden))
+							{
+								return Embolden;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && ActionReady(Embolden))
-						{
-							return Embolden;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && ActionReady(Manafication)
+								&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
+								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
+								&& Gauge.ManaStacks == 0)
+							{
+								return Manafication;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && ActionReady(Manafication)
-							&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
-							&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
-							&& Gauge.ManaStacks == 0)
-						{
-							return Manafication;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Contre) && ActionReady(ContreSixte))
+							{
+								return ContreSixte;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Contre) && ActionReady(ContreSixte))
-						{
-							return ContreSixte;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Engagement) && ActionReady(Engagement) && InActionRange(Engagement))
+							{
+								return Engagement;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Engagement) && ActionReady(Engagement) && InActionRange(Engagement))
-						{
-							return Engagement;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && InMeleeRangeNoMovement())
+							{
+								return Corpsacorps;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && InMeleeRangeNoMovement())
-						{
-							return Corpsacorps;
-						}
+							if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && HasEffect(Buffs.ThornedFlourish))
+							{
+								return ViceOfThorns;
+							}
 
-						if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && HasEffect(Buffs.ThornedFlourish))
-						{
-							return ViceOfThorns;
-						}
-
-						if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && HasEffect(Buffs.PrefulugenceReady))
-						{
-							return Prefulgence;
+							if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && HasEffect(Buffs.PrefulugenceReady))
+							{
+								return Prefulgence;
+							}
 						}
 					}
 
@@ -211,7 +220,8 @@ namespace UltimateCombo.Combos.PvE
 						|| WasLastWeaponskill(OriginalHook(EnchantedRiposte))
 						|| WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))))
 					{
-						if (WasLastWeaponskill(OriginalHook(EnchantedZwerchhau)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+						if (WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))
+							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
 								&& InActionRange(EnchantedRedoublement))
@@ -225,7 +235,8 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (WasLastWeaponskill(OriginalHook(EnchantedRiposte)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+						if (WasLastWeaponskill(OriginalHook(EnchantedRiposte))
+							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
 								&& InActionRange(EnchantedZwerchhau))
@@ -239,7 +250,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
 							&& InActionRange(EnchantedRiposte))
@@ -247,15 +258,15 @@ namespace UltimateCombo.Combos.PvE
 								return Corpsacorps;
 							}
 
-							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedRiposte))
-								&& Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedRiposte)))
 							{
 								return EnchantedRiposte;
 							}
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady))
+					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady)
+						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5))
 					{
 						return GrandImpact;
 					}
@@ -399,7 +410,8 @@ namespace UltimateCombo.Combos.PvE
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetTrois))))
 					{
-						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
+							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
 								&& !InActionRange(EnchantedMoulinetTrois))
@@ -413,7 +425,8 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinet)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinet))
+							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
 								&& !InActionRange(EnchantedMoulinetDeux))
@@ -427,7 +440,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
 								&& !InActionRange(EnchantedMoulinet))

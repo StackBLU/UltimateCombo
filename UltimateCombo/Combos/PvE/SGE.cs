@@ -123,7 +123,7 @@ namespace UltimateCombo.Combos.PvE
 							return Kardia;
 						}
 
-						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) && ActionReady(Psyche) && ActionWatching.NumberOfGcdsUsed >= 4)
+						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) && ActionReady(Psyche) && ActionWatching.NumberOfGcdsUsed >= 6)
 						{
 							return Psyche;
 						}
@@ -153,17 +153,19 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(EukrasianDosis)) && ActionWatching.NumberOfGcdsUsed >= 3
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis)]) || (GetDebuffRemainingTime(DosisList[OriginalHook(Dosis)]) <= 3)))
+						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis)]) <= 3
+						|| ActionWatching.NumberOfGcdsUsed == 11))
 					{
 						if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))
 						{
 							return Eukrasia;
 						}
+
 						return OriginalHook(Dosis);
 					}
 
 					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3)) && ActionReady(OriginalHook(Phlegma3))
-						&& ActionWatching.NumberOfGcdsUsed >= 4)
+						&& ActionWatching.NumberOfGcdsUsed >= 5)
 					{
 						return OriginalHook(Phlegma3);
 					}

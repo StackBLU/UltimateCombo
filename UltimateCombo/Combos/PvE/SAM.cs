@@ -103,47 +103,62 @@ namespace UltimateCombo.Combos.PvE
 						return MeikyoShisui;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
+					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SAM_ST_Shield) && ActionReady(OriginalHook(ThirdEye)))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return OriginalHook(ThirdEye);
+							if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Ikishoten)
+								&& GetRemainingCharges(MeikyoShisui) == 2 && ActionReady(Hagakure)
+								&& (Gauge.HasKa || Gauge.HasGetsu || Gauge.HasSetsu)
+								&& !(Gauge.HasKa && Gauge.HasGetsu && Gauge.HasSetsu))
+							{
+								return Hagakure;
+							}
+
+							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
+							{
+								return Ikishoten;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
-							return Ikishoten;
-						}
+							if (IsEnabled(CustomComboPreset.SAM_ST_Shield) && ActionReady(OriginalHook(ThirdEye)))
+							{
+								return OriginalHook(ThirdEye);
+							}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && ActionReady(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui)
-							&& !HasEffect(Buffs.Tendo) && !WasLastWeaponskill(Hakaze) && !WasLastWeaponskill(Gyofu)
-							&& !WasLastWeaponskill(Jinpu) && !WasLastWeaponskill(Shifu)
-							&& (HasEffect(Buffs.OgiNamikiriReady) || !LevelChecked(OgiNamikiri)))
-						{
-							return MeikyoShisui;
-						}
+							if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && ActionReady(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui)
+								&& !HasEffect(Buffs.Tendo) && !WasLastWeaponskill(Hakaze) && !WasLastWeaponskill(Gyofu)
+								&& !WasLastWeaponskill(Jinpu) && !WasLastWeaponskill(Shifu)
+								&& (HasEffect(Buffs.OgiNamikiriReady) || !LevelChecked(OgiNamikiri)))
+							{
+								return MeikyoShisui;
+							}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && HasEffect(Buffs.Zanshin))
-						{
-							return Zanshin;
-						}
+							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && HasEffect(Buffs.Zanshin))
+							{
+								return Zanshin;
+							}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Shoha) && ActionReady(Shoha) && Gauge.MeditationStacks == 3)
-						{
-							return Shoha;
-						}
+							if (IsEnabled(CustomComboPreset.SAM_ST_Shoha) && ActionReady(Shoha) && Gauge.MeditationStacks == 3)
+							{
+								return Shoha;
+							}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Senei) && ActionReady(Senei) && ActionReady(Senei) && Gauge.Kenki >= 25)
-						{
-							return Senei;
-						}
+							if (IsEnabled(CustomComboPreset.SAM_ST_Senei) && ActionReady(Senei) && ActionReady(Senei) && Gauge.Kenki >= 25)
+							{
+								return Senei;
+							}
 
-						if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) && ActionReady(Shinten)
-							&& ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
-							|| (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
-							|| Gauge.Kenki == 100))
-						{
-							return Shinten;
+							if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) && ActionReady(Shinten)
+								&& ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
+								|| (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
+								|| Gauge.Kenki == 100
+								|| (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
+							{
+								return Shinten;
+							}
 						}
 					}
 
@@ -165,9 +180,8 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.SAM_ST_Higanbana) && GetDebuffRemainingTime(Debuffs.Higanbana) < 3
 						&& OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
-						&& EnemyHealthCurrentHp() > LocalPlayer.MaxHp
 						&& (Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.SETSU))
-						&& ActionWatching.NumberOfGcdsUsed > 2 && (EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10 || EnemyHealthMaxHp() == 44))
+						&& ActionWatching.NumberOfGcdsUsed > 2 && (EnemyHealthCurrentHp() > LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
 					{
 						return OriginalHook(Iaijutsu);
 					}
@@ -250,14 +264,23 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SAM_AoE_Shield) && ActionReady(OriginalHook(ThirdEye)))
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Ikishoten)
+							&& GetRemainingCharges(MeikyoShisui) == 2
+							&& ActionReady(Hagakure)
+							&& (Gauge.HasKa || Gauge.HasGetsu || Gauge.HasSetsu)
+							&& !(Gauge.HasKa && Gauge.HasGetsu && Gauge.HasSetsu))
 						{
-							return OriginalHook(ThirdEye);
+							return Hagakure;
 						}
 
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Shield) && ActionReady(OriginalHook(ThirdEye)))
+						{
+							return OriginalHook(ThirdEye);
 						}
 
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && ActionReady(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui)
@@ -284,7 +307,8 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Kyuten) && ActionReady(Kyuten)
 							&& ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
 							|| (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
-							|| Gauge.Kenki == 100))
+							|| Gauge.Kenki == 100
+							|| (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
 						{
 							return Kyuten;
 						}
@@ -300,7 +324,8 @@ namespace UltimateCombo.Combos.PvE
 						return OgiNamikiri;
 					}
 
-					if (IsEnabled(CustomComboPreset.SAM_AoE_Tsubame) && (HasEffect(Buffs.AoETsubameReady) || HasEffect(Buffs.EnhancedAoETsubameReady)))
+					if (IsEnabled(CustomComboPreset.SAM_AoE_Tsubame)
+						&& (HasEffect(Buffs.AoETsubameReady) || HasEffect(Buffs.EnhancedAoETsubameReady)))
 					{
 						return OriginalHook(TsubameGaeshi);
 					}

@@ -138,90 +138,92 @@ namespace UltimateCombo.Combos.PvE
 						return EarthlyStar;
 					}
 
-					if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
-						&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-						&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving)
-						&& CanWeave(actionID))
+					if (CanWeave(actionID))
 					{
-						return Lightspeed;
-					}
-
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
-					{
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
+								&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
+								&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving))
 							{
 								return Lightspeed;
 							}
-
-							return Divination;
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
-							&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
-							&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
-							return OriginalHook(Play1);
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
+							{
+								return Divination;
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
-							&& Config.AST_ST_DPS_UseDefenseCards
-							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
-						{
-							return OriginalHook(Play2);
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
+								&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
+								&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+							{
+								return OriginalHook(Play1);
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
-							&& Config.AST_ST_DPS_UseDefenseCards
-							&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
-						{
-							return OriginalHook(Play3);
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
+								&& Config.AST_ST_DPS_UseDefenseCards
+								&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
+							{
+								return OriginalHook(Play2);
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
-							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
-						{
-							return OriginalHook(MinorArcana);
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
+								&& Config.AST_ST_DPS_UseDefenseCards
+								&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
+							{
+								return OriginalHook(Play3);
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
-							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
-							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_ST_DPS_UseDefenseCards)))
-						{
-							if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
-								|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
+								&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
 							{
 								return OriginalHook(MinorArcana);
 							}
 
-							return OriginalHook(AstralDraw);
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
+								&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
+								&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_ST_DPS_UseDefenseCards)))
+							{
+								if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
+									|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
+								{
+									return OriginalHook(MinorArcana);
+								}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
-						{
-							return Oracle;
-						}
+								return OriginalHook(AstralDraw);
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) && ActionReady(EarthlyStar))
-						{
-							return EarthlyStar;
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
+							{
+								return Oracle;
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
-						{
-							return SunSign;
-						}
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_EarthlyStar) && ActionReady(EarthlyStar))
+							{
+								return EarthlyStar;
+							}
 
-						if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Buffs.Lightspeed))
-						{
-							return All.Swiftcast;
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_SunSign) && HasEffect(Buffs.Suntouched))
+							{
+								return SunSign;
+							}
+
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Buffs.Lightspeed))
+							{
+								return All.Swiftcast;
+							}
 						}
 					}
 
 					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Combust3)) && ActionWatching.NumberOfGcdsUsed >= 3
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(CombustList[OriginalHook(Combust3)]) || GetDebuffRemainingTime(CombustList[OriginalHook(Combust3)]) <= 3))
+						&& (!TargetHasEffect(CombustList[OriginalHook(Combust3)])
+						|| GetDebuffRemainingTime(CombustList[OriginalHook(Combust3)]) <= 3
+						|| ActionWatching.NumberOfGcdsUsed == 11))
 					{
 						return OriginalHook(Combust3);
 					}

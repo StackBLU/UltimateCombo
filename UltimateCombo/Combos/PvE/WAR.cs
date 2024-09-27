@@ -81,6 +81,11 @@ namespace UltimateCombo.Combos.PvE
 						return Holmgang;
 					}
 
+					if (!InCombat() && ActionReady(Tomahawk))
+					{
+						return Tomahawk;
+					}
+
 					if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate) && CanWeave(actionID)
 						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
 						&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
@@ -89,7 +94,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
-						&& ActionWatching.NumberOfGcdsUsed >= 2)
+						&& ActionWatching.NumberOfGcdsUsed >= 4)
 					{
 						if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 						{

@@ -116,43 +116,46 @@ namespace UltimateCombo.Combos.PvE
 							return PitchPerfect;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow) && ActionWatching.NumberOfGcdsUsed >= 3)
+						if (IsEnabled(CustomComboPreset.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow))
 						{
 							return EmpyrealArrow;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return BattleVoice;
-						}
+							if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
+							{
+								return BattleVoice;
+							}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
-						{
-							return RadiantFinale;
-						}
+							if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
+							{
+								return RadiantFinale;
+							}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes) && HasEffect(Buffs.RadiantFinale))
-						{
-							return RagingStrikes;
-						}
+							if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes) && HasEffect(Buffs.RadiantFinale))
+							{
+								return RagingStrikes;
+							}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
-						{
-							return Barrage;
-						}
+							if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
+							{
+								return Barrage;
+							}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Sidewinder) && ActionReady(Sidewinder))
-						{
-							return Sidewinder;
-						}
+							if (IsEnabled(CustomComboPreset.BRD_ST_Sidewinder) && ActionReady(Sidewinder))
+							{
+								return Sidewinder;
+							}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Bloodletter) && ActionReady(Bloodletter)
-							&& ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
-							|| (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
-							&& GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 7.5f)
-							|| HasEffect(Buffs.BattleVoice)))
-						{
-							return OriginalHook(Bloodletter);
+							if (IsEnabled(CustomComboPreset.BRD_ST_Bloodletter) && ActionReady(Bloodletter)
+								&& ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
+								|| (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
+								&& GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 7.5f)
+								|| HasEffect(Buffs.BattleVoice)))
+							{
+								return OriginalHook(Bloodletter);
+							}
 						}
 					}
 

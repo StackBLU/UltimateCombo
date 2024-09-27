@@ -84,6 +84,11 @@ namespace UltimateCombo.Combos.PvE
 						return LivingDead;
 					}
 
+					if (!InCombat() && ActionReady(Unmend))
+					{
+						return Unmend;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
@@ -97,7 +102,7 @@ namespace UltimateCombo.Combos.PvE
 							return LivingShadow;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
 							if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
 								&& (LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver) || Gauge.HasDarkArts))

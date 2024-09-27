@@ -102,7 +102,12 @@ namespace UltimateCombo.Combos.PvE
 						return Soulsow;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed > 2)
+					if (!InCombat() && ActionReady(Harpe))
+					{
+						return Harpe;
+					}
+
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
 					{
 						if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && Gauge.VoidShroud == 2)
 						{

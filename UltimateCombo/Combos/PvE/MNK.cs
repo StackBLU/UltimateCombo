@@ -100,19 +100,30 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.MNK_ST_Fire) && ActionReady(RiddleOfFire) && ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
-							return RiddleOfFire;
-						}
+							if (IsEnabled(CustomComboPreset.MNK_ST_Fire) && ActionReady(RiddleOfFire))
+							{
+								return RiddleOfFire;
+							}
 
-						if (IsEnabled(CustomComboPreset.MNK_ST_Brother) && ActionReady(Brotherhood) && ActionWatching.NumberOfGcdsUsed >= 3)
-						{
-							return Brotherhood;
-						}
+							if (IsEnabled(CustomComboPreset.MNK_ST_Brother) && ActionReady(Brotherhood))
+							{
+								return Brotherhood;
+							}
 
-						if (IsEnabled(CustomComboPreset.MNK_ST_Wind) && ActionReady(RiddleOfWind) && ActionWatching.NumberOfGcdsUsed >= 3)
-						{
-							return RiddleOfWind;
+							if (IsEnabled(CustomComboPreset.MNK_ST_Wind) && ActionReady(RiddleOfWind))
+							{
+								return RiddleOfWind;
+							}
+
+							if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) && ActionReady(OriginalHook(SteelPeak))
+								&& Gauge.Chakra >= 5 && InCombat()
+								&& (!HasEffect(Buffs.Brotherhood) || GetBuffRemainingTime(Buffs.Brotherhood) < 2 || !LevelChecked(SixSidedStar)
+								|| !IsEnabled(CustomComboPreset.MNK_ST_SixStar)))
+							{
+								return OriginalHook(SteelPeak);
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.MNK_ST_PerfectBalance) && ActionReady(PerfectBalance)
@@ -121,13 +132,6 @@ namespace UltimateCombo.Combos.PvE
 							&& (WasLastWeaponskill(OriginalHook(Bootshine)) || WasLastWeaponskill(DragonKick)))
 						{
 							return PerfectBalance;
-						}
-
-						if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) && ActionReady(OriginalHook(SteelPeak)) && Gauge.Chakra >= 5 && InCombat()
-							&& (!HasEffect(Buffs.Brotherhood) || GetBuffRemainingTime(Buffs.Brotherhood) < 2 || !LevelChecked(SixSidedStar)
-							|| !IsEnabled(CustomComboPreset.MNK_ST_SixStar)))
-						{
-							return OriginalHook(SteelPeak);
 						}
 					}
 

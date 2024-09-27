@@ -95,7 +95,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Stone1 or Stone2 or Stone3 or Stone4 or Glare1 or Glare3) && IsEnabled(CustomComboPreset.WHM_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
 					{
 						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
 						{
@@ -113,9 +113,11 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Dia)) && ActionWatching.NumberOfGcdsUsed >= 3
+					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Dia))
+						&& ActionWatching.NumberOfGcdsUsed >= 1
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(DiaList[OriginalHook(Dia)]) || GetDebuffRemainingTime(DiaList[OriginalHook(Dia)]) <= 3))
+						&& (!TargetHasEffect(DiaList[OriginalHook(Dia)]) || GetDebuffRemainingTime(DiaList[OriginalHook(Dia)]) <= 3
+						|| ActionWatching.NumberOfGcdsUsed == 13))
 					{
 						return OriginalHook(Dia);
 					}

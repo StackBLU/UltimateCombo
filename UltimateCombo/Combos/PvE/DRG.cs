@@ -88,71 +88,77 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is TrueThrust or VorpalThrust or LanceBarrage or Disembowel or SpiralBlow or FullThrust
 					or HeavensThrust or ChaosThrust or ChaoticSpring or FangAndClaw or WheelingThrust) && IsEnabled(CustomComboPreset.DRG_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2)
+					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge)
-							&& (HasEffect(Buffs.LanceCharge) || GetMaxCharges(LifeSurge) == GetRemainingCharges(LifeSurge)) && !HasEffect(Buffs.LifeSurge)
-							&& (((WasLastWeaponskill(WheelingThrust) || WasLastWeaponskill(FangAndClaw)) && LevelChecked(Drakesbane))
-							|| WasLastWeaponskill(OriginalHook(LanceBarrage))))
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							return LifeSurge;
+							if (IsEnabled(CustomComboPreset.DRG_ST_LanceCharge) && ActionReady(LanceCharge))
+							{
+								return LanceCharge;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_LanceCharge) && ActionReady(LanceCharge))
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
-							return LanceCharge;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_BattleLitany) && ActionReady(BattleLitany))
+							{
+								return BattleLitany;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_BattleLitany) && ActionReady(BattleLitany))
-						{
-							return BattleLitany;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Geirskogul))
+							{
+								return Geirskogul;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Geirskogul))
-						{
-							return Geirskogul;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(HighJump)))
+							{
+								return OriginalHook(HighJump);
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(HighJump)))
-						{
-							return OriginalHook(HighJump);
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge)
+								&& (HasEffect(Buffs.LanceCharge) || GetMaxCharges(LifeSurge) == GetRemainingCharges(LifeSurge))
+								&& !HasEffect(Buffs.LifeSurge)
+								&& (WasLastWeaponskill(WheelingThrust) || WasLastWeaponskill(OriginalHook(LanceBarrage))))
+							{
+								return LifeSurge;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(DragonfireDive))
-						{
-							return DragonfireDive;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(DragonfireDive))
+							{
+								return DragonfireDive;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond)
-							&& HasEffect(Buffs.NastrondReady) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
-						{
-							return Nastrond;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond)
+								&& HasEffect(Buffs.NastrondReady) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
+							{
+								return Nastrond;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && ActionReady(Stardiver) && Gauge.IsLOTDActive
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
-						{
-							return Stardiver;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && ActionReady(Stardiver) && Gauge.IsLOTDActive
+								&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
+							{
+								return Stardiver;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && HasEffect(Buffs.StarcrossReady))
-						{
-							return Starcross;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && HasEffect(Buffs.StarcrossReady))
+							{
+								return Starcross;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(RiseOfTheDragon) && HasEffect(Buffs.DragonsFlight))
-						{
-							return RiseOfTheDragon;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(RiseOfTheDragon) && HasEffect(Buffs.DragonsFlight))
+							{
+								return RiseOfTheDragon;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(MirageDive) && HasEffect(Buffs.DiveReady))
-						{
-							return MirageDive;
-						}
+							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(MirageDive) && HasEffect(Buffs.DiveReady))
+							{
+								return MirageDive;
+							}
 
-						if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && ActionReady(WyrmwindThrust) && Gauge.FirstmindsFocusCount == 2)
-						{
-							return WyrmwindThrust;
+							if (IsEnabled(CustomComboPreset.DRG_ST_Wyrmwind) && ActionReady(WyrmwindThrust) && Gauge.FirstmindsFocusCount == 2)
+							{
+								return WyrmwindThrust;
+							}
 						}
 					}
 

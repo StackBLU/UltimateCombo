@@ -99,7 +99,7 @@ namespace UltimateCombo.Combos.PvE
 						return HolySpirit;
 					}
 
-					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || WasLastWeaponskill(RoyalAuthority)))
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
 					{
 						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
 						{

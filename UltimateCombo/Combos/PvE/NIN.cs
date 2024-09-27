@@ -128,17 +128,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush) && IsEnabled(CustomComboPreset.NIN_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && !InCombat() && GetRemainingCharges(Ten) != GetMaxCharges(Ten)
-						&& !HasEffect(Buffs.Mudra) && ActionReady(Hide) && !WasLastAbility(Suiton))
-					{
-						return Hide;
-					}
-
-					if (HasEffect(Buffs.Hidden) && ActionReady(Shukuchi) && CurrentTarget == null)
-					{
-						return Shukuchi;
-					}
-
 					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && ActionReady(Ten)
 						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
 					{
@@ -159,12 +148,12 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
 					{
-						if (IsEnabled(CustomComboPreset.NIN_ST_Kassatsu) && ActionReady(Kassatsu))
+						if (IsEnabled(CustomComboPreset.NIN_ST_Kassatsu) && ActionReady(Kassatsu) && ActionWatching.NumberOfGcdsUsed >= 1)
 						{
 							return Kassatsu;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)))
 							{
@@ -175,7 +164,10 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return Bunshin;
 							}
+						}
 
+						if (ActionWatching.NumberOfGcdsUsed >= 5)
+						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
 								&& HasEffect(Buffs.ShadowWalker)
 								&& (GetCooldownRemainingTime(OriginalHook(Mug)) > 30 || TargetHasEffect(MugList[OriginalHook(Mug)])))
@@ -355,17 +347,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(CustomComboPreset.NIN_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && !InCombat() && GetRemainingCharges(Ten) != GetMaxCharges(Ten)
-						&& !HasEffect(Buffs.Mudra) && ActionReady(Hide) && !WasLastAbility(Huton))
-					{
-						return Hide;
-					}
-
-					if (HasEffect(Buffs.Hidden) && ActionReady(Shukuchi) && CurrentTarget == null)
-					{
-						return Shukuchi;
-					}
-
 					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && ActionReady(Ten)
 						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
 					{
@@ -448,7 +429,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
-							if (HasEffect(Buffs.Doton))
+							if (HasEffect(Buffs.Doton) && GetBuffRemainingTime(Buffs.Doton) > 3)
 							{
 								if (OriginalHook(Ten) is TCJHuton)
 								{

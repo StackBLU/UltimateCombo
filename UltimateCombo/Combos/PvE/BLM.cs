@@ -124,14 +124,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
-							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
-							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
-						{
-							return Amplifier;
-						}
-
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
 							if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)
 								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
@@ -140,18 +133,28 @@ namespace UltimateCombo.Combos.PvE
 								return All.Swiftcast;
 							}
 
-							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
+							if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
+								&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
+								&& (Gauge.InUmbralIce || Gauge.InAstralFire))
+							{
+								return Amplifier;
+							}
+
+							if (ActionWatching.NumberOfGcdsUsed >= 5)
+							{
+								if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
 								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
 								&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
 								|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1 && GetCooldownChargeRemainingTime(Triplecast) < 10)
 								|| IsMoving || HasEffect(Buffs.LeyLines)))
-							{
-								return Triplecast;
-							}
+								{
+									return Triplecast;
+								}
 
-							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines))
-							{
-								return LeyLines;
+								if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines))
+								{
+									return LeyLines;
+								}
 							}
 						}
 					}
@@ -179,7 +182,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
-						&& HasEffect(Buffs.LeyLines))
+						&& HasEffect(Buffs.LeyLines) && Gauge.AstralSoulStacks < 6)
 					{
 						return Manafont;
 					}
