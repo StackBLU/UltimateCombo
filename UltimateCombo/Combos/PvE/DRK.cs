@@ -84,7 +84,7 @@ namespace UltimateCombo.Combos.PvE
 						return LivingDead;
 					}
 
-					if (!InCombat() && ActionReady(Unmend))
+					if (!InCombat() && ActionReady(Unmend) && !InMeleeRange())
 					{
 						return Unmend;
 					}

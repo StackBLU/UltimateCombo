@@ -106,7 +106,9 @@ namespace UltimateCombo.Combos.PvE
 
 		public static class Config
 		{
-
+			public static UserBool
+				SMN_ST_Astral_Swift = new("SMN_ST_Astral_Swift"),
+				SMN_AoE_Astral_Swift = new("SMN_AoE_Astral_Swift");
 		}
 
 		internal class SMN_ST_DPS : CustomComboClass
@@ -122,7 +124,12 @@ namespace UltimateCombo.Combos.PvE
 						return SummonCarbuncle;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
+					if (!InCombat() && ActionReady(OriginalHook(Ruin)))
+					{
+						return OriginalHook(Ruin);
+					}
+
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
@@ -162,7 +169,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (ActionReady(All.Swiftcast))
+						if (ActionReady(All.Swiftcast) && Config.SMN_ST_Astral_Swift)
 						{
 							return All.Swiftcast;
 						}
@@ -239,6 +246,11 @@ namespace UltimateCombo.Combos.PvE
 						return SummonCarbuncle;
 					}
 
+					if (!InCombat() && ActionReady(OriginalHook(Tridisaster)))
+					{
+						return OriginalHook(Tridisaster);
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_AoE_SearingLight) && HasEffect(Buffs.RubysGlimmer))
@@ -279,7 +291,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (ActionReady(All.Swiftcast))
+						if (ActionReady(All.Swiftcast) && Config.SMN_AoE_Astral_Swift)
 						{
 							return All.Swiftcast;
 						}

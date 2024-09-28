@@ -180,12 +180,6 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Assassinate);
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo)
-								&& TargetHasEffect(MugList[OriginalHook(Mug)]))
-							{
-								return TenriJindo;
-							}
-
 							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
 								&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && !IsMoving
 								&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
@@ -203,6 +197,12 @@ namespace UltimateCombo.Combos.PvE
 								&& TargetHasEffect(TrickList[OriginalHook(TrickAttack)]))
 							{
 								return ZeshoMeppo;
+							}
+
+							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo)
+								&& TargetHasEffect(MugList[OriginalHook(Mug)]))
+							{
+								return TenriJindo;
 							}
 
 							if (IsEnabled(CustomComboPreset.NIN_ST_Bhav) && ActionReady(Bhavacakra)

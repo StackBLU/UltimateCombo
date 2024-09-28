@@ -121,7 +121,7 @@ namespace UltimateCombo.Combos.PvE
 							return EmpyrealArrow;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 3)
 						{
 							if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
 							{

@@ -94,7 +94,7 @@ namespace UltimateCombo.Combos.PvE
 						return HallowedGround;
 					}
 
-					if (!InCombat() && ActionReady(HolySpirit) && LocalPlayer.CurrentMp >= 1000)
+					if (!InCombat() && ActionReady(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !InMeleeRange())
 					{
 						return HolySpirit;
 					}

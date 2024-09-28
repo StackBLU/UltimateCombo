@@ -102,7 +102,7 @@ namespace UltimateCombo.Combos.PvE
 						return Soulsow;
 					}
 
-					if (!InCombat() && ActionReady(Harpe))
+					if (!InCombat() && ActionReady(Harpe) && !InMeleeRange())
 					{
 						return Harpe;
 					}

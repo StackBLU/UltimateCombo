@@ -112,7 +112,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
 							&& Gauge.SeraphTimer < 5000)

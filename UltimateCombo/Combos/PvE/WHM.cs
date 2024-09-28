@@ -95,7 +95,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Stone1 or Stone2 or Stone3 or Stone4 or Glare1 or Glare3) && IsEnabled(CustomComboPreset.WHM_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
+					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 5)
 					{
 						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
 						{

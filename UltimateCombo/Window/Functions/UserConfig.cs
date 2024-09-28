@@ -1457,7 +1457,15 @@ namespace UltimateCombo.Window.Functions
 
 			#region SUMMONER
 
+			if (preset is CustomComboPreset.SMN_ST_Astral && enabled)
+			{
+				UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_Astral_Swift, "Use Swiftcast on Slipstream", "");
+			}
 
+			if (preset is CustomComboPreset.SMN_AoE_Astral && enabled)
+			{
+				UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_AoE_Astral_Swift, "Use Swiftcast on Slipstream", "");
+			}
 
 			#endregion
 

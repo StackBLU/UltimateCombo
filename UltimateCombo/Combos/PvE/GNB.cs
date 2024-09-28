@@ -97,7 +97,7 @@ namespace UltimateCombo.Combos.PvE
 						return Superbolide;
 					}
 
-					if (!InCombat() && ActionReady(LightningShot))
+					if (!InCombat() && ActionReady(LightningShot) && !InMeleeRange())
 					{
 						return LightningShot;
 					}

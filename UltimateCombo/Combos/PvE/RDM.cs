@@ -107,7 +107,8 @@ namespace UltimateCombo.Combos.PvE
 						ActionWatching.LastWeaponskill = 0;
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat() && ActionReady(OriginalHook(Verthunder3))
+					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat() && !IsUnsheathed()
+						&& ActionReady(OriginalHook(Verthunder3))
 						&& !HasEffect(Buffs.MagickedSwordPlay) && Gauge.ManaStacks == 0)
 					{
 						return OriginalHook(Verthunder3);

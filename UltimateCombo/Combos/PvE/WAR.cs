@@ -81,7 +81,7 @@ namespace UltimateCombo.Combos.PvE
 						return Holmgang;
 					}
 
-					if (!InCombat() && ActionReady(Tomahawk))
+					if (!InCombat() && ActionReady(Tomahawk) && !InMeleeRange())
 					{
 						return Tomahawk;
 					}
