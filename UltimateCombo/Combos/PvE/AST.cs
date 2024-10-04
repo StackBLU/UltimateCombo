@@ -212,7 +212,8 @@ namespace UltimateCombo.Combos.PvE
 								return SunSign;
 							}
 
-							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Buffs.Lightspeed))
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast)
+								&& IsMoving && !HasEffect(Buffs.Lightspeed))
 							{
 								return All.Swiftcast;
 							}
@@ -323,7 +324,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast)
-							&& !HasEffect(Buffs.Lightspeed) && IsMoving && !HasEffect(Buffs.Lightspeed))
+							&& IsMoving && !HasEffect(Buffs.Lightspeed))
 						{
 							return All.Swiftcast;
 						}

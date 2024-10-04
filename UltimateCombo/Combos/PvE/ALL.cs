@@ -192,7 +192,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(11);
 					}
 
-					if (ActionReady(Swiftcast))
+					if (ActionReady(Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
 					{
 						return Swiftcast;
 					}
@@ -264,7 +264,7 @@ namespace UltimateCombo.Combos.PvE
 						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(VPR.Buffs.Reawakened))
 					{
 						if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(TrueNorth) && IsEnabled(TrueNorth)
-							&& TargetNeedsPositionals() && !HasEffect(Buffs.TrueNorth))
+							&& TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || GetBuffRemainingTime(Buffs.TrueNorth) < 1))
 						{
 							if (LocalPlayer.ClassJob.Id == MNK.JobID)
 							{
@@ -452,7 +452,10 @@ namespace UltimateCombo.Combos.PvE
 							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) || LocalPlayer.CurrentMp <= 1000)
 							&& LocalPlayer.ClassJob.Id == BLU.JobID)
 						{
-							return LucidDreaming;
+							if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor)
+							{
+								return LucidDreaming;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength)

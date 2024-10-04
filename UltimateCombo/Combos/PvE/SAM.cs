@@ -103,14 +103,22 @@ namespace UltimateCombo.Combos.PvE
 						return MeikyoShisui;
 					}
 
+					if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(All.TrueNorth) && !InCombat()
+						&& HasEffect(Buffs.MeikyoShisui) && !HasEffect(All.Buffs.TrueNorth))
+					{
+						return All.TrueNorth;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
-							if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Ikishoten)
-								&& GetRemainingCharges(MeikyoShisui) == 2 && ActionReady(Hagakure)
-								&& (Gauge.HasKa || Gauge.HasGetsu || Gauge.HasSetsu)
-								&& !(Gauge.HasKa && Gauge.HasGetsu && Gauge.HasSetsu))
+							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
+								&& GetCooldownRemainingTime(Ikishoten) < 3
+								&& ((GetRemainingCharges(MeikyoShisui) == 1 && GetCooldownChargeRemainingTime(MeikyoShisui) < 3)
+								|| GetRemainingCharges(MeikyoShisui) == 2)
+								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
+								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
 							{
 								return Hagakure;
 							}
@@ -264,11 +272,11 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Ikishoten)
-							&& GetRemainingCharges(MeikyoShisui) == 2
-							&& ActionReady(Hagakure)
-							&& (Gauge.HasKa || Gauge.HasGetsu || Gauge.HasSetsu)
-							&& !(Gauge.HasKa && Gauge.HasGetsu && Gauge.HasSetsu))
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Hagakure)
+							&& GetCooldownRemainingTime(Ikishoten) < 3
+							&& ((GetRemainingCharges(MeikyoShisui) == 1 && GetCooldownChargeRemainingTime(MeikyoShisui) < 3)
+							|| GetRemainingCharges(MeikyoShisui) == 2)
+							&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU)))
 						{
 							return Hagakure;
 						}

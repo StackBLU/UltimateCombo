@@ -176,34 +176,31 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Heatblast);
 					}
 
-					if (ActionWatching.NumberOfGcdsUsed > 2)
+					if (IsEnabled(CustomComboPreset.MCH_ST_AirAnchor) && ActionReady(OriginalHook(AirAnchor))
+						&& GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1 && !HasEffect(Buffs.Overheated))
 					{
-						if (IsEnabled(CustomComboPreset.MCH_ST_AirAnchor) && ActionReady(OriginalHook(AirAnchor))
-							&& GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1 && !HasEffect(Buffs.Overheated))
-						{
-							return OriginalHook(AirAnchor);
-						}
+						return OriginalHook(AirAnchor);
+					}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Drill) && ActionReady(Drill) && !HasEffect(Buffs.Overheated))
-						{
-							return Drill;
-						}
+					if (IsEnabled(CustomComboPreset.MCH_ST_Drill) && ActionReady(Drill) && !HasEffect(Buffs.Overheated))
+					{
+						return Drill;
+					}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Chainsaw) && ActionReady(Chainsaw)
-							&& GetCooldownRemainingTime(Chainsaw) < 1 && !HasEffect(Buffs.Overheated))
-						{
-							return Chainsaw;
-						}
+					if (IsEnabled(CustomComboPreset.MCH_ST_Chainsaw) && ActionReady(Chainsaw)
+						&& GetCooldownRemainingTime(Chainsaw) < 1 && !HasEffect(Buffs.Overheated))
+					{
+						return Chainsaw;
+					}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Chainsaw) && HasEffect(Buffs.ExcavatorReady))
-						{
-							return Excavator;
-						}
+					if (IsEnabled(CustomComboPreset.MCH_ST_Chainsaw) && HasEffect(Buffs.ExcavatorReady))
+					{
+						return Excavator;
+					}
 
-						if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && HasEffect(Buffs.FullMetalMachinist))
-						{
-							return FullMetalField;
-						}
+					if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && HasEffect(Buffs.FullMetalMachinist))
+					{
+						return FullMetalField;
 					}
 
 					if ((comboTime > 0
@@ -298,8 +295,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.MCH_AoE_Bioblaster) && ActionReady(Bioblaster)
-						&& GetCooldownRemainingTime(Bioblaster) < 1 && !HasEffect(Buffs.Overheated)
-						&& !HasEffect(Buffs.Reassembled))
+						&& !HasEffect(Buffs.Overheated) && !HasEffect(Buffs.Reassembled)
+						&& (!TargetHasEffect(Debuffs.Bioblaster) || GetDebuffRemainingTime(Debuffs.Bioblaster) < 3))
 					{
 						return Bioblaster;
 					}

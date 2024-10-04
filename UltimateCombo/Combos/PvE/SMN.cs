@@ -184,6 +184,10 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
 					{
+						if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
+						{
+							return Ruin4;
+						}
 						return OriginalHook(AstralFlow);
 					}
 
@@ -193,7 +197,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_ST_SummonElements) && Gauge.AttunmentTimerRemaining == 0
-						&& Gauge.SummonTimerRemaining == 0)
+						&& Gauge.SummonTimerRemaining == 0 && !IsOffCooldown(OriginalHook(SummonBahamut)))
 					{
 						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)
 						{
@@ -209,13 +213,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(SummonIfrit);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && ActionReady(Ruin4)
-						&& HasEffect(Buffs.FurtherRuin)
-						&& ((!Gauge.IsGarudaReady && !Gauge.IsTitanReady && !Gauge.IsIfritReady) || IsMoving))
-					{
-						return Ruin4;
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_ST_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))
@@ -306,6 +303,10 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
 					{
+						if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
+						{
+							return Ruin4;
+						}
 						return OriginalHook(AstralFlow);
 					}
 
@@ -315,7 +316,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonElements) && Gauge.AttunmentTimerRemaining == 0
-						&& Gauge.SummonTimerRemaining == 0)
+						&& Gauge.SummonTimerRemaining == 0 && !IsOffCooldown(OriginalHook(SummonBahamut)))
 					{
 						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)
 						{
@@ -331,13 +332,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(SummonIfrit);
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && ActionReady(Ruin4)
-						&& HasEffect(Buffs.FurtherRuin)
-						&& ((!Gauge.IsGarudaReady && !Gauge.IsTitanReady && !Gauge.IsIfritReady) || IsMoving))
-					{
-						return Ruin4;
 					}
 
 					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))

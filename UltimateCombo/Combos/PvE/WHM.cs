@@ -165,6 +165,11 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return PresenceOfMind;
 						}
+
+						if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Assize) && ActionReady(Assize))
+						{
+							return Assize;
+						}
 					}
 
 					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)

@@ -54,10 +54,6 @@ namespace UltimateCombo.Combos.PvE
 			Eukrasia = 24290,
 			Rhizomata = 24309;
 
-		internal static readonly List<uint>
-			AddersgallList = [Taurochole, Druochole, Ixochole, Kerachole],
-			DyskrasiaList = [Dyskrasia, Dyskrasia2];
-
 		internal static class Buffs
 		{
 			internal const ushort
@@ -151,7 +147,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(EukrasianDosis)) && ActionWatching.NumberOfGcdsUsed >= 3
+					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(EukrasianDosis))
+						&& ActionWatching.NumberOfGcdsUsed >= 3
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis)]) <= 3
 						|| ActionWatching.NumberOfGcdsUsed == 11))
@@ -230,10 +227,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Eukrasia;
 						}
+
 						return OriginalHook(EukrasianDyskrasia);
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3)) && ActionReady(OriginalHook(Phlegma3)))
+					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3))
+						&& ActionReady(OriginalHook(Phlegma3)))
 					{
 						return OriginalHook(Phlegma3);
 					}

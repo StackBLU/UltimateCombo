@@ -71,7 +71,7 @@ namespace UltimateCombo.Combos.PvP
 					if (IsEnabled(CustomComboPreset.NINPvP_SeitonTenchu)
 						&& (GetLimitBreakCurrentValue() == GetLimitBreakMaxValue() || HasEffect(Buffs.UnsealedSeitonTenchu))
 						&& (GetTargetHPPercent() <= 49
-						|| (HasEffect(Buffs.UnsealedSeitonTenchu) && GetBuffRemainingTime(Buffs.UnsealedSeitonTenchu) <= 1)))
+						|| (HasEffect(Buffs.UnsealedSeitonTenchu) && GetBuffRemainingTime(Buffs.UnsealedSeitonTenchu) <= 2)))
 					{
 						return SeitonTenchu;
 					}

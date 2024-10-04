@@ -143,14 +143,19 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return OriginalHook(11);
 					}
-					if (GetCooldownRemainingTime(PhantomFlurry) > 60 && HasEffect(Buffs.WingedReprobation) && IsNotEnabled(CustomComboPreset.BLU_MoonFluteOpener_DoTOpener))
+
+					if (GetCooldownRemainingTime(PhantomFlurry) > 60
+						&& HasEffect(Buffs.WingedReprobation)
+						&& IsNotEnabled(CustomComboPreset.BLU_MoonFluteOpener_DoTOpener))
 					{
 						return WingedReprobation;
 					}
+
 					if (GetCooldownRemainingTime(PhantomFlurry) > 20)
 					{
 						return PhantomFlurry;
 					}
+
 					if (!HasEffect(Buffs.MoonFlute) && actionID is MoonFlute)
 					{
 						if (!HasEffect(Buffs.Whistle) && actionID is MoonFlute && IsSpellActive(Whistle))
@@ -203,6 +208,7 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return SeaShanty;
 						}
+
 						if (!TargetHasEffectAny(Debuffs.BreathOfMagic) && !TargetHasEffectAny(Debuffs.MortalFlame) && actionID is MoonFlute)
 						{
 							if (!WasLastSpell(BreathOfMagic) && !WasLastSpell(MortalFlame) && actionID is MoonFlute)
@@ -218,6 +224,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 						}
+
 						if (IsOffCooldown(ShockStrike) && actionID is MoonFlute && IsSpellActive(ShockStrike)
 							&& (WasLastSpell(BreathOfMagic) || WasLastSpell(MortalFlame)))
 						{
@@ -315,6 +322,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -331,19 +339,23 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return TripleTrident;
 					}
+
 					if (!HasEffect(Buffs.Whistle) && actionID is TripleTrident && IsSpellActive(Whistle))
 					{
 						return Whistle;
 					}
+
 					if (!HasEffect(Buffs.Tingle) && actionID is TripleTrident && IsSpellActive(Tingle))
 					{
 						return Tingle;
 					}
+
 					if (HasEffect(Buffs.Whistle) && HasEffect(Buffs.Tingle) && actionID is TripleTrident)
 					{
 						return TripleTrident;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -360,31 +372,38 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Whistle;
 					}
+
 					if (!TargetHasEffectAny(Debuffs.Offguard) && IsOffCooldown(Offguard) && actionID is FinalSting && IsSpellActive(Offguard))
 					{
 						return Offguard;
 					}
+
 					if (!HasEffect(Buffs.Tingle) && actionID is FinalSting && IsSpellActive(Tingle))
 					{
 						return Tingle;
 					}
+
 					if (!HasEffect(Buffs.BasicInstinct) && IsSpellActive(BasicInstinct) && actionID is FinalSting && HasCondition(ConditionFlag.BoundByDuty))
 					{
 						return BasicInstinct;
 					}
+
 					if (!HasEffect(Buffs.MoonFlute) && actionID is FinalSting && IsSpellActive(MoonFlute))
 					{
 						return MoonFlute;
 					}
+
 					if (IsOffCooldown(All.Swiftcast) && actionID is FinalSting)
 					{
 						return All.Swiftcast;
 					}
+
 					if (HasEffect(Buffs.Whistle) && HasEffect(Buffs.Tingle) && HasEffect(Buffs.MoonFlute) && actionID is FinalSting)
 					{
 						return FinalSting;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -401,23 +420,28 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return ToadOil;
 					}
+
 					if (!HasEffect(Buffs.Bristle) && actionID is SelfDestruct && IsSpellActive(Bristle))
 					{
 						return Bristle;
 					}
+
 					if (!HasEffect(Buffs.MoonFlute) && actionID is SelfDestruct && IsSpellActive(MoonFlute))
 					{
 						return MoonFlute;
 					}
+
 					if (IsOffCooldown(All.Swiftcast) && actionID is SelfDestruct)
 					{
 						return All.Swiftcast;
 					}
+
 					if (HasEffect(Buffs.ToadOil) && HasEffect(Buffs.Bristle) && HasEffect(Buffs.MoonFlute) && actionID is SelfDestruct)
 					{
 						return SelfDestruct;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -434,21 +458,25 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Bristle;
 					}
+
 					if (IsSpellActive(BreathOfMagic) && actionID is Bristle
 						&& (!TargetHasEffectAny(Debuffs.BreathOfMagic) || GetDebuffRemainingTime(Debuffs.BreathOfMagic) < 3))
 					{
 						return BreathOfMagic;
 					}
+
 					if (IsSpellActive(MortalFlame) && !TargetHasEffectAny(Debuffs.MortalFlame) && actionID is Bristle)
 					{
 						return MortalFlame;
 					}
+
 					if (IsSpellActive(SongOfTorment) && actionID is Bristle
 						&& (!TargetHasEffectAny(Debuffs.Bleeding) || GetDebuffRemainingTime(Debuffs.Bleeding) < 3))
 					{
 						return SongOfTorment;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -461,14 +489,15 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is PeripheralSynthesis or MustardBomb) && IsEnabled(CustomComboPreset.BLU_Periph))
 				{
-					if (IsSpellActive(MustardBomb)
-						&& (WasLastSpell(PeripheralSynthesis) || HasEffect(Buffs.Bristle)
+					if (IsSpellActive(MustardBomb) && (WasLastSpell(PeripheralSynthesis) || HasEffect(Buffs.Bristle)
 						|| TargetHasEffectAny(Debuffs.MustardBomb) || TargetHasEffectAny(Debuffs.Lightheaded)))
 					{
 						return MustardBomb;
 					}
+
 					return PeripheralSynthesis;
 				}
+
 				return actionID;
 			}
 		}
@@ -525,6 +554,7 @@ namespace UltimateCombo.Combos.PvE
 						return BloodDrain;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -541,31 +571,38 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return MightyGuard;
 					}
+
 					if (!HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil))
 					{
 						return ToadOil;
 					}
+
 					if (IsOffCooldown(Devour) & InActionRange(Devour) && IsSpellActive(Devour))
 					{
 						return Devour;
 					}
+
 					if (IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight))
 					{
 						return PeculiarLight;
 					}
+
 					if (!TargetHasEffect(Debuffs.PeatPelt) && !HasEffect(Buffs.DeepClean) && !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
 					{
 						return PeatPelt;
 					}
+
 					if ((WasLastSpell(PeatPelt) || TargetHasEffect(Debuffs.PeatPelt)) && IsSpellActive(DeepClean))
 					{
 						return DeepClean;
 					}
+
 					if (HasEffect(Buffs.DeepClean) && IsSpellActive(GoblinPunch))
 					{
 						return GoblinPunch;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -584,9 +621,11 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(PhantomFlurry);
 						}
+
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}

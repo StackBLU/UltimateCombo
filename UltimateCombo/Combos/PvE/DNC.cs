@@ -386,12 +386,12 @@ namespace UltimateCombo.Combos.PvE
 						return SaberDance;
 					}
 
-					if (HasEffect(Buffs.SilkenSymmetry))
+					if (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry))
 					{
 						return RisingWindmill;
 					}
 
-					if (HasEffect(Buffs.SilkenFlow))
+					if (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow))
 					{
 						return Bloodshower;
 					}

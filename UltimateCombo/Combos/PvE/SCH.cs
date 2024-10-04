@@ -191,6 +191,19 @@ namespace UltimateCombo.Combos.PvE
 							return Aetherflow;
 						}
 
+						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_ChainStrat))
+						{
+							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
+							{
+								return ChainStratagem;
+							}
+
+							if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
+							{
+								return BanefulImpaction;
+							}
+						}
+
 						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
 						{
 							if (((GetCooldownRemainingTime(Aetherflow) <= 10f || GetCooldownRemainingTime(Dissipation) <= 10f)

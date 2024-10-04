@@ -614,8 +614,12 @@ namespace UltimateCombo.Combos
 		SCH_AoE_DPS_EnergyDrain = 16022,
 
 		[ParentCombo(SCH_AoE_DPS)]
+		[CustomComboInfo("Chain Stratagem > Baneful Impact", "", SCH.JobID)]
+		SCH_AoE_DPS_ChainStrat = 16023,
+
+		[ParentCombo(SCH_AoE_DPS)]
 		[CustomComboInfo("Fairy Reminder", "", SCH.JobID)]
-		SCH_AoE_DPS_Fairy = 16023,
+		SCH_AoE_DPS_Fairy = 16024,
 
 		#endregion
 

@@ -218,7 +218,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Thunder);
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_ST_Xeno) && ActionReady(Xenoglossy)
+					if (IsEnabled(CustomComboPreset.BLM_ST_Xeno) && ActionReady(Xenoglossy) && Gauge.PolyglotStacks >= 1
 						&& ((Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) && Gauge.EnochianTimer <= 10000)
 						|| Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) + 1
 						|| (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level))
@@ -401,7 +401,7 @@ namespace UltimateCombo.Combos.PvE
 						return Manafont;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_AoE_Foul) && ActionReady(Foul) && Gauge.PolyglotStacks > 0)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Foul) && ActionReady(Foul) && Gauge.PolyglotStacks >= 1)
 					{
 						return Foul;
 					}

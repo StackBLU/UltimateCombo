@@ -5,7 +5,6 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility;
 using ECommons;
-using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -103,6 +102,7 @@ namespace UltimateCombo
 					Service.PluginLog.Debug($"Switched to job {value}");
 					PvEFeatures.HasToOpenJob = true;
 				}
+
 				jobID = value;
 			}
 		}
