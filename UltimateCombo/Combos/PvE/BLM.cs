@@ -117,11 +117,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Fire or Fire3 or Fire4 or Blizzard or Blizzard3 or Blizzard4) && IsEnabled(CustomComboPreset.BLM_ST_DPS))
 				{
-					/*if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && GetDebuffRemainingTime(Bozja.Debuffs.LostFlareStar) > 3)
-					{
-						return Bozja.LostFlareStar;
-					}*/
-
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2)
@@ -159,6 +154,59 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					// Bozja
+					if (IsEnabled(CustomComboPreset.BLM_Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
+						&& (GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 7 || LocalPlayer.CurrentMp <= 4000)
+						&& HasEffect(Bozja.Buffs.FontOfMagic) && !WasLastAction(Bozja.FontOfMagic) && !WasLastSpell(Bozja.FlareStar))
+					{
+						if (WasLastSpell(Blizzard4) && GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 5)
+						{
+							return Bozja.FlareStar;
+						}
+
+						if (Gauge.InUmbralIce && !WasLastSpell(Blizzard4))
+						{
+							return Blizzard4;
+						}
+
+						if (!Gauge.InUmbralIce)
+						{
+							return Blizzard3;
+						}
+					}
+
+					if (IsEnabled(CustomComboPreset.BLM_Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
+						&& (GetDebuffRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !TargetHasEffect(Bozja.Debuffs.FlareStar)
+						|| IsOffCooldown(Bozja.FontOfMagic)))
+					{
+						if (WasLastAction(Blizzard4) && IsOnCooldown(Bozja.FontOfMagic))
+						{
+							return Bozja.FlareStar;
+						}
+
+						if (WasLastAction(Bozja.FontOfMagic))
+						{
+							return Blizzard4;
+						}
+
+						if (WasLastAction(All.LucidDreaming))
+						{
+							return Bozja.FontOfMagic;
+						}
+
+						if (ActionReady(All.LucidDreaming) && WasLastAction(Blizzard4))
+						{
+							return All.LucidDreaming;
+						}
+
+						if (!Gauge.InUmbralIce)
+						{
+							return Blizzard3;
+						}
+
+						return Blizzard4;
+					}
+
 					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar)
 						&& Gauge.ElementTimeRemaining > 5000 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
 					{
@@ -166,7 +214,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
-						&& HasEffect(Buffs.CircleOfPower))
+						&& HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire)
 					{
 						return Manafont;
 					}
@@ -188,7 +236,7 @@ namespace UltimateCombo.Combos.PvE
 						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
 						+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500) && LocalPlayer.CurrentMp >= 800)
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500)
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Despair).CooldownTotal * 1000) + 500)
 						&& LocalPlayer.CurrentMp >= 800)))
 					{
 						return Despair;
@@ -218,11 +266,6 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (ActionReady(All.LucidDreaming) && !Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 800)
-					{
-						return All.LucidDreaming;
-					}
-
-					if (ActionReady(All.LucidDreaming) && !Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.Level < 80)
 					{
 						return All.LucidDreaming;
 					}
@@ -259,6 +302,7 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return All.Swiftcast;
 							}
+
 							return Fire3;
 						}
 
@@ -271,44 +315,53 @@ namespace UltimateCombo.Combos.PvE
 
 					if (LocalPlayer.Level < 90)
 					{
-						if (ActionReady(Blizzard3) && HasEffect(Bozja.Buffs.FontOfMagic) && LocalPlayer.CurrentMp < 5000)
+						if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 800
+							&& ((!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
+							+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500))
+							|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500))
+							|| HasEffect(Bozja.Buffs.AutoEther) || (LocalPlayer.CurrentMp < 2400 && !HasEffect(Bozja.Buffs.FontOfMagic))))
 						{
-							return Blizzard3;
-						}
+							if (HasEffect(Bozja.Buffs.AutoEther))
+							{
+								if (ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
+								{
+									return All.Swiftcast;
+								}
 
-						if (Gauge.InAstralFire && Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)
-							+ (GetCooldown(Fire).AdjustedCastTime * 1000)
-							&& LocalPlayer.CurrentMp >= 3200 && !HasEffect(Bozja.Buffs.AutoEther))
-						{
-							return Fire;
-						}
+								if (ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast))
+								{
+									return Triplecast;
+								}
 
-						if (ActionReady(Despair) && Gauge.InAstralFire
-							&& (Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)
-							+ (GetCooldown(Fire).AdjustedCastTime * 1000) || LocalPlayer.CurrentMp < 2400
-							|| HasEffect(Bozja.Buffs.AutoEther))
-							&& LocalPlayer.CurrentMp >= 800)
-						{
+								if (ActionReady(LeyLines))
+								{
+									return LeyLines;
+								}
+							}
+
+							if (LocalPlayer.CurrentMp >= 3200 && !HasEffect(Bozja.Buffs.AutoEther))
+							{
+								return Fire;
+							}
+
 							return Despair;
 						}
 
-						if (ActionReady(Blizzard3) && !Gauge.InAstralFire && (!Gauge.InUmbralIce || Gauge.ElementTimeRemaining == 15000))
+						if (ActionReady(Blizzard3) && !Gauge.InAstralFire && !Gauge.InUmbralIce)
 						{
-							if (ActionReady(All.LucidDreaming))
-							{
-								return All.LucidDreaming;
-							}
-
 							return Blizzard3;
 						}
 					}
 
-					if (ActionReady(Blizzard4) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(Blizzard4))
+					if (ActionReady(Blizzard4) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(Blizzard4)
+						&& !WasLastAction(Bozja.FlareStar))
 					{
 						return Blizzard4;
 					}
 
-					if (ActionReady(Blizzard3) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp == 0)
+					if (ActionReady(Blizzard3) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
 						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800
 						&& !WasLastAbility(Manafont))))
 					{

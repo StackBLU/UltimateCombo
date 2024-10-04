@@ -39,6 +39,7 @@
 				Bravery2 = 2341,
 				AutoEther = 2343,
 				FontOfPower = 2346,
+				Reminiscence = 2348,
 				PureElder = 2435,
 				PureFiendhunter = 2437,
 				PureIndomitable = 2438,
