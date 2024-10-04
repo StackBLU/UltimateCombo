@@ -25,6 +25,7 @@ The following are just a few of the overall improvements:
 
 You must have <a href="https://goatcorp.github.io/">XIVLauncher/Dalamud</a> installed.
 
+Ultimate Combo is not guaranteed to work with other combo plugins. Installing multiple combo plugins may produce unexpected results.
 Ultimate Combo pairs very well with the following plugins:
 * <a href="https://github.com/UnknownX7/ReAction">ReAction</a>, for automatic target picking and turbo mode
 * <a href="https://github.com/FFXIV-CombatReborn/BossmodReborn">BossMod Reborn</a>, for lag reduction
