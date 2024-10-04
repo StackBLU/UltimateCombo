@@ -250,12 +250,16 @@ namespace UltimateCombo.Combos
 		DRK_ST_Shadowbringer = 5007,
 
 		[ParentCombo(DRK_ST_DPS)]
+		[CustomComboInfo("The Blackest Night - only out of combat", "", DRK.JobID)]
+		DRK_ST_BlackestNight = 5008,
+
+		[ParentCombo(DRK_ST_DPS)]
 		[CustomComboInfo("Oblation", "", DRK.JobID)]
-		DRK_ST_Oblation = 5008,
+		DRK_ST_Oblation = 5009,
 
 		[ParentCombo(DRK_ST_DPS)]
 		[CustomComboInfo("Living Dead", "", DRK.JobID)]
-		DRK_ST_Invuln = 5009,
+		DRK_ST_Invuln = 50010,
 
 		#endregion
 
@@ -298,12 +302,16 @@ namespace UltimateCombo.Combos
 		DRK_AoE_Shadowstride = 5028,
 
 		[ParentCombo(DRK_AoE_DPS)]
+		[CustomComboInfo("The Blackest Night - only out of combat", "", DRK.JobID)]
+		DRK_AoE_BlackestNight = 5029,
+
+		[ParentCombo(DRK_AoE_DPS)]
 		[CustomComboInfo("Oblation", "", DRK.JobID)]
-		DRK_AoE_Oblation = 5029,
+		DRK_AoE_Oblation = 5030,
 
 		[ParentCombo(DRK_AoE_DPS)]
 		[CustomComboInfo("Living Dead", "", DRK.JobID)]
-		DRK_AoE_Invuln = 5030,
+		DRK_AoE_Invuln = 5031,
 
 		#endregion
 
@@ -1158,7 +1166,9 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-
+		[ReplaceSkill(NIN.Chi, NIN.Doton)]
+		[CustomComboInfo("Doton", "", NIN.JobID)]
+		NIN_Doton = 10040,
 
 		#endregion
 
@@ -1315,8 +1325,12 @@ namespace UltimateCombo.Combos
 		RPR_ST_Enshroud = 12008,
 
 		[ParentCombo(RPR_ST_DPS)]
+		[CustomComboInfo("Arcane Crest", "", RPR.JobID)]
+		RPR_ST_Shield = 12009,
+
+		[ParentCombo(RPR_ST_DPS)]
 		[CustomComboInfo("Soulsow", "", RPR.JobID)]
-		RPR_ST_Soulsow = 12009,
+		RPR_ST_Soulsow = 12010,
 
 		#endregion
 
@@ -1359,8 +1373,12 @@ namespace UltimateCombo.Combos
 		RPR_AoE_Enshroud = 12028,
 
 		[ParentCombo(RPR_AoE_DPS)]
+		[CustomComboInfo("Arcane Crest", "", RPR.JobID)]
+		RPR_AoE_Shield = 12029,
+
+		[ParentCombo(RPR_AoE_DPS)]
 		[CustomComboInfo("Soulsow", "", RPR.JobID)]
-		RPR_AoE_Soulsow = 12029,
+		RPR_AoE_Soulsow = 12030,
 
 		#endregion
 

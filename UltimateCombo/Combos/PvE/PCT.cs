@@ -146,7 +146,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn
 							&& ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1
-							&& GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 3)
+							&& GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 10)
 							|| GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
 							|| HasEffect(Buffs.StarryMuse)))
 						{
@@ -307,7 +307,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn
 							&& ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1
-							&& GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 3)
+							&& GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 10)
 							|| GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
 							|| HasEffect(Buffs.StarryMuse)))
 						{

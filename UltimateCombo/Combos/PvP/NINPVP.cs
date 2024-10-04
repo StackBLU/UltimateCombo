@@ -73,83 +73,80 @@ namespace UltimateCombo.Combos.PvP
 						&& (GetTargetHPPercent() <= 49
 						|| (HasEffect(Buffs.UnsealedSeitonTenchu) && GetBuffRemainingTime(Buffs.UnsealedSeitonTenchu) <= 2)))
 					{
-						return SeitonTenchu;
+						return OriginalHook(SeitonTenchu);
 					}
 
-					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard) && (!HasEffect(Buffs.Hidden) || !WasLastAbility(Shukuchi)))
 					{
-						if (!HasEffect(Buffs.Hidden))
+						if (CanWeave(actionID))
 						{
-							if (CanWeave(actionID))
+							if (IsEnabled(CustomComboPreset.NINPvP_Mug) && ActionReady(Mug) && GetRemainingCharges(FumaShuriken) <= 1
+								&& InActionRange(Mug))
 							{
-								if (IsEnabled(CustomComboPreset.NINPvP_Mug) && ActionReady(Mug) && GetRemainingCharges(FumaShuriken) <= 1
-									&& InActionRange(Mug))
-								{
-									return Mug;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Bunshin) && ActionReady(Bunshin))
-								{
-									return Bunshin;
-								}
+								return Mug;
 							}
 
-							if (IsEnabled(CustomComboPreset.NINPvP_Kassatsu) && ActionReady(Kassatsu) && !HasEffect(Buffs.Kassatsu)
-								&& (CanWeave(actionID) || !InMeleeRange()))
+							if (IsEnabled(CustomComboPreset.NINPvP_Bunshin) && ActionReady(Bunshin))
 							{
-								return Kassatsu;
+								return Bunshin;
+							}
+						}
+
+						if (IsEnabled(CustomComboPreset.NINPvP_Kassatsu) && ActionReady(Kassatsu) && !HasEffect(Buffs.Kassatsu)
+							&& (CanWeave(actionID) || !InMeleeRange()))
+						{
+							return Kassatsu;
+						}
+
+						if (HasEffect(Buffs.Kassatsu))
+						{
+							if (IsEnabled(CustomComboPreset.NINPvP_Huton) && !HasEffect(Debuffs.SealedHuton)
+								&& PlayerHealthPercentageHp() >= GetOptionValue(Config.NINPvP_Huton)
+								&& !HasEffect(Buffs.Huton))
+							{
+								return Huton;
 							}
 
-							if (HasEffect(Buffs.Kassatsu))
+							if (IsEnabled(CustomComboPreset.NINPvP_Meisui) && !HasEffect(Debuffs.SealedMeisui)
+								&& PlayerHealthPercentageHp() <= GetOptionValue(Config.NINPvP_Huton)
+								&& !HasEffect(Buffs.Meisui))
 							{
-								if (IsEnabled(CustomComboPreset.NINPvP_Huton) && !HasEffect(Debuffs.SealedHuton)
-									&& PlayerHealthPercentageHp() >= GetOptionValue(Config.NINPvP_Huton)
-									&& !HasEffect(Buffs.Huton))
-								{
-									return Huton;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Meisui) && !HasEffect(Debuffs.SealedMeisui)
-									&& PlayerHealthPercentageHp() <= GetOptionValue(Config.NINPvP_Huton)
-									&& !HasEffect(Buffs.Meisui))
-								{
-									return Meisui;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Goka) && !HasEffect(Debuffs.SealedGokaMekkyaku)
-									&& !TargetHasEffect(Debuffs.GokaMekkyaku))
-								{
-									return GokaMekkyaku;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Hyosho) && !HasEffect(Debuffs.SealedHyoshoRanryu)
-									&& GetTargetHPPercent() > 60)
-								{
-									return HyoshoRanryu;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && !HasEffect(Debuffs.SealedForkedRaiju))
-								{
-									return ForkedRaiju;
-								}
-
-								if (IsEnabled(CustomComboPreset.NINPvP_Doton) && !HasEffect(Debuffs.SealedDoton))
-								{
-									return Doton;
-								}
+								return Meisui;
 							}
 
-							if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && HasEffect(Buffs.FleetingRaijuReady))
+							if (IsEnabled(CustomComboPreset.NINPvP_Goka) && !HasEffect(Debuffs.SealedGokaMekkyaku)
+								&& !TargetHasEffect(Debuffs.GokaMekkyaku))
 							{
-								return FleetingRaiju;
+								return GokaMekkyaku;
 							}
 
-							if (IsEnabled(CustomComboPreset.NINPvP_Shuriken) && ActionReady(FumaShuriken)
-								&& (!HasEffect(Buffs.Hidden) || (HasEffect(Buffs.Hidden) && !InMeleeRange()))
-								&& (!InMeleeRange() || GetRemainingCharges(FumaShuriken) == GetMaxCharges(FumaShuriken)))
+							if (IsEnabled(CustomComboPreset.NINPvP_Hyosho) && !HasEffect(Debuffs.SealedHyoshoRanryu)
+								&& GetTargetHPPercent() > 60)
 							{
-								return FumaShuriken;
+								return HyoshoRanryu;
 							}
+
+							if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && !HasEffect(Debuffs.SealedForkedRaiju))
+							{
+								return ForkedRaiju;
+							}
+
+							if (IsEnabled(CustomComboPreset.NINPvP_Doton) && !HasEffect(Debuffs.SealedDoton))
+							{
+								return Doton;
+							}
+						}
+
+						if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && HasEffect(Buffs.FleetingRaijuReady))
+						{
+							return FleetingRaiju;
+						}
+
+						if (IsEnabled(CustomComboPreset.NINPvP_Shuriken) && ActionReady(FumaShuriken)
+							&& (!HasEffect(Buffs.Hidden) || (HasEffect(Buffs.Hidden) && !InMeleeRange()))
+							&& (!InMeleeRange() || GetRemainingCharges(FumaShuriken) == GetMaxCharges(FumaShuriken)))
+						{
+							return FumaShuriken;
 						}
 					}
 				}

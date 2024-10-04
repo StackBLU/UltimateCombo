@@ -102,11 +102,6 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Jolt or Jolt2 or Jolt3 or Verthunder or Verthunder3 or Veraero or Veraero3 or Verfire or Verstone)
 					&& IsEnabled(CustomComboPreset.RDM_ST_DPS))
 				{
-					if (LocalPlayer.IsDead && ActionWatching.LastWeaponskill != 0)
-					{
-						ActionWatching.LastWeaponskill = 0;
-					}
-
 					if (IsEnabled(CustomComboPreset.RDM_ST_Opener) && !InCombat() && !IsUnsheathed()
 						&& ActionReady(OriginalHook(Verthunder3))
 						&& !HasEffect(Buffs.MagickedSwordPlay) && Gauge.ManaStacks == 0)
@@ -215,6 +210,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if ((IsEnabled(CustomComboPreset.RDM_ST_Swords) || IsEnabled(CustomComboPreset.RDM_ST_Manafication))
+						&& !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
@@ -310,11 +306,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(CustomComboPreset.RDM_AoE_DPS))
 				{
-					if (LocalPlayer.IsDead && ActionWatching.LastWeaponskill != 0)
-					{
-						ActionWatching.LastWeaponskill = 0;
-					}
-
 					if (CanWeave(actionID)
 						&& (!WasLastWeaponskill(EnchantedMoulinet) || (WasLastWeaponskill(EnchantedMoulinet)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
@@ -405,6 +396,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if ((IsEnabled(CustomComboPreset.RDM_AoE_Swords) || IsEnabled(CustomComboPreset.RDM_AoE_Manafication))
+						&& !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)

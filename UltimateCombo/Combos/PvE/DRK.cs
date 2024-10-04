@@ -37,7 +37,8 @@ namespace UltimateCombo.Combos.PvE
 			Shadowbringer = 25757,
 			Disesteem = 36932,
 			Shadowstride = 36926,
-			Unmend = 3624;
+			Unmend = 3624,
+			TheBlackestNight = 7393;
 
 		public static class Buffs
 		{
@@ -82,6 +83,12 @@ namespace UltimateCombo.Combos.PvE
 						&& ActionReady(LivingDead))
 					{
 						return LivingDead;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRK_ST_BlackestNight) && ActionReady(TheBlackestNight)
+						&& !InCombat() && LocalPlayer.CurrentMp >= 3000)
+					{
+						return TheBlackestNight;
 					}
 
 					if (!InCombat() && ActionReady(Unmend) && !InMeleeRange())
@@ -191,6 +198,12 @@ namespace UltimateCombo.Combos.PvE
 						&& ActionReady(LivingDead))
 					{
 						return LivingDead;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
+						&& !InCombat() && LocalPlayer.CurrentMp >= 3000)
+					{
+						return TheBlackestNight;
 					}
 
 					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange()

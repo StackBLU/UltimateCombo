@@ -148,12 +148,12 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
 					{
-						if (IsEnabled(CustomComboPreset.NIN_ST_Kassatsu) && ActionReady(Kassatsu) && ActionWatching.NumberOfGcdsUsed >= 1)
+						if (IsEnabled(CustomComboPreset.NIN_ST_Kassatsu) && ActionReady(Kassatsu))
 						{
 							return Kassatsu;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)))
 							{
@@ -166,7 +166,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 5)
+						if (ActionWatching.NumberOfGcdsUsed >= 4)
 						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
 								&& HasEffect(Buffs.ShadowWalker)
@@ -235,8 +235,8 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (HasEffect(Buffs.Kassatsu) && (TargetHasEffect(TrickList[OriginalHook(TrickAttack)])
-							|| !LevelChecked(HyoshoRanryu)))
+						if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
+							&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || GetBuffRemainingTime(Buffs.Kassatsu) < 5))
 						{
 							if (LevelChecked(HyoshoRanryu))
 							{
@@ -244,10 +244,12 @@ namespace UltimateCombo.Combos.PvE
 								{
 									return OriginalHook(Ninjutsu);
 								}
+
 								if (WasLastAbility(TenCombo))
 								{
 									return JinCombo;
 								}
+
 								return TenCombo;
 							}
 
@@ -255,25 +257,29 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return OriginalHook(Ninjutsu);
 							}
+
 							if (WasLastAbility(TenCombo))
 							{
 								return ChiCombo;
 							}
+
 							return TenCombo;
 						}
 
 						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20
 							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& ActionWatching.NumberOfGcdsUsed >= 2 && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+							&& ActionWatching.NumberOfGcdsUsed >= 4 && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
 							if (OriginalHook(Ninjutsu) is Raiton)
 							{
 								return OriginalHook(Ninjutsu);
 							}
+
 							if (WasLastAbility(Ten))
 							{
 								return ChiCombo;
 							}
+
 							return Ten;
 						}
 
@@ -354,14 +360,17 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Ninjutsu);
 						}
+
 						if (WasLastAbility(JinCombo))
 						{
 							return TenCombo;
 						}
+
 						if (WasLastAbility(Chi))
 						{
 							return JinCombo;
 						}
+
 						return Chi;
 					}
 
@@ -429,24 +438,6 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
-							if (HasEffect(Buffs.Doton) && GetBuffRemainingTime(Buffs.Doton) > 3)
-							{
-								if (OriginalHook(Ten) is TCJHuton)
-								{
-									return TCJHuton;
-								}
-
-								if (OriginalHook(Chi) is TCJRaiton)
-								{
-									return TCJRaiton;
-								}
-
-								if (OriginalHook(Jin) is TCJFumaShurikenJin)
-								{
-									return TCJFumaShurikenJin;
-								}
-							}
-
 							if (OriginalHook(Chi) is TCJDoton)
 							{
 								return TCJDoton;
@@ -463,17 +454,19 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (HasEffect(Buffs.Kassatsu)
+						if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || GetBuffRemainingTime(Buffs.Kassatsu) < 5))
 						{
-							if (OriginalHook(Ninjutsu) is GokaMekkyaku)
+							if (OriginalHook(Ninjutsu) is GokaMekkyaku or Katon)
 							{
 								return OriginalHook(Ninjutsu);
 							}
+
 							if (WasLastAbility(ChiCombo))
 							{
 								return TenCombo;
 							}
+
 							return ChiCombo;
 						}
 
@@ -481,32 +474,17 @@ namespace UltimateCombo.Combos.PvE
 							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
-							if (HasEffect(Buffs.Doton))
-							{
-								if (OriginalHook(Ninjutsu) is Katon)
-								{
-									return OriginalHook(Ninjutsu);
-								}
-								if (WasLastAbility(Chi))
-								{
-									return TenCombo;
-								}
-								return Chi;
-							}
-
-							if (OriginalHook(Ninjutsu) is Doton)
+							if (OriginalHook(Ninjutsu) is Katon)
 							{
 								return OriginalHook(Ninjutsu);
 							}
-							if (WasLastAbility(JinCombo))
+
+							if (WasLastAbility(Chi))
 							{
-								return ChiCombo;
+								return TenCombo;
 							}
-							if (WasLastAbility(Ten))
-							{
-								return JinCombo;
-							}
-							return Ten;
+
+							return Chi;
 						}
 
 						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker)
@@ -516,14 +494,17 @@ namespace UltimateCombo.Combos.PvE
 							{
 								return OriginalHook(Ninjutsu);
 							}
+
 							if (WasLastAbility(JinCombo))
 							{
 								return TenCombo;
 							}
+
 							if (WasLastAbility(Chi))
 							{
 								return JinCombo;
 							}
+
 							return Chi;
 						}
 					}
@@ -543,6 +524,43 @@ namespace UltimateCombo.Combos.PvE
 
 					return DeathBlossom;
 				}
+
+				return actionID;
+			}
+		}
+
+		internal class NIN_Doton : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_Doton;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is Chi && IsEnabled(CustomComboPreset.NIN_Doton))
+				{
+					if ((ActionReady(Jin) || HasEffect(Buffs.Mudra)) && actionID is Chi)
+					{
+						if (OriginalHook(Ninjutsu) is Doton && actionID is Chi)
+						{
+							return OriginalHook(Ninjutsu);
+						}
+
+						if (WasLastAbility(JinCombo) && actionID is Chi)
+						{
+							return ChiCombo;
+						}
+
+						if (WasLastAbility(Ten) && actionID is Chi)
+						{
+							return JinCombo;
+						}
+
+						if (actionID is Chi)
+						{
+							return Ten;
+						}
+					}
+				}
+
 				return actionID;
 			}
 		}

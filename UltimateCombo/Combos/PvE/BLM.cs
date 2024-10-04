@@ -119,7 +119,7 @@ namespace UltimateCombo.Combos.PvE
 				{
 					/*if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && GetDebuffRemainingTime(Bozja.Debuffs.LostFlareStar) > 3)
 					{
-						_ = UseAction(ActionType.GeneralAction, 27);
+						return Bozja.LostFlareStar;
 					}*/
 
 					if (CanWeave(actionID))
@@ -127,8 +127,7 @@ namespace UltimateCombo.Combos.PvE
 						if (ActionWatching.NumberOfGcdsUsed >= 2)
 						{
 							if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)
-								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
-								&& (IsMoving || HasEffect(Buffs.LeyLines)))
+								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && (IsMoving || HasEffect(Buffs.CircleOfPower)))
 							{
 								return All.Swiftcast;
 							}
@@ -145,8 +144,9 @@ namespace UltimateCombo.Combos.PvE
 								if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
 								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
 								&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
-								|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1 && GetCooldownChargeRemainingTime(Triplecast) < 10)
-								|| IsMoving || HasEffect(Buffs.LeyLines)))
+								|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1
+								&& GetCooldownChargeRemainingTime(Triplecast) < 10)
+								|| (IsMoving && Gauge.PolyglotStacks == 0) || HasEffect(Buffs.CircleOfPower)))
 								{
 									return Triplecast;
 								}
@@ -159,30 +159,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines) &&
-						(ActionReady(All.Swiftcast) || ActionReady(Triplecast))
-						&& !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
-						&& ActionWatching.NumberOfGcdsUsed > 10)
-					{
-						if (ActionReady(All.Swiftcast))
-						{
-							return All.Swiftcast;
-						}
-
-						if (ActionReady(Triplecast))
-						{
-							return Triplecast;
-						}
-					}
-
 					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar)
-						&& LocalPlayer.CurrentMp == 0 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
+						&& Gauge.ElementTimeRemaining > 5000 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
 					{
 						return FlareStar;
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
-						&& HasEffect(Buffs.LeyLines) && Gauge.AstralSoulStacks < 6)
+						&& HasEffect(Buffs.CircleOfPower))
 					{
 						return Manafont;
 					}
@@ -190,9 +174,9 @@ namespace UltimateCombo.Combos.PvE
 					//90+
 					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InAstralFire
 						&& ((!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
-						&& Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime)
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000) + 500))
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-						&& Gauge.ElementTimeRemaining / 1000 <= 1)))
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500))))
 					{
 						return Paradox;
 					}
@@ -201,10 +185,11 @@ namespace UltimateCombo.Combos.PvE
 					if (ActionReady(Despair) && Gauge.InAstralFire && !Gauge.IsParadoxActive && LevelChecked(Paradox)
 						&& ((LocalPlayer.CurrentMp <= 1200 && LocalPlayer.CurrentMp >= 800)
 						|| (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
-						&& Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime
-						+ GetCooldown(Despair).AdjustedCastTime && LocalPlayer.CurrentMp >= 800)
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
+						+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500) && LocalPlayer.CurrentMp >= 800)
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-						&& Gauge.ElementTimeRemaining / 1000 <= GetActionCastTime(Despair) + 1 && LocalPlayer.CurrentMp >= 800)))
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500)
+						&& LocalPlayer.CurrentMp >= 800)))
 					{
 						return Despair;
 					}
@@ -212,7 +197,8 @@ namespace UltimateCombo.Combos.PvE
 					if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder))
 						&& HasEffect(Buffs.Thunderhead) && LocalPlayer.CurrentMp != 0
 						&& (EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10 || EnemyHealthMaxHp() == 44)
-						&& (Gauge.InUmbralIce || GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) < 3)
+						&& (Gauge.InUmbralIce
+						|| (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) < 3 && Gauge.ElementTimeRemaining > 7500))
 						&& Gauge.ElementTimeRemaining > 6000 && !WasLastSpell(Blizzard4))
 					{
 						return OriginalHook(Thunder);
@@ -223,9 +209,10 @@ namespace UltimateCombo.Combos.PvE
 						|| Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) + 1
 						|| (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level))
 						|| (Gauge.InUmbralIce && Gauge.PolyglotStacks > MaxPolyglot(LocalPlayer.Level) - MaxPolyglot(LocalPlayer.Level))
-						|| ActionWatching.NumberOfGcdsUsed == 3)
+						|| ActionWatching.NumberOfGcdsUsed == 4
+						|| IsMoving)
 						&& Gauge.ElementTimeRemaining > 6000 && !WasLastSpell(Blizzard4) && Gauge.ElementTimeRemaining != 15000
-						&& (GetBuffRemainingTime(Buffs.Firestarter) >= 5 || !HasEffect(Buffs.Firestarter)))
+						&& (GetBuffRemainingTime(Buffs.Firestarter) >= 10 || !HasEffect(Buffs.Firestarter)))
 					{
 						return Xenoglossy;
 					}
@@ -289,16 +276,16 @@ namespace UltimateCombo.Combos.PvE
 							return Blizzard3;
 						}
 
-						if (Gauge.InAstralFire && Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime
-							+ GetCooldown(Fire).AdjustedCastTime
+						if (Gauge.InAstralFire && Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)
+							+ (GetCooldown(Fire).AdjustedCastTime * 1000)
 							&& LocalPlayer.CurrentMp >= 3200 && !HasEffect(Bozja.Buffs.AutoEther))
 						{
 							return Fire;
 						}
 
 						if (ActionReady(Despair) && Gauge.InAstralFire
-							&& (Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime
-							+ GetCooldown(Fire).AdjustedCastTime || LocalPlayer.CurrentMp < 2400
+							&& (Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)
+							+ (GetCooldown(Fire).AdjustedCastTime * 1000) || LocalPlayer.CurrentMp < 2400
 							|| HasEffect(Bozja.Buffs.AutoEther))
 							&& LocalPlayer.CurrentMp >= 800)
 						{
@@ -370,8 +357,9 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && ActionReady(Triplecast)
 							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
 							&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
-							|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1 && GetCooldownChargeRemainingTime(Triplecast) < 10)
-							|| IsMoving || HasEffect(Buffs.LeyLines)))
+							|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1
+							&& GetCooldownChargeRemainingTime(Triplecast) < 10)
+							|| IsMoving || HasEffect(Buffs.CircleOfPower)))
 						{
 							return Triplecast;
 						}
@@ -396,7 +384,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_AoE_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
-						&& HasEffect(Buffs.LeyLines))
+						&& HasEffect(Buffs.CircleOfPower))
 					{
 						return Manafont;
 					}
@@ -469,11 +457,13 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Fire4;
 					}
+
 					if (Gauge.InUmbralIce)
 					{
 						return Blizzard4;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -487,20 +477,21 @@ namespace UltimateCombo.Combos.PvE
 				if (actionID is Xenoglossy && IsEnabled(CustomComboPreset.BLM_XenoParadox))
 				{
 					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InAstralFire
-						&& Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime)
+						&& Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000))
 					{
 						return Paradox;
 					}
 
 					if (ActionReady(Despair) && ActionReady(All.Swiftcast) && Gauge.InAstralFire
 						&& !Gauge.IsParadoxActive && (LocalPlayer.CurrentMp == 1200
-						|| Gauge.ElementTimeRemaining / 1000 <= GetCooldown(Fire4).AdjustedCastTime))
+						|| Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)))
 					{
 						return Despair;
 					}
 
 					return Xenoglossy;
 				}
+
 				return actionID;
 			}
 		}
@@ -518,6 +509,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(11);
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -534,11 +526,13 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Transpose;
 					}
+
 					if (Gauge.InUmbralIce)
 					{
 						return UmbralSoul;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -555,8 +549,10 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return BetweenTheLines;
 					}
+
 					return LeyLines;
 				}
+
 				return actionID;
 			}
 		}

@@ -324,7 +324,8 @@ namespace UltimateCombo.Combos.PvE
 										return TrueNorth;
 									}
 
-									if (ActionReady(NIN.ArmorCrush) && !OnTargetsFlank())
+									if (ActionReady(NIN.ArmorCrush) && !OnTargetsFlank()
+										&& (NIN.Gauge.Kazematoi <= 3))
 									{
 										return TrueNorth;
 									}
@@ -357,12 +358,12 @@ namespace UltimateCombo.Combos.PvE
 								{
 									if (HasEffect(RPR.Buffs.SoulReaver) || HasEffect(RPR.Buffs.Executioner))
 									{
-										if (HasEffect(RPR.Buffs.EnhancedGibbet) && !OnTargetsRear())
+										if (HasEffect(RPR.Buffs.EnhancedGallows) && !OnTargetsRear())
 										{
 											return TrueNorth;
 										}
 
-										if (HasEffect(RPR.Buffs.EnhancedGallows) && !OnTargetsFlank())
+										if (HasEffect(RPR.Buffs.EnhancedGibbet) && !OnTargetsFlank())
 										{
 											return TrueNorth;
 										}

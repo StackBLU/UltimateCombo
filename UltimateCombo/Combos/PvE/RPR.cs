@@ -45,6 +45,7 @@ namespace UltimateCombo.Combos.PvE
 			HellsIngress = 24401,
 			HellsEgress = 24402,
 			Regress = 24403,
+			ArcaneCrest = 24404,
 			Harpe = 24386,
 			Soulsow = 24387,
 			HarvestMoon = 24388;
@@ -109,6 +110,11 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
 					{
+						if (IsEnabled(CustomComboPreset.RPR_ST_Shield) && ActionReady(ArcaneCrest))
+						{
+							return ArcaneCrest;
+						}
+
 						if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && Gauge.VoidShroud == 2)
 						{
 							return LemuresSlice;
@@ -238,6 +244,11 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
+						if (IsEnabled(CustomComboPreset.RPR_AoE_Shield) && ActionReady(ArcaneCrest))
+						{
+							return ArcaneCrest;
+						}
+
 						if (IsEnabled(CustomComboPreset.RPR_AoE_Enshroud) && Gauge.VoidShroud == 2)
 						{
 							return LemuresScythe;
