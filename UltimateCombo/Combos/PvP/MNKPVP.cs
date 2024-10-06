@@ -44,7 +44,8 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Bootshine && IsEnabled(CustomComboPreset.MNKPvP_Combo))
+				if ((actionID is Bootshine or TrueStrike or SnapPunch or DragonKick or TwinSnakes or Demolish or PhantomRush)
+					&& IsEnabled(CustomComboPreset.MNKPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.MNKPvP_MeteoDrive) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
 						&& TargetHasEffect(Debuffs.PressurePoint))

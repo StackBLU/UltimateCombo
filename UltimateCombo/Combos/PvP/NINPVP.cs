@@ -65,7 +65,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is SpinningEdge && IsEnabled(CustomComboPreset.NINPvP_Combo))
+				if ((actionID is SpinningEdge or GustSlash or AeolianEdge) && IsEnabled(CustomComboPreset.NINPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.NINPvP_SeitonTenchu) && HasTarget()
 						&& (GetLimitBreakCurrentValue() == GetLimitBreakMaxValue() || HasEffect(Buffs.UnsealedSeitonTenchu))

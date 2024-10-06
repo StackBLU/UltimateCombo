@@ -45,7 +45,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is HardSlash && IsEnabled(CustomComboPreset.DRKPvP_Combo))
+				if ((actionID is HardSlash or SyphonStrike or Souleater) && IsEnabled(CustomComboPreset.DRKPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{

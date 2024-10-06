@@ -13,7 +13,7 @@
 <h2 align="center">Features</h2>
 
 Ultimate Combo is based off of several combo plugins, but has completely new logic, features, and many quality of life improvements.<br>
-The following are just a few of the overall improvements:
+The following are just a few of the amazing features:
 * Fresh, custom, and smooth PvE combo logic, updated for Dawntrail, for all classes
 * Intuitive UI
 * Better controller support
@@ -31,7 +31,7 @@ Ultimate Combo pairs very well with the following plugins:
 * <a href="https://github.com/FFXIV-CombatReborn/BossmodReborn">BossMod Reborn</a>, for lag reduction
 * <a href="https://github.com/PunishXIV/Avarice">Avarice</a>, for positional tells
 * <a href="https://github.com/PunishXIV/Orbwalker">Orbwalker</a>, for slidecasting
-<p>You can find installation instructions for the above plugins on their github page.</p>
+<p>You can find installation instructions for the above plugins on their github pages.</p>
 <p>For recommended settings for each plugin, check the <tt>#recommended-settings</tt> channel in the <a href="https://discord.gg/yPxwkdqhHs">Discord</a></p>
 <br>
 
