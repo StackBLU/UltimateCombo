@@ -1,4 +1,7 @@
-﻿namespace UltimateCombo.Combos.PvP
+﻿using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.CustomCombo;
+
+namespace UltimateCombo.Combos.PvP
 {
 	internal class DRKPvP
 	{
@@ -30,53 +33,97 @@
 
 		public class Config
 		{
-
+			public static UserInt
+				DRKPvP_ShadowbringerHP = new("DRKPvP_ShadowbringerHP", 50),
+				DRKPvP_ShadowbringerMP = new("DRKPvP_ShadowbringerMP", 5000),
+				DRKPvP_Quietus = new("DRKPvP_Quietus", 75);
 		}
 
-		/*internal class DRKPvP_Combo : CustomComboClass
+		internal class DRKPvP_Combo : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRKPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is HardSlash or SyphonStrike or Souleater) && IsEnabled(CustomComboPreset.DRKPvP_Combo))
+				if (actionID is HardSlash && IsEnabled(CustomComboPreset.DRKPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{
-						return Eventide;
+						if (PlayerHealthPercentageHp() < 100 && LocalPlayer.CurrentMp >= 2500)
+						{
+							return PvPCommon.Recuperate;
+						}
+
+						if (!InMeleeRange() && ActionReady(Plunge))
+						{
+							return Plunge;
+						}
+
+						if ((PlayerHealthPercentageHp() == 100 && (InMeleeRange() || WasLastAbility(Plunge)))
+							|| (PlayerHealthPercentageHp() < 25 && LocalPlayer.CurrentMp < 2500))
+						{
+							return Eventide;
+						}
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
+						if (IsEnabled(CustomComboPreset.DRKPvP_SaltCombo)
+							&& ((ActionReady(Plunge) && ActionReady(SaltedEarth))
+							|| (ActionReady(SaltedEarth) && WasLastAbility(Plunge))
+							|| IsEnabled(SaltAndDarkness)))
+						{
+							if (IsEnabled(CustomComboPreset.DRKPvP_BlackestNight) && ActionReady(BlackestNight))
+							{
+								return BlackestNight;
+							}
+
+							if (ActionReady(Plunge))
+							{
+								return Plunge;
+							}
+
+							return OriginalHook(SaltedEarth);
+						}
+
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.SGEPvP_Toxikon) && ActionReady(OriginalHook(Toxikon)) && !TargetHasEffect(Debuffs.Toxikon))
+							if (IsEnabled(CustomComboPreset.DRKPvP_Plunge) && ActionReady(Plunge)
+								&& GetCooldownRemainingTime(SaltedEarth) > 13)
 							{
-								return OriginalHook(Toxikon);
+								if (IsEnabled(CustomComboPreset.DRKPvP_BlackestNight) && ActionReady(BlackestNight))
+								{
+									return BlackestNight;
+								}
+
+								return Plunge;
+							}
+
+							if (IsEnabled(CustomComboPreset.DRKPvP_BlackestNight) && ActionReady(BlackestNight)
+								&& GetCooldownRemainingTime(SaltedEarth) > 13 && GetCooldownRemainingTime(Plunge) > 10)
+							{
+								return BlackestNight;
+							}
+
+							if (IsEnabled(CustomComboPreset.DRKPvP_Shadowbringer) && ActionReady(Shadowbringer)
+								&& !HasEffect(Buffs.Blackblood)
+								&& PlayerHealthPercentageHp() >= GetOptionValue(Config.DRKPvP_ShadowbringerHP)
+								&& LocalPlayer.CurrentMp >= GetOptionValue(Config.DRKPvP_ShadowbringerMP))
+							{
+								return Shadowbringer;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SGEPvP_Eukrasia) && ActionReady(Eukrasia) && !HasEffect(Buffs.Eukrasia)
-							&& !HasEffect(Buffs.Diagnosis) && !TargetHasEffect(Debuffs.EukrasianDosis)
-							&& (TargetHasEffect(Debuffs.Toxikon) || (GetRemainingCharges(Toxikon) == 0 && GetCooldownChargeRemainingTime(Toxikon) > 5)))
+						if (IsEnabled(CustomComboPreset.DRKPvP_Quietus) && ActionReady(Quietus)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRKPvP_Quietus) && InActionRange(Quietus))
 						{
-							return Eukrasia;
-						}
-
-						if (IsEnabled(CustomComboPreset.SGEPvP_Pneuma) && ActionReady(Pneuma))
-						{
-							return Pneuma;
-						}
-
-						if (IsEnabled(CustomComboPreset.SGEPvP_Phlegma) && ActionReady(Phlegma) && InActionRange(Phlegma))
-						{
-							return Phlegma;
+							return Quietus;
 						}
 					}
 				}
 
 				return actionID;
 			}
-		}*/
+		}
 	}
 }

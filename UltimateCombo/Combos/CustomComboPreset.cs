@@ -1897,6 +1897,10 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Lost Flare Star", "", BLM.JobID)]
 		BLM_Bozja_LFS = 2070,
 
+		/*[Bozja]
+		[CustomComboInfo("Don't enable this it does nothing", "", BLM.JobID)]
+		Bozja_Test = 2071,*/
+
 		#endregion
 
 		#endregion
@@ -2346,7 +2350,7 @@ namespace UltimateCombo.Combos
 		#region BLACK MAGE - 112000
 
 		[PvPCustomCombo]
-		[ReplaceSkill(BLMPvP.Fire, BLMPvP.Fire4, BLMPvP.Flare, BLMPvP.Blizzard, BLMPvP.Blizzard4, BLMPvP.Freeze)]
+		[ReplaceSkill(BLMPvP.Fire, BLMPvP.Blizzard)]
 		[CustomComboInfo("Combo Mode", "", BLM.JobID)]
 		BLMPvP_Combo = 112000,
 
@@ -2381,14 +2385,47 @@ namespace UltimateCombo.Combos
 
 		#region DARK KNIGHT - 115000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(DRKPvP.HardSlash)]
+		[CustomComboInfo("Combo Mode", "", DRK.JobID)]
+		DRKPvP_Combo = 115000,
 
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Plunge", "", DRK.JobID)]
+		DRKPvP_Plunge = 115001,
+
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Plunge > Salted Earth > Salt and Darkness", "", DRK.JobID)]
+		DRKPvP_SaltCombo = 115002,
+
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Blackest Night", "", DRK.JobID)]
+		DRKPvP_BlackestNight = 115003,
+
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Quietus", "", DRK.JobID)]
+		DRKPvP_Quietus = 115004,
+
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Shadowbringer", "", DRK.JobID)]
+		DRKPvP_Shadowbringer = 115005,
+
+		[PvPCustomCombo]
+		[ParentCombo(DRKPvP_Combo)]
+		[CustomComboInfo("Eventide", "", DRK.JobID)]
+		DRKPvP_Eventide = 115006,
 
 		#endregion
 
 		#region DRAGOON - 116000
 
 		[PvPCustomCombo]
-		[ReplaceSkill(DRGPvP.RaidenThrust, DRGPvP.FangAndClaw, DRGPvP.WheelingThrust, DRGPvP.HeavensThrust)]
+		[ReplaceSkill(DRGPvP.RaidenThrust)]
 		[CustomComboInfo("Combo Mode", "", DRG.JobID)]
 		DRGPvP_Combo = 116000,
 
@@ -2422,14 +2459,37 @@ namespace UltimateCombo.Combos
 
 		#region MACHINIST - 118000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(MCHPvP.BlastCharge)]
+		[CustomComboInfo("Combo Mode", "", MCH.JobID)]
+		MCHPvP_Combo = 118000,
 
+		[PvPCustomCombo]
+		[ParentCombo(MCHPvP_Combo)]
+		[CustomComboInfo("Weapons", "", MCH.JobID)]
+		MCHPvP_Weapons = 118001,
+
+		[PvPCustomCombo]
+		[ParentCombo(MCHPvP_Combo)]
+		[CustomComboInfo("Wildfire", "", MCH.JobID)]
+		MCHPvP_Wildfire = 118002,
+
+		[PvPCustomCombo]
+		[ParentCombo(MCHPvP_Combo)]
+		[CustomComboInfo("Scattergun", "", MCH.JobID)]
+		MCHPvP_Scattergun = 118003,
+
+		[PvPCustomCombo]
+		[ParentCombo(MCHPvP_Combo)]
+		[CustomComboInfo("Marksman's Spite", "", MCH.JobID)]
+		MCHPvP_Spite = 118004,
 
 		#endregion
 
 		#region MONK - 119000
 
 		[PvPCustomCombo]
-		[ReplaceSkill(MNKPvP.Bootshine, MNKPvP.TrueStrike, MNKPvP.SnapPunch, MNKPvP.DragonKick, MNKPvP.TwinSnakes, MNKPvP.Demolish, MNKPvP.PhantomRush)]
+		[ReplaceSkill(MNKPvP.Bootshine)]
 		[CustomComboInfo("Combo Mode", "", MNK.JobID)]
 		MNKPvP_Combo = 119000,
 
@@ -2468,7 +2528,7 @@ namespace UltimateCombo.Combos
 		#region NINJA - 120000
 
 		[PvPCustomCombo]
-		[ReplaceSkill(NINPvP.SpinningEdge, NINPvP.GustSlash, NINPvP.AeolianEdge)]
+		[ReplaceSkill(NINPvP.SpinningEdge)]
 		[CustomComboInfo("Combo Mode", "", NIN.JobID)]
 		NINPvP_Combo = 120000,
 
@@ -2544,7 +2604,7 @@ namespace UltimateCombo.Combos
 		#region REAPER - 122000
 
 		[PvPCustomCombo]
-		[ReplaceSkill(RPRPvP.Slice, RPRPvP.WaxingSlice, RPRPvP.InfernalSlice)]
+		[ReplaceSkill(RPRPvP.Slice)]
 		[CustomComboInfo("Combo Mode", "", RPR.JobID)]
 		RPRPvP_Combo = 122000,
 
@@ -2582,7 +2642,30 @@ namespace UltimateCombo.Combos
 
 		#region RED MAGE - 123000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(RDMPvP.Verstone)]
+		[CustomComboInfo("Combo Mode", "", RDM.JobID)]
+		RDMPvP_Combo = 123000,
 
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("White Shift & Black Shift", "", RDM.JobID)]
+		RDMPvP_Shift = 123001,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Magick Barrier & Frazzle", "", RDM.JobID)]
+		RDMPvP_BarrierFrazzle = 123002,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Resolution", "", RDM.JobID)]
+		RDMPvP_Resolution = 123003,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Southern Cross", "", RDM.JobID)]
+		RDMPvP_Cross = 123004,
 
 		#endregion
 
@@ -2672,7 +2755,40 @@ namespace UltimateCombo.Combos
 
 		#region SUMMONER - 127000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(SMNPvP.Ruin3)]
+		[CustomComboInfo("Combo Mode", "", SMN.JobID)]
+		SMNPvP_Combo = 127000,
 
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Fester", "", SMN.JobID)]
+		SMNPvP_Fester = 127001,
+
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Slipstream", "", SMN.JobID)]
+		SMNPvP_Slipstream = 127002,
+
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Mountain Buster", "", SMN.JobID)]
+		SMNPvP_Mountain = 127003,
+
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Crimson Cycline > Crimson Strike", "", SMN.JobID)]
+		SMNPvP_Crimson = 127004,
+
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Radiant Aegis", "", SMN.JobID)]
+		SMNPvP_Aegis = 127005,
+
+		[PvPCustomCombo]
+		[ParentCombo(SMNPvP_Combo)]
+		[CustomComboInfo("Enkindle Bahamut & Enkindle Phoenix", "", SMN.JobID)]
+		SMNPvP_Enkindle = 127006,
 
 		#endregion
 

@@ -1,3 +1,5 @@
+using UltimateCombo.CustomCombo;
+
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class SMNPvP
@@ -16,19 +18,81 @@ namespace UltimateCombo.Combos.PvP
 			MountainBuster = 29671,
 			Fester = 29672,
 			EnkindleBahamut = 29674,
-			Megaflare = 29675,          // unused
-			Wyrmwave = 29676,           // unused
-			AkhMorn = 29677,            // unused
+			Megaflare = 29675,
+			Wyrmwave = 29676,
+			AkhMorn = 29677,
 			EnkindlePhoenix = 29679,
-			ScarletFlame = 29681,       // unused
-			Revelation = 29682;         // unused
+			ScarletFlame = 29681,
+			Revelation = 29682;
 
 		public static class Config
 		{
-			public const string
-				SMNPvP_RadiantAegisThreshold = "SMNPvP_RadiantAegisThreshold";
-			public const string
-				SMNPvP_FesterThreshold = "SMNPvP_FesterThreshold";
+
+		}
+
+		internal class SMNPvP_Combo : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMNPvP_Combo;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is Ruin3 && IsEnabled(CustomComboPreset.SMNPvP_Combo))
+				{
+					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+					{
+						if (CanWeave(actionID))
+						{
+							if (IsEnabled(CustomComboPreset.SMNPvP_Enkindle))
+							{
+								if (ActionReady(EnkindleBahamut) && IsEnabled(EnkindleBahamut))
+								{
+									return EnkindleBahamut;
+								}
+
+								if (ActionReady(EnkindlePhoenix) && IsEnabled(EnkindlePhoenix))
+								{
+									return EnkindlePhoenix;
+								}
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Mountain) && ActionReady(MountainBuster)
+								&& (WasLastSpell(CrimsonCyclone) || WasLastSpell(CrimsonStrike)))
+							{
+								return MountainBuster;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Aegis) && ActionReady(RadiantAegis))
+							{
+								return RadiantAegis;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Fester) && ActionReady(Fester)
+								&& (GetTargetHPPercent() <= 50 || GetRemainingCharges(Fester) == 2)
+								&& HasTarget())
+							{
+								return Fester;
+							}
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream))
+						{
+							return Slipstream;
+						}
+
+						if (lastComboMove is CrimsonCyclone)
+						{
+							return CrimsonStrike;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_Crimson) && ActionReady(CrimsonCyclone))
+						{
+							return CrimsonCyclone;
+						}
+					}
+				}
+
+				return actionID;
+			}
 		}
 	}
 }

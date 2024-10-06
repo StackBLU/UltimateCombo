@@ -53,8 +53,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Slice or WaxingSlice or InfernalSlice)
-					&& IsEnabled(CustomComboPreset.RPRPvP_Combo))
+				if (actionID is Slice && IsEnabled(CustomComboPreset.RPRPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded))
 					{

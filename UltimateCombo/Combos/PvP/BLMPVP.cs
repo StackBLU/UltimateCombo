@@ -49,7 +49,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Fire or Fire4 or Flare or Blizzard or Blizzard4 or Freeze) && IsEnabled(CustomComboPreset.BLMPvP_Combo))
+				if ((actionID is Fire or Blizzard) && IsEnabled(CustomComboPreset.BLMPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.BLMPvP_SoulResonance) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{

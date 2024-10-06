@@ -613,7 +613,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is GoblinPunch or SonicBoom) && IsEnabled(CustomComboPreset.BLU_PhantomEnder))
+				if ((actionID is GoblinPunch or SonicBoom or ChocoMeteor) && IsEnabled(CustomComboPreset.BLU_PhantomEnder))
 				{
 					if (HasEffect(Buffs.PhantomFlurry))
 					{

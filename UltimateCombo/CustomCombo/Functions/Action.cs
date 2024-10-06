@@ -1,5 +1,7 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using System;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
 
@@ -153,6 +155,21 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static unsafe float SheatheCooldown()
 		{
 			return UIState.Instance()->WeaponState.SheatheCooldown;
+		}
+
+		public static unsafe int FindHolsterItem(uint itemID)
+		{
+			return PublicContentBozja.GetState()->HolsterActions.IndexOf((byte)itemID);
+		}
+
+		public static unsafe bool HasHolsterItem(uint itemID)
+		{
+			return FindHolsterItem(itemID) >= 0 ? true : false;
+		}
+
+		public static unsafe bool UseFromHolster(uint holsterIndex, uint slot)
+		{
+			return PublicContentBozja.GetInstance()->UseFromHolster(holsterIndex, slot);
 		}
 
 		public static unsafe bool UseAction(ActionType actionType, uint actionID)

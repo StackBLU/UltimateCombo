@@ -62,22 +62,23 @@ namespace UltimateCombo.Combos.PvP
 					{
 						return Guard;
 					}
-					else
-					{
-						return OriginalHook(11);
-					}
+
+					return OriginalHook(11);
 				}
-				else
+
+				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
 				{
-					if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
-					{
-						return OriginalHook(Recuperate);
-					}
-					else
+					if (LocalPlayer.ClassJob.Id == DRKPvP.JobID && PlayerHealthPercentageHp() > 25
+						&& (IsOffCooldown(DRKPvP.Quietus) || WasLastAction(DRKPvP.Quietus)
+						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2)))
 					{
 						return actionID;
 					}
+
+					return OriginalHook(Recuperate);
 				}
+
+				return actionID;
 			}
 
 			public static bool Execute()
@@ -98,7 +99,7 @@ namespace UltimateCombo.Combos.PvP
 					return false; //Rival Wings Mounted
 				}
 
-				return !HasEffect(DRKPvP.Buffs.UndeadRedemption) && LocalPlayer.CurrentMp >= 2500 && remainingPercentage * 100 <= threshold;
+				return LocalPlayer.CurrentMp >= 2500 && remainingPercentage * 100 <= threshold;
 			}
 		}
 
@@ -110,26 +111,25 @@ namespace UltimateCombo.Combos.PvP
 			{
 				if (HasEffect(Buffs.Guard))
 				{
-					if (actionID == Guard)
+					if (actionID is Guard)
 					{
 						return Guard;
 					}
-					else
-					{
-						return OriginalHook(11);
-					}
+
+					return OriginalHook(11);
 				}
-				else
+
+				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
 				{
-					if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
-					{
-						return OriginalHook(Guard);
-					}
-					else
+					if (LocalPlayer.ClassJob.Id == DRKPvP.JobID && HasEffect(DRKPvP.Buffs.UndeadRedemption))
 					{
 						return actionID;
 					}
+
+					return OriginalHook(Guard);
 				}
+
+				return actionID;
 			}
 
 			public static bool Execute()
@@ -162,26 +162,20 @@ namespace UltimateCombo.Combos.PvP
 			{
 				if (HasEffect(Buffs.Guard))
 				{
-					if (actionID == Guard)
+					if (actionID is Guard)
 					{
 						return Guard;
 					}
-					else
-					{
-						return OriginalHook(11);
-					}
+
+					return OriginalHook(11);
 				}
-				else
+
+				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID))
 				{
-					if (Execute() && InPvP() && !GlobalSkills.Contains(actionID))
-					{
-						return OriginalHook(Purify);
-					}
-					else
-					{
-						return actionID;
-					}
+					return OriginalHook(Purify);
 				}
+
+				return actionID;
 			}
 
 			public static bool Execute()

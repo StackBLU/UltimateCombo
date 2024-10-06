@@ -44,8 +44,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is RaidenThrust or FangAndClaw or WheelingThrust)
-					&& IsEnabled(CustomComboPreset.DRGPvP_Combo))
+				if (actionID is RaidenThrust && IsEnabled(CustomComboPreset.DRGPvP_Combo))
 				{
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{

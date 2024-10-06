@@ -1294,6 +1294,21 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, DRK.Config.DRK_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
 
+			#region PvP
+
+			if (preset is CustomComboPreset.DRKPvP_Shadowbringer && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_ShadowbringerHP, "Triggers when you have more than this % of HP", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 10000, DRKPvP.Config.DRKPvP_ShadowbringerMP, "Triggers when you have more than this amount of MP", 150, SliderIncrements.Hundreds);
+			}
+
+			if (preset is CustomComboPreset.DRKPvP_Quietus && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_Quietus, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
+
 			#endregion
 
 			#region DRAGOON

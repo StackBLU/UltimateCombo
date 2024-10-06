@@ -37,6 +37,7 @@
 				BannerOfHonoredSacrifice = 2327,
 				FontOfMagic = 2332,
 				Bravery2 = 2341,
+				AutoPotion = 2342,
 				AutoEther = 2343,
 				FontOfPower = 2346,
 				Reminiscence = 2348,
@@ -58,5 +59,26 @@
 				FlareStar = 2440,
 				RendArmor = 2441;
 		}
+
+		public static class Items
+		{
+			public const uint
+				EtherKit = 38;
+		}
+
+		/*internal class Bozja_Test : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_Test;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_Test) && HasEffect(Buffs.Reminiscence))
+				{
+					PluginLog.Debug(FindHolsterItem(Items.EtherKit) + " " + HasHolsterItem(Items.EtherKit));
+				}
+
+				return actionID;
+			}
+		}*/
 	}
 }
