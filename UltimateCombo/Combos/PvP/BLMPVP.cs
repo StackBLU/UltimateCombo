@@ -4,8 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class BLMPvP
 	{
-		public const byte JobID = 25;
-
 		public const uint
 			Fire = 29649,
 			Blizzard = 29653,
@@ -56,15 +54,19 @@ namespace UltimateCombo.Combos.PvP
 						return SoulResonance;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLMPvP_Foul)
-						&& HasEffect(Buffs.Polyglot) && GetBuffRemainingTime(Buffs.Polyglot) < 5)
+					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						return Foul;
-					}
+						if (IsEnabled(CustomComboPreset.BLMPvP_Foul)
+							&& HasEffect(Buffs.Polyglot) && GetBuffRemainingTime(Buffs.Polyglot) < 5)
+						{
+							return Foul;
+						}
 
-					if (IsEnabled(CustomComboPreset.BLMPvP_Burst) && ActionReady(Burst) && HasEffect(Buffs.Swiftcast))
-					{
-						return Burst;
+						if (IsEnabled(CustomComboPreset.BLMPvP_Burst) && ActionReady(Burst) && HasEffect(Buffs.Swiftcast)
+							&& InActionRange(Burst))
+						{
+							return Burst;
+						}
 					}
 				}
 

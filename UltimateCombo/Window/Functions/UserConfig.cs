@@ -1376,7 +1376,10 @@ namespace UltimateCombo.Window.Functions
 
 			#region PICTOMANCER
 
-
+			if (preset == CustomComboPreset.PCTPvP_AutoSubtractive && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoSubtractive, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
+			}
 
 			#endregion
 

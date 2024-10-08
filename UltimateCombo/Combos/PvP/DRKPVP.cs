@@ -5,8 +5,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal class DRKPvP
 	{
-		public const byte JobID = 32;
-
 		public const uint
 			HardSlash = 29085,
 			SyphonStrike = 29086,

@@ -4,9 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class MNKPvP
 	{
-		public const byte ClassID = 2;
-		public const byte JobID = 20;
-
 		public const uint
 			PhantomRushCombo = 55,
 			Bootshine = 29472,

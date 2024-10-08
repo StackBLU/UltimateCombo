@@ -4,9 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class SMNPvP
 	{
-		public const byte ClassID = 26;
-		public const byte JobID = 27;
-
 		internal const uint
 			Ruin3 = 29664,
 			AstralImpulse = 29665,
@@ -74,7 +71,7 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream))
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream) && !IsMoving)
 						{
 							return Slipstream;
 						}

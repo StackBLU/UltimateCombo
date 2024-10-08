@@ -5,9 +5,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class NINPvP
 	{
-		public const byte ClassID = 29;
-		public const byte JobID = 30;
-
 		internal const uint
 			SpinningEdge = 29500,
 			GustSlash = 29501,

@@ -1,11 +1,7 @@
-﻿using UltimateCombo.CustomCombo;
-
-namespace UltimateCombo.Combos.PvP
+﻿namespace UltimateCombo.Combos.PvP
 {
 	internal static class ASTPvP
 	{
-		internal const byte JobID = 33;
-
 		internal const uint
 			Malefic = 29242,
 			AspectedBenefic = 29243,

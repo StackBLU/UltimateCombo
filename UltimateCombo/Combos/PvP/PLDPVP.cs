@@ -2,8 +2,6 @@
 {
 	internal static class PLDPvP
 	{
-		public const byte JobID = 19;
-
 		public const uint
 			FastBlade = 29058,
 			RiotBlade = 29059,

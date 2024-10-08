@@ -5,8 +5,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class RDMPvP
 	{
-		public const byte JobID = 35;
-
 		public const uint
 			EnchantedCombo = 29689,
 

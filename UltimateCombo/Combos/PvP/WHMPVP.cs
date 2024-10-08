@@ -5,8 +5,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class WHMPvP
 	{
-		public const byte JobID = 24;
-
 		public const uint
 			Glare = 29223,
 			Cure2 = 29224,

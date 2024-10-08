@@ -4,8 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class SCHPvP
 	{
-		public const byte JobID = 28;
-
 		public const uint
 			Broil = 29231,
 			Adloquium = 29232,

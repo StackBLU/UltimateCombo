@@ -2591,7 +2591,45 @@ namespace UltimateCombo.Combos
 
 		#region PICTOMANCER - 130000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(PCTPvP.FireInRed)]
+		[CustomComboInfo("Combo Mode", "", PCT.JobID)]
+		PCTPvP_Combo = 130000,
 
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Auto Subtractive Palette", "", PCT.JobID)]
+		PCTPvP_AutoSubtractive = 130001,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Creature Motif", "", PCT.JobID)]
+		PCTPvP_Motif = 130002,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Living Muse", "", PCT.JobID)]
+		PCTPvP_Muse = 130003,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Mog of the Ages & Retribution of the Madeen", "", PCT.JobID)]
+		PCTPvP_Portrait = 130004,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Holy in White & Comet in Black", "", PCT.JobID)]
+		PCTPvP_Paint = 130005,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Tempera Coat", "", PCT.JobID)]
+		PCTPvP_Tempera = 130006,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Star Prism", "", PCT.JobID)]
+		PCTPvP_StarPrism = 130007,
 
 		#endregion
 
@@ -2794,7 +2832,40 @@ namespace UltimateCombo.Combos
 
 		#region VIPER - 131000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(VPRPvP.SteelFangs)]
+		[CustomComboInfo("Combo Mode", "", VPR.JobID)]
+		VPRPvP_Combo = 131000,
 
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Hunter's Snap & Swiftskin's Coil", "", VPR.JobID)]
+		VPRPvP_HuntersSnap = 131001,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Slither", "", VPR.JobID)]
+		VPRPvP_Slither = 131002,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Uncoiled Fury", "", VPR.JobID)]
+		VPRPvP_UncoiledFury = 131003,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Backlash", "", VPR.JobID)]
+		VPRPvP_Backlash = 131004,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Rattling Coil", "", VPR.JobID)]
+		VPRPvP_RattlingCoil = 131005,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("World-Swallower", "", VPR.JobID)]
+		VPRPvP_WorldSwallower = 131006,
 
 		#endregion
 

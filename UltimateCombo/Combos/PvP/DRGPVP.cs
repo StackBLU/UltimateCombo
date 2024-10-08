@@ -4,9 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class DRGPvP
 	{
-		public const byte ClassID = 4;
-		public const byte JobID = 22;
-
 		public const uint
 			WheelingThrustCombo = 56,
 			RaidenThrust = 29486,

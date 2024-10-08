@@ -4,8 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class MCHPvP
 	{
-		public const byte JobID = 31;
-
 		public const uint
 			BlastCharge = 29402,
 			HeatBlast = 29403,

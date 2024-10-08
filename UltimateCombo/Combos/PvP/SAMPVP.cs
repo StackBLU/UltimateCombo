@@ -1,13 +1,7 @@
-﻿using UltimateCombo.Combos.PvE;
-using UltimateCombo.Core;
-using UltimateCombo.CustomCombo;
-
-namespace UltimateCombo.Combos.PvP
+﻿namespace UltimateCombo.Combos.PvP
 {
 	internal static class SAMPvP
 	{
-		public const byte JobID = 34;
-
 		public const uint
 			KashakCombo = 58,
 			Yukikaze = 29523,

@@ -4,8 +4,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class RPRPvP
 	{
-		public const byte JobID = 39;
-
 		internal const uint
 			Slice = 29538,
 			WaxingSlice = 29539,

@@ -2,8 +2,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class DNCPvP
 	{
-		public const byte JobID = 38;
-
 		internal const uint
 			FountainCombo = 54,
 			Cascade = 29416,

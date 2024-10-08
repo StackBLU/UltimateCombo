@@ -60,32 +60,37 @@ namespace UltimateCombo
 			//RDM.JobID,
 			//PCT.JobID,
 
-			//BLU.JobID,
+			//BLU.JobID
 		];
 
-		public static readonly List<uint> DisabledJobsPVP =
+		public static readonly List<uint> DisabledJobsPvP =
 		[
-			ASTPvP.JobID,
-			//BLMPvP.JobID,
-			BRDPvP.JobID,
-			DNCPvP.JobID,
-			//DRGPvP.JobID,
-			DRKPvP.JobID,
-			GNBPvP.JobID,
-			MCHPvP.JobID,
-			//MNKPvP.JobID,
-			//NINPvP.JobID,
-			PCTPvP.JobID,
-			PLDPvP.JobID,
-			RDMPvP.JobID,
-			//RPRPvP.JobID,
-			SAMPvP.JobID,
-			//SCHPvP.JobID,
-			//SGEPvP.JobID,
-			SMNPvP.JobID,
-			VPRPvP.JobID,
-			WARPvP.JobID,
-			//WHMPvP.JobID
+			//All.JobID,
+
+			//PLD.JobID,
+			//WAR.JobID,
+			//DRK.JobID,
+			//GNB.JobID,
+
+			//WHM.JobID
+			//SCH.JobID,
+			//AST.JobID,
+			//SGE.JobID,
+
+			//MNK.JobID,
+			//DRG.JobID,
+			//NIN.JobID,
+			//SAM.JobID,
+			//RPR.JobID,
+			//VPR.JobID,
+
+			//BRD.JobID,
+			//MCH.JobID,
+			//DNC.JobID,
+			//BLM.JobID,
+			//SMN.JobID,
+			//RDM.JobID,
+			//PCT.JobID
 		];
 
 		public static uint? JobID

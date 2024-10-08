@@ -2,9 +2,6 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class BRDPvP
 	{
-		public const byte ClassID = 5;
-		public const byte JobID = 23;
-
 		public const uint
 			PowerfulShot = 29391,
 			ApexArrow = 29393,
