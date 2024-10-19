@@ -50,6 +50,12 @@ namespace UltimateCombo.Combos.PvP
 						return Meteodrive;
 					}
 
+					if (IsEnabled(CustomComboPreset.MNKPvP_Thunderclap) && TargetHasEffect(Debuffs.PressurePoint)
+						&& ActionReady(ThunderClap) && !InActionRange(OriginalHook(PhantomRush)))
+					{
+						return ThunderClap;
+					}
+
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
@@ -77,7 +83,7 @@ namespace UltimateCombo.Combos.PvP
 							return Enlightenment;
 						}
 
-						if (IsEnabled(CustomComboPreset.MNKPvP_Enlightenment) && ActionReady(RiddleOfEarth) && PlayerHealthPercentageHp() <= 95)
+						if (IsEnabled(CustomComboPreset.MNKPvP_RiddleOfEarth) && ActionReady(RiddleOfEarth) && PlayerHealthPercentageHp() <= 95)
 						{
 							return RiddleOfEarth;
 						}

@@ -105,14 +105,19 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool CanWeave(uint actionID, double weaveTime = 0.6)
 		{
-			return (GetCooldown(actionID).CooldownRemaining >= weaveTime)
+			if (Service.Configuration.DisableTripleWeaving)
+			{
+				return (GetCooldown(actionID).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved())
+				|| HasSilence() || HasPacification();
+			}
+
+			return GetCooldown(actionID).CooldownRemaining >= weaveTime
 				|| HasSilence() || HasPacification();
 		}
 
 		public static bool CanDelayedWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)
 		{
-			return (GetCooldown(actionID).CooldownRemaining <= weaveStart
-				&& GetCooldown(actionID).CooldownRemaining >= weaveTime)
+			return (GetCooldown(actionID).CooldownRemaining <= weaveStart && GetCooldown(actionID).CooldownRemaining >= weaveTime)
 				|| HasSilence() || HasPacification();
 		}
 

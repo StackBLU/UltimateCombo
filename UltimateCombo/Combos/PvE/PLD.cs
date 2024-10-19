@@ -122,8 +122,10 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Expiacion);
 						}
 
-						if (GetCooldownRemainingTime(CircleOfScorn) > 2 && GetCooldownRemainingTime(OriginalHook(Expiacion)) > 2
-							&& GetCooldownRemainingTime(FightOrFlight) > 2 && GetCooldownRemainingTime(OriginalHook(Imperator)) > 2)
+						if ((GetCooldownRemainingTime(CircleOfScorn) > 2 || !LevelChecked(CircleOfScorn))
+							&& (GetCooldownRemainingTime(OriginalHook(Expiacion)) > 2 || !LevelChecked(Expiacion))
+							&& (GetCooldownRemainingTime(FightOrFlight) > 2 || !LevelChecked(FightOrFlight))
+							&& (GetCooldownRemainingTime(OriginalHook(Imperator)) > 2 || !LevelChecked(Imperator)))
 						{
 							if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
 							{
@@ -148,8 +150,8 @@ namespace UltimateCombo.Combos.PvE
 								return Intervention;
 							}
 
-							if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) &&
-								ActionReady(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
+							if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) && ActionReady(Sheltron)
+								&& !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
 								Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
 							{
 								return OriginalHook(Sheltron);
@@ -157,33 +159,32 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor))
-						&& HasEffect(Buffs.Requiescat) && LocalPlayer.CurrentMp >= 1000)
+					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor)
+						&& (HasEffect(Buffs.ConfiteorReady) || (HasEffect(Buffs.Requiescat) && LevelChecked(BladeOfFaith)))
+						&& LocalPlayer.CurrentMp >= 1000)
 					{
 						return OriginalHook(Confiteor);
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && HasEffect(Buffs.GoringBladeReady)
-						&& WasLastSpell(BladeOfValor))
+						&& (WasLastSpell(BladeOfValor) || !LevelChecked(OriginalHook(BladeOfFaith))))
 					{
 						return GoringBlade;
 					}
 
-					if ((!HasEffect(Buffs.FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) > 5)
+					if ((HasEffect(Buffs.FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) > 5)
 						|| (GetCooldownRemainingTime(OriginalHook(Imperator)) > 20 && !HasEffect(Buffs.Requiescat))
-						|| (lastComboActionID is RiotBlade && HasEffect(Buffs.SepulchreReady))
-						|| HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady))
+						|| lastComboActionID is RiotBlade)
 					{
 						if (IsEnabled(CustomComboPreset.PLD_ST_Atonement) && ActionReady(OriginalHook(Atonement))
-						&& (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady)))
+							&& (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady)))
 						{
 							return OriginalHook(Atonement);
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && ActionReady(HolySpirit)
+						if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && ActionReady(OriginalHook(HolySpirit))
 							&& (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith)))
-							&& LocalPlayer.CurrentMp >= GetResourceCost(HolySpirit)
-							&& LocalPlayer.CurrentMp >= 1000)
+							&& LocalPlayer.CurrentMp >= GetResourceCost(HolySpirit))
 						{
 							return HolySpirit;
 						}
@@ -283,8 +284,9 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor))
-						&& HasEffect(Buffs.Requiescat) && LocalPlayer.CurrentMp >= 1000)
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor)
+						&& (HasEffect(Buffs.ConfiteorReady) || (HasEffect(Buffs.Requiescat) && LevelChecked(BladeOfFaith)))
+						&& LocalPlayer.CurrentMp >= 1000)
 					{
 						return OriginalHook(Confiteor);
 					}

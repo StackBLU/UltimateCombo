@@ -208,15 +208,6 @@ namespace UltimateCombo
 			ConfigWindow.Draw();
 		}
 
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Used for non-static only window initialization")]
-		public string Name
-		{
-			get
-			{
-				return "UltimateCombo";
-			}
-		}
-
 		public void Dispose()
 		{
 			ConfigWindow?.Dispose();

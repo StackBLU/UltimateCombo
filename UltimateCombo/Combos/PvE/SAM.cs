@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -111,25 +112,15 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
-								&& GetCooldownRemainingTime(Ikishoten) < 3
-								&& ((GetRemainingCharges(MeikyoShisui) == 1 && GetCooldownChargeRemainingTime(MeikyoShisui) < 3)
-								|| GetRemainingCharges(MeikyoShisui) == 2)
-								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
-								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
-							{
-								return Hagakure;
-							}
-
 							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 							{
 								return Ikishoten;
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.SAM_ST_Shield) && ActionReady(OriginalHook(ThirdEye)))
 							{
@@ -142,6 +133,14 @@ namespace UltimateCombo.Combos.PvE
 								&& (HasEffect(Buffs.OgiNamikiriReady) || !LevelChecked(OgiNamikiri)))
 							{
 								return MeikyoShisui;
+							}
+
+							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
+								&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
+								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
+								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
+							{
+								return Hagakure;
 							}
 
 							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && HasEffect(Buffs.Zanshin))
@@ -180,22 +179,25 @@ namespace UltimateCombo.Combos.PvE
 						return OgiNamikiri;
 					}
 
-					if (IsEnabled(CustomComboPreset.SAM_ST_Tsubame) && (HasEffect(Buffs.TsubameReady) || HasEffect(Buffs.EnhancedTsubameReady))
-						&& ActionWatching.NumberOfGcdsUsed > 2)
+					if (IsEnabled(CustomComboPreset.SAM_ST_Tsubame) && (HasEffect(Buffs.TsubameReady)
+						|| HasEffect(Buffs.EnhancedTsubameReady))
+						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return OriginalHook(TsubameGaeshi);
 					}
 
-					if (IsEnabled(CustomComboPreset.SAM_ST_Higanbana) && GetDebuffRemainingTime(Debuffs.Higanbana) < 3
+					if (IsEnabled(CustomComboPreset.SAM_ST_Higanbana) && GetDebuffRemainingTime(Debuffs.Higanbana) < 5
 						&& OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
 						&& (Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.SETSU))
-						&& ActionWatching.NumberOfGcdsUsed > 2 && (EnemyHealthCurrentHp() > LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
+						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
+						&& (EnemyHealthCurrentHp() > LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
 					{
 						return OriginalHook(Iaijutsu);
 					}
 
 					if (Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.SETSU)
-						&& IsEnabled(CustomComboPreset.SAM_ST_Iaijutsu) && ActionWatching.NumberOfGcdsUsed > 2)
+						&& IsEnabled(CustomComboPreset.SAM_ST_Iaijutsu)
+						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return OriginalHook(Iaijutsu);
 					}
@@ -273,9 +275,7 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Hagakure)
-							&& GetCooldownRemainingTime(Ikishoten) < 3
-							&& ((GetRemainingCharges(MeikyoShisui) == 1 && GetCooldownChargeRemainingTime(MeikyoShisui) < 3)
-							|| GetRemainingCharges(MeikyoShisui) == 2)
+							&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
 							&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU)))
 						{
 							return Hagakure;

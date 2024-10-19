@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -90,7 +91,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is HeavyShot or BurstShot or StraightShot or RefulgentArrow) && IsEnabled(CustomComboPreset.BRD_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && InCombat())
 						{
@@ -121,7 +122,7 @@ namespace UltimateCombo.Combos.PvE
 							return EmpyrealArrow;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
 							{

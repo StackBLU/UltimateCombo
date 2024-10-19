@@ -1,13 +1,13 @@
 using Dalamud.Configuration;
 using Newtonsoft.Json;
-using UltimateCombo.Combos;
-using UltimateCombo.Combos.PvE;
-using UltimateCombo.Extensions;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using UltimateCombo.Combos;
+using UltimateCombo.Combos.PvE;
+using UltimateCombo.Extensions;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Core
 {
@@ -24,6 +24,10 @@ namespace UltimateCombo.Core
 		public bool HideConflictedCombos { get; set; } = false;
 
 		public bool HideChildren { get; set; } = false;
+
+		public bool IgnoreGCDChecks { get; set; } = false;
+
+		public bool DisableTripleWeaving { get; set; } = false;
 
 		public double MeleeOffset { get; set; } = 0;
 

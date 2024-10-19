@@ -1,7 +1,7 @@
-﻿using UltimateCombo.Combos;
+﻿using System.Collections.Generic;
+using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Core;
-using System.Collections.Generic;
 
 namespace UltimateCombo.ComboHelper.Functions
 {

@@ -1233,14 +1233,24 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, "Blood Drain MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
-			if (preset is CustomComboPreset.BLU_Treasure_Pomcure && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Healer_Pomcure && enabled)
 			{
-				UserConfig.DrawSliderInt(1, 100, BLU.Config.BLU_TreasurePomcure, "Pomcure HP Threshold", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasurePomcure, "Pomcure HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
-			if (preset is CustomComboPreset.BLU_Treasure_Gobskin && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Healer_Gobskin && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureGobskin, "Shield Percentage Threshold", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureGobskin, "Shield % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.BLU_Treasure_Tank_WhiteWind && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureWhiteWind, "White Wind HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.BLU_Treasure_Tank_Rehydration && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureRehydration, "Rehydration HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
 			#endregion

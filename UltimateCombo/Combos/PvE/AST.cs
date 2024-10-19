@@ -5,6 +5,7 @@ using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -140,7 +141,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
 								&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
@@ -150,7 +151,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
 							{
@@ -220,7 +221,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Combust3)) && ActionWatching.NumberOfGcdsUsed >= 3
+					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Combust3))
+						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 						&& (!TargetHasEffect(CombustList[OriginalHook(Combust3)])
 						|| GetDebuffRemainingTime(CombustList[OriginalHook(Combust3)]) <= 3

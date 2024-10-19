@@ -4,6 +4,7 @@ using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -108,7 +109,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dosis or Dosis2 or Dosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
 				{
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 2
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
 						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
 						&& !WasLastSpell(EukrasianDyskrasia))
@@ -119,7 +120,8 @@ namespace UltimateCombo.Combos.PvE
 							return Kardia;
 						}
 
-						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) && ActionReady(Psyche) && ActionWatching.NumberOfGcdsUsed >= 6)
+						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Psyche) && ActionReady(Psyche)
+							&& (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks))
 						{
 							return Psyche;
 						}
@@ -148,7 +150,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(EukrasianDosis))
-						&& ActionWatching.NumberOfGcdsUsed >= 3
+						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis)]) <= 3
 						|| ActionWatching.NumberOfGcdsUsed == 11))
@@ -162,7 +164,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3)) && ActionReady(OriginalHook(Phlegma3))
-						&& ActionWatching.NumberOfGcdsUsed >= 5)
+						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return OriginalHook(Phlegma3);
 					}

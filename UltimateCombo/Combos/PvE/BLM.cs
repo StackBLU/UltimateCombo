@@ -5,6 +5,7 @@ using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -119,37 +120,34 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)
+							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire)
 						{
-							if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)
-								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && (IsMoving || HasEffect(Buffs.CircleOfPower)))
+							return All.Swiftcast;
+						}
+
+						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
+							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
+							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
+						{
+							return Amplifier;
+						}
+
+						if (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
+						{
+							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
+							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
+							&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
+							|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1
+							&& GetCooldownChargeRemainingTime(Triplecast) < 10)
+							|| (IsMoving && Gauge.PolyglotStacks == 0) || HasEffect(Buffs.CircleOfPower)))
 							{
-								return All.Swiftcast;
+								return Triplecast;
 							}
 
-							if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
-								&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
-								&& (Gauge.InUmbralIce || Gauge.InAstralFire))
+							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines))
 							{
-								return Amplifier;
-							}
-
-							if (ActionWatching.NumberOfGcdsUsed >= 5)
-							{
-								if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
-								&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
-								&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast)
-								|| (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) - 1
-								&& GetCooldownChargeRemainingTime(Triplecast) < 10)
-								|| (IsMoving && Gauge.PolyglotStacks == 0) || HasEffect(Buffs.CircleOfPower)))
-								{
-									return Triplecast;
-								}
-
-								if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines))
-								{
-									return LeyLines;
-								}
+								return LeyLines;
 							}
 						}
 					}
@@ -213,7 +211,8 @@ namespace UltimateCombo.Combos.PvE
 						return FlareStar;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
+					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont)
+						&& (LocalPlayer.CurrentMp == 0 || (LocalPlayer.CurrentMp < 1600 && LocalPlayer.Level < 72))
 						&& HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire)
 					{
 						return Manafont;
@@ -224,7 +223,7 @@ namespace UltimateCombo.Combos.PvE
 						&& ((!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
 						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000) + 500))
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500))))
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500))))
 					{
 						return Paradox;
 					}
@@ -236,7 +235,7 @@ namespace UltimateCombo.Combos.PvE
 						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
 						+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500) && LocalPlayer.CurrentMp >= 800)
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Despair).CooldownTotal * 1000) + 500)
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500)
 						&& LocalPlayer.CurrentMp >= 800)))
 					{
 						return Despair;
@@ -258,7 +257,7 @@ namespace UltimateCombo.Combos.PvE
 						|| (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level))
 						|| (Gauge.InUmbralIce && Gauge.PolyglotStacks > MaxPolyglot(LocalPlayer.Level) - MaxPolyglot(LocalPlayer.Level))
 						|| ActionWatching.NumberOfGcdsUsed == 4
-						|| IsMoving)
+						|| (IsMoving && ActionWatching.NumberOfGcdsUsed >= 10))
 						&& Gauge.ElementTimeRemaining > 6000 && !WasLastSpell(Blizzard4) && Gauge.ElementTimeRemaining != 15000
 						&& (GetBuffRemainingTime(Buffs.Firestarter) >= 10 || !HasEffect(Buffs.Firestarter)))
 					{
@@ -280,14 +279,35 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (LocalPlayer.CurrentMp < 1600 || (Gauge.InUmbralIce && LocalPlayer.CurrentMp < 8000))
 						{
+							if (ActionReady(All.Swiftcast))
+							{
+								return All.Swiftcast;
+							}
+
 							return Blizzard;
 						}
 					}
 
-					if (LocalPlayer.Level < 60)
+					if (LocalPlayer.Level < 72)
 					{
-						if (ActionReady(UmbralSoul) && Gauge.InUmbralIce && !WasLastSpell(UmbralSoul) && LocalPlayer.CurrentMp < 10000)
+						if (ActionReady(Fire) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 3200
+							&& ((!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
+							+ (GetCooldown(Fire).AdjustedCastTime * 1000) + 500))
+							|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500))))
 						{
+							return Fire;
+						}
+
+						if (ActionReady(UmbralSoul) && Gauge.InUmbralIce && !WasLastSpell(UmbralSoul)
+							&& !WasLastSpell(Blizzard4) && LocalPlayer.CurrentMp < 10000)
+						{
+							if (LocalPlayer.Level >= 58)
+							{
+								return Blizzard4;
+							}
+
 							return UmbralSoul;
 						}
 
@@ -296,20 +316,15 @@ namespace UltimateCombo.Combos.PvE
 							return Blizzard3;
 						}
 
-						if (ActionReady(Fire3) && (HasEffect(Buffs.Firestarter) || !Gauge.InAstralFire))
+						if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600)
 						{
-							if (!Gauge.InAstralFire && ActionReady(All.Swiftcast))
+							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && CanWeave(actionID)
+								&& !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
 							{
-								return All.Swiftcast;
+								return Triplecast;
 							}
 
-							return Fire3;
-						}
-
-						if (ActionReady(Fire) && ((LocalPlayer.CurrentMp >= 1600 && Gauge.InAstralFire)
-							|| (LocalPlayer.CurrentMp >= 800 && !Gauge.InAstralFire)))
-						{
-							return Fire;
+							return Fire4;
 						}
 					}
 
@@ -320,25 +335,22 @@ namespace UltimateCombo.Combos.PvE
 							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
 							+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500))
 							|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
-							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).CooldownTotal * 1000) + 500))
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500))
 							|| HasEffect(Bozja.Buffs.AutoEther) || (LocalPlayer.CurrentMp < 2400 && !HasEffect(Bozja.Buffs.FontOfMagic))))
 						{
-							if (HasEffect(Bozja.Buffs.AutoEther))
+							if (ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
 							{
-								if (ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
-								{
-									return All.Swiftcast;
-								}
+								return All.Swiftcast;
+							}
 
-								if (ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast))
-								{
-									return Triplecast;
-								}
+							if (ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast))
+							{
+								return Triplecast;
+							}
 
-								if (ActionReady(LeyLines))
-								{
-									return LeyLines;
-								}
+							if (ActionReady(LeyLines))
+							{
+								return LeyLines;
 							}
 
 							if (LocalPlayer.CurrentMp >= 3200 && !HasEffect(Bozja.Buffs.AutoEther))
@@ -349,7 +361,7 @@ namespace UltimateCombo.Combos.PvE
 							return Despair;
 						}
 
-						if (ActionReady(Blizzard3) && !Gauge.InAstralFire && !Gauge.InUmbralIce)
+						if (ActionReady(Blizzard3) && !Gauge.InAstralFire && !Gauge.InUmbralIce && HasEffect(Bozja.Buffs.Reminiscence))
 						{
 							return Blizzard3;
 						}
@@ -361,7 +373,7 @@ namespace UltimateCombo.Combos.PvE
 						return Blizzard4;
 					}
 
-					if (ActionReady(Blizzard3) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
+					if (ActionReady(Blizzard3) && !WasLastAction(Transpose) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
 						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800
 						&& !WasLastAbility(Manafont))))
 					{
@@ -371,6 +383,12 @@ namespace UltimateCombo.Combos.PvE
 					if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600
 						&& !WasLastAction(Transpose) && !WasLastAction(Blizzard4))
 					{
+						if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && CanWeave(actionID)
+							&& !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && LocalPlayer.Level < 86)
+						{
+							return Triplecast;
+						}
+
 						return Fire4;
 					}
 
@@ -457,6 +475,16 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (Gauge.InUmbralIce && !WasLastSpell(UmbralSoul) && LocalPlayer.CurrentMp < 10000)
 						{
+							if (LocalPlayer.Level < 35)
+							{
+								if (ActionReady(All.LucidDreaming))
+								{
+									return All.LucidDreaming;
+								}
+
+								return Blizzard;
+							}
+
 							return UmbralSoul;
 						}
 

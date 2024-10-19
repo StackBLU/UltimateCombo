@@ -1,6 +1,6 @@
 using Dalamud.Game;
-using UltimateCombo.Services;
 using System;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Core
 {

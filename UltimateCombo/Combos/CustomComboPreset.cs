@@ -586,24 +586,20 @@ namespace UltimateCombo.Combos
 		SCH_ST_DPS_EnergyDrain = 16003,
 
 		[ParentCombo(SCH_ST_DPS)]
-		[CustomComboInfo("Dissipation", "", SCH.JobID)]
-		SCH_ST_DPS_Dissipation = 16004,
-
-		[ParentCombo(SCH_ST_DPS)]
 		[CustomComboInfo("Consolation", "", SCH.JobID)]
-		SCH_ST_DPS_Seraph = 16005,
+		SCH_ST_DPS_Seraph = 16004,
 
 		[ParentCombo(SCH_ST_DPS)]
 		[CustomComboInfo("Chain Stratagem > Baneful Impact", "", SCH.JobID)]
-		SCH_ST_DPS_ChainStrat = 16006,
+		SCH_ST_DPS_ChainStrat = 16005,
 
 		[ParentCombo(SCH_ST_DPS)]
 		[CustomComboInfo("Ruin II Movement", "", SCH.JobID)]
-		SCH_ST_DPS_Ruin2Movement = 16007,
+		SCH_ST_DPS_Ruin2Movement = 16006,
 
 		[ParentCombo(SCH_ST_DPS)]
 		[CustomComboInfo("Fairy Reminder", "", SCH.JobID)]
-		SCH_ST_DPS_Fairy = 16008,
+		SCH_ST_DPS_Fairy = 16007,
 
 		#endregion
 
@@ -628,6 +624,14 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SCH_AoE_DPS)]
 		[CustomComboInfo("Fairy Reminder", "", SCH.JobID)]
 		SCH_AoE_DPS_Fairy = 16024,
+
+		#endregion
+
+		#region Single Target Heals
+
+		[ReplaceSkill(SCH.Physick, SCH.Adloquium)]
+		[CustomComboInfo("Single Target Heals", "", SCH.JobID)]
+		SCH_ST_Heals = 16030,
 
 		#endregion
 
@@ -1169,6 +1173,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(NIN.Chi, NIN.Doton)]
 		[CustomComboInfo("Doton", "", NIN.JobID)]
 		NIN_Doton = 10040,
+
+		[ReplaceSkill(NIN.Ten, NIN.Chi, NIN.Jin)]
+		[CustomComboInfo("Mudra Protection", "", NIN.JobID)]
+		NIN_MudraProtection = 10041,
 
 		#endregion
 
@@ -2263,6 +2271,7 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ConflictingCombos(BLU_Treasure_Tank)]
 		[BlueInactive(BLU.GoblinPunch, BLU.MightyGuard, BLU.ToadOil, BLU.Devour, BLU.PeatPelt, BLU.DeepClean)]
 		[ReplaceSkill(BLU.GoblinPunch)]
 		[CustomComboInfo("Tank Combo", "Mighty Guard, Toad Oil, and Devour Checks, then Peculiar Light, Peat Pelt, and Deep Clean", BLU.JobID)]
@@ -2278,14 +2287,16 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
 		BLU_PhantomEnder = 70033,
 
-		[BlueInactive(BLU.GoblinPunch, BLU.Gobskin, BLU.Pomcure, BLU.BasicInstinct, BLU.MightyGuard, BLU.AngelsSnack, BLU.FeatherRain, BLU.BreathOfMagic,
-			BLU.MortalFlame, BLU.TripleTrident)]
+		#region Treasure Healer
+
+		[BlueInactive(BLU.AethericMimicry, BLU.GoblinPunch, BLU.Gobskin, BLU.Pomcure, BLU.BasicInstinct, BLU.MightyGuard, BLU.AngelsSnack,
+					  BLU.FeatherRain, BLU.BreathOfMagic, BLU.MortalFlame, BLU.TripleTrident)]
 		[ReplaceSkill(BLU.GoblinPunch)]
 		[CustomComboInfo("Solo Treasure Mappin' (Healer Mimic required)", "", BLU.JobID)]
-		BLU_Treasure = 70040,
+		BLU_Treasure_Healer = 70040,
 
-		[ParentCombo(BLU_Treasure)]
-		[CustomComboInfo("Auto Spell Setting - Only check if you are actively solo mapping.\n" +
+		[ParentCombo(BLU_Treasure_Healer)]
+		[CustomComboInfo("Auto Spell Setting\n" +
 			"Ram's Voice = Shock Strike\n" +
 			"Missile = Glass Dance\n" +
 			"Ultravibration = Quasar\n" +
@@ -2293,43 +2304,95 @@ namespace UltimateCombo.Combos
 			"You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
 			"You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.\n" +
 			"When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
-		BLU_Treasure_AutoSpell = 70041,
+		BLU_Treasure_Healer_AutoSpell = 70041,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Basic Instinct", "", BLU.JobID)]
-		BLU_Treasure_BasicInstinct = 70042,
+		BLU_Treasure_Healer_BasicInstinct = 70042,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Mighty Guard", "", BLU.JobID)]
-		BLU_Treasure_MightyGuard = 70043,
+		BLU_Treasure_Healer_MightyGuard = 70043,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Angel's Snack", "", BLU.JobID)]
-		BLU_Treasure_AngelsSnack = 70044,
+		BLU_Treasure_Healer_AngelsSnack = 70044,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Pomcure", "", BLU.JobID)]
-		BLU_Treasure_Pomcure = 70045,
+		BLU_Treasure_Healer_Pomcure = 70045,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Gobskin", "", BLU.JobID)]
-		BLU_Treasure_Gobskin = 70046,
+		BLU_Treasure_Healer_Gobskin = 70046,
 
-		[ParentCombo(BLU_Treasure)]
-		[CustomComboInfo("Feather Rain", "", BLU.JobID)]
-		BLU_Treasure_FeatherRain = 70047,
-
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Triple Trident", "", BLU.JobID)]
-		BLU_Treasure_TripleTrident = 70048,
+		BLU_Treasure_Healer_TripleTrident = 70048,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Breath of Magic", "", BLU.JobID)]
-		BLU_Treasure_BreathOfMagic = 70049,
+		BLU_Treasure_Healer_BreathOfMagic = 70049,
 
-		[ParentCombo(BLU_Treasure)]
+		[ParentCombo(BLU_Treasure_Healer)]
 		[CustomComboInfo("Mortal Flame", "", BLU.JobID)]
-		BLU_Treasure_MortalFlame = 70050,
+		BLU_Treasure_Healer_MortalFlame = 70050,
+
+		#endregion
+
+		#region Treasure Tank
+
+		[BlueInactive(BLU.AethericMimicry, BLU.GoblinPunch, BLU.BasicInstinct, BLU.MightyGuard, BLU.FeatherRain, BLU.BreathOfMagic,
+					  BLU.Devour, BLU.WhiteWind, BLU.MortalFlame, BLU.TripleTrident)]
+		[ReplaceSkill(BLU.GoblinPunch)]
+		[CustomComboInfo("Solo Treasure Mappin' (Tank Mimic required)", "", BLU.JobID)]
+		BLU_Treasure_Tank = 70060,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Auto Spell Setting\n" +
+			"Ram's Voice = Shock Strike\n" +
+			"Missile = Glass Dance\n" +
+			"Ultravibration = Quasar\n" +
+			"Hydro Pull = Sea Shanty\n" +
+			"You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
+			"You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.\n" +
+			"When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
+		BLU_Treasure_Tank_AutoSpell = 70061,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Basic Instinct", "", BLU.JobID)]
+		BLU_Treasure_Tank_BasicInstinct = 70062,
+
+		[ConflictingCombos(BLU_Tanking)]
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Mighty Guard", "", BLU.JobID)]
+		BLU_Treasure_Tank_MightyGuard = 70063,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Devour", "", BLU.JobID)]
+		BLU_Treasure_Tank_Devour = 70064,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("White Wind", "", BLU.JobID)]
+		BLU_Treasure_Tank_WhiteWind = 70065,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Rehydration", "", BLU.JobID)]
+		BLU_Treasure_Tank_Rehydration = 70066,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Triple Trident", "", BLU.JobID)]
+		BLU_Treasure_Tank_TripleTrident = 70068,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Breath of Magic", "", BLU.JobID)]
+		BLU_Treasure_Tank_BreathOfMagic = 70069,
+
+		[ParentCombo(BLU_Treasure_Tank)]
+		[CustomComboInfo("Mortal Flame", "", BLU.JobID)]
+		BLU_Treasure_Tank_MortalFlame = 70070,
+
+		#endregion
 
 		#endregion
 
@@ -3118,11 +3181,7 @@ namespace UltimateCombo.Combos
 
 		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
 		[CustomComboInfo("Swift Raise (Includes Thin Air for WHM and Dualcast for RDM)", "", All.JobID)]
-		All_SwiftRaise = 100036,
-
-		[ParentCombo(All_SwiftRaise)]
-		[CustomComboInfo("Raise Protection", "", All.JobID)]
-		All_Raise_Protection = 100037,
+		All_Raise = 100036,
 
 		#endregion
 

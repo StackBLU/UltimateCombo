@@ -5,6 +5,7 @@ using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -177,15 +178,15 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
-		internal class All_Raise_Protection : CustomComboClass
+		internal class All_Raise : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Raise_Protection;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Raise;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
 				if ((actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro
 					or SMN.Resurrection or RDM.Verraise or BLU.AngelWhisper)
-					&& IsEnabled(CustomComboPreset.All_Raise_Protection))
+					&& IsEnabled(CustomComboPreset.All_Raise))
 				{
 					if (TargetHasEffectAny(Buffs.Raise))
 					{
@@ -216,7 +217,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (!HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
 						{
-							return OriginalHook(11);
+							return OriginalHook(RDM.Jolt);
 						}
 
 						return RDM.Verraise;
@@ -318,7 +319,7 @@ namespace UltimateCombo.Combos.PvE
 										&& ((NIN.Gauge.Kazematoi >= 1
 										&& (TargetHasEffect(NIN.TrickList[OriginalHook(NIN.TrickAttack)])
 										|| TargetHasEffect(NIN.MugList[OriginalHook(NIN.Mug)])
-										|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 10 && EnemyHealthCurrentHp() != 44)))
+										|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 5 && EnemyHealthMaxHp() != 44)))
 										|| NIN.Gauge.Kazematoi > 3 || !LevelChecked(NIN.ArmorCrush)))
 									{
 										return TrueNorth;
@@ -460,7 +461,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength)
-							&& ActionWatching.NumberOfGcdsUsed >= 5)
+							&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 						{
 							return ArmsLength;
 						}

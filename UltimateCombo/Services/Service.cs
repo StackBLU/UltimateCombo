@@ -4,11 +4,11 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using UltimateCombo.Core;
-using UltimateCombo.Data;
 using System;
 using System.IO;
 using System.Reflection;
+using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Services
 {

@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -109,10 +110,12 @@ namespace UltimateCombo.Combos.PvE
 							return LivingShadow;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
-								&& (LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver) || Gauge.HasDarkArts))
+								&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
+								&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
+								|| Gauge.HasDarkArts || !LevelChecked(TheBlackestNight) || LocalPlayer.CurrentMp >= 9500))
 							{
 								return OriginalHook(EdgeOfShadow);
 							}
@@ -147,7 +150,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn) && ActionWatching.NumberOfGcdsUsed >= 2
+					if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn)
+						&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						&& (HasEffect(Buffs.Delirium) || GetBuffRemainingTime(Buffs.Scorn) <= 3))
 					{
 						return Disesteem;
@@ -214,8 +218,16 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if ((IsEnabled(CustomComboPreset.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
-							&& LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)) || Gauge.HasDarkArts)
+						if (IsEnabled(CustomComboPreset.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
+							&& LocalPlayer.CurrentMp >= 3000)
+						{
+							return TheBlackestNight;
+						}
+
+						if (IsEnabled(CustomComboPreset.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
+							&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)
+							&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
+							|| Gauge.HasDarkArts || !LevelChecked(TheBlackestNight) || LocalPlayer.CurrentMp >= 9500))
 						{
 							return OriginalHook(FloodOfShadow);
 						}

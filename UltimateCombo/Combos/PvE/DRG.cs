@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -90,7 +91,7 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.DRG_ST_LanceCharge) && ActionReady(LanceCharge))
 							{
@@ -98,7 +99,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.DRG_ST_BattleLitany) && ActionReady(BattleLitany))
 							{
@@ -110,15 +111,18 @@ namespace UltimateCombo.Combos.PvE
 								return Geirskogul;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(HighJump)))
+							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(OriginalHook(HighJump))
+								&& OriginalHook(HighJump) != MirageDive)
 							{
 								return OriginalHook(HighJump);
 							}
 
 							if (IsEnabled(CustomComboPreset.DRG_ST_LifeSurge) && ActionReady(LifeSurge)
-								&& (HasEffect(Buffs.LanceCharge) || GetMaxCharges(LifeSurge) == GetRemainingCharges(LifeSurge))
+								&& (HasEffect(Buffs.LanceCharge) || GetRemainingCharges(LifeSurge) == GetMaxCharges(LifeSurge)
+								|| (GetRemainingCharges(LifeSurge) == GetMaxCharges(LifeSurge) - 1 && GetCooldownChargeRemainingTime(LifeSurge) < 5))
 								&& !HasEffect(Buffs.LifeSurge)
-								&& (WasLastWeaponskill(WheelingThrust) || WasLastWeaponskill(OriginalHook(LanceBarrage))))
+								&& ((WasLastWeaponskill(WheelingThrust) && LevelChecked(Drakesbane))
+								|| WasLastWeaponskill(OriginalHook(LanceBarrage))))
 							{
 								return LifeSurge;
 							}
@@ -128,8 +132,8 @@ namespace UltimateCombo.Combos.PvE
 								return DragonfireDive;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond)
-								&& HasEffect(Buffs.NastrondReady) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
+							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond) && HasEffect(Buffs.NastrondReady)
+								&& !WasLastAction(Nastrond))
 							{
 								return Nastrond;
 							}
@@ -145,12 +149,12 @@ namespace UltimateCombo.Combos.PvE
 								return Starcross;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(RiseOfTheDragon) && HasEffect(Buffs.DragonsFlight))
+							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && HasEffect(Buffs.DragonsFlight))
 							{
 								return RiseOfTheDragon;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && ActionReady(MirageDive) && HasEffect(Buffs.DiveReady))
+							if (IsEnabled(CustomComboPreset.DRG_ST_HighJump) && HasEffect(Buffs.DiveReady))
 							{
 								return MirageDive;
 							}

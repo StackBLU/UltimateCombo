@@ -401,7 +401,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) && ActionReady(Vicewinder)
+					if (IsEnabled(CustomComboPreset.VPR_AoE_Vicepit) && ActionReady(Vicepit)
 						&& (WasLastWeaponskill(JaggedMaw) || WasLastWeaponskill(BloodiedMaw)))
 					{
 						return Vicepit;

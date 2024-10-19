@@ -1,7 +1,7 @@
-﻿using UltimateCombo.Core;
-using UltimateCombo.Services;
-using System;
+﻿using System;
 using System.Linq;
+using UltimateCombo.Core;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.ComboHelper.Functions
 {

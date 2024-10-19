@@ -8,12 +8,6 @@ namespace UltimateCombo.CustomCombo
 {
 	internal abstract partial class CustomComboClass : CustomComboFunctions
 	{
-
-		protected CustomComboClass()
-		{
-			StartTimer();
-		}
-
 		protected internal abstract CustomComboPreset Preset { get; }
 
 		protected byte ClassID { get; }
@@ -23,8 +17,9 @@ namespace UltimateCombo.CustomCombo
 		{
 			newActionID = 0;
 
-			if (!Svc.ClientState.IsPvP && ActionManager.Instance()->QueuedActionType == ActionType.Action
-				&& ActionManager.Instance()->QueuedActionId != actionID)
+			if (ActionManager.Instance()->QueuedActionType == ActionType.Action
+				&& ActionManager.Instance()->QueuedActionId != actionID
+				&& !Svc.ClientState.IsPvP)
 			{
 				return false;
 			}
@@ -35,11 +30,6 @@ namespace UltimateCombo.CustomCombo
 			}
 
 			uint classJobID = LocalPlayer!.ClassJob.Id;
-
-			if (classJobID is >= 16 and <= 18)
-			{
-				classJobID = FSH.JobID;
-			}
 
 			if (JobID != All.JobID && JobID != classJobID && ClassID != classJobID)
 			{

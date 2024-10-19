@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -96,7 +97,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer))
 							{
@@ -110,7 +111,7 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(AutomatonQueen);
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.MCH_ST_Reassemble) && !HasEffect(Buffs.Reassembled)
 								&& ActionReady(Reassemble) && !HasEffect(Buffs.Overheated)
@@ -122,25 +123,24 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 5)
+						if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire) && ActionReady(Wildfire)
+							&& (HasEffect(Buffs.Hypercharged) || HasEffect(Buffs.Overheated)))
 						{
-							if (IsEnabled(CustomComboPreset.MCH_ST_Wildfire) && ActionReady(Wildfire)
-								&& (HasEffect(Buffs.Hypercharged) || HasEffect(Buffs.Overheated)))
-							{
-								return Wildfire;
-							}
+							return Wildfire;
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_ST_GaussRico) && ActionReady(OriginalHook(GaussRound))
 							&& GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet))
-							&& !HasEffect(Buffs.Overheated) && GetRemainingCharges(OriginalHook(GaussRound)) >= 2)
+							&& !HasEffect(Buffs.Overheated)
+							&& GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1)
 						{
 							return OriginalHook(GaussRound);
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_ST_GaussRico) && ActionReady(OriginalHook(Ricochet))
 							&& GetRemainingCharges(OriginalHook(Ricochet)) >= GetRemainingCharges(OriginalHook(GaussRound))
-							&& !HasEffect(Buffs.Overheated) && GetRemainingCharges(OriginalHook(Ricochet)) >= 2)
+							&& !HasEffect(Buffs.Overheated)
+							&& GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1)
 						{
 							return OriginalHook(Ricochet);
 						}
@@ -177,6 +177,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.MCH_ST_AirAnchor) && ActionReady(OriginalHook(AirAnchor))
+						&& !HasEffect(Buffs.Reassembled) && !WasLastAbility(Reassemble)
 						&& GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1 && !HasEffect(Buffs.Overheated))
 					{
 						return OriginalHook(AirAnchor);
@@ -253,14 +254,16 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRico) && ActionReady(OriginalHook(GaussRound))
 							&& GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet))
-							&& !HasEffect(Buffs.Overheated) && GetRemainingCharges(OriginalHook(GaussRound)) >= 2)
+							&& !HasEffect(Buffs.Overheated)
+							&& GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1)
 						{
 							return OriginalHook(GaussRound);
 						}
 
 						if (IsEnabled(CustomComboPreset.MCH_AoE_GaussRico) && ActionReady(OriginalHook(Ricochet))
 							&& GetRemainingCharges(OriginalHook(Ricochet)) >= GetRemainingCharges(OriginalHook(GaussRound))
-							&& !HasEffect(Buffs.Overheated) && GetRemainingCharges(OriginalHook(Ricochet)) >= 2)
+							&& !HasEffect(Buffs.Overheated)
+							&& GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1)
 						{
 							return OriginalHook(Ricochet);
 						}

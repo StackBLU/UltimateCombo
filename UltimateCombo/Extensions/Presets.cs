@@ -1,7 +1,7 @@
 ﻿using Dalamud.Utility;
+using System.Collections.Generic;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
-using System.Collections.Generic;
 
 namespace UltimateCombo.Extensions
 {

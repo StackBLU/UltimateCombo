@@ -1,6 +1,6 @@
-﻿using UltimateCombo.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Attributes
 {

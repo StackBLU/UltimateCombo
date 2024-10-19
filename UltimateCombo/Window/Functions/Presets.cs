@@ -3,14 +3,14 @@ using Dalamud.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System.Linq;
+using System.Text;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 using UltimateCombo.Extensions;
 using UltimateCombo.Services;
-using System.Linq;
-using System.Text;
 
 namespace UltimateCombo.Window.Functions
 {

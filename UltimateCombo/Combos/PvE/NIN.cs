@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -126,7 +127,8 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush) && IsEnabled(CustomComboPreset.NIN_ST_DPS))
+				if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush)
+					&& IsEnabled(CustomComboPreset.NIN_ST_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && ActionReady(Ten)
 						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
@@ -153,7 +155,7 @@ namespace UltimateCombo.Combos.PvE
 							return Kassatsu;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)))
 							{
@@ -166,7 +168,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
 								&& HasEffect(Buffs.ShadowWalker)
@@ -183,7 +185,8 @@ namespace UltimateCombo.Combos.PvE
 							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && ActionReady(TenChiJin) && !HasEffect(Buffs.ShadowWalker)
 								&& !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.Kassatsu) && !IsMoving
 								&& (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15
-								|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))))
+								|| (GetCooldownRemainingTime(Meisui) <= 15 && LevelChecked(Meisui))
+								|| !LevelChecked(Meisui)))
 							{
 								return TenChiJin;
 							}
@@ -199,8 +202,8 @@ namespace UltimateCombo.Combos.PvE
 								return ZeshoMeppo;
 							}
 
-							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo)
-								&& TargetHasEffect(MugList[OriginalHook(Mug)]))
+							if (IsEnabled(CustomComboPreset.NIN_ST_TenChiJin) && HasEffect(Buffs.TenriJindo) && ActionReady(TenriJindo)
+								&& (TargetHasEffect(MugList[OriginalHook(Mug)]) || GetBuffRemainingTime(Buffs.TenriJindo) <= 5))
 							{
 								return TenriJindo;
 							}
@@ -268,7 +271,8 @@ namespace UltimateCombo.Combos.PvE
 
 						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20
 							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& ActionWatching.NumberOfGcdsUsed >= 4 && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+							&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
 							if (OriginalHook(Ninjutsu) is Raiton)
 							{
@@ -320,7 +324,7 @@ namespace UltimateCombo.Combos.PvE
 							if (ActionReady(AeolianEdge)
 								&& ((Gauge.Kazematoi >= 1
 								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])
-								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 10 && EnemyHealthCurrentHp() != 44)))
+								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 5 && EnemyHealthMaxHp() != 44)))
 								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
 							{
 								return AeolianEdge;
@@ -393,8 +397,8 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(TrickAttack);
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && HasEffect(Buffs.TenriJindo)
-							&& TargetHasEffect(MugList[OriginalHook(Mug)]))
+						if (IsEnabled(CustomComboPreset.NIN_AoE_TenChiJin) && HasEffect(Buffs.TenriJindo) && ActionReady(TenriJindo)
+							&& (TargetHasEffect(MugList[OriginalHook(Mug)]) || GetBuffRemainingTime(Buffs.TenriJindo) <= 5))
 						{
 							return TenriJindo;
 						}
@@ -559,6 +563,28 @@ namespace UltimateCombo.Combos.PvE
 							return Ten;
 						}
 					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class NIN_MudraProtection : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_MudraProtection;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is not SpinningEdge and not GustSlash and not AeolianEdge and not ArmorCrush
+					and not DeathBlossom and not HakkeMujinsatsu and not Ten and not Chi and not Jin)
+					&& IsEnabled(CustomComboPreset.NIN_MudraProtection))
+				{
+					if (HasEffect(Buffs.Mudra))
+					{
+						return OriginalHook(11);
+					}
+
+					return actionID;
 				}
 
 				return actionID;

@@ -2,6 +2,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -87,17 +88,20 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
-						if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && !Gauge.CreatureMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_ST_Creatures) && ActionReady(OriginalHook(CreatureMotif))
+							&& !Gauge.CreatureMotifDrawn)
 						{
 							return OriginalHook(CreatureMotif);
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_ST_Hammer) && !Gauge.WeaponMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_ST_Hammer) && ActionReady(OriginalHook(WeaponMotif))
+							&& !Gauge.WeaponMotifDrawn)
 						{
 							return OriginalHook(WeaponMotif);
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && !Gauge.LandscapeMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(LandscapeMotif))
+							&& !Gauge.LandscapeMotifDrawn)
 						{
 							return OriginalHook(LandscapeMotif);
 						}
@@ -110,8 +114,9 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn
-							&& ActionWatching.NumberOfGcdsUsed >= 2)
+						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse))
+							&& Gauge.LandscapeMotifDrawn
+							&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
 						{
 							return OriginalHook(ScenicMuse);
 						}
@@ -248,17 +253,20 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (!InCombat() && !HasEffect(Buffs.HammerTime))
 					{
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && !Gauge.CreatureMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_AoE_Creatures) && ActionReady(OriginalHook(CreatureMotif))
+							&& !Gauge.CreatureMotifDrawn)
 						{
 							return OriginalHook(CreatureMotif);
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Hammer) && !Gauge.WeaponMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_AoE_Hammer) && ActionReady(OriginalHook(WeaponMotif))
+							&& !Gauge.WeaponMotifDrawn)
 						{
 							return OriginalHook(WeaponMotif);
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && !Gauge.LandscapeMotifDrawn)
+						if (IsEnabled(CustomComboPreset.PCT_AoE_Landscape) && ActionReady(OriginalHook(LandscapeMotif))
+							&& !Gauge.LandscapeMotifDrawn)
 						{
 							return OriginalHook(LandscapeMotif);
 						}

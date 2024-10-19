@@ -4,15 +4,15 @@ using Dalamud.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
 using ImGuiNET;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Core;
 using UltimateCombo.Window.Tabs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 
 namespace UltimateCombo.Window
 {

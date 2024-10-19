@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -49,11 +50,6 @@ namespace UltimateCombo.Combos.PvE
 			Recitation = 16542,
 			ChainStratagem = 7436,
 			DeploymentTactics = 3585;
-
-		internal static readonly List<uint>
-			BroilList = [Ruin, Broil, Broil2, Broil3, Broil4],
-			AetherflowList = [EnergyDrain, Lustrate, SacredSoil, Indomitability, Excogitation],
-			FairyList = [WhisperingDawn, FeyBlessing, FeyIllumination, Dissipation, Aetherpact];
 
 		internal static class Buffs
 		{
@@ -104,7 +100,7 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
 							{
@@ -112,19 +108,12 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
 							&& Gauge.SeraphTimer < 5000)
 							{
 								return OriginalHook(SummonSeraph);
-							}
-
-							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
-								&& HasPetPresent() && Gauge.Aetherflow == 0
-								&& Gauge.SeraphTimer == 0)
-							{
-								return Dissipation;
 							}
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
@@ -142,8 +131,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
 							{
-								if (((GetCooldownRemainingTime(Aetherflow) <= 10f || GetCooldownRemainingTime(Dissipation) <= 10f)
-								&& !HasEffect(Buffs.Dissipation)) || TargetHasEffect(Debuffs.ChainStratagem))
+								if (GetCooldownRemainingTime(Aetherflow) <= 10f || TargetHasEffect(Debuffs.ChainStratagem))
 								{
 									return EnergyDrain;
 								}
@@ -157,7 +145,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
-						&& ActionWatching.NumberOfGcdsUsed >= 1
+						&& (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 						&& (!TargetHasEffect(BioList[OriginalHook(Biolysis)])
 						|| GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
@@ -173,6 +161,7 @@ namespace UltimateCombo.Combos.PvE
 
 					return OriginalHook(Ruin);
 				}
+
 				return actionID;
 			}
 		}
@@ -206,8 +195,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
 						{
-							if (((GetCooldownRemainingTime(Aetherflow) <= 10f || GetCooldownRemainingTime(Dissipation) <= 10f)
-								&& !HasEffect(Buffs.Dissipation)) || TargetHasEffect(Debuffs.ChainStratagem))
+							if (GetCooldownRemainingTime(Aetherflow) <= 10f || TargetHasEffect(Debuffs.ChainStratagem))
 							{
 								return EnergyDrain;
 							}
@@ -220,6 +208,25 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					return OriginalHook(ArtOfWar);
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_ST_Heals : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ST_Heals;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Physick or Adloquium) && IsEnabled(CustomComboPreset.SCH_ST_Heals))
+				{
+					if (ActionReady(Adloquium))
+					{
+						return Adloquium;
+					}
+
+					return Physick;
 				}
 
 				return actionID;

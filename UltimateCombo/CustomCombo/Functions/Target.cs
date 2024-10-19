@@ -215,82 +215,12 @@ namespace UltimateCombo.ComboHelper.Functions
 				out Lumina.Excel.GeneratedSheets.BNpcBase? bnpc) && !bnpc.Unknown10;
 		}
 
-		/// <summary> Attempts to target the given party member </summary>
-		/// <param name="target"></param>
-		protected static unsafe void TargetObject(TargetType target)
-		{
-			StructsObject.GameObject* t = GetTarget(target);
-			if (t == null)
-			{
-				return;
-			}
-
-			ulong o = PartyTargetingService.GetObjectID(t);
-			IGameObject? p = Service.ObjectTable.Where(x => x.GameObjectId == o).First();
-
-			if (IsInRange(p))
-			{
-				SetTarget(p);
-			}
-		}
-
 		public static void TargetObject(IGameObject? target)
 		{
 			if (IsInRange(target))
 			{
 				SetTarget(target);
 			}
-		}
-
-		public static unsafe StructsObject.GameObject* GetTarget(TargetType target)
-		{
-			IGameObject? o = null;
-
-			switch (target)
-			{
-				case TargetType.Target:
-					o = Service.TargetManager.Target;
-					break;
-				case TargetType.SoftTarget:
-					o = Service.TargetManager.SoftTarget;
-					break;
-				case TargetType.FocusTarget:
-					o = Service.TargetManager.FocusTarget;
-					break;
-				case TargetType.UITarget:
-					return PartyTargetingService.UITarget;
-				case TargetType.FieldTarget:
-					o = Service.TargetManager.MouseOverTarget;
-					break;
-				case TargetType.TargetsTarget when Service.TargetManager.Target is { TargetObjectId: not 0xE0000000 }:
-					o = Service.TargetManager.Target.TargetObject;
-					break;
-				case TargetType.Self:
-					o = Service.ClientState.LocalPlayer;
-					break;
-				case TargetType.LastTarget:
-					return PartyTargetingService.GetGameObjectFromPronounID(1006);
-				case TargetType.LastEnemy:
-					return PartyTargetingService.GetGameObjectFromPronounID(1084);
-				case TargetType.LastAttacker:
-					return PartyTargetingService.GetGameObjectFromPronounID(1008);
-				case TargetType.P2:
-					return PartyTargetingService.GetGameObjectFromPronounID(44);
-				case TargetType.P3:
-					return PartyTargetingService.GetGameObjectFromPronounID(45);
-				case TargetType.P4:
-					return PartyTargetingService.GetGameObjectFromPronounID(46);
-				case TargetType.P5:
-					return PartyTargetingService.GetGameObjectFromPronounID(47);
-				case TargetType.P6:
-					return PartyTargetingService.GetGameObjectFromPronounID(48);
-				case TargetType.P7:
-					return PartyTargetingService.GetGameObjectFromPronounID(49);
-				case TargetType.P8:
-					return PartyTargetingService.GetGameObjectFromPronounID(50);
-			}
-
-			return o != null ? (StructsObject.GameObject*)o.Address : null;
 		}
 
 		public enum TargetType

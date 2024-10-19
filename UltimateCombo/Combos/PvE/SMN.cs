@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -119,7 +120,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Ruin or Ruin2 or Ruin3) && IsEnabled(CustomComboPreset.SMN_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SMN_ST_Reminder) && !HasPetPresent())
+					if (IsEnabled(CustomComboPreset.SMN_ST_Reminder) && !HasPetPresent() && !InCombat())
 					{
 						return SummonCarbuncle;
 					}
@@ -129,7 +130,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Ruin);
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
 						{
@@ -144,12 +145,15 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain)
 							&& (ActionReady(EnergyDrain) || Gauge.AetherflowStacks > 0))
 						{
-							if (Gauge.AetherflowStacks > 0)
+							if (Gauge.AetherflowStacks > 0 && HasEffect(Buffs.SearingLight))
 							{
 								return OriginalHook(Necrotize);
 							}
 
-							return EnergyDrain;
+							if (ActionReady(EnergyDrain) && Gauge.AetherflowStacks == 0)
+							{
+								return EnergyDrain;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_ST_Astral) && ActionReady(OriginalHook(AstralFlow))
@@ -182,12 +186,19 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
+					if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin) && !LevelChecked(CrimsonCyclone)
+						&& Gauge.SummonTimerRemaining == 0)
+					{
+						return Ruin4;
+					}
+
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
 						{
 							return Ruin4;
 						}
+
 						return OriginalHook(AstralFlow);
 					}
 
@@ -238,7 +249,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Outburst or Tridisaster) && IsEnabled(CustomComboPreset.SMN_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SMN_AoE_Reminder) && !HasPetPresent())
+					if (IsEnabled(CustomComboPreset.SMN_AoE_Reminder) && !HasPetPresent() && !InCombat())
 					{
 						return SummonCarbuncle;
 					}
@@ -263,12 +274,15 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.SMN_AoE_EnergySiphon)
 							&& (ActionReady(EnergySiphon) || Gauge.AetherflowStacks > 0))
 						{
-							if (Gauge.AetherflowStacks > 0)
+							if (Gauge.AetherflowStacks > 0 && HasEffect(Buffs.SearingLight))
 							{
 								return OriginalHook(Painflare);
 							}
 
-							return EnergySiphon;
+							if (ActionReady(EnergySiphon) && Gauge.AetherflowStacks == 0)
+							{
+								return EnergySiphon;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Astral) && ActionReady(OriginalHook(AstralFlow))
@@ -301,12 +315,18 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
+					if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin) && !LevelChecked(CrimsonCyclone))
+					{
+						return Ruin4;
+					}
+
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
 						{
 							return Ruin4;
 						}
+
 						return OriginalHook(AstralFlow);
 					}
 

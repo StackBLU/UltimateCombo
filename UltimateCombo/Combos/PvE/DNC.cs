@@ -2,6 +2,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -113,7 +114,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep)
-						&& ActionWatching.NumberOfGcdsUsed >= 10)
+						&& (ActionWatching.NumberOfGcdsUsed >= 10 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
 						{

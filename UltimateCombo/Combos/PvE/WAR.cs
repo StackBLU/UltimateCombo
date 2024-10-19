@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -86,7 +87,8 @@ namespace UltimateCombo.Combos.PvE
 						return Tomahawk;
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate) && CanWeave(actionID)
+					if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate)
+						&& CanWeave(actionID) && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
 						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
 						&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
 					{
@@ -94,7 +96,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
-						&& ActionWatching.NumberOfGcdsUsed >= 4)
+						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 						{
@@ -113,10 +115,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_ST_FellCleave) && ActionReady(OriginalHook(FellCleave)) && ActionWatching.NumberOfGcdsUsed >= 2
+					if (IsEnabled(CustomComboPreset.WAR_ST_FellCleave) && ActionReady(OriginalHook(FellCleave))
+						&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						&& GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
 						&& (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)
-						|| Gauge.BeastGauge >= GetOptionValue(Config.WAR_FellCleaveGauge)))
+						|| (Gauge.BeastGauge >= GetOptionValue(Config.WAR_FellCleaveGauge)
+						&& (LevelChecked(InnerRelease)
+						|| ((HasEffect(Buffs.Berserk) || (!HasEffect(Buffs.Berserk)
+						&& !LevelChecked(InnerRelease))) && Gauge.BeastGauge >= 50)))))
 					{
 						return OriginalHook(FellCleave);
 					}
@@ -138,9 +144,10 @@ namespace UltimateCombo.Combos.PvE
 							return Maim;
 						}
 
-						if (lastComboMove is Maim && ActionReady(StormsPath) && IsEnabled(CustomComboPreset.WAR_ST_StormsEye) & ActionReady(StormsEye))
+						if (lastComboMove is Maim && ActionReady(StormsPath) && IsEnabled(CustomComboPreset.WAR_ST_StormsEye))
 						{
-							if (GetBuffRemainingTime(Buffs.SurgingTempest) <= GetOptionValue(Config.WAR_SurgingRefresh))
+							if (ActionReady(StormsEye)
+								&& GetBuffRemainingTime(Buffs.SurgingTempest) <= GetOptionValue(Config.WAR_SurgingRefresh))
 							{
 								return StormsEye;
 							}
@@ -171,8 +178,9 @@ namespace UltimateCombo.Combos.PvE
 						return Holmgang;
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_AoE_Infuriate) && ActionReady(Infuriate) && CanWeave(actionID)
-						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease) && HasEffect(Buffs.SurgingTempest)
+					if (IsEnabled(CustomComboPreset.WAR_AoE_Infuriate) && ActionReady(Infuriate)
+						&& CanWeave(actionID) && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
+						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
 						&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
 					{
 						return Infuriate;
@@ -203,9 +211,13 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_AoE_Decimate) && ActionReady(OriginalHook(Decimate)) && HasEffect(Buffs.SurgingTempest)
+					if (IsEnabled(CustomComboPreset.WAR_AoE_Decimate) && ActionReady(OriginalHook(Decimate))
+						&& GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
 						&& (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)
-						|| Gauge.BeastGauge >= GetOptionValue(Config.WAR_DecimateGauge)))
+						|| (Gauge.BeastGauge >= GetOptionValue(Config.WAR_DecimateGauge)
+						&& (LevelChecked(InnerRelease)
+						|| ((HasEffect(Buffs.Berserk) || (!HasEffect(Buffs.Berserk)
+						&& !LevelChecked(InnerRelease))) && Gauge.BeastGauge >= 50)))))
 					{
 						return OriginalHook(Decimate);
 					}
@@ -227,8 +239,10 @@ namespace UltimateCombo.Combos.PvE
 							return MythrilTempest;
 						}
 					}
+
 					return Overpower;
 				}
+
 				return actionID;
 			}
 		}

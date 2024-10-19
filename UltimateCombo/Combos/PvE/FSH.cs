@@ -5,7 +5,7 @@ namespace UltimateCombo.Combos.PvE
 {
 	internal static class FSH
 	{
-		public const byte JobID = 51;
+		public const byte JobID = 18;
 
 		internal const uint
 			AgelessWords = 215,

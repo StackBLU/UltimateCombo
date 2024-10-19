@@ -1,12 +1,12 @@
 using ECommons.DalamudServices;
 using Lumina.Excel.GeneratedSheets;
-using UltimateCombo.Combos.PvE;
-using UltimateCombo.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using UltimateCombo.Combos.PvE;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Attributes
 {
@@ -191,7 +191,6 @@ namespace UltimateCombo.Attributes
 				39 => "Reaper",
 				40 => "Sage",
 				99 => "Global",
-				FSH.JobID => "Fisher",
 				_ => "Unknown",
 			};
 		}

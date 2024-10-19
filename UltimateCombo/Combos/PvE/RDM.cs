@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -117,7 +118,7 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedRedoublement) || (WasLastWeaponskill(EnchantedRedoublement)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
 								&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
@@ -127,7 +128,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Fleche) && ActionReady(Fleche))
 							{
@@ -143,7 +144,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 4)
+						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && ActionReady(Embolden))
 							{
@@ -213,6 +214,7 @@ namespace UltimateCombo.Combos.PvE
 						&& !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && (Gauge.WhiteMana > 50 || Gauge.BlackMana > 50))
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(OriginalHook(EnchantedRiposte))
 						|| WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))))
@@ -314,7 +316,7 @@ namespace UltimateCombo.Combos.PvE
 							&& (!WasLastWeaponskill(EnchantedMoulinetTrois) || (WasLastWeaponskill(EnchantedMoulinetTrois)
 							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2)
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Embolden) && ActionReady(Embolden))
 							{
@@ -399,6 +401,7 @@ namespace UltimateCombo.Combos.PvE
 						&& !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && (Gauge.WhiteMana > 50 || Gauge.BlackMana > 50))
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetTrois))))

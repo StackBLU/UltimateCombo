@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -108,7 +109,7 @@ namespace UltimateCombo.Combos.PvE
 						return Harpe;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 3)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.RPR_ST_Shield) && ActionReady(ArcaneCrest))
 						{
@@ -158,7 +159,8 @@ namespace UltimateCombo.Combos.PvE
 						return ShadowOfDeath;
 					}
 
-					if (IsEnabled(CustomComboPreset.RPR_ST_Soulsow) && HasEffect(Buffs.Soulsow) && ActionWatching.NumberOfGcdsUsed > 2)
+					if (IsEnabled(CustomComboPreset.RPR_ST_Soulsow) && HasEffect(Buffs.Soulsow)
+						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return HarvestMoon;
 					}

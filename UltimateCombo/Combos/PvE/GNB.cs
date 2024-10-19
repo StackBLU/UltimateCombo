@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -102,7 +103,7 @@ namespace UltimateCombo.Combos.PvE
 						return LightningShot;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 1)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (ActionReady(Continuation)
 							&& (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)
@@ -117,7 +118,7 @@ namespace UltimateCombo.Combos.PvE
 							return Bloodfest;
 						}
 
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
 							{
@@ -143,7 +144,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0
-						&& Gauge.AmmoComboStep == 0)
+						&& Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return OriginalHook(GnashingFang);
 					}

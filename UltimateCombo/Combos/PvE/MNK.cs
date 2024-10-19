@@ -4,6 +4,7 @@ using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -91,16 +92,17 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(ForbiddenMeditation);
 					}
 
-					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist) && Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange()
-						&& (!InCombat() || (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm)
-						&& !HasEffect(Buffs.CoeurlForm) && !HasEffect(Buffs.PerfectBalance))))
+					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist)
+						&& Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
+						&& (!InCombat()
+						|| (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm) && !HasEffect(Buffs.CoeurlForm))))
 					{
 						return FormShift;
 					}
 
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 3)
+						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.MNK_ST_Fire) && ActionReady(RiddleOfFire))
 							{
@@ -118,9 +120,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.MNK_ST_Meditation) && ActionReady(OriginalHook(SteelPeak))
-								&& Gauge.Chakra >= 5 && InCombat()
-								&& (!HasEffect(Buffs.Brotherhood) || GetBuffRemainingTime(Buffs.Brotherhood) < 2 || !LevelChecked(SixSidedStar)
-								|| !IsEnabled(CustomComboPreset.MNK_ST_SixStar)))
+								&& Gauge.Chakra >= 5 && InCombat())
 							{
 								return OriginalHook(SteelPeak);
 							}
@@ -145,12 +145,6 @@ namespace UltimateCombo.Combos.PvE
 						return WindsReply;
 					}
 
-					if (IsEnabled(CustomComboPreset.MNK_ST_SixStar) && ActionReady(SixSidedStar) && HasEffect(Buffs.Brotherhood) & Gauge.Chakra == 10
-						&& !HasEffect(Buffs.PerfectBalance))
-					{
-						return SixSidedStar;
-					}
-
 					if (IsEnabled(CustomComboPreset.MNK_ST_Blitz) && ActionReady(OriginalHook(MasterfulBlitz)) && !Gauge.BeastChakra.Contains(BeastChakra.NONE))
 					{
 						return OriginalHook(MasterfulBlitz);
@@ -158,7 +152,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.PerfectBalance))
 					{
-						if (Gauge.Nadi is Nadi.SOLAR && Gauge.Nadi is Nadi.LUNAR)
+						if (Gauge.Nadi.HasFlag(Nadi.SOLAR) && Gauge.Nadi.HasFlag(Nadi.LUNAR))
 						{
 							if (ActionReady(OriginalHook(Bootshine)) && Gauge.OpoOpoFury >= 1)
 							{
@@ -171,7 +165,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.Nadi is not Nadi.SOLAR)
+						if (!Gauge.Nadi.HasFlag(Nadi.SOLAR))
 						{
 							if (!Gauge.BeastChakra.Contains(BeastChakra.OPOOPO))
 							{
@@ -213,7 +207,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.Nadi is not Nadi.LUNAR)
+						if (!Gauge.Nadi.HasFlag(Nadi.LUNAR))
 						{
 							if (ActionReady(OriginalHook(Bootshine)) && Gauge.OpoOpoFury >= 1)
 							{
@@ -263,6 +257,7 @@ namespace UltimateCombo.Combos.PvE
 						return DragonKick;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -280,9 +275,10 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(InspiritedMeditation);
 					}
 
-					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist) && Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange()
-						&& (!InCombat() || (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm)
-						&& !HasEffect(Buffs.CoeurlForm) && !HasEffect(Buffs.PerfectBalance))))
+					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist)
+						&& Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
+						&& (!InCombat()
+						|| (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm) && !HasEffect(Buffs.CoeurlForm))))
 					{
 						return FormShift;
 					}
@@ -312,7 +308,8 @@ namespace UltimateCombo.Combos.PvE
 							return PerfectBalance;
 						}
 
-						if (IsEnabled(CustomComboPreset.MNK_AoE_Meditation) && ActionReady(OriginalHook(HowlingFist)) && Gauge.Chakra >= 5 && InCombat())
+						if (IsEnabled(CustomComboPreset.MNK_AoE_Meditation) && ActionReady(OriginalHook(HowlingFist))
+							&& Gauge.Chakra >= 5 && InCombat())
 						{
 							return OriginalHook(HowlingFist);
 						}
@@ -335,7 +332,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.PerfectBalance))
 					{
-						if (Gauge.Nadi is Nadi.SOLAR && Gauge.Nadi is Nadi.LUNAR)
+						if (Gauge.Nadi.HasFlag(Nadi.SOLAR) && Gauge.Nadi.HasFlag(Nadi.LUNAR))
 						{
 							if (ActionReady(OriginalHook(ArmOfTheDestroyer)))
 							{
@@ -343,7 +340,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.Nadi is not Nadi.SOLAR)
+						if (!Gauge.Nadi.HasFlag(Nadi.SOLAR))
 						{
 							if (!Gauge.BeastChakra.Contains(BeastChakra.OPOOPO))
 							{
@@ -370,7 +367,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (Gauge.Nadi is not Nadi.LUNAR)
+						if (!Gauge.Nadi.HasFlag(Nadi.LUNAR))
 						{
 							if (ActionReady(OriginalHook(ArmOfTheDestroyer)))
 							{
@@ -394,6 +391,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(ArmOfTheDestroyer);
 					}
 				}
+
 				return actionID;
 			}
 		}

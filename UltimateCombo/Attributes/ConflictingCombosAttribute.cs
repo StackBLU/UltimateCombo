@@ -1,5 +1,5 @@
-﻿using UltimateCombo.Combos;
-using System;
+﻿using System;
+using UltimateCombo.Combos;
 
 namespace UltimateCombo.Attributes
 {

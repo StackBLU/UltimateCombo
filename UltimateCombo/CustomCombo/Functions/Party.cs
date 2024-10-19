@@ -1,7 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Plugin.Services;
+﻿using Dalamud.Plugin.Services;
 using UltimateCombo.Services;
-using System.Linq;
 
 namespace UltimateCombo.ComboHelper.Functions
 {
@@ -18,34 +16,6 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static IPartyList GetPartyMembers()
 		{
 			return Service.PartyList;
-		}
-
-		public static unsafe IGameObject? GetPartySlot(int slot)
-		{
-			try
-			{
-				FFXIVClientStructs.FFXIV.Client.Game.Object.GameObject* o = slot switch
-				{
-					1 => GetTarget(TargetType.Self),
-					2 => GetTarget(TargetType.P2),
-					3 => GetTarget(TargetType.P3),
-					4 => GetTarget(TargetType.P4),
-					5 => GetTarget(TargetType.P5),
-					6 => GetTarget(TargetType.P6),
-					7 => GetTarget(TargetType.P7),
-					8 => GetTarget(TargetType.P8),
-					_ => GetTarget(TargetType.Self),
-				};
-				ulong i = PartyTargetingService.GetObjectID(o);
-				return Service.ObjectTable.Where(x => x.GameObjectId == i).Any()
-					? Service.ObjectTable.Where(x => x.GameObjectId == i).First()
-					: null;
-			}
-
-			catch
-			{
-				return null;
-			}
 		}
 	}
 }
