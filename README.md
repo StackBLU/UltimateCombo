@@ -1,10 +1,17 @@
-<p align="center"><br>
+<p align="center">
 	<a href="https://github.com/StackBLU/UltimateCombo">
 	<img align="center" src="/images/logoWide.png" width="800px"</img>
 	</a>
 </p>
+<p align="center">
+	What does it do? This!
+</p>
+<p align="center">
+	<img align="center" src="/images/g_blm.gif"</img>
+	<img align="center" src="/images/g_nin.gif"</img>
+	<img align="center" src="/images/g_gnb.gif"</img>
+</p>
 <br>
-
 <p align="center"> 
   <a href="https://discord.gg/yPxwkdqhHs" alt="Discord">
     <img src="https://img.shields.io/discord/1277684496509964403?style=for-the-badge&logo=Discord&logoColor=ffffff&label=&logoSize=auto&color=5865F2" /></a>
