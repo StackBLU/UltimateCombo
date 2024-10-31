@@ -122,7 +122,8 @@ namespace UltimateCombo.Combos.PvP
 								return HyoshoRanryu;
 							}
 
-							if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && !HasEffect(Debuffs.SealedForkedRaiju))
+							if (IsEnabled(CustomComboPreset.NINPvP_Raiju) && !HasEffect(Debuffs.SealedForkedRaiju)
+								&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience))
 							{
 								return ForkedRaiju;
 							}

@@ -89,6 +89,7 @@ namespace UltimateCombo.Combos.PvP
 
 							if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill))
 								&& OriginalHook(Drill) == AirAnchor && !WasLastWeaponskill(AirAnchor)
+								&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience)
 								&& (ActionReady(Analysis) || HasEffect(Buffs.Analysis)))
 							{
 								if (!HasEffect(Buffs.Analysis))

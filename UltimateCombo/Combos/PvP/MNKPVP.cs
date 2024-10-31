@@ -60,7 +60,8 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.MNKPvP_SixSidedStar) && ActionReady(SixSidedStar) && lastComboMove is TwinSnakes)
+							if (IsEnabled(CustomComboPreset.MNKPvP_SixSidedStar) && ActionReady(SixSidedStar) && lastComboMove is TwinSnakes
+								&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience))
 							{
 								return SixSidedStar;
 							}

@@ -135,14 +135,6 @@ namespace UltimateCombo.Combos.PvE
 								return MeikyoShisui;
 							}
 
-							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
-								&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
-								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
-								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
-							{
-								return Hagakure;
-							}
-
 							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && HasEffect(Buffs.Zanshin))
 							{
 								return Zanshin;
@@ -165,6 +157,14 @@ namespace UltimateCombo.Combos.PvE
 								|| (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
 							{
 								return Shinten;
+							}
+
+							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
+								&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
+								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
+								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
+							{
+								return Hagakure;
 							}
 						}
 					}
@@ -218,6 +218,11 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return Yukikaze;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.SAM_ST_Enpi) && ActionReady(Enpi) && OutOfMeleeRange())
+					{
+						return Enpi;
 					}
 
 					if (comboTime > 0)
@@ -274,13 +279,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Hagakure)
-							&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
-							&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU)))
-						{
-							return Hagakure;
-						}
-
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
 						{
 							return Ikishoten;
@@ -319,6 +317,13 @@ namespace UltimateCombo.Combos.PvE
 							|| (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
 						{
 							return Kyuten;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Hagakure)
+							&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
+							&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU)))
+						{
+							return Hagakure;
 						}
 					}
 

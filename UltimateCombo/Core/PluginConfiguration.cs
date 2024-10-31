@@ -29,7 +29,7 @@ namespace UltimateCombo.Core
 
 		public bool DisableTripleWeaving { get; set; } = false;
 
-		public double MeleeOffset { get; set; } = 0;
+		public double RangedAttackRange { get; set; } = 7;
 
 		public Vector4 TargetHighlightColor { get; set; } = new() { W = 1, X = 0.5f, Y = 0.5f, Z = 0.5f };
 

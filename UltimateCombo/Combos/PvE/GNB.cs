@@ -180,6 +180,11 @@ namespace UltimateCombo.Combos.PvE
 						return BurstStrike;
 					}
 
+					if (IsEnabled(CustomComboPreset.GNB_ST_LightningShot) && ActionReady(LightningShot) && OutOfMeleeRange())
+					{
+						return LightningShot;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is KeenEdge && ActionReady(BrutalShell))

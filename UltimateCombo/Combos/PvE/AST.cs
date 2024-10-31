@@ -145,7 +145,7 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
 								&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-								&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving))
+								&& GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed))
 							{
 								return Lightspeed;
 							}
@@ -155,6 +155,11 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
 							{
+								if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
+								{
+									return Lightspeed;
+								}
+
 								return Divination;
 							}
 
@@ -255,14 +260,14 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed)
 							&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-							&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) || IsMoving))
+							&& GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed))
 						{
 							return Lightspeed;
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && ActionReady(Divination))
 						{
-							if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
+							if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 							{
 								return Lightspeed;
 							}

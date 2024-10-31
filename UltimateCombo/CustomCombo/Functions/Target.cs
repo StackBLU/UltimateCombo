@@ -65,7 +65,21 @@ namespace UltimateCombo.ComboHelper.Functions
 
 			float distance = GetTargetDistance();
 
-			return distance <= 3 + Service.Configuration.MeleeOffset;
+			return distance <= 3;
+		}
+
+		/// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
+		/// <returns> Bool indicating whether you are in melee range. </returns>
+		public static bool OutOfMeleeRange()
+		{
+			if (LocalPlayer.TargetObject == null)
+			{
+				return false;
+			}
+
+			float distance = GetTargetDistance();
+
+			return distance > Service.Configuration.RangedAttackRange;
 		}
 
 		/// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>

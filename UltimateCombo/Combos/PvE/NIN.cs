@@ -17,7 +17,7 @@ namespace UltimateCombo.Combos.PvE
 			GustSlash = 2242,
 			Hide = 2245,
 			Assassinate = 2246,
-			ThrowingDaggers = 2247,
+			ThrowingDagger = 2247,
 			Mug = 2248,
 			DeathBlossom = 2254,
 			AeolianEdge = 2255,
@@ -315,6 +315,11 @@ namespace UltimateCombo.Combos.PvE
 					if (IsEnabled(CustomComboPreset.NIN_ST_Raiju) && HasEffect(Buffs.RaijuReady))
 					{
 						return FleetingRaiju;
+					}
+
+					if (IsEnabled(CustomComboPreset.NIN_ST_ThrowingDagger) && ActionReady(ThrowingDagger) && OutOfMeleeRange())
+					{
+						return ThrowingDagger;
 					}
 
 					if (comboTime > 0)

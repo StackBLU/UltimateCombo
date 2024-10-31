@@ -163,13 +163,17 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Dosis);
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3)) && ActionReady(OriginalHook(Phlegma3))
+					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma)
+						&& InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
+						&& (ActionReady(Psyche) || !LevelChecked(Psyche)
+						|| WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50)
 						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
-						return OriginalHook(Phlegma3);
+						return OriginalHook(Phlegma);
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon) && Gauge.Addersting > 0)
+					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon) && Gauge.Addersting > 0
+						&& !HasEffect(All.Buffs.Swiftcast))
 					{
 						return OriginalHook(Toxikon);
 					}
@@ -233,10 +237,12 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(EukrasianDyskrasia);
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma3))
-						&& ActionReady(OriginalHook(Phlegma3)))
+					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma)
+						&& InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
+						&& (ActionReady(Psyche) || !LevelChecked(Psyche)
+						|| WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50))
 					{
-						return OriginalHook(Phlegma3);
+						return OriginalHook(Phlegma);
 					}
 
 					return OriginalHook(Dyskrasia);

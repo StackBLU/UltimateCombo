@@ -79,12 +79,14 @@ namespace UltimateCombo.Combos.PvE
 				All_Healer_Lucid = new("All_Healer_Lucid", 7500),
 				All_Mage_Lucid = new("All_Mage_Lucid", 7500),
 				All_BLU_Lucid = new("All_BLU_Lucid", 7500),
-				All_Choco = new("All_Choco", 35),
+				All_ChocoHP = new("All_ChocoHP", 75),
+				All_ChocoMode = new("All_ChocoMode", 1),
 				All_Variant_Cure = new("All_Variant_Cure", 50);
 
 			public static UserBool
 				All_BLM_Lucid = new("All_BLM_Lucid", false),
-				All_SwiftRaise = new("All_SwiftRaise", false);
+				All_SwiftRaise = new("All_SwiftRaise", false),
+				All_ChocoAuto = new("All_ChocoAuto", false);
 		}
 
 		internal class All_Tank_Reprisal : CustomComboClass
@@ -478,21 +480,46 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override unsafe uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
+				//5 is Tank Mode
 				//6 is Attack Mode
 				//7 is Healing Mode
 
 				if (IsEnabled(CustomComboPreset.All_Choco) && HasCompanionPresent())
 				{
-					if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7 && !ActionQueued()
-						&& PlayerHealthPercentageHp() < GetOptionValue(Config.All_Choco))
+					if (Config.All_ChocoAuto)
 					{
-						_ = UseAction(ActionType.BuddyAction, 7);
+						if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6 && !ActionQueued()
+							&& PlayerHealthPercentageHp() >= GetOptionValue(Config.All_ChocoHP))
+						{
+							_ = UseAction(ActionType.BuddyAction, 6);
+						}
+
+						if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7 && !ActionQueued()
+							&& PlayerHealthPercentageHp() < GetOptionValue(Config.All_ChocoHP))
+						{
+							_ = UseAction(ActionType.BuddyAction, 7);
+						}
 					}
 
-					if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6 && !ActionQueued()
-						&& PlayerHealthPercentageHp() >= GetOptionValue(Config.All_Choco))
+					if (!Config.All_ChocoAuto)
 					{
-						_ = UseAction(ActionType.BuddyAction, 6);
+						if (Config.All_ChocoMode == 1 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6
+							 && !ActionQueued())
+						{
+							_ = UseAction(ActionType.BuddyAction, 6);
+						}
+
+						if (Config.All_ChocoMode == 2 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7
+							 && !ActionQueued())
+						{
+							_ = UseAction(ActionType.BuddyAction, 7);
+						}
+
+						if (Config.All_ChocoMode == 3 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 5
+							 && !ActionQueued())
+						{
+							_ = UseAction(ActionType.BuddyAction, 5);
+						}
 					}
 				}
 

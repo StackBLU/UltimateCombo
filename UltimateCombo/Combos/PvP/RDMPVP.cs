@@ -109,7 +109,8 @@ namespace UltimateCombo.Combos.PvP
 								}
 
 								if (IsEnabled(CustomComboPreset.RDMPvP_Resolution) && ActionReady(OriginalHook(Resolution))
-									&& GetLimitBreakCurrentValue() <= GetLimitBreakMaxValue() - 500)
+									&& GetLimitBreakCurrentValue() <= GetLimitBreakMaxValue() - 500
+									&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience))
 								{
 									return OriginalHook(Resolution);
 								}

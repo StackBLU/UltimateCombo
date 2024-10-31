@@ -137,6 +137,11 @@ namespace UltimateCombo.Combos.PvE
 						return PrimalRend;
 					}
 
+					if (IsEnabled(CustomComboPreset.WAR_ST_Tomahawk) && ActionReady(Tomahawk) && OutOfMeleeRange())
+					{
+						return Tomahawk;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is HeavySwing && ActionReady(Maim))

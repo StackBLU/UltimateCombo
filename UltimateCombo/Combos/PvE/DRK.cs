@@ -164,6 +164,11 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Bloodspiller);
 					}
 
+					if (IsEnabled(CustomComboPreset.DRK_ST_Unmend) && ActionReady(Unmend) && OutOfMeleeRange())
+					{
+						return Unmend;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is HardSlash && ActionReady(SyphonStrike))

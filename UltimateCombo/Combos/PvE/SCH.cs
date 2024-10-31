@@ -47,6 +47,7 @@ namespace UltimateCombo.Combos.PvE
 			FeyBlessing = 16543,
 
 			Aetherflow = 166,
+			Protraction = 25867,
 			Recitation = 16542,
 			ChainStratagem = 7436,
 			DeploymentTactics = 3585;
@@ -245,7 +246,83 @@ namespace UltimateCombo.Combos.PvE
 						return Excogitation;
 					}
 
-					return Lustrate;
+					if (ActionReady(Lustrate) && Gauge.Aetherflow > 0)
+					{
+						return Lustrate;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_DissipationDrain : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DissipationDrain;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Dissipation or EnergyDrain or Aetherflow) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
+				{
+					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
+					{
+						return EnergyDrain;
+					}
+
+					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation)))
+					{
+						return Dissipation;
+					}
+
+					return Aetherflow;
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_SeraphBlessing : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_SeraphBlessing;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is FeyBlessing or SummonSeraph or Consolation) && IsEnabled(CustomComboPreset.SCH_SeraphBlessing))
+				{
+					if (ActionReady(FeyBlessing) && IsEnabled(FeyBlessing))
+					{
+						return FeyBlessing;
+					}
+
+					if (ActionReady(SummonSeraph))
+					{
+						return SummonSeraph;
+					}
+
+					if (ActionReady(Consolation) && IsEnabled(Consolation))
+					{
+						return Consolation;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_ProRecitation : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ProRecitation;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Protraction or Recitation) && IsEnabled(CustomComboPreset.SCH_ProRecitation))
+				{
+					if (ActionReady(Recitation))
+					{
+						return Recitation;
+					}
+
+					if (ActionReady(Protraction))
+					{
+						return Protraction;
+					}
 				}
 
 				return actionID;

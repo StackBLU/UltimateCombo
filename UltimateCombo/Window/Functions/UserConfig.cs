@@ -1201,7 +1201,19 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.All_Choco && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, All.Config.All_Choco, "HP % Threshold", 150, SliderIncrements.Fives);
+				UserConfig.DrawAdditionalBoolChoice(All.Config.All_ChocoAuto, "Automatically command Chocobo?", "");
+			}
+
+			if (preset is CustomComboPreset.All_Choco && enabled && !All.Config.All_ChocoAuto)
+			{
+				UserConfig.DrawRadioButton(All.Config.All_ChocoMode, "Attack Mode", "", 1);
+				UserConfig.DrawRadioButton(All.Config.All_ChocoMode, "Heal Mode", "", 2);
+				UserConfig.DrawRadioButton(All.Config.All_ChocoMode, "Tank Mode", "", 3);
+			}
+
+			if (preset is CustomComboPreset.All_Choco && enabled && All.Config.All_ChocoAuto)
+			{
+				UserConfig.DrawSliderInt(0, 100, All.Config.All_ChocoHP, "HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
 			#endregion

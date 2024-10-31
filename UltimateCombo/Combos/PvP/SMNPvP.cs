@@ -53,7 +53,8 @@ namespace UltimateCombo.Combos.PvP
 							}
 
 							if (IsEnabled(CustomComboPreset.SMNPvP_Mountain) && ActionReady(MountainBuster)
-								&& (WasLastSpell(CrimsonCyclone) || WasLastSpell(CrimsonStrike)))
+								&& (WasLastSpell(CrimsonCyclone) || WasLastSpell(CrimsonStrike))
+								&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience))
 							{
 								return MountainBuster;
 							}

@@ -221,6 +221,16 @@ namespace UltimateCombo.Combos.PvE
 						return Vicewinder;
 					}
 
+					if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledSnap) && ActionReady(WrithingSnap) && OutOfMeleeRange())
+					{
+						if (ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0)
+						{
+							return UncoiledFury;
+						}
+
+						return WrithingSnap;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is SteelFangs or ReavingFangs)

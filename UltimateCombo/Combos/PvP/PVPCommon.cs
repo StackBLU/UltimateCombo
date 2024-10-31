@@ -230,7 +230,8 @@ namespace UltimateCombo.Combos.PvP
 					|| (HasEffectAny(Debuffs.HalfAsleep) && selectedStatuses[2])
 					|| (HasEffectAny(Debuffs.Sleep) && selectedStatuses[3])
 					|| (HasEffectAny(Debuffs.Bind) && selectedStatuses[4])
-					|| (HasEffectAny(Debuffs.Heavy) && selectedStatuses[5]) || (HasEffectAny(Debuffs.Silence) && selectedStatuses[6]));
+					|| (HasEffectAny(Debuffs.Heavy) && selectedStatuses[5])
+					|| (HasEffectAny(Debuffs.Silence) && selectedStatuses[6]));
 			}
 		}
 	}

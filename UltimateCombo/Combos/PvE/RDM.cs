@@ -122,7 +122,10 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
 								&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
-								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
+								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden)
+								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
+								&& !WasLastSpell(Resolution) && !WasLastWeaponskill(EnchantedRiposte)
+								&& !WasLastWeaponskill(EnchantedZwerchhau) && !WasLastWeaponskill(EnchantedRedoublement))
 							{
 								return All.Swiftcast;
 							}
@@ -138,7 +141,10 @@ namespace UltimateCombo.Combos.PvE
 							if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && ActionReady(Acceleration)
 								&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && Gauge.ManaStacks == 0
 								&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
-								&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15))
+								&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15)
+								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
+								&& !WasLastSpell(Resolution) && !WasLastWeaponskill(EnchantedRiposte)
+								&& !WasLastWeaponskill(EnchantedZwerchhau) && !WasLastWeaponskill(EnchantedRedoublement))
 							{
 								return Acceleration;
 							}

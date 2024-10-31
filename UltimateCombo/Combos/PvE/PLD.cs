@@ -190,6 +190,11 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.PLD_ST_ShieldLob) && ActionReady(ShieldLob) && OutOfMeleeRange())
+					{
+						return ShieldLob;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboActionID is FastBlade && ActionReady(RiotBlade))

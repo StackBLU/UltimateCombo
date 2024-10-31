@@ -211,6 +211,12 @@ namespace UltimateCombo.Combos.PvE
 						return SoulSlice;
 					}
 
+					if (IsEnabled(CustomComboPreset.RPR_ST_Harpe) && ActionReady(Harpe) && OutOfMeleeRange()
+						&& HasEffect(Buffs.EnhancedHarpe))
+					{
+						return Harpe;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is WaxingSlice && ActionReady(InfernalSlice))

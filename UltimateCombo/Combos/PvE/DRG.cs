@@ -166,6 +166,11 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.DRG_ST_PiercingTalon) && ActionReady(PiercingTalon) && OutOfMeleeRange())
+					{
+						return PiercingTalon;
+					}
+
 					if (comboTime > 0)
 					{
 						if (lastComboMove is TrueThrust or RaidenThrust)

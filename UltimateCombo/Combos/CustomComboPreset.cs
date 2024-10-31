@@ -20,6 +20,10 @@ namespace UltimateCombo.Combos
 		PLD_ST_DPS = 11000,
 
 		[ParentCombo(PLD_ST_DPS)]
+		[CustomComboInfo("Shield Lob", "", PLD.JobID)]
+		PLD_ST_ShieldLob = 11012,
+
+		[ParentCombo(PLD_ST_DPS)]
 		[CustomComboInfo("Fight or Flight > Goring Blade", "", PLD.JobID)]
 		PLD_ST_FightOrFlight = 11001,
 
@@ -136,6 +140,10 @@ namespace UltimateCombo.Combos
 		WAR_ST_DPS = 18000,
 
 		[ParentCombo(WAR_ST_DPS)]
+		[CustomComboInfo("Tomahawk", "", WAR.JobID)]
+		WAR_ST_Tomahawk = 18009,
+
+		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Storm's Eye", "", WAR.JobID)]
 		WAR_ST_StormsEye = 18001,
 
@@ -222,6 +230,10 @@ namespace UltimateCombo.Combos
 		DRK_ST_DPS = 5000,
 
 		[ParentCombo(DRK_ST_DPS)]
+		[CustomComboInfo("Unmend", "", DRK.JobID)]
+		DRK_ST_Unmend = 5011,
+
+		[ParentCombo(DRK_ST_DPS)]
 		[CustomComboInfo("Edge of Darkness / Edge of Shadow", "", DRK.JobID)]
 		DRK_ST_Edge = 5001,
 
@@ -259,7 +271,7 @@ namespace UltimateCombo.Combos
 
 		[ParentCombo(DRK_ST_DPS)]
 		[CustomComboInfo("Living Dead", "", DRK.JobID)]
-		DRK_ST_Invuln = 50010,
+		DRK_ST_Invuln = 5010,
 
 		#endregion
 
@@ -330,6 +342,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(GNB.KeenEdge, GNB.BrutalShell, GNB.SolidBarrel)]
 		[CustomComboInfo("Single Target DPS", "", GNB.JobID)]
 		GNB_ST_DPS = 7000,
+
+		[ParentCombo(GNB_ST_DPS)]
+		[CustomComboInfo("Lightning Shot", "", GNB.JobID)]
+		GNB_ST_LightningShot = 7010,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("No Mercy > Sonic Break", "", GNB.JobID)]
@@ -637,9 +653,21 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(SCH.Lustrate)]
+		[ReplaceSkill(SCH.Lustrate, SCH.Excogitation)]
 		[CustomComboInfo("Lustrate > Excogitation", "", SCH.JobID)]
 		SCH_Lustrate = 16041,
+
+		[ReplaceSkill(SCH.EnergyDrain, SCH.Dissipation)]
+		[CustomComboInfo("Energy Drain & Dissipation", "", SCH.JobID)]
+		SCH_DissipationDrain = 16042,
+
+		[ReplaceSkill(SCH.FeyBlessing, SCH.SummonSeraph, SCH.Consolation)]
+		[CustomComboInfo("Fey Blessing > Summon Seraph > Consolation", "", SCH.JobID)]
+		SCH_SeraphBlessing = 16043,
+
+		[ReplaceSkill(SCH.Recitation, SCH.Protraction)]
+		[CustomComboInfo("Recitation & Protraction", "", SCH.JobID)]
+		SCH_ProRecitation = 16044,
 
 		#endregion
 
@@ -993,6 +1021,10 @@ namespace UltimateCombo.Combos
 		DRG_ST_DPS = 6000,
 
 		[ParentCombo(DRG_ST_DPS)]
+		[CustomComboInfo("Piercing Talon", "", DRG.JobID)]
+		DRG_ST_PiercingTalon = 6009,
+
+		[ParentCombo(DRG_ST_DPS)]
 		[CustomComboInfo("Life Surge", "", DRG.JobID)]
 		DRG_ST_LifeSurge = 6001,
 
@@ -1081,6 +1113,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(NIN.SpinningEdge, NIN.GustSlash, NIN.AeolianEdge, NIN.ArmorCrush)]
 		[CustomComboInfo("Single Target DPS", "", NIN.JobID)]
 		NIN_ST_DPS = 10000,
+
+		[ParentCombo(NIN_ST_DPS)]
+		[CustomComboInfo("Throwing Dagger", "", NIN.JobID)]
+		NIN_ST_ThrowingDagger = 10011,
 
 		[ParentCombo(NIN_ST_DPS)]
 		[CustomComboInfo("Mudras", "", NIN.JobID)]
@@ -1189,6 +1225,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(SAM.Hakaze, SAM.Gyofu, SAM.Jinpu, SAM.Gekko, SAM.Shifu, SAM.Kasha, SAM.Yukikaze)]
 		[CustomComboInfo("Single Target DPS", "", SAM.JobID)]
 		SAM_ST_DPS = 15000,
+
+		[ParentCombo(SAM_ST_DPS)]
+		[CustomComboInfo("Enpi", "", SAM.JobID)]
+		SAM_ST_Enpi = 15012,
 
 		[ParentCombo(SAM_ST_DPS)]
 		[CustomComboInfo("Higanbana", "", SAM.JobID)]
@@ -1301,6 +1341,10 @@ namespace UltimateCombo.Combos
 		RPR_ST_DPS = 12000,
 
 		[ParentCombo(RPR_ST_DPS)]
+		[CustomComboInfo("Enhanced Harpe", "", RPR.JobID)]
+		RPR_ST_Harpe = 12011,
+
+		[ParentCombo(RPR_ST_DPS)]
 		[CustomComboInfo("Shadow of Death", "", RPR.JobID)]
 		RPR_ST_ShadowOfDeath = 12001,
 
@@ -1408,6 +1452,10 @@ namespace UltimateCombo.Combos
 			VPR.ReavingFangs, VPR.SwiftskinsSting, VPR.HindstingStrike, VPR.HindsbaneFang)]
 		[CustomComboInfo("Single Target DPS", "", VPR.JobID)]
 		VPR_ST_DPS = 30000,
+
+		[ParentCombo(VPR_ST_DPS)]
+		[CustomComboInfo("Writhing Snap & Uncoiled Fury", "", VPR.JobID)]
+		VPR_ST_UncoiledSnap = 30006,
 
 		[ParentCombo(VPR_ST_DPS)]
 		[CustomComboInfo("Serpent's Tail & Twinfang & Twinblood", "", VPR.JobID)]
@@ -2811,7 +2859,40 @@ namespace UltimateCombo.Combos
 
 		#region SAMURAI - 125000
 
+		[PvPCustomCombo]
+		[ReplaceSkill(SAMPvP.Yukikaze)]
+		[CustomComboInfo("Combo Mode", "", SAM.JobID)]
+		SAMPvP_Combo = 125000,
 
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Soten", "", SAM.JobID)]
+		SAMPvP_Soten = 125001,
+
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Chiten", "", SAM.JobID)]
+		SAMPvP_Chiten = 125002,
+
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Mineuchi", "", SAM.JobID)]
+		SAMPvP_Mineuchi = 125003,
+
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Meikyo Shisui > Midare Setsugekka", "", SAM.JobID)]
+		SAMPvP_Meikyo = 125004,
+
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Ogi Namikiri > Kaeshi: Namikiri", "", SAM.JobID)]
+		SAMPvP_Namikiri = 125005,
+
+		[PvPCustomCombo]
+		[ParentCombo(SAMPvP_Combo)]
+		[CustomComboInfo("Zantetsuken", "", SAM.JobID)]
+		SAMPvP_Zantetsuken = 125006,
 
 		#endregion
 

@@ -42,6 +42,15 @@ namespace UltimateCombo.Window.Tabs
 				Service.Configuration.Save();
 			}
 
+			ImGui.NextColumn();
+			double rangedAttackRange = Service.Configuration.RangedAttackRange;
+			ImGui.SetNextItemWidth(150);
+			if (ImGui.InputDouble("Minimum range away from target before using ranged attacks on melee classes", ref rangedAttackRange, 1))
+			{
+				Service.Configuration.RangedAttackRange = rangedAttackRange;
+				Service.Configuration.Save();
+			}
+
 			ImGui.EndChild();
 		}
 	}
