@@ -63,6 +63,25 @@ namespace UltimateCombo.ComboHelper.Functions
 			}
 		}
 
+		public static bool MaxActionRange(uint id)
+		{
+			int range = ActionWatching.GetActionRange(id);
+			switch (range)
+			{
+				case -2:
+					return false;
+				case -1:
+					return InMeleeRange();
+				case 0:
+					{
+						float radius = ActionWatching.GetActionEffectRange(id);
+						return radius <= 0 || (HasTarget() && GetTargetDistance() >= (radius - 2f));
+					}
+				default:
+					return GetTargetDistance() >= range - 2;
+			}
+		}
+
 		public static int GetTraitLevel(uint id)
 		{
 			return ActionWatching.GetTraitLevel(id);

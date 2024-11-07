@@ -109,13 +109,18 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dosis or Dosis2 or Dosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
 				{
+					if ((WasLastSpell(EukrasianPrognosis) || WasLastSpell(EukrasianPrognosis2)) && !InCombat())
+					{
+						ActionWatching.CombatActions.Clear();
+					}
+
 					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
 						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
-							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || !IsInParty()))
+							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || GetPartyMembers().Length == 0))
 						{
 							return Kardia;
 						}

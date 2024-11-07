@@ -46,7 +46,7 @@ namespace UltimateCombo.Combos.PvP
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && HasEffect(Buffs.LifeOfTheDragon)
-							&& GetBuffRemainingTime(Buffs.LifeOfTheDragon) < 2)
+							&& (GetBuffRemainingTime(Buffs.LifeOfTheDragon) < 2 || GetTargetHPPercent() <= 50))
 						{
 							return Nastrond;
 						}
@@ -65,12 +65,12 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.DRGPvP_Wyrmwind) && HasEffect(Buffs.FirstmindsFocus)
-							&& GetBuffRemainingTime(Buffs.FirstmindsFocus) < 3)
+							&& (GetBuffRemainingTime(Buffs.FirstmindsFocus) < 2 || MaxActionRange(WyrmwindThrust)))
 						{
 							return WyrmwindThrust;
 						}
 
-						if (IsEnabled(CustomComboPreset.DRGPvP_Chaotic) && ActionReady(ChaoticSpring) && PlayerHealthPercentageHp() <= 100)
+						if (IsEnabled(CustomComboPreset.DRGPvP_Chaotic) && ActionReady(ChaoticSpring) && PlayerHealthPercentageHp() <= 75)
 						{
 							return ChaoticSpring;
 						}

@@ -22,6 +22,7 @@ namespace UltimateCombo.Combos.PvE
 			Excogitation = 7434,
 			Consolation = 16546,
 			Resurrection = 173,
+			Concitation = 37013,
 
 			Bio = 17864,
 			Bio2 = 17865,
@@ -99,6 +100,12 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Ruin or Broil or Broil2 or Broil3 or Broil4) && IsEnabled(CustomComboPreset.SCH_ST_DPS))
 				{
+					if ((WasLastSpell(Succor) || WasLastSpell(Concitation) || WasLastSpell(Adloquium)
+						|| WasLastSpell(SummonEos)) && !InCombat())
+					{
+						ActionWatching.CombatActions.Clear();
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
@@ -263,7 +270,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Dissipation or EnergyDrain or Aetherflow) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
 				{
-					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
+					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0 && ActionReady(Dissipation))
 					{
 						return EnergyDrain;
 					}
@@ -273,7 +280,12 @@ namespace UltimateCombo.Combos.PvE
 						return Dissipation;
 					}
 
-					return Aetherflow;
+					if (LevelChecked(Dissipation))
+					{
+						return Aetherflow;
+					}
+
+					return OriginalHook(11);
 				}
 
 				return actionID;
@@ -287,19 +299,19 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is FeyBlessing or SummonSeraph or Consolation) && IsEnabled(CustomComboPreset.SCH_SeraphBlessing))
 				{
-					if (ActionReady(FeyBlessing) && IsEnabled(FeyBlessing))
+					if (ActionReady(FeyBlessing) && Gauge.SeraphTimer == 0)
 					{
 						return FeyBlessing;
+					}
+
+					if (ActionReady(Consolation) && Gauge.SeraphTimer > 0)
+					{
+						return Consolation;
 					}
 
 					if (ActionReady(SummonSeraph))
 					{
 						return SummonSeraph;
-					}
-
-					if (ActionReady(Consolation) && IsEnabled(Consolation))
-					{
-						return Consolation;
 					}
 				}
 

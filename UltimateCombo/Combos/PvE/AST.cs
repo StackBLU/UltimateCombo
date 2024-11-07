@@ -139,6 +139,11 @@ namespace UltimateCombo.Combos.PvE
 						return EarthlyStar;
 					}
 
+					if ((WasLastSpell(AspectedHelios) || WasLastSpell(HeliosConjuction)) && !InCombat())
+					{
+						ActionWatching.CombatActions.Clear();
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
@@ -351,7 +356,9 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Benefic1 or Benefic2) && IsEnabled(CustomComboPreset.AST_ST_Heals))
 				{
-					if (ActionReady(AspectedBenefic) && !TargetHasEffect(Buffs.AspectedBenefic) && !HasEffect(Buffs.AspectedBenefic))
+					if (ActionReady(AspectedBenefic)
+						&& ((HasFriendlyTarget() && !TargetHasEffect(Buffs.AspectedBenefic))
+						|| (!HasFriendlyTarget() && !HasEffect(Buffs.AspectedBenefic))))
 					{
 						return AspectedBenefic;
 					}

@@ -96,6 +96,11 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Stone1 or Stone2 or Stone3 or Stone4 or Glare1 or Glare3) && IsEnabled(CustomComboPreset.WHM_ST_DPS))
 				{
+					if ((WasLastSpell(Medica1) || WasLastSpell(Medica2) || WasLastSpell(Medica3)) && !InCombat())
+					{
+						ActionWatching.CombatActions.Clear();
+					}
+
 					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
@@ -232,7 +237,9 @@ namespace UltimateCombo.Combos.PvE
 						return AfflatusSolace;
 					}
 
-					if (!TargetHasEffect(Buffs.Regen) && ActionReady(Regen) && !HasEffect(Buffs.Regen))
+					if (ActionReady(Regen)
+						&& ((HasFriendlyTarget() && !TargetHasEffect(Buffs.Regen))
+						|| (!HasFriendlyTarget() && !HasEffect(Buffs.Regen))))
 					{
 						return Regen;
 					}

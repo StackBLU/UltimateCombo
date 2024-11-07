@@ -219,7 +219,12 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (!HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
 						{
-							return OriginalHook(RDM.Jolt);
+							if (InCombat())
+							{
+								return OriginalHook(RDM.Jolt);
+							}
+
+							return RDM.Vercure;
 						}
 
 						return RDM.Verraise;

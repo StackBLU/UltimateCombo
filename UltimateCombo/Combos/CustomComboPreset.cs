@@ -2319,10 +2319,9 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ConflictingCombos(BLU_Treasure_Tank)]
 		[BlueInactive(BLU.GoblinPunch, BLU.MightyGuard, BLU.ToadOil, BLU.Devour, BLU.PeatPelt, BLU.DeepClean)]
 		[ReplaceSkill(BLU.GoblinPunch)]
-		[CustomComboInfo("Tank Combo", "Mighty Guard, Toad Oil, and Devour Checks, then Peculiar Light, Peat Pelt, and Deep Clean", BLU.JobID)]
+		[CustomComboInfo("Tank Combo (Doesn't work while solo)", "Mighty Guard, Toad Oil, and Devour Checks, then Peculiar Light, Peat Pelt, and Deep Clean", BLU.JobID)]
 		BLU_Tanking = 70030,
 
 		[BlueInactive(BLU.GoblinPunch, BLU.BloodDrain, BLU.ChocoMeteor)]
@@ -2411,7 +2410,6 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Basic Instinct", "", BLU.JobID)]
 		BLU_Treasure_Tank_BasicInstinct = 70062,
 
-		[ConflictingCombos(BLU_Tanking)]
 		[ParentCombo(BLU_Treasure_Tank)]
 		[CustomComboInfo("Mighty Guard", "", BLU.JobID)]
 		BLU_Treasure_Tank_MightyGuard = 70063,
@@ -3157,39 +3155,34 @@ namespace UltimateCombo.Combos
 		FSH_CastGig = 51003,
 
 		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.SurfaceSlap, FSH.VeteranTrade)]
-		[CustomComboInfo("Surface Slap to Veteran Trade", "", FSH.JobID)]
-		FSH_SurfaceTrade = 51004,
+		[ReplaceSkill(FSH.Chum, FSH.BaitedBreath)]
+		[CustomComboInfo("Chum to Baited Breath", "", FSH.JobID)]
+		FSH_Chum_BaitedBreath = 51004,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.PrecisionHookset, FSH.VitalSight)]
+		[CustomComboInfo("Precision Hookset to Vital Sight", "", FSH.JobID)]
+		FSH_PrecisionSight = 51005,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.PowerfulHookset, FSH.ElectricCurrent)]
+		[CustomComboInfo("Powerful Hookset to Electric Current", "", FSH.JobID)]
+		FSH_PowerfulCurrent = 51006,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.Mooch, FSH.MoochII, FSH.SharkEye, FSH.SharkEyeII)]
+		[CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
+		FSH_MoochEye = 51007,
 
 		[ParentCombo(FSH_FishingToSpearfishing)]
 		[ReplaceSkill(FSH.PrizeCatch, FSH.NaturesBounty)]
 		[CustomComboInfo("Prize Catch to Nature's Bounty", "", FSH.JobID)]
-		FSH_PrizeBounty = 51005,
+		FSH_PrizeBounty = 51008,
 
 		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Snagging, FSH.Salvage)]
-		[CustomComboInfo("Snagging to Salvage", "", FSH.JobID)]
-		FSH_SnaggingSalvage = 51006,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.CastLight, FSH.ElectricCurrent)]
-		[CustomComboInfo("Cast Light to Electric Current", "", FSH.JobID)]
-		FSH_CastLight_ElectricCurrent = 51007,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Mooch, FSH.SharkEye)]
-		[CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
-		FSH_Mooch_SharkEye = 51008,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.FishEyes, FSH.VitalSight)]
-		[CustomComboInfo("Fish Eyes to Vital Sight", "", FSH.JobID)]
-		FSH_FishEyes_VitalSight = 51009,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Chum, FSH.BaitedBreath)]
-		[CustomComboInfo("Chum to Baited Breath", "", FSH.JobID)]
-		FSH_Chum_BaitedBreath = 51010,
+		[ReplaceSkill(FSH.SurfaceSlap, FSH.VeteranTrade)]
+		[CustomComboInfo("Surface Slap to Veteran Trade", "", FSH.JobID)]
+		FSH_SurfaceTrade = 51009,
 
 		#endregion
 

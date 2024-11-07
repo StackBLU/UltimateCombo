@@ -573,7 +573,7 @@ namespace UltimateCombo.Combos.PvE
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
 				if (actionID is GoblinPunch && IsEnabled(CustomComboPreset.BLU_Tanking)
-					&& HasEffect(Buffs.TankMimicry) && !HasEffect(Buffs.PhantomFlurry))
+					&& HasEffect(Buffs.TankMimicry) && !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length > 0)
 				{
 					if (!HasEffect(Buffs.MightyGuard) && IsSpellActive(MightyGuard))
 					{
@@ -651,7 +651,7 @@ namespace UltimateCombo.Combos.PvE
 					or Maps.Gazelle2 or Maps.Thief or Maps.Zonure1 or Maps.Zonure2;
 
 				if (actionID is GoblinPunch && IsEnabled(CustomComboPreset.BLU_Treasure_Healer) && HasEffect(Buffs.HealerMimicry)
-					&& !HasEffect(Buffs.PhantomFlurry))
+					&& !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length == 0)
 				{
 					if (notInMap)
 					{
@@ -725,8 +725,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (inMap)
 					{
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_BasicInstinct) && !HasEffect(Buffs.BasicInstinct)
-							 && GetPartyMembers().Length == 0)
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_BasicInstinct) && !HasEffect(Buffs.BasicInstinct))
 						{
 							return BasicInstinct;
 						}
@@ -874,7 +873,7 @@ namespace UltimateCombo.Combos.PvE
 					or Maps.Gazelle2 or Maps.Thief or Maps.Zonure1 or Maps.Zonure2;
 
 				if (actionID is GoblinPunch && IsEnabled(CustomComboPreset.BLU_Treasure_Tank) && HasEffect(Buffs.TankMimicry)
-					&& !HasEffect(Buffs.PhantomFlurry))
+					&& !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length == 0)
 				{
 					if (notInMap)
 					{
@@ -962,8 +961,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (inMap)
 					{
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_BasicInstinct) && !HasEffect(Buffs.BasicInstinct)
-							 && GetPartyMembers().Length == 0)
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_BasicInstinct) && !HasEffect(Buffs.BasicInstinct))
 						{
 							return BasicInstinct;
 						}

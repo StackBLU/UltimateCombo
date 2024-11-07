@@ -153,7 +153,7 @@ namespace UltimateCombo
 			KillRedundantIDs();
 			HandleConflictedCombos();
 
-			ConfigWindow.IsOpen = true;
+			//ConfigWindow.IsOpen = true;
 		}
 
 		private static void HandleConflictedCombos()

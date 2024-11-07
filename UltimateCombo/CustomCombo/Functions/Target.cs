@@ -13,7 +13,6 @@ namespace UltimateCombo.ComboHelper.Functions
 {
 	internal abstract partial class CustomComboFunctions
 	{
-		/// <summary> Gets the current target or null. </summary>
 		public static IGameObject? CurrentTarget
 		{
 			get
@@ -22,15 +21,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			}
 		}
 
-		/// <summary> Find if the player has a target. </summary>
-		/// <returns> A value indicating whether the player has a target. </returns>
 		public static bool HasTarget()
 		{
 			return CurrentTarget is not null;
 		}
 
-		/// <summary> Gets the distance from the target. </summary>
-		/// <returns> Double representing the distance from the target. </returns>
 		public static float GetTargetDistance()
 		{
 			if (CurrentTarget is null || LocalPlayer is null)
@@ -54,8 +49,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
 		}
 
-		/// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
-		/// <returns> Bool indicating whether you are in melee range. </returns>
 		public static bool InMeleeRange()
 		{
 			if (LocalPlayer.TargetObject == null)
@@ -68,8 +61,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			return distance <= 3;
 		}
 
-		/// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
-		/// <returns> Bool indicating whether you are in melee range. </returns>
 		public static bool OutOfMeleeRange()
 		{
 			if (LocalPlayer.TargetObject == null)
@@ -82,8 +73,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			return distance > Service.Configuration.RangedAttackRange;
 		}
 
-		/// <summary> Gets a value indicating whether you are in melee range from the current target. </summary>
-		/// <returns> Bool indicating whether you are in melee range. </returns>
 		public static bool InMeleeRangeNoMovement()
 		{
 			if (LocalPlayer.TargetObject == null)
@@ -96,13 +85,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			return distance <= 0;
 		}
 
-		/// <summary> Gets a value indicating target's HP Percent. CurrentTarget is default unless specified </summary>
-		/// <returns> Double indicating percentage. </returns>
 		public static float GetTargetHPPercent(IGameObject? OurTarget = null)
 		{
 			if (OurTarget is null)
 			{
-				OurTarget = CurrentTarget; // Fallback to CurrentTarget
+				OurTarget = CurrentTarget;
 				if (OurTarget is null)
 				{
 					return 0;
@@ -138,7 +125,6 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (OurTarget is null)
 			{
-				//Fallback to CurrentTarget
 				OurTarget = CurrentTarget;
 				if (OurTarget is null)
 				{
@@ -146,21 +132,14 @@ namespace UltimateCombo.ComboHelper.Functions
 				}
 			}
 
-			//Humans and Trusts
 			if (OurTarget.ObjectKind is ObjectKind.Player)
 			{
 				return true;
 			}
-			//AI
 			return OurTarget is IBattleNpc
 				   && (OurTarget as IBattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
 		}
 
-		/// <summary> Grabs healable target. Checks Soft Target then Hard Target. 
-		/// If Party UI Mouseover is enabled, find the target and return that. Else return the player. </summary>
-		/// <param name="checkMOPartyUI">Checks for a mouseover target.</param>
-		/// <param name="restrictToMouseover">Forces only the mouseover target, may return null.</param>
-		/// <returns> IGameObject of a player target. </returns>
 		public static unsafe IGameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
 		{
 			IGameObject? healTarget = null;
@@ -175,7 +154,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			{
 				healTarget = CurrentTarget;
 			}
-			//if (checkMO && HasFriendlyTarget(tm.MouseOverTarget)) healTarget = tm.MouseOverTarget;
 			if (checkMOPartyUI)
 			{
 				StructsObject.GameObject* t = Framework.Instance()->GetUIModule()->GetPronounModule()->UiMouseOverTarget;
@@ -202,22 +180,16 @@ namespace UltimateCombo.ComboHelper.Functions
 			return healTarget;
 		}
 
-		/// <summary> Determines if the enemy can be interrupted if they are currently casting. </summary>
-		/// <returns> Bool indicating whether they can be interrupted or not. </returns>
 		public static bool CanInterruptEnemy()
 		{
 			return CurrentTarget is not null && CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
 		}
 
-		/// <summary> Sets the player's target. </summary>
-		/// <param name="target"> Target must be a game object that the player can normally click and target. </param>
 		public static void SetTarget(IGameObject? target)
 		{
 			Service.TargetManager.Target = target;
 		}
 
-		/// <summary> Checks if target is in appropriate range for targeting </summary>
-		/// <param name="target"> The target object to check </param>
 		public static bool IsInRange(IGameObject? target)
 		{
 			return target != null && target.YalmDistanceX < 30;
@@ -258,10 +230,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			P8
 		}
 
-		/// <summary>
-		/// Get angle to target.
-		/// </summary>
-		/// <returns>Angle relative to target</returns>
 		public static float AngleToTarget()
 		{
 			if (CurrentTarget is null || LocalPlayer is null)
@@ -287,10 +255,6 @@ namespace UltimateCombo.ComboHelper.Functions
 				: regionDegrees is >= 135 and <= 225 ? 2 : regionDegrees is >= 225 and <= 315 ? 3 : regionDegrees is >= 315 or <= 45 ? 4 : 0;
 		}
 
-		/// <summary>
-		/// Is player on target's rear.
-		/// </summary>
-		/// <returns>True or false.</returns>
 		public static bool OnTargetsRear()
 		{
 			if (CurrentTarget is null || LocalPlayer is null)
@@ -314,10 +278,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			return regionDegrees is >= 135 and <= 225;
 		}
 
-		/// <summary>
-		/// Is player on target's flank.
-		/// </summary>
-		/// <returns>True or false.</returns>
 		public static bool OnTargetsFlank()
 		{
 			if (CurrentTarget is null || LocalPlayer is null)
@@ -338,16 +298,13 @@ namespace UltimateCombo.ComboHelper.Functions
 				regionDegrees = 360 + regionDegrees;
 			}
 
-			// left flank
 			if (regionDegrees is >= 45 and <= 135)
 			{
 				return true;
 			}
-			// right flank
 			return regionDegrees is >= 225 and <= 315;
 		}
 
-		// the following is all lifted from the excellent Resonant plugin
 		internal static class PositionalMath
 		{
 			internal static float Radians(float degrees)

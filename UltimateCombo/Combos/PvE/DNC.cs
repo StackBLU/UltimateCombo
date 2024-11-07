@@ -108,7 +108,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Cascade or Fountain) && IsEnabled(CustomComboPreset.DNC_ST_DPS))
 				{
-					if (!HasEffect(Buffs.ClosedPosition) && IsInParty())
+					if (!HasEffect(Buffs.ClosedPosition) && GetPartyMembers().Length > 0)
 					{
 						return ClosedPosition;
 					}
@@ -263,7 +263,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Windmill or Bladeshower) && IsEnabled(CustomComboPreset.DNC_AoE_DPS))
 				{
-					if (!HasEffect(Buffs.ClosedPosition) && IsInParty())
+					if (!HasEffect(Buffs.ClosedPosition) && GetPartyMembers().Length > 0)
 					{
 						return ClosedPosition;
 					}

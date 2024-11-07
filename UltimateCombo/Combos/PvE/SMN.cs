@@ -125,6 +125,11 @@ namespace UltimateCombo.Combos.PvE
 						return SummonCarbuncle;
 					}
 
+					if (WasLastSpell(SummonCarbuncle) && !InCombat())
+					{
+						ActionWatching.CombatActions.Clear();
+					}
+
 					if (!InCombat() && ActionReady(OriginalHook(Ruin)))
 					{
 						return OriginalHook(Ruin);
