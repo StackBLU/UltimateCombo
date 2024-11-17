@@ -13,6 +13,7 @@ namespace UltimateCombo.Core
 		private static HashSet<CustomComboPreset>? PvPCombos;
 		private static HashSet<CustomComboPreset>? BozjaCombos;
 		private static HashSet<CustomComboPreset>? EurekaCombos;
+		private static HashSet<CustomComboPreset>? VariantCombos;
 		private static Dictionary<CustomComboPreset, CustomComboPreset[]>? ConflictingCombos;
 		private static Dictionary<CustomComboPreset, CustomComboPreset?>? ParentCombos;
 
@@ -28,6 +29,10 @@ namespace UltimateCombo.Core
 
 			EurekaCombos = Enum.GetValues<CustomComboPreset>()
 				.Where(preset => preset.GetAttribute<EurekaAttribute>() != default)
+				.ToHashSet();
+
+			VariantCombos = Enum.GetValues<CustomComboPreset>()
+				.Where(preset => preset.GetAttribute<VariantAttribute>() != default)
 				.ToHashSet();
 
 			ConflictingCombos = Enum.GetValues<CustomComboPreset>()
@@ -60,6 +65,11 @@ namespace UltimateCombo.Core
 		public static bool IsEureka(CustomComboPreset preset)
 		{
 			return EurekaCombos.Contains(preset);
+		}
+
+		public static bool IsVariant(CustomComboPreset preset)
+		{
+			return VariantCombos.Contains(preset);
 		}
 
 		public static CustomComboPreset? GetParent(CustomComboPreset preset)

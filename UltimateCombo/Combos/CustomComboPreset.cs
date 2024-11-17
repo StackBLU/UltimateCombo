@@ -1948,11 +1948,6 @@ namespace UltimateCombo.Combos
 
 		#region Bozja
 
-		[Bozja]
-		[ReplaceSkill(Bozja.FlareStar)]
-		[CustomComboInfo("Lost Flare Star", "", BLM.JobID)]
-		BLM_Bozja_LFS = 2070,
-
 		/*[Bozja]
 		[CustomComboInfo("Don't enable this it does nothing", "", BLM.JobID)]
 		Bozja_Test = 2071,*/
@@ -3259,32 +3254,41 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
+		#region Bozja
+
+		[Bozja]
+		[ReplaceSkill(Bozja.FlareStar)]
+		[CustomComboInfo("Lost Flare Star", "", All.JobID)]
+		Bozja_LFS = 100040,
+
+		#endregion
+
 		#region Variant
 
-		[ReplaceSkill(Variant.VariantCure_Image, Variant.VariantUltimatum, Variant.VariantRaise,
-			Variant.VariantSpiritDart_Image, Variant.VariantRampart_Image)]
-		[CustomComboInfo("Variant Dungeon Skills", "", All.JobID)]
-		All_Variant = 100050,
-
-		[ParentCombo(All_Variant)]
+		[Variant]
+		[ReplaceSkill(Variant.VariantCure_Image)]
 		[CustomComboInfo("Variant Cure", "", All.JobID)]
-		All_Variant_Cure = 100051,
+		Variant_Cure = 100050,
 
-		[ParentCombo(All_Variant)]
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
 		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
-		All_Variant_Ultimatum = 100052,
+		Variant_Ultimatum = 100051,
 
-		[ParentCombo(All_Variant)]
+		[Variant]
+		[ReplaceSkill(Variant.VariantRaise, Variant.VariantRaise2)]
 		[CustomComboInfo("Variant Raise", "", All.JobID)]
-		All_Variant_Raise = 100053,
+		Variant_Raise = 100052,
 
-		[ParentCombo(All_Variant)]
+		[Variant]
+		[ReplaceSkill(Variant.VariantSpiritDart_Image)]
 		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
-		All_Variant_SpiritDart = 100054,
+		Variant_SpiritDart = 100053,
 
-		[ParentCombo(All_Variant)]
+		[Variant]
+		[ReplaceSkill(Variant.VariantRampart_Image)]
 		[CustomComboInfo("Variant Rampart", "", All.JobID)]
-		All_Variant_Rampart = 100055,
+		Variant_Rampart = 100054,
 
 		#endregion
 

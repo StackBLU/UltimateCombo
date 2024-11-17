@@ -14,7 +14,7 @@ using Status = Dalamud.Game.ClientState.Statuses.Status;
 namespace UltimateCombo.Window.Tabs
 {
 
-	internal class Debug : ConfigWindow
+	internal class DebugWindow : ConfigWindow
 	{
 
 		internal class DebugCombo : CustomComboClass
@@ -64,8 +64,10 @@ namespace UltimateCombo.Window.Tabs
 				ImGui.TextUnformatted($"Last Spell: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
 				ImGui.TextUnformatted($"Last Ability: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
 				ImGui.TextUnformatted($"Zone: {Service.ClientState.TerritoryType}");
-				_ = ImGui.BeginChild("BLUSPELLS", new Vector2(250, 500), true);
-				ImGui.TextUnformatted($"Selected BLU Spells:\n{string.Join("\n", Service.Configuration.ActiveBLUSpells.Select(ActionWatching.GetActionName).OrderBy(x => x))}");
+				ImGui.TextUnformatted($"\n-- Active BLU Spells --");
+				_ = ImGui.BeginChild("BLUSpells", new Vector2(200, 430), true);
+				ImGui.TextUnformatted($"{string.Join("\n",
+					Service.Configuration.ActiveBLUSpells.Select(ActionWatching.GetActionName).OrderBy(x => x))}");
 				ImGui.EndChild();
 			}
 

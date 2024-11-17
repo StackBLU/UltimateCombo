@@ -153,7 +153,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					// Bozja
-					if (IsEnabled(CustomComboPreset.BLM_Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
+					if (IsEnabled(CustomComboPreset.Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
 						&& (GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 7 || LocalPlayer.CurrentMp <= 4000)
 						&& HasEffect(Bozja.Buffs.FontOfMagic) && !WasLastAction(Bozja.FontOfMagic) && !WasLastSpell(Bozja.FlareStar))
 					{
@@ -173,7 +173,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
+					if (IsEnabled(CustomComboPreset.Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
 						&& (GetDebuffRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !TargetHasEffect(Bozja.Debuffs.FlareStar)
 						|| IsOffCooldown(Bozja.FontOfMagic)))
 					{

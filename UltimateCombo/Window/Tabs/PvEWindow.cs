@@ -12,7 +12,7 @@ using UltimateCombo.Window.Functions;
 
 namespace UltimateCombo.Window.Tabs
 {
-	internal class PvEFeatures : ConfigWindow
+	internal class PvEWindow : ConfigWindow
 	{
 		internal static bool HasToOpenJob = true;
 		internal static string OpenJob = string.Empty;
@@ -81,58 +81,9 @@ namespace UltimateCombo.Window.Tabs
 				using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);
 				try
 				{
-					if (ImGui.BeginTabBar($"subTab{OpenJob}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs))
-					{
-						if (ImGui.BeginTabItem("Normal"))
-						{
-							DrawHeadingContents(OpenJob, i);
-							ImGui.EndTabItem();
-						}
-
-						if (groupedPresets[OpenJob].Any(x => PresetStorage.IsBozja(x.Preset)))
-						{
-							if (ImGui.BeginTabItem("Bozja"))
-							{
-								DrawBozjaContents(OpenJob);
-								ImGui.EndTabItem();
-							}
-						}
-
-						if (groupedPresets[OpenJob].Any(x => PresetStorage.IsEureka(x.Preset)))
-						{
-							if (ImGui.BeginTabItem("Eureka"))
-							{
-								DrawEurekaContents(OpenJob);
-								ImGui.EndTabItem();
-							}
-						}
-
-						ImGui.EndTabBar();
-					}
+					DrawHeadingContents(OpenJob, i);
 				}
 				catch { }
-			}
-		}
-
-		private static void DrawBozjaContents(string jobName)
-		{
-			foreach ((CustomComboPreset preset, Attributes.CustomComboInfoAttribute info) in groupedPresets[jobName].Where(x => PresetStorage.IsBozja(x.Preset)))
-			{
-				int i = -1;
-				InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
-				presetBox.Draw();
-				ImGuiHelpers.ScaledDummy(12.0f);
-			}
-		}
-
-		private static void DrawEurekaContents(string jobName)
-		{
-			foreach ((CustomComboPreset preset, Attributes.CustomComboInfoAttribute info) in groupedPresets[jobName].Where(x => PresetStorage.IsEureka(x.Preset)))
-			{
-				int i = -1;
-				InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
-				presetBox.Draw();
-				ImGuiHelpers.ScaledDummy(12.0f);
 			}
 		}
 
@@ -140,8 +91,9 @@ namespace UltimateCombo.Window.Tabs
 		{
 			foreach ((CustomComboPreset preset,
 				Attributes.CustomComboInfoAttribute info) in groupedPresets[jobName].Where(x => !PresetStorage.IsPvP(x.Preset)
-																							 && !PresetStorage.IsBozja(x.Preset) &&
-																								!PresetStorage.IsEureka(x.Preset)))
+																							 && !PresetStorage.IsBozja(x.Preset)
+																							 && !PresetStorage.IsEureka(x.Preset)
+																							 && !PresetStorage.IsVariant(x.Preset)))
 			{
 				InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 2f.Scale(), ContentsOffset = 5f.Scale(), ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
 

@@ -105,7 +105,7 @@ namespace UltimateCombo
 				if (jobID != value && value != null)
 				{
 					Service.PluginLog.Debug($"Switched to job {value}");
-					PvEFeatures.HasToOpenJob = true;
+					PvEWindow.HasToOpenJob = true;
 				}
 
 				jobID = value;
@@ -153,7 +153,10 @@ namespace UltimateCombo
 			KillRedundantIDs();
 			HandleConflictedCombos();
 
-			//ConfigWindow.IsOpen = true;
+			if (Service.Configuration.OpenOnLaunch)
+			{
+				ConfigWindow.IsOpen = true;
+			}
 		}
 
 		private static void HandleConflictedCombos()
@@ -512,13 +515,13 @@ namespace UltimateCombo
 
 				default:
 					ConfigWindow.IsOpen = !ConfigWindow.IsOpen;
-					PvEFeatures.HasToOpenJob = true;
+					PvEWindow.HasToOpenJob = true;
 					if (argumentsParts[0].Length > 0)
 					{
 						string jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(argumentsParts[0].ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
 						string header = $"{jobname} - {argumentsParts[0].ToUpper()}";
 						Service.PluginLog.Debug($"{jobname}");
-						PvEFeatures.HeaderToOpen = header;
+						PvEWindow.HeaderToOpen = header;
 					}
 					break;
 			}

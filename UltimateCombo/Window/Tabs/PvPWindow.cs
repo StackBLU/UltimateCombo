@@ -12,7 +12,7 @@ using UltimateCombo.Window.Functions;
 
 namespace UltimateCombo.Window.Tabs
 {
-	internal class PvPFeatures : ConfigWindow
+	internal class PvPWindow : ConfigWindow
 	{
 		internal static bool HasToOpenJob = true;
 		internal static string OpenJob = string.Empty;
@@ -57,7 +57,7 @@ namespace UltimateCombo.Window.Tabs
 				byte id = groupedPresets[OpenJob].First().Info.JobID;
 				IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-				using (ImRaii.IEndObject headingTab = ImRaii.Child("PvPHeadingTab",
+				using (ImRaii.IEndObject headingTab = ImRaii.Child("HeadingTab",
 					new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
 				{
 					if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
@@ -81,16 +81,7 @@ namespace UltimateCombo.Window.Tabs
 				using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);
 				try
 				{
-					if (ImGui.BeginTabBar($"subTab{OpenJob}", ImGuiTabBarFlags.Reorderable | ImGuiTabBarFlags.AutoSelectNewTabs))
-					{
-						if (ImGui.BeginTabItem("Normal"))
-						{
-							DrawHeadingContents(OpenJob, i);
-							ImGui.EndTabItem();
-						}
-
-						ImGui.EndTabBar();
-					}
+					DrawHeadingContents(OpenJob, i);
 				}
 				catch { }
 			}

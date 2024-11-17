@@ -7,6 +7,7 @@ using System.Numerics;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.Combos.PvP;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
@@ -1169,9 +1170,9 @@ namespace UltimateCombo.Window.Functions
 
 			#region All
 
-			if (preset is CustomComboPreset.All_Variant_Cure && enabled)
+			if (preset is CustomComboPreset.Variant_Cure && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, All.Config.All_Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, Variant.Config.Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
 			if (preset is CustomComboPreset.All_SecondWind && enabled)

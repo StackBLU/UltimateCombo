@@ -115,44 +115,61 @@ namespace UltimateCombo.Window
 			float topLeftSideHeight = region.Y;
 
 			using ImRaii.Style style = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0));
-			using ImRaii.IEndObject table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.Resizable);
+			using ImRaii.IEndObject table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.BordersInnerV);
 			if (!table)
 			{
 				return;
 			}
 
 			ImGui.TableSetupColumn("##LeftColumn", ImGuiTableColumnFlags.WidthFixed, ImGui.GetWindowWidth() / 6);
-
 			_ = ImGui.TableNextColumn();
-
 			Vector2 regionSize = ImGui.GetContentRegionAvail();
-
 			ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
 
-			using (ImRaii.IEndObject leftChild = ImRaii.Child($"###LeftSide", regionSize with { Y = topLeftSideHeight }, false, ImGuiWindowFlags.NoDecoration))
+			using (ImRaii.IEndObject leftChild = ImRaii.Child($"###LeftSide",
+				regionSize with { Y = topLeftSideHeight }, false))
 			{
-				if (ImGui.Selectable("PvE Features", OpenWindow == OpenWindow.PvE))
+				if (ImGui.Selectable("PvE", OpenWindow == OpenWindow.PvE))
 				{
 					OpenWindow = OpenWindow.PvE;
 				}
 				ImGui.Spacing();
-				ImGui.Spacing();
-				if (ImGui.Selectable("PvP Features", OpenWindow == OpenWindow.PvP))
+
+				if (ImGui.Selectable("PvP", OpenWindow == OpenWindow.PvP))
 				{
 					OpenWindow = OpenWindow.PvP;
 				}
 				ImGui.Spacing();
+
+				if (ImGui.Selectable("Eureka", OpenWindow == OpenWindow.Eureka))
+				{
+					OpenWindow = OpenWindow.Eureka;
+				}
 				ImGui.Spacing();
+
+				if (ImGui.Selectable("Bozja", OpenWindow == OpenWindow.Bozja))
+				{
+					OpenWindow = OpenWindow.Bozja;
+				}
+				ImGui.Spacing();
+
+				if (ImGui.Selectable("Variant", OpenWindow == OpenWindow.Variant))
+				{
+					OpenWindow = OpenWindow.Variant;
+				}
+				ImGui.Spacing();
+
 				if (ImGui.Selectable("Settings", OpenWindow == OpenWindow.Settings))
 				{
 					OpenWindow = OpenWindow.Settings;
 				}
 				ImGui.Spacing();
-				ImGui.Spacing();
+
 				if (ImGui.Selectable("Debug", OpenWindow == OpenWindow.Debug))
 				{
 					OpenWindow = OpenWindow.Debug;
 				}
+
 				ImGuiEx.LineCentered(() =>
 				{
 					ImGui.SetCursorPosY(ImGui.GetWindowHeight() - 30);
@@ -169,17 +186,33 @@ namespace UltimateCombo.Window
 			switch (OpenWindow)
 			{
 				case OpenWindow.PvE:
-					PvEFeatures.Draw();
+					PvEWindow.Draw();
 					break;
+
 				case OpenWindow.PvP:
-					PvPFeatures.Draw();
+					PvPWindow.Draw();
 					break;
+
+				case OpenWindow.Eureka:
+					EurekaWindow.Draw();
+					break;
+
+				case OpenWindow.Bozja:
+					BozjaWindow.Draw();
+					break;
+
+				case OpenWindow.Variant:
+					VariantWindow.Draw();
+					break;
+
 				case OpenWindow.Settings:
-					Settings.Draw();
+					SettingsWindow.Draw();
 					break;
+
 				case OpenWindow.Debug:
-					Debug.Draw();
+					DebugWindow.Draw();
 					break;
+
 				default:
 					break;
 			};
@@ -196,8 +229,11 @@ namespace UltimateCombo.Window
 		None = 0,
 		PvE = 1,
 		PvP = 2,
-		Settings = 3,
-		About = 4,
-		Debug = 5
+		Eureka = 3,
+		Bozja = 4,
+		Variant = 5,
+		Settings = 6,
+		About = 7,
+		Debug = 8
 	}
 }

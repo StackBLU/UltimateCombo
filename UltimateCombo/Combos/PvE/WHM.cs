@@ -226,8 +226,7 @@ namespace UltimateCombo.Combos.PvE
 						return Tetragrammaton;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-						&& Gauge.Lily >= 1)
+					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
 					{
 						return AfflatusMisery;
 					}
@@ -274,8 +273,7 @@ namespace UltimateCombo.Combos.PvE
 						return PlenaryIndulgence;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-						&& Gauge.Lily >= 1)
+					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
 					{
 						return AfflatusMisery;
 					}

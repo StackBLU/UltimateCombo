@@ -2,7 +2,6 @@
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -80,8 +79,7 @@ namespace UltimateCombo.Combos.PvE
 				All_Mage_Lucid = new("All_Mage_Lucid", 7500),
 				All_BLU_Lucid = new("All_BLU_Lucid", 7500),
 				All_ChocoHP = new("All_ChocoHP", 75),
-				All_ChocoMode = new("All_ChocoMode", 1),
-				All_Variant_Cure = new("All_Variant_Cure", 50);
+				All_ChocoMode = new("All_ChocoMode", 1);
 
 			public static UserBool
 				All_BLM_Lucid = new("All_BLM_Lucid", false),
@@ -525,59 +523,6 @@ namespace UltimateCombo.Combos.PvE
 						{
 							_ = UseAction(ActionType.BuddyAction, 5);
 						}
-					}
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class All_Variant : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.All_Variant;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.All_Variant))
-				{
-					if (IsEnabled(CustomComboPreset.All_Variant_Cure) && IsEnabled(Variant.VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_Variant_Cure))
-					{
-						return Variant.VariantCure;
-					}
-
-					if (IsEnabled(CustomComboPreset.All_Variant_Raise) && IsEnabled(Variant.VariantCure)
-						&& (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro
-						or SMN.Resurrection or RDM.Verraise))
-					{
-						if (ActionReady(Swiftcast))
-						{
-							return Swiftcast;
-						}
-
-						return Variant.VariantRaise;
-					}
-
-					if (CanWeave(actionID))
-					{
-						if (IsEnabled(CustomComboPreset.All_Variant_Ultimatum) && IsEnabled(Variant.VariantUltimatum)
-						&& ActionReady(Variant.VariantUltimatum))
-						{
-							return Variant.VariantUltimatum;
-						}
-
-						if (IsEnabled(CustomComboPreset.All_Variant_SpiritDart) && IsEnabled(Variant.VariantSpiritDart)
-							&& !TargetHasEffectAny(Variant.Debuffs.SustainedDamage))
-						{
-							return Variant.VariantSpiritDart;
-						}
-
-						if (IsEnabled(CustomComboPreset.All_Variant_Rampart) && IsEnabled(Variant.VariantRampart)
-							&& ActionReady(Variant.VariantRampart))
-						{
-							return Variant.VariantRampart;
-						}
-
 					}
 				}
 

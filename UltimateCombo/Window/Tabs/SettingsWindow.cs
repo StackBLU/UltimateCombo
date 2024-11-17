@@ -4,12 +4,19 @@ using UltimateCombo.Services;
 
 namespace UltimateCombo.Window.Tabs
 {
-	internal class Settings : ConfigWindow
+	internal class SettingsWindow : ConfigWindow
 	{
 		internal static new void Draw()
 		{
-			PvEFeatures.HasToOpenJob = true;
+			PvEWindow.HasToOpenJob = true;
 			_ = ImGui.BeginChild("main", new Vector2(0, 0), true);
+
+			bool openOnLaunch = Service.Configuration.OpenOnLaunch;
+			if (ImGui.Checkbox("Open on launch", ref openOnLaunch))
+			{
+				Service.Configuration.OpenOnLaunch = openOnLaunch;
+				Service.Configuration.Save();
+			}
 
 			bool hideChildren = Service.Configuration.HideChildren;
 			if (ImGui.Checkbox("Hide nested options", ref hideChildren))

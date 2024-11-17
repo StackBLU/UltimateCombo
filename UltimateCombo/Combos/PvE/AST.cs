@@ -150,7 +150,9 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
 								&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-								&& GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed))
+								&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed)
+								|| (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) - 1
+								&& GetCooldownChargeRemainingTime(Lightspeed) < 5)))
 							{
 								return Lightspeed;
 							}
@@ -265,7 +267,9 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed)
 							&& !HasEffect(Buffs.Lightspeed) && !HasEffect(All.Buffs.Swiftcast)
-							&& GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed))
+							&& (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed)
+							|| (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) - 1
+							&& GetCooldownChargeRemainingTime(Lightspeed) < 5)))
 						{
 							return Lightspeed;
 						}

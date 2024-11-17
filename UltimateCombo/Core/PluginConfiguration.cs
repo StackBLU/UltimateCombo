@@ -21,9 +21,11 @@ namespace UltimateCombo.Core
 
 		public bool EnabledOutputLog { get; set; } = false;
 
-		public bool HideConflictedCombos { get; set; } = false;
+		public bool OpenOnLaunch { get; set; } = false;
 
 		public bool HideChildren { get; set; } = false;
+
+		public bool HideConflictedCombos { get; set; } = false;
 
 		public bool IgnoreGCDChecks { get; set; } = false;
 
