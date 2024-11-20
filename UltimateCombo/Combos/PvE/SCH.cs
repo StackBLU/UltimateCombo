@@ -137,12 +137,11 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
+								&& (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
+								|| TargetHasEffect(Debuffs.ChainStratagem)))
 							{
-								if (GetCooldownRemainingTime(Aetherflow) <= 10f || TargetHasEffect(Debuffs.ChainStratagem))
-								{
-									return EnergyDrain;
-								}
+								return EnergyDrain;
 							}
 						}
 					}
@@ -188,7 +187,7 @@ namespace UltimateCombo.Combos.PvE
 							return Aetherflow;
 						}
 
-						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_ChainStrat))
+						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_ChainStrat) && LevelChecked(BanefulImpaction))
 						{
 							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
 							{
@@ -201,12 +200,11 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
+						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
+							&& (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
+							|| TargetHasEffect(Debuffs.ChainStratagem)))
 						{
-							if (GetCooldownRemainingTime(Aetherflow) <= 10f || TargetHasEffect(Debuffs.ChainStratagem))
-							{
-								return EnergyDrain;
-							}
+							return EnergyDrain;
 						}
 					}
 

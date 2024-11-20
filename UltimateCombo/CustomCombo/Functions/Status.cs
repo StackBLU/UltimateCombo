@@ -181,7 +181,7 @@ namespace UltimateCombo.ComboHelper.Functions
 			{
 				foreach (Status status in chara.StatusList)
 				{
-					if (ActionWatching.StatusSheet.TryGetValue(status.StatusId, out Lumina.Excel.GeneratedSheets.Status? statusItem) && statusItem.CanDispel)
+					if (ActionWatching.StatusSheet.TryGetValue(status.StatusId, out Lumina.Excel.Sheets.Status statusItem) && statusItem.CanDispel)
 					{
 						return true;
 					}

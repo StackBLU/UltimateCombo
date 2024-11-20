@@ -74,7 +74,7 @@ namespace UltimateCombo.Combos.PvE
 			public static UserInt
 				PLD_ST_Sheltron = new("PLD_ST_Sheltron", 100),
 				PLD_ST_Intervention = new("PLD_ST_Intervention", 50),
-				PLD_AoE_Sheltron = new("PLD_AoE_Sheltron", 100),
+				PLD_AoE_Sheltron = new("PLD_AoE_Sheltron", 50),
 				PLD_AoE_Intervention = new("PLD_AoE_Intervention", 50),
 				PLD_ST_Invuln = new("PLD_ST_Invuln", 10),
 				PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10);

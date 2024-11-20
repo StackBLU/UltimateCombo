@@ -149,7 +149,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(GnashingFang);
 					}
 
-					if (IsEnabled(CustomComboPreset.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2
+					if (IsEnabled(CustomComboPreset.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1
 						&& HasEffect(Buffs.NoMercy))
 					{
 						return DoubleDown;
@@ -260,7 +260,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2)
+					if (IsEnabled(CustomComboPreset.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1)
 					{
 						return DoubleDown;
 					}

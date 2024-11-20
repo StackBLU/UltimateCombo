@@ -29,7 +29,7 @@ namespace UltimateCombo.CustomCombo
 				return false;
 			}
 
-			uint classJobID = LocalPlayer!.ClassJob.Id;
+			uint classJobID = LocalPlayer!.ClassJob.Value.RowId;
 
 			if (JobID != All.JobID && JobID != classJobID && ClassID != classJobID)
 			{

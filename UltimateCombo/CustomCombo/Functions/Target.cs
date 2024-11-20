@@ -1,7 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
+using Lumina.Excel.Sheets;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -198,7 +200,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static bool TargetNeedsPositionals()
 		{
 			return HasBattleTarget() && ActionWatching.BNpcSheet.TryGetValue(CurrentTarget.DataId,
-				out Lumina.Excel.GeneratedSheets.BNpcBase? bnpc) && !bnpc.Unknown10;
+				out _);
 		}
 
 		public static void TargetObject(IGameObject? target)
@@ -323,9 +325,32 @@ namespace UltimateCombo.ComboHelper.Functions
 			}
 		}
 
-		internal static unsafe bool OutOfRange(uint actionID, IGameObject target)
+		internal unsafe bool OutOfRange(uint actionID, IGameObject target)
 		{
 			return ActionWatching.OutOfRange(actionID, Service.ClientState.LocalPlayer!, target);
+		}
+
+		internal static unsafe byte? GetMobType(IGameObject target)
+		{
+			if (HasBattleTarget())
+			{
+				return Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank;
+			}
+
+			return 0;
+		}
+
+		internal static unsafe bool IsBoss(IGameObject target)
+		{
+			if (HasBattleTarget())
+			{
+				if (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank is 2 or 6)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }

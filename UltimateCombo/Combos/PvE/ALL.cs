@@ -198,7 +198,7 @@ namespace UltimateCombo.Combos.PvE
 						return Swiftcast;
 					}
 
-					if (LocalPlayer.ClassJob.Id == AST.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == AST.JobID)
 					{
 						if (ActionReady(AST.Lightspeed) && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast))
 						{
@@ -208,12 +208,12 @@ namespace UltimateCombo.Combos.PvE
 						return AST.Ascend;
 					}
 
-					if (LocalPlayer.ClassJob.Id == BLU.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
 					{
 						return BLU.AngelWhisper;
 					}
 
-					if (LocalPlayer.ClassJob.Id == RDM.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == RDM.JobID)
 					{
 						if (!HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
 						{
@@ -228,22 +228,22 @@ namespace UltimateCombo.Combos.PvE
 						return RDM.Verraise;
 					}
 
-					if (LocalPlayer.ClassJob.Id == SCH.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == SCH.JobID)
 					{
 						return SCH.Resurrection;
 					}
 
-					if (LocalPlayer.ClassJob.Id == SGE.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
 					{
 						return SGE.Egeiro;
 					}
 
-					if (LocalPlayer.ClassJob.Id == SMN.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == SMN.JobID)
 					{
 						return SMN.Resurrection;
 					}
 
-					if (LocalPlayer.ClassJob.Id == WHM.JobID)
+					if (LocalPlayer.ClassJob.Value.RowId == WHM.JobID)
 					{
 						if (ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
 						{
@@ -272,7 +272,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(TrueNorth) && IsEnabled(TrueNorth)
 							&& TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || GetBuffRemainingTime(Buffs.TrueNorth) < 1))
 						{
-							if (LocalPlayer.ClassJob.Id == MNK.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == MNK.JobID)
 							{
 								if (actionID
 									is MNK.Bootshine or MNK.LeapingOpo or MNK.TrueStrike
@@ -293,7 +293,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id == DRG.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == DRG.JobID)
 							{
 								if (actionID
 									is DRG.TrueThrust or DRG.VorpalThrust or DRG.LanceBarrage
@@ -315,7 +315,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id == NIN.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == NIN.JobID)
 							{
 								if (lastComboMove is NIN.GustSlash
 									&& (actionID is NIN.SpinningEdge or NIN.GustSlash or NIN.AeolianEdge or NIN.ArmorCrush))
@@ -338,7 +338,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id == SAM.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == SAM.JobID)
 							{
 								if (actionID
 									is SAM.Hakaze or SAM.Gyofu or SAM.Jinpu
@@ -358,7 +358,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id == RPR.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == RPR.JobID)
 							{
 								if (actionID is RPR.Slice or RPR.WaxingSlice or RPR.InfernalSlice)
 								{
@@ -377,7 +377,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id == VPR.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == VPR.JobID)
 							{
 								if (actionID is VPR.SteelFangs or VPR.ReavingFangs)
 								{
@@ -430,7 +430,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
 							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) || LocalPlayer.CurrentMp <= 1000))
 						{
-							if (LocalPlayer.ClassJob.Id == SGE.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
 							{
 								if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis) && !WasLastSpell(SGE.EukrasianPrognosis2)
 									&& !WasLastSpell(SGE.EukrasianDosis) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
@@ -440,7 +440,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (LocalPlayer.ClassJob.Id is WHM.JobID or SCH.JobID or AST.JobID)
+							if (LocalPlayer.ClassJob.Value.RowId is WHM.JobID or SCH.JobID or AST.JobID)
 							{
 								return LucidDreaming;
 							}
@@ -448,16 +448,16 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
 							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Mage_Lucid) || LocalPlayer.CurrentMp <= 1000)
-							&& (LocalPlayer.ClassJob.Id == SMN.JobID
-							|| LocalPlayer.ClassJob.Id == RDM.JobID
-							|| LocalPlayer.ClassJob.Id == PCT.JobID))
+							&& (LocalPlayer.ClassJob.Value.RowId == SMN.JobID
+							|| LocalPlayer.ClassJob.Value.RowId == RDM.JobID
+							|| LocalPlayer.ClassJob.Value.RowId == PCT.JobID))
 						{
 							return LucidDreaming;
 						}
 
 						if (IsEnabled(CustomComboPreset.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
 							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) || LocalPlayer.CurrentMp <= 1000)
-							&& LocalPlayer.ClassJob.Id == BLU.JobID)
+							&& LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
 						{
 							if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor)
 							{

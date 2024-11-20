@@ -145,7 +145,8 @@ namespace UltimateCombo.Combos.PvE
 								return Triplecast;
 							}
 
-							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines))
+							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines)
+								&& !HasEffect(Buffs.LeyLines))
 							{
 								return LeyLines;
 							}
@@ -232,8 +233,7 @@ namespace UltimateCombo.Combos.PvE
 					if (ActionReady(Despair) && Gauge.InAstralFire && !Gauge.IsParadoxActive && LevelChecked(Paradox)
 						&& ((LocalPlayer.CurrentMp <= 1200 && LocalPlayer.CurrentMp >= 800)
 						|| (!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
-						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
-						+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500) && LocalPlayer.CurrentMp >= 800)
+						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000) + 500))
 						|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
 						&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500)
 						&& LocalPlayer.CurrentMp >= 800)))
@@ -332,8 +332,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 800
 							&& ((!HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast)
-							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000)
-							+ (GetCooldown(Despair).AdjustedCastTime * 1000) + 500))
+							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire4).AdjustedCastTime * 1000) + 500))
 							|| ((HasEffect(Buffs.Triplecast) || HasEffect(All.Buffs.Swiftcast))
 							&& Gauge.ElementTimeRemaining <= ((GetCooldown(Fire).CooldownTotal * 1000) + 500))
 							|| HasEffect(Bozja.Buffs.AutoEther) || (LocalPlayer.CurrentMp < 2400 && !HasEffect(Bozja.Buffs.FontOfMagic))))
@@ -558,14 +557,14 @@ namespace UltimateCombo.Combos.PvE
 				if (actionID is Xenoglossy && IsEnabled(CustomComboPreset.BLM_XenoParadox))
 				{
 					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InAstralFire
-						&& Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000))
+						&& Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000) + 500)
 					{
 						return Paradox;
 					}
 
 					if (ActionReady(Despair) && ActionReady(All.Swiftcast) && Gauge.InAstralFire
 						&& !Gauge.IsParadoxActive && (LocalPlayer.CurrentMp == 1200
-						|| Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000)))
+						|| Gauge.ElementTimeRemaining <= (GetCooldown(Fire4).AdjustedCastTime * 1000) + 500))
 					{
 						return Despair;
 					}

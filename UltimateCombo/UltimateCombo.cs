@@ -1,5 +1,4 @@
-﻿using Dalamud.Game.ClientState.Statuses;
-using Dalamud.Game.Command;
+﻿using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -27,9 +26,6 @@ namespace UltimateCombo
 		private readonly ConfigWindow ConfigWindow;
 		internal static UltimateComboClass? P = null!;
 		internal WindowSystem ws;
-
-		private static uint? jobID;
-
 		public static readonly List<uint> DisabledJobsPVE =
 		[
 			//All.JobID,
@@ -95,20 +91,17 @@ namespace UltimateCombo
 
 		public static uint? JobID
 		{
-			get
-			{
-				return jobID;
-			}
+			get;
 
 			set
 			{
-				if (jobID != value && value != null)
+				if (field != value && value != null)
 				{
 					Service.PluginLog.Debug($"Switched to job {value}");
 					PvEWindow.HasToOpenJob = true;
 				}
 
-				jobID = value;
+				field = value;
 			}
 		}
 
@@ -188,7 +181,7 @@ namespace UltimateCombo
 		{
 			if (Service.ClientState.LocalPlayer is not null)
 			{
-				JobID = Service.ClientState.LocalPlayer?.ClassJob?.Id;
+				JobID = Service.ClientState.LocalPlayer?.ClassJob.Value.RowId;
 			}
 
 			BlueMageService.PopulateBLUSpells();
@@ -355,12 +348,12 @@ namespace UltimateCombo
 							file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");
 							file.WriteLine("");
 							file.WriteLine($"Current Job: " +
-								$"{Service.ClientState.LocalPlayer.ClassJob.GameData.NameEnglish} / " +
-								$"{Service.ClientState.LocalPlayer.ClassJob.GameData.Abbreviation}");
-							file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.Id}");
+								$"{Service.ClientState.LocalPlayer.ClassJob.Value.NameEnglish} / " +
+								$"{Service.ClientState.LocalPlayer.ClassJob.Value.Abbreviation}");
+							file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer.ClassJob.Value.RowId}");
 							file.WriteLine($"Current Job Level: {Service.ClientState.LocalPlayer.Level}");
 							file.WriteLine("");
-							file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");
+							file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");
 							file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
 							file.WriteLine("");
 							file.WriteLine($"Enabled Features:");
@@ -422,8 +415,8 @@ namespace UltimateCombo
 							else
 							{
 								string jobname = ConfigWindow.groupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(specificJob.ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;
-								uint? jobID = Service.DataManager.GetExcelSheet<Lumina.Excel.GeneratedSheets.ClassJob>()?
-									.Where(x => x.Name.RawString.Equals(jobname, StringComparison.CurrentCultureIgnoreCase))
+								uint? jobID = Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.ClassJob>()?
+									.Where(x => x.Name.ToString().Equals(jobname, StringComparison.CurrentCultureIgnoreCase))
 									.First()
 									.RowId;
 
@@ -494,7 +487,7 @@ namespace UltimateCombo
 							file.WriteLine($"Status Effect Count: {Service.ClientState.LocalPlayer.StatusList.Count(x => x != null)}");
 							if (Service.ClientState.LocalPlayer.StatusList.Length > 0)
 							{
-								foreach (Status? status in Service.ClientState.LocalPlayer.StatusList)
+								foreach (Dalamud.Game.ClientState.Statuses.Status status in Service.ClientState.LocalPlayer.StatusList)
 								{
 									file.WriteLine($"ID: {status.StatusId}, Count: {status.StackCount}, Source: {status.SourceId} Name: {ActionWatching.GetStatusName(status.StatusId)}");
 								}

@@ -132,8 +132,8 @@ namespace UltimateCombo.Combos.PvE
 								return DragonfireDive;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond) && HasEffect(Buffs.NastrondReady)
-								&& !WasLastAction(Nastrond))
+							if (IsEnabled(CustomComboPreset.DRG_ST_Geirskogul) && ActionReady(Nastrond)
+								&& HasEffect(Buffs.NastrondReady))
 							{
 								return Nastrond;
 							}
@@ -249,7 +249,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.DRG_AoE_Geirskogul) && ActionReady(Nastrond)
-							&& HasEffect(Buffs.NastrondReady) && !WasLastAbility(Nastrond))
+							&& HasEffect(Buffs.NastrondReady))
 						{
 							return Nastrond;
 						}

@@ -27,7 +27,6 @@ namespace UltimateCombo.Window.Tabs
 			}
 		}
 
-		public static int debugNum = 0;
 		internal static new unsafe void Draw()
 		{
 			IPlayerCharacter? LocalPlayer = Service.ClientState.LocalPlayer;
@@ -51,6 +50,8 @@ namespace UltimateCombo.Window.Tabs
 				ImGui.TextUnformatted($"Territory: {Service.ClientState.TerritoryType}");
 				ImGui.TextUnformatted($"Target Object Kind: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
 				ImGui.TextUnformatted($"Target is Battle Char: {Service.ClientState.LocalPlayer.TargetObject is IBattleChara}");
+				ImGui.TextUnformatted($"Mob Type: {CustomComboFunctions.GetMobType(CustomComboFunctions.CurrentTarget)}");
+				ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.IsBoss(CustomComboFunctions.CurrentTarget)}");
 				ImGui.TextUnformatted($"In Combat: {CustomComboFunctions.InCombat()}");
 				ImGui.TextUnformatted($"Combo Time: {Math.Round(CustomComboFunctions.ComboTimer, 2)}");
 				ImGui.TextUnformatted($"# of GCDs used: {ActionWatching.NumberOfGcdsUsed}");

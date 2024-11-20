@@ -15,7 +15,6 @@
     "eureka",
     "bozja"
   ],
-  "DalamudApiLevel": 10,
   "LoadRequiredState": 0,
   "LoadSync": false,
   "CanUnloadAsync": false,

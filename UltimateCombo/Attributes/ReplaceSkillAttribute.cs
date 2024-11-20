@@ -14,7 +14,7 @@ namespace UltimateCombo.Attributes
 		{
 			foreach (uint id in actionIDs)
 			{
-				if (ActionWatching.ActionSheet.TryGetValue(id, out Lumina.Excel.GeneratedSheets.Action? action) && action != null)
+				if (ActionWatching.ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) && action.IsPlayerAction)
 				{
 					ActionNames.Add($"{action.Name}");
 					ActionIcons.Add(action.Icon);

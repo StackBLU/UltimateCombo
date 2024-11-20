@@ -69,19 +69,19 @@ namespace UltimateCombo.Combos.PvP
 
 				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
 				{
-					if (LocalPlayer.ClassJob.Id == DRK.JobID && PlayerHealthPercentageHp() > 25
+					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && PlayerHealthPercentageHp() > 25
 						&& (IsOffCooldown(DRKPvP.Quietus) || WasLastAction(DRKPvP.Quietus)
 						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2)))
 					{
 						return actionID;
 					}
 
-					if (LocalPlayer.ClassJob.Id == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
+					if (LocalPlayer.ClassJob.Value.RowId == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
 					{
 						return actionID;
 					}
 
-					if (LocalPlayer.ClassJob.Id == VPR.JobID && actionID is VPRPvP.SnakeScales)
+					if (LocalPlayer.ClassJob.Value.RowId == VPR.JobID && actionID is VPRPvP.SnakeScales)
 					{
 						return actionID;
 					}
@@ -132,17 +132,17 @@ namespace UltimateCombo.Combos.PvP
 
 				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
 				{
-					if (LocalPlayer.ClassJob.Id == DRK.JobID && HasEffect(DRKPvP.Buffs.UndeadRedemption))
+					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && HasEffect(DRKPvP.Buffs.UndeadRedemption))
 					{
 						return actionID;
 					}
 
-					if (LocalPlayer.ClassJob.Id == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
+					if (LocalPlayer.ClassJob.Value.RowId == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
 					{
 						return actionID;
 					}
 
-					if (LocalPlayer.ClassJob.Id == VPR.JobID && actionID is VPRPvP.SnakeScales)
+					if (LocalPlayer.ClassJob.Value.RowId == VPR.JobID && actionID is VPRPvP.SnakeScales)
 					{
 						return actionID;
 					}
@@ -191,12 +191,12 @@ namespace UltimateCombo.Combos.PvP
 					return OriginalHook(11);
 				}
 
-				if (LocalPlayer.ClassJob.Id == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
+				if (LocalPlayer.ClassJob.Value.RowId == NIN.JobID && HasEffect(NINPvP.Buffs.Hidden))
 				{
 					return actionID;
 				}
 
-				if (LocalPlayer.ClassJob.Id == VPR.JobID && actionID is VPRPvP.SnakeScales)
+				if (LocalPlayer.ClassJob.Value.RowId == VPR.JobID && actionID is VPRPvP.SnakeScales)
 				{
 					return actionID;
 				}

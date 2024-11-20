@@ -2,7 +2,7 @@
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using UltimateCombo.Services;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
@@ -50,7 +50,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static unsafe bool IsActionUnlocked(uint id)
 		{
-			uint unlockLink = Svc.Data.GetExcelSheet<Action>().GetRow(id).UnlockLink;
+			uint unlockLink = Svc.Data.GetExcelSheet<Action>().GetRow(id).UnlockLink.RowId;
 			return unlockLink == 0 || UIState.Instance()->IsUnlockLinkUnlockedOrQuestCompleted(unlockLink);
 		}
 	}

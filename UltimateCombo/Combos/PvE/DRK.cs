@@ -67,7 +67,7 @@ namespace UltimateCombo.Combos.PvE
 				DRK_AoE_ManaSaver = new("DRK_AoE_ManaSaver", 6000),
 				DRK_BloodspillerGauge = new("DRK_BloodspillerGauge", 50),
 				DRK_QuietusGauge = new("DRK_QuietusGauge", 50),
-				DRK_AoE_Abyssal = new("DRK_AoE_Abyssal", 50),
+				DRK_AoE_Abyssal = new("DRK_AoE_Abyssal", 25),
 				DRK_ST_Invuln = new("DRK_ST_Invuln", 10),
 				DRK_AoE_Invuln = new("DRK_AoE_Invuln", 10);
 		}

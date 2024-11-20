@@ -1,5 +1,5 @@
 using ECommons.DalamudServices;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -30,6 +30,9 @@ namespace UltimateCombo.Attributes
 			MemeName = memeName;
 			MemeDescription = memeDescription;
 		}
+
+		internal static Dictionary<uint, ClassJob> ClassSheet = Service.DataManager.GetExcelSheet<ClassJob>()!
+			.ToDictionary(i => i.RowId, i => i);
 
 		/// <summary> Gets the display name. </summary>
 		public string FancyName { get; }
@@ -70,7 +73,7 @@ namespace UltimateCombo.Attributes
 
 		private static uint JobIDToClassJobCategory(byte jobID)
 		{
-			return Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID) ? Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Row : 0;
+			return Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID) ? Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Value.RowId : 0;
 		}
 
 		/// <summary> Gets the display order. </summary>
@@ -95,7 +98,7 @@ namespace UltimateCombo.Attributes
 
 		private static string JobIDToShorthand(byte key)
 		{
-			return key == 41 ? "VPR" : key == 0 ? "" : ClassJobs.TryGetValue(key, out ClassJob? job) ? job.Abbreviation.RawString : "";
+			return key == 41 ? "VPR" : key == 0 ? "" : ClassSheet.TryGetValue(key, out ClassJob job) ? job.Abbreviation.ToString() : "";
 		}
 
 		private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
@@ -112,10 +115,10 @@ namespace UltimateCombo.Attributes
 				return "Fisher";
 			}
 
-			if (ClassJobs.TryGetValue(key, out ClassJob? job))
+			if (ClassJobs.TryGetValue(key, out ClassJob job))
 			{
 				//Grab Category name for DOH/DOL, else the normal Name for the rest
-				string jobname = key is 08 or 16 ? job.ClassJobCategory.Value.Name : job.Name;
+				string jobname = key is 08 or 16 ? job.ClassJobCategory.Value.Name.ToString() : job.Name.ToString();
 				//Job names are all lowercase by default. This capitalizes based on regional rules
 				string cultureID = Service.ClientState.ClientLanguage switch
 				{
