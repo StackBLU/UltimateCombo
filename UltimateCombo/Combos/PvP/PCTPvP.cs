@@ -1,161 +1,124 @@
 ﻿using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class PCTPvP
 	{
 		public const uint
-			FireInRed = 39191,
-			AeroInGreen = 39192,
-			WaterInBlue = 39193,
-			BlizzardInCyan = 39194,
-			StoneInYellow = 39195,
-			ThunderInMagenta = 39196,
-			HolyInWhite = 39198,
-			CometInBlack = 39199,
+			Ruin3 = 29664,
+			Necrotize = 41483,
+			Ruin4 = 41482,
+			MountainBuster = 29671,
+			Slipstream = 29669,
+			CrimsonCyclone = 29667,
+			CrimsonStrike = 29668,
+			RadiantAegis = 29670,
 
-			CreatureMotif = 39204,
-			PomMotif = 39200,
-			WingMotif = 39201,
-			ClawMotif = 39202,
-			MawMotif = 39203,
+			SummonBahamut = 29673,
+			SummonPhoenix = 29678,
+			Deathflare = 41484,
+			BrandOfPurgatory = 41485,
 
-			LivingMuse = 39209,
-			PomMuse = 39205,
-			WingedMuse = 39206,
-			ClawedMused = 39207,
-			FangedMuse = 39208,
+			AstralImpulse = 29665,
+			FountainOfFire = 29666,
 
-			MogOfTheAges = 39782,
-			RetributionOfTheMadeen = 39783,
-
-			Smudge = 39210,
-			TemperaCoat = 39211,
-			TemperaGrassa = 39212,
-			SubtractivePalette = 39213,
-			AdventOfChoco = 39215,
-			StarPrism = 39216;
+			//Unused (Pet skills)
+			Megaflare = 29675,
+			Wyrmwave = 29676,
+			EverlastingFlight = 29680,
+			ScarletFlame = 29681;
 
 		public static class Buffs
 		{
 			public const ushort
-				SubtractivePalette = 4102,
+				FurtherRuin = 4399,
+				Slipstream = 3226,
+				CrimsonStrikeReady = 4400,
+				RadiantAegis = 3224,
 
-				PomMotif = 4105,
-				WingMotif = 4106,
-				ClawMotif = 4107,
-				MawMotif = 4108,
-
-				PomSketch = 4124,
-				WingSketch = 4125,
-				ClawSketch = 4126,
-				MawSketch = 4127,
-
-				MooglePortrait = 4103,
-				MadeenPortrait = 4104,
-
-				PomMuse = 4109,
-				WingedMuse = 4110,
-
-				Starstruck = 4118;
+				DreadwyrmTrance = 3228,
+				FirebirdTrance = 3229,
+				EverlastingFlight = 3230;
 		}
 
-		public static class Debuffs
+		internal class Debuffs
 		{
-			public const ushort
-				ClawedMuse = 4111,
-				FangedMused = 4112;
+			internal const ushort
+				Slipping = 3227,
+				ScarletFlame = 3231,
+				Revelation = 3232;
 		}
 
 		public static class Config
 		{
 			public static UserInt
-				PCTPvP_AutoSubtractive = new("PCTPvP_AutoSubtractive", 50);
+				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
 		}
 
-		internal class PCTPvP_Combo : CustomComboClass
+		/*internal class SMNPvP_Combo : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCTPvP_Combo;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMNPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is FireInRed && IsEnabled(CustomComboPreset.PCTPvP_Combo))
+				if ((actionID is Ruin3 or Ruin4) && IsEnabled(CustomComboPreset.SMNPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.PCTPvP_Motif) && ActionReady(OriginalHook(CreatureMotif))
-						&& !IsMoving && !InCombat()
-						&& (HasEffect(Buffs.PomSketch) || HasEffect(Buffs.WingSketch)
-						|| HasEffect(Buffs.ClawSketch) || HasEffect(Buffs.MawSketch)))
+					if (IsEnabled(CustomComboPreset.WARPvP_PrimalScream) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{
-						return OriginalHook(CreatureMotif);
-					}
-
-					if (IsEnabled(CustomComboPreset.PCTPvP_AutoSubtractive) && ActionReady(OriginalHook(SubtractivePalette)))
-					{
-						if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
-							|| PlayerHealthPercentageHp() < GetOptionValue(Config.PCTPvP_AutoSubtractive)))
-						{
-							return OriginalHook(SubtractivePalette);
-						}
-
-						if ((!IsMoving || (IsMoving && GetRemainingCharges(OriginalHook(HolyInWhite)) >= 1
-							&& PlayerHealthPercentageHp() >= GetOptionValue(Config.PCTPvP_AutoSubtractive)))
-							&& !HasEffect(Buffs.SubtractivePalette))
-						{
-							return OriginalHook(SubtractivePalette);
-						}
-					}
-
-					if (CanWeave(actionID))
-					{
-						if (IsEnabled(CustomComboPreset.PCTPvP_Tempera) && ActionReady(TemperaCoat))
-						{
-							return TemperaCoat;
-						}
+						return PrimalScream;
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (IsEnabled(CustomComboPreset.PCTPvP_StarPrism) && ActionReady(OriginalHook(AdventOfChoco))
-							&& HasEffect(Buffs.Starstruck) && (LocalPlayer.CurrentHp <= (LocalPlayer.MaxHp - 8000) ||
-							GetBuffRemainingTime(Buffs.Starstruck) < 5))
+						if (CanWeave(actionID))
 						{
-							return OriginalHook(AdventOfChoco);
+							if (IsEnabled(CustomComboPreset.SMNPvP_Deathflare) && IsEnabled(Deathflare))
+							{
+								return Deathflare;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_BrandOfPurgatory) && IsEnabled(BrandOfPurgatory))
+							{
+								return BrandOfPurgatory;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
+							{
+								return CrimsonCyclone;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Necrotize) && ActionReady(Necrotize)
+								&& !HasEffect(Buffs.FurtherRuin))
+							{
+								return Necrotize;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_RadiantAegis) && ActionReady(RadiantAegis))
+							{
+								return RadiantAegis;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.PCTPvP_Paint) && ActionReady(OriginalHook(HolyInWhite))
-							&& (IsMoving || GetRemainingCharges(OriginalHook(HolyInWhite)) == 2))
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream)
+							&& !IsMoving)
 						{
-							return OriginalHook(HolyInWhite);
+							return Slipstream;
 						}
 
-						if (IsEnabled(CustomComboPreset.PCTPvP_Portrait) && ActionReady(OriginalHook(MogOfTheAges))
-							&& (HasEffect(Buffs.MooglePortrait) || HasEffect(Buffs.MadeenPortrait))
-							&& (HasEffect(Buffs.PomMuse) || TargetHasEffect(Debuffs.ClawedMuse)
-							|| HasEffect(Buffs.WingMotif) || HasEffect(Buffs.MawMotif)))
+						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster))
 						{
-							return OriginalHook(MogOfTheAges);
+							return MountainBuster;
 						}
 
-						if (IsEnabled(CustomComboPreset.PCTPvP_Muse) && ActionReady(OriginalHook(LivingMuse))
-							&& (HasEffect(Buffs.PomMotif) || HasEffect(Buffs.WingMotif)
-							|| HasEffect(Buffs.ClawMotif) || HasEffect(Buffs.MawMotif)))
+						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonStrike) && HasEffect(Buffs.CrimsonStrikeReady))
 						{
-							return OriginalHook(LivingMuse);
+							return CrimsonCyclone;
 						}
-					}
-
-					if (IsEnabled(CustomComboPreset.PCTPvP_Motif) && ActionReady(OriginalHook(CreatureMotif))
-						&& !IsMoving
-						&& (HasEffect(Buffs.PomSketch) || HasEffect(Buffs.WingSketch)
-						|| HasEffect(Buffs.ClawSketch) || HasEffect(Buffs.MawSketch)))
-					{
-						return OriginalHook(CreatureMotif);
 					}
 				}
 
 				return actionID;
 			}
-		}
+		}*/
 	}
 }

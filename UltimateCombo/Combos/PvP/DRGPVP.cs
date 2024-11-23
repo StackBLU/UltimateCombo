@@ -1,78 +1,104 @@
-﻿using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class DRGPvP
 	{
 		public const uint
-			WheelingThrustCombo = 56,
 			RaidenThrust = 29486,
 			FangAndClaw = 29487,
 			WheelingThrust = 29488,
+			Drakesbane = 41449,
+
 			ChaoticSpring = 29490,
+
 			Geirskogul = 29491,
+			Nastrond = 29492,
+			Starcross = 41450,
+
 			HighJump = 29493,
-			ElusiveJump = 29494,
-			WyrmwindThrust = 29495,
 			HorridRoar = 29496,
 			HeavensThrust = 29489,
-			Nastrond = 29492,
-			Purify = 29056,
-			Guard = 29054;
 
+			ElusiveJump = 29494,
+			WyrmwindThrust = 29495,
+
+			SkyHigh = 29497,
+			SkyShatter = 29499;
 
 		public static class Buffs
 		{
 			public const ushort
-			FirstmindsFocus = 3178,
-			LifeOfTheDragon = 3177,
-			Heavensent = 3176;
+				LifeOfTheDragon = 3177,
+				NastrondReady = 4404,
+				StarcrossReady = 4302,
 
+				Heavensent = 3176,
 
+				ElusiveJump = 3209,
+				FirstmindsFocus = 3178,
+
+				SkyHigh = 3180,
+				SkyShatter = 3183;
 		}
-		internal static class Config
+
+		public static class Debuffs
 		{
-
+			public const ushort
+				HorridRoad = 3179;
 		}
 
-		internal class DRGPvP_Burst : CustomComboClass
+		public static class Config
+		{
+			public static UserInt
+				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
+		}
+
+		internal class DRGPvP_Combo : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRGPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is RaidenThrust or FangAndClaw or WheelingThrust) && IsEnabled(CustomComboPreset.DRGPvP_Combo))
+				if ((actionID is RaidenThrust or FangAndClaw or WheelingThrust or Drakesbane or HeavensThrust)
+					&& IsEnabled(CustomComboPreset.DRGPvP_Combo))
 				{
+					if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpring) && ActionReady(ChaoticSpring)
+						&& LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 12000 && InActionRange(ChaoticSpring))
+					{
+						return ChaoticSpring;
+					}
+
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && HasEffect(Buffs.LifeOfTheDragon)
-							&& (GetBuffRemainingTime(Buffs.LifeOfTheDragon) < 2 || GetTargetHPPercent() <= 50))
-						{
-							return Nastrond;
-						}
-
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.DRGPvP_Roar) && ActionReady(HorridRoar) && WasLastAbility(HighJump))
-							{
-								return HorridRoar;
-							}
-
 							if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && ActionReady(Geirskogul))
 							{
 								return Geirskogul;
 							}
+
+							if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && HasEffect(Buffs.NastrondReady) && GetBuffRemainingTime(Buffs.NastrondReady) < 1)
+							{
+								return Nastrond;
+							}
+
+							if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && ActionReady(HighJump))
+							{
+								return HighJump;
+							}
+
+							if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && ActionReady(HorridRoar) && WasLastAbility(HighJump))
+							{
+								return HorridRoar;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.DRGPvP_Wyrmwind) && HasEffect(Buffs.FirstmindsFocus)
-							&& (GetBuffRemainingTime(Buffs.FirstmindsFocus) < 2 || MaxActionRange(WyrmwindThrust)))
+						if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus)
+							&& (MaxActionRange(WyrmwindThrust) || (HasBattleTarget() && GetTargetDistance() > (GetBuffRemainingTime(Buffs.FirstmindsFocus) / 100) + 5)))
 						{
 							return WyrmwindThrust;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRGPvP_Chaotic) && ActionReady(ChaoticSpring) && PlayerHealthPercentageHp() <= 75)
-						{
-							return ChaoticSpring;
 						}
 					}
 				}

@@ -1,77 +1,124 @@
-﻿using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.ComboHelper.Functions;
 
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class BLMPvP
 	{
 		public const uint
-			Fire = 29649,
-			Blizzard = 29653,
-			Burst = 29657,
-			Paradox = 29663,
-			NightWing = 29659,
-			AetherialManipulation = 29660,
-			Superflare = 29661,
-			Fire4 = 29650,
-			Flare = 29651,
-			Blizzard4 = 29654,
-			Freeze = 29655,
-			Foul = 29371,
-			SoulResonance = 29662;
+			Ruin3 = 29664,
+			Necrotize = 41483,
+			Ruin4 = 41482,
+			MountainBuster = 29671,
+			Slipstream = 29669,
+			CrimsonCyclone = 29667,
+			CrimsonStrike = 29668,
+			RadiantAegis = 29670,
+
+			SummonBahamut = 29673,
+			SummonPhoenix = 29678,
+			Deathflare = 41484,
+			BrandOfPurgatory = 41485,
+
+			AstralImpulse = 29665,
+			FountainOfFire = 29666,
+
+			//Unused (Pet skills)
+			Megaflare = 29675,
+			Wyrmwave = 29676,
+			EverlastingFlight = 29680,
+			ScarletFlame = 29681;
 
 		public static class Buffs
 		{
 			public const ushort
-				AstralFire2 = 3212,
-				AstralFire3 = 3213,
-				UmbralIce2 = 3214,
-				UmbralIce3 = 3215,
-				Burst = 3221,
-				SoulResonance = 3222,
-				Polyglot = 3169,
-				Swiftcast = 1325;
+				FurtherRuin = 4399,
+				Slipstream = 3226,
+				CrimsonStrikeReady = 4400,
+				RadiantAegis = 3224,
+
+				DreadwyrmTrance = 3228,
+				FirebirdTrance = 3229,
+				EverlastingFlight = 3230;
 		}
 
-		public static class Debuffs
+		internal class Debuffs
 		{
-			public const ushort
-				AstralWarmth = 3216,
-				UmbralFreeze = 3217,
-				Burns = 3218,
-				DeepFreeze = 3219;
+			internal const ushort
+				Slipping = 3227,
+				ScarletFlame = 3231,
+				Revelation = 3232;
 		}
 
-		internal class BLMPvP_Combo : CustomComboClass
+		public static class Config
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BLMPvP_Combo;
+			public static UserInt
+				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
+		}
+
+		/*internal class SMNPvP_Combo : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMNPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Fire or Blizzard) && IsEnabled(CustomComboPreset.BLMPvP_Combo))
+				if ((actionID is Ruin3 or Ruin4) && IsEnabled(CustomComboPreset.SMNPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.BLMPvP_SoulResonance) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
+					if (IsEnabled(CustomComboPreset.WARPvP_PrimalScream) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{
-						return SoulResonance;
+						return PrimalScream;
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (IsEnabled(CustomComboPreset.BLMPvP_Foul)
-							&& HasEffect(Buffs.Polyglot) && GetBuffRemainingTime(Buffs.Polyglot) < 5)
+						if (CanWeave(actionID))
 						{
-							return Foul;
+							if (IsEnabled(CustomComboPreset.SMNPvP_Deathflare) && IsEnabled(Deathflare))
+							{
+								return Deathflare;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_BrandOfPurgatory) && IsEnabled(BrandOfPurgatory))
+							{
+								return BrandOfPurgatory;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
+							{
+								return CrimsonCyclone;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Necrotize) && ActionReady(Necrotize)
+								&& !HasEffect(Buffs.FurtherRuin))
+							{
+								return Necrotize;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_RadiantAegis) && ActionReady(RadiantAegis))
+							{
+								return RadiantAegis;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.BLMPvP_Burst) && ActionReady(Burst) && HasEffect(Buffs.Swiftcast)
-							&& InActionRange(Burst))
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream)
+							&& !IsMoving)
 						{
-							return Burst;
+							return Slipstream;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster))
+						{
+							return MountainBuster;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonStrike) && HasEffect(Buffs.CrimsonStrikeReady))
+						{
+							return CrimsonCyclone;
 						}
 					}
 				}
 
 				return actionID;
 			}
-		}
+		}*/
 	}
 }

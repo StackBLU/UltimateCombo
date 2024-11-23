@@ -1,131 +1,124 @@
-﻿using ECommons.Logging;
-using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.ComboHelper.Functions;
 
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class RDMPvP
 	{
 		public const uint
-			EnchantedCombo = 29689,
+			Ruin3 = 29664,
+			Necrotize = 41483,
+			Ruin4 = 41482,
+			MountainBuster = 29671,
+			Slipstream = 29669,
+			CrimsonCyclone = 29667,
+			CrimsonStrike = 29668,
+			RadiantAegis = 29670,
 
-			Resolution = 29695,
-			CorpsACorps = 29699,
-			Displacement = 29700,
+			SummonBahamut = 29673,
+			SummonPhoenix = 29678,
+			Deathflare = 41484,
+			BrandOfPurgatory = 41485,
 
-			Verstone = 29683,
-			Veraero3 = 29684,
+			AstralImpulse = 29665,
+			FountainOfFire = 29666,
 
-			Verfire = 29686,
-			Verthunder3 = 29687,
-
-			MagickBarrier = 29697,
-
-			BlackShift = 29702,
-
-			SouthernCross = 29704;
+			//Unused (Pet skills)
+			Megaflare = 29675,
+			Wyrmwave = 29676,
+			EverlastingFlight = 29680,
+			ScarletFlame = 29681;
 
 		public static class Buffs
 		{
 			public const ushort
-				Manafication = 3243,
-				WhiteShift = 3245,
-				BlackShift = 3246,
-				Dualcast = 1393,
-				EnchantedRiposte = 3234,
-				EnchantedRedoublement = 3236,
-				EnchantedZwerchhau = 3235,
-				VermilionRadiance = 3233,
-				MagickBarrier = 3240;
+				FurtherRuin = 4399,
+				Slipstream = 3226,
+				CrimsonStrikeReady = 4400,
+				RadiantAegis = 3224,
+
+				DreadwyrmTrance = 3228,
+				FirebirdTrance = 3229,
+				EverlastingFlight = 3230;
 		}
 
-		public static class Debuffs
+		internal class Debuffs
 		{
-			public const ushort
-				Monomachy = 3242;
+			internal const ushort
+				Slipping = 3227,
+				ScarletFlame = 3231,
+				Revelation = 3232;
 		}
 
 		public static class Config
 		{
-
+			public static UserInt
+				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
 		}
 
-		internal class RDMPvP_Combo : CustomComboClass
+		/*internal class SMNPvP_Combo : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDMPvP_Combo;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMNPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Verstone && IsEnabled(CustomComboPreset.RDMPvP_Combo))
+				if ((actionID is Ruin3 or Ruin4) && IsEnabled(CustomComboPreset.SMNPvP_Combo))
 				{
+					if (IsEnabled(CustomComboPreset.WARPvP_PrimalScream) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
+					{
+						return PrimalScream;
+					}
 
-					PluginLog.Debug(GetLimitBreakCurrentValue() + " " + GetLimitBreakMaxValue() + " ");
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (!HasEffect(Buffs.BlackShift))
+						if (CanWeave(actionID))
 						{
-							return OriginalHook(BlackShift);
-						}
-
-						if (IsEnabled(CustomComboPreset.RDMPvP_BarrierFrazzle) && ActionReady(OriginalHook(MagickBarrier))
-							&& InMeleeRange())
-						{
-							return OriginalHook(MagickBarrier);
-						}
-
-						if (!HasEffect(Buffs.Dualcast))
-						{
-							if (HasEffect(Buffs.VermilionRadiance))
+							if (IsEnabled(CustomComboPreset.SMNPvP_Deathflare) && IsEnabled(Deathflare))
 							{
-								if (ActionReady(Displacement) && !HasEffect(Buffs.Manafication) && InActionRange(Displacement))
-								{
-									return Displacement;
-								}
-
-								if (GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
-								{
-									if (IsEnabled(CustomComboPreset.RDMPvP_Resolution) && ActionReady(Resolution))
-									{
-										return OriginalHook(Resolution);
-									}
-
-									if (IsEnabled(CustomComboPreset.RDMPvP_Cross))
-									{
-										return OriginalHook(SouthernCross);
-									}
-								}
-
-								if (InActionRange(OriginalHook(EnchantedCombo)))
-								{
-									return OriginalHook(EnchantedCombo);
-								}
+								return Deathflare;
 							}
 
-							if (ActionReady(OriginalHook(EnchantedCombo)))
+							if (IsEnabled(CustomComboPreset.SMNPvP_BrandOfPurgatory) && IsEnabled(BrandOfPurgatory))
 							{
-								if (ActionReady(CorpsACorps)
-									&& (!TargetHasEffect(Debuffs.Monomachy) || !InActionRange(OriginalHook(EnchantedCombo))))
-								{
-									return CorpsACorps;
-								}
-
-								if (IsEnabled(CustomComboPreset.RDMPvP_Resolution) && ActionReady(OriginalHook(Resolution))
-									&& GetLimitBreakCurrentValue() <= GetLimitBreakMaxValue() - 500
-									&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience))
-								{
-									return OriginalHook(Resolution);
-								}
-
-								if (InActionRange(OriginalHook(EnchantedCombo)))
-								{
-									return OriginalHook(EnchantedCombo);
-								}
+								return BrandOfPurgatory;
 							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
+							{
+								return CrimsonCyclone;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_Necrotize) && ActionReady(Necrotize)
+								&& !HasEffect(Buffs.FurtherRuin))
+							{
+								return Necrotize;
+							}
+
+							if (IsEnabled(CustomComboPreset.SMNPvP_RadiantAegis) && ActionReady(RadiantAegis))
+							{
+								return RadiantAegis;
+							}
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream)
+							&& !IsMoving)
+						{
+							return Slipstream;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster))
+						{
+							return MountainBuster;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonStrike) && HasEffect(Buffs.CrimsonStrikeReady))
+						{
+							return CrimsonCyclone;
 						}
 					}
 				}
 
 				return actionID;
 			}
-		}
+		}*/
 	}
 }

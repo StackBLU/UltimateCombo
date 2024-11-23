@@ -59,8 +59,7 @@ namespace UltimateCombo.Data
 
 				LastAction = header.ActionId;
 
-				_ = ActionSheet.TryGetValue(header.ActionId, out Lumina.Excel.Sheets.Action sheet);
-				if (sheet.IsPlayerAction)
+				if (ActionSheet.TryGetValue(header.ActionId, out var sheet))
 				{
 					switch (sheet.ActionCategory.Value.RowId)
 					{

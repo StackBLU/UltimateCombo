@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
+using ECommons;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using Lumina.Excel.Sheets;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Numerics;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
+using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
 
 namespace UltimateCombo.ComboHelper.Functions
@@ -199,8 +201,22 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool TargetNeedsPositionals()
 		{
-			return HasBattleTarget() && ActionWatching.BNpcSheet.TryGetValue(CurrentTarget.DataId,
-				out _);
+			if (!HasBattleTarget())
+			{
+				return false;
+			}
+
+			if (TargetHasEffectAny(3808))
+			{
+				return false; // Directional Disregard Effect (Patch 7.01)
+			}
+
+			if (Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == CurrentTarget.DataId, out BNpcBase bnpc) && !bnpc.IsOmnidirectional)
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		public static void TargetObject(IGameObject? target)

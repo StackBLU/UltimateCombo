@@ -6,24 +6,42 @@ namespace UltimateCombo.Combos.PvP
 	internal static class WHMPvP
 	{
 		public const uint
-			Glare = 29223,
+			Glare3 = 29223,
 			Cure2 = 29224,
-			Cure3 = 29225,
+
 			AfflatusMisery = 29226,
 			Aquaveil = 29227,
 			MiracleOfNature = 29228,
-			SeraphStrike = 29229;
 
-		internal class Buffs
+			SeraphStrike = 29229,
+			Cure3 = 29225,
+			Glare4 = 41499,
+
+			AfflatusPurgation = 29230;
+
+		public static class Buffs
+		{
+			public const ushort
+				Aquaveil = 3086,
+
+				Protect = 1415,
+				SacredSight = 4326,
+				Cure3Ready = 3083,
+
+				Temperance = 2037,
+				TemperanceRegen = 2038;
+		}
+
+		internal class Debuffs
 		{
 			internal const ushort
-				Cure3Ready = 3083;
+				MiracleOfNature = 000000000000;
 		}
 
 		public static class Config
 		{
 			public static UserInt
-				WHMPvP_Polymorph = new("WHMPvP_Polymorph", 30),
+				WHMPvP_MiracleOfNature = new("WHMPvP_MiracleOfNature", 30),
 				WHMPvP_Cure3 = new("WHMPvP_Cure3", 40);
 		}
 
@@ -33,14 +51,14 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Glare && IsEnabled(CustomComboPreset.WHMPvP_Combo))
+				if (actionID is Glare3 && IsEnabled(CustomComboPreset.WHMPvP_Combo))
 				{
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.WHMPvP_Polymorph) && ActionReady(MiracleOfNature)
-								&& GetTargetHPPercent() < GetOptionValue(Config.WHMPvP_Polymorph))
+							if (IsEnabled(CustomComboPreset.WHMPvP_MiracleOfNature) && ActionReady(MiracleOfNature)
+								&& GetTargetHPPercent() < GetOptionValue(Config.WHMPvP_MiracleOfNature))
 							{
 								return MiracleOfNature;
 							}
@@ -50,13 +68,13 @@ namespace UltimateCombo.Combos.PvP
 								return Aquaveil;
 							}
 
-							if (IsEnabled(CustomComboPreset.WHMPvP_Seraph) && ActionReady(SeraphStrike) && InMeleeRange())
+							if (IsEnabled(CustomComboPreset.WHMPvP_SeraphStrike) && ActionReady(SeraphStrike))
 							{
 								return SeraphStrike;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.WHMPvP_Misery) && ActionReady(AfflatusMisery))
+						if (IsEnabled(CustomComboPreset.WHMPvP_AfflatusMisery) && ActionReady(AfflatusMisery))
 						{
 							return AfflatusMisery;
 						}
@@ -67,6 +85,11 @@ namespace UltimateCombo.Combos.PvP
 						|| (GetTargetHPPercent() < GetOptionValue(Config.WHMPvP_Cure3) && HasFriendlyTarget())))
 					{
 						return Cure3;
+					}
+
+					if (IsEnabled(CustomComboPreset.WHMPvP_SeraphStrike) && HasEffect(Buffs.SacredSight))
+					{
+						return Glare4;
 					}
 				}
 

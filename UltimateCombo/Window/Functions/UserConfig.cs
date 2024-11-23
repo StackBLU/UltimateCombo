@@ -1231,6 +1231,15 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
 			}
 
+			#region PvP
+
+			if (preset is CustomComboPreset.ASTPvP_AspectedBenefic && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, ASTPvP.Config.ASTPvP_AspectedBenefic, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
+
 			#endregion
 
 			#region BLACK MAGE
@@ -1321,13 +1330,12 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.DRKPvP_Shadowbringer && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_ShadowbringerHP, "Triggers when you have more than this % of HP", 150, SliderIncrements.Fives);
-				UserConfig.DrawSliderInt(0, 10000, DRKPvP.Config.DRKPvP_ShadowbringerMP, "Triggers when you have more than this amount of MP", 150, SliderIncrements.Hundreds);
+				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_Shadowbringer, "Triggers when you have more than this % of HP", 150, SliderIncrements.Fives);
 			}
 
-			if (preset is CustomComboPreset.DRKPvP_Quietus && enabled)
+			if (preset is CustomComboPreset.DRKPvP_Impalement && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_Quietus, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, DRKPvP.Config.DRKPvP_Impalement, "Triggers when you have less than or equal to this % of HP", 150, SliderIncrements.Fives);
 			}
 
 			#endregion
@@ -1383,15 +1391,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region PvP
 
-			if (preset is CustomComboPreset.NINPvP_Huton && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, NINPvP.Config.NINPvP_Huton, "Triggers when you have more than this % of HP", 150, SliderIncrements.Fives);
-			}
 
-			if (preset is CustomComboPreset.NINPvP_Meisui && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, NINPvP.Config.NINPvP_Meisui, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
-			}
 
 			#endregion
 
@@ -1399,10 +1399,10 @@ namespace UltimateCombo.Window.Functions
 
 			#region PICTOMANCER
 
-			if (preset == CustomComboPreset.PCTPvP_AutoSubtractive && enabled)
+			/*if (preset == CustomComboPreset.PCTPvP_AutoSubtractive && enabled)
 			{
 				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoSubtractive, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
-			}
+			}*/
 
 			#endregion
 
@@ -1437,6 +1437,15 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
+
+			#region PvP
+
+			if (preset is CustomComboPreset.PLDPvP_Phalanx && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, PLDPvP.Config.PLDPvP_Phalanx, "Triggers when you have less than or equal to this % of HP, or after using Guardian", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
 
 			#endregion
 
@@ -1543,6 +1552,15 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
 
+			#region PvP
+
+			if (preset is CustomComboPreset.WARPvP_Bloodwhetting && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, WARPvP.Config.WARPvP_Bloodwhetting, "Triggers when you have less than or equal to this % of HP", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
+
 			#endregion
 
 			#region WHITE MAGE
@@ -1550,11 +1568,6 @@ namespace UltimateCombo.Window.Functions
 
 
 			#region PvP
-
-			if (preset is CustomComboPreset.WHMPvP_Polymorph && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, WHMPvP.Config.WHMPvP_Polymorph, "Target % HP", 150, SliderIncrements.Fives);
-			}
 
 			if (preset is CustomComboPreset.WHMPvP_Cure3 && enabled)
 			{

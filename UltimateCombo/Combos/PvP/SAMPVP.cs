@@ -5,33 +5,49 @@ namespace UltimateCombo.Combos.PvP
 	internal static class SAMPvP
 	{
 		public const uint
-			KashakCombo = 58,
 			Yukikaze = 29523,
 			Gekko = 29524,
 			Kasha = 29525,
+
+			OgiNamikiri = 29530,
+			KaeshiNamikiri = 29531,
+
+			Mineuchi = 29535,
+
+			Soten = 29532,
 			Hyosetsu = 29526,
 			Mangetsu = 29527,
 			Oka = 29528,
-			OgiNamikiri = 29530,
-			Soten = 29532,
+
 			Chiten = 29533,
-			Mineuchi = 29535,
+			Zanshin = 41577,
+
 			MeikyoShisui = 29536,
-			Midare = 29529,
-			Kaeshi = 29531,
+			TendoSetsugekka = 41454,
+			TendoKaeshiSetsugekka = 41455,
+
 			Zantetsuken = 29537;
 
 		public static class Buffs
 		{
 			public const ushort
 				Kaiten = 3201,
-				Midare = 3203;
+
+				Chiten = 1240,
+				ZanshinReady = 1318,
+
+				MeikyoShisui = 1320,
+				TendoSetsugekkaReady = 3203,
+
+				OgiNamikiri = 3199,
+				KaeshiNamikiri = 3200;
 		}
 
-		public static class Debuffs
+		internal class Debuffs
 		{
-			public const ushort
-				Kuzushi = 3202;
+			internal const ushort
+				Debana = 4306,
+				Kuzushi = 0000000000;
 		}
 
 		internal class SAMPvP_Combo : CustomComboClass
@@ -54,8 +70,7 @@ namespace UltimateCombo.Combos.PvP
 						if (CanWeave(actionID))
 						{
 							if (IsEnabled(CustomComboPreset.SAMPvP_Chiten) && ActionReady(Chiten)
-								&& (GetLimitBreakCurrentValue() <= GetLimitBreakMaxValue() * 0.75
-								|| GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()))
+								&& (GetLimitBreakCurrentValue() <= GetLimitBreakMaxValue() * 0.75 || GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()))
 							{
 								return Chiten;
 							}
@@ -66,7 +81,7 @@ namespace UltimateCombo.Combos.PvP
 								return Soten;
 							}
 
-							if (IsEnabled(CustomComboPreset.SAMPvP_Meikyo) && ActionReady(MeikyoShisui))
+							if (IsEnabled(CustomComboPreset.SAMPvP_MeikyoShisui) && ActionReady(MeikyoShisui))
 							{
 								return MeikyoShisui;
 							}
@@ -78,25 +93,21 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SAMPvP_Soten) && ActionReady(Soten) && !HasEffect(Buffs.Kaiten)
-							&& (!InActionRange(OgiNamikiri) || !HasBattleTarget()))
+						if (IsEnabled(CustomComboPreset.SAMPvP_Soten) && ActionReady(Soten) && !HasEffect(Buffs.Kaiten) && !InActionRange(OgiNamikiri))
 						{
 							return Soten;
 						}
 
-						if (!WasLastAction(Soten))
+						if (IsEnabled(CustomComboPreset.SAMPvP_MeikyoShisui)
+							&& (HasEffect(Buffs.TendoSetsugekkaReady) || lastComboMove is TendoSetsugekka) && InActionRange(TendoSetsugekka))
 						{
-							if (IsEnabled(CustomComboPreset.SAMPvP_Meikyo) && HasEffect(Buffs.Midare)
-								&& InActionRange(Midare))
-							{
-								return Midare;
-							}
+							return OriginalHook(TendoSetsugekka);
+						}
 
-							if (IsEnabled(CustomComboPreset.SAMPvP_Namikiri) && ActionReady(OriginalHook(OgiNamikiri))
-								&& InActionRange(OgiNamikiri))
-							{
-								return OriginalHook(OgiNamikiri);
-							}
+						if (IsEnabled(CustomComboPreset.SAMPvP_Namikiri)
+							&& (ActionReady(OgiNamikiri) || lastComboMove is OgiNamikiri) && InActionRange(OgiNamikiri))
+						{
+							return OriginalHook(OgiNamikiri);
 						}
 					}
 				}

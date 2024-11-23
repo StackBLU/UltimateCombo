@@ -5,27 +5,48 @@ namespace UltimateCombo.Combos.PvP
 	internal static class SCHPvP
 	{
 		public const uint
-			Broil = 29231,
+			Broil4 = 29231,
+
 			Adloquium = 29232,
 			Biolysis = 29233,
 			DeploymentTactics = 29234,
-			Mummification = 29235,
 			Expedient = 29236,
-			Seraph = 29237,
-			Consolation = 29238;
 
-		internal class Buffs
+			ChainStratagem = 29716,
+
+			SummonSeraph = 29237,
+			SeraphicVeil = 29240,
+
+			Seraphism = 41502,
+			SeraphicHalo = 41500,
+			Accession = 41501;
+
+		public static class Buffs
 		{
-			internal const ushort
+			public const ushort
+				Galvanize = 3087,
 				Catalyze = 3088,
+
+				Expedience = 3092,
+				DesperateMeasures = 3093,
 				Recitation = 3094,
-				Seraph = 3095;
+
+				SummonSeraph = 3095,
+				SeraphicIllumination = 4402,
+				SeraphicVeil = 3097,
+
+				Seraphism = 4327,
+				SeraphFlight = 3096,
+				Consolation = 3098;
 		}
+
 		internal class Debuffs
 		{
 			internal const ushort
 				Biolysis = 3089,
-				Biolytic = 3090;
+				Biolytic = 3090,
+
+				ChainStratagem = 1406;
 		}
 
 		internal class SCHPvP_Combo : CustomComboClass
@@ -34,63 +55,23 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Broil && IsEnabled(CustomComboPreset.SCHPvP_Combo))
+				if ((actionID is Broil4 or SeraphicHalo) && IsEnabled(CustomComboPreset.SCHPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.SCHPvP_Seraph) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-						&& !HasEffect(Buffs.Recitation) && GetCooldownRemainingTime(Expedient) > 10 && GetCooldownRemainingTime(Biolysis) <= 5
-						&& GetBuffRemainingTime(Buffs.Catalyze) >= 10)
+					if (IsEnabled(CustomComboPreset.SCHPvP_ChainStratagem) && ActionReady(ChainStratagem)
+						&& TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						return Seraph;
+						return ChainStratagem;
 					}
+				}
 
+				if (actionID is Biolysis && IsEnabled(CustomComboPreset.SCHPvP_Biolysis))
+				{
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (CanWeave(actionID))
-						{
-							if (IsEnabled(CustomComboPreset.SCHPvP_Expedient) && ActionReady(Expedient) && !HasEffect(Buffs.Recitation)
-								&& GetBuffRemainingTime(Buffs.Catalyze) >= 10)
-							{
-								return Expedient;
-							}
-
-							if (IsEnabled(CustomComboPreset.SCHPvP_Deploy) && ActionReady(DeploymentTactics)
-								&& TargetHasEffect(Debuffs.Biolysis) && GetDebuffRemainingTime(Debuffs.Biolytic) >= 10
-								&& !WasLastAction(DeploymentTactics))
-							{
-								return DeploymentTactics;
-							}
-
-							if (IsEnabled(CustomComboPreset.SCHPvP_Mummy) && ActionReady(Mummification) && InActionRange(Mummification))
-							{
-								return Mummification;
-							}
-
-							if (IsEnabled(CustomComboPreset.SCHPvP_Seraph) && ActionReady(Consolation) && HasEffect(Buffs.Seraph))
-							{
-								return Consolation;
-							}
-						}
+						return actionID;
 					}
 
-					if (IsEnabled(CustomComboPreset.SCHPvP_Adloquium) && ActionReady(Adloquium)
-						&& (!HasEffect(Buffs.Catalyze) || GetBuffRemainingTime(Buffs.Catalyze) <= 1 || !InCombat())
-						&& !HasEffect(Buffs.Recitation))
-					{
-						return Adloquium;
-					}
-
-					if (IsEnabled(CustomComboPreset.SCHPvP_Expedient) && ActionReady(Expedient) && GetBuffRemainingTime(Buffs.Catalyze) >= 10
-						&& !InCombat())
-					{
-						return Expedient;
-					}
-
-					if (IsEnabled(CustomComboPreset.SCHPvP_Bio) && GetBuffRemainingTime(Buffs.Catalyze) >= 1
-						&& (GetCooldownRemainingTime(Expedient) >= 2 || HasEffect(Buffs.Recitation))
-						&& (ActionReady(Biolysis) || GetCooldownRemainingTime(Biolysis) <= 2.4))
-					{
-						return Biolysis;
-					}
+					return OriginalHook(11);
 				}
 
 				return actionID;

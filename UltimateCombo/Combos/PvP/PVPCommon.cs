@@ -47,8 +47,7 @@ namespace UltimateCombo.Combos.PvP
 		}
 
 		internal static readonly List<uint>
-			MovmentSkills = [WARPvP.Onslaught, NINPvP.Shukuchi, DNCPvP.EnAvant, MNKPvP.ThunderClap, RDMPvP.CorpsACorps, RDMPvP.Displacement,
-				SGEPvP.Icarus, RPRPvP.HellsIngress, RPRPvP.Regress, BRDPvP.RepellingShot, BLMPvP.AetherialManipulation, DRGPvP.ElusiveJump, GNBPvP.RoughDivide],
+			MovmentSkills = [WARPvP.Onslaught],
 			GlobalSkills = [Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint];
 
 		internal class GlobalEmergencyHeals : CustomComboClass
@@ -70,7 +69,7 @@ namespace UltimateCombo.Combos.PvP
 				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
 				{
 					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && PlayerHealthPercentageHp() > 25
-						&& (IsOffCooldown(DRKPvP.Quietus) || WasLastAction(DRKPvP.Quietus)
+						&& (IsOffCooldown(DRKPvP.Impalement) || WasLastAction(DRKPvP.Impalement)
 						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2)))
 					{
 						return actionID;

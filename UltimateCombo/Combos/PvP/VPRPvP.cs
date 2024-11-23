@@ -5,45 +5,69 @@ namespace UltimateCombo.Combos.PvP
 	internal static class VPRPvP
 	{
 		public const uint
-				SteelFangs = 39157,
-				HuntersSting = 39159,
-				BarbarousBite = 39161,
+			SteelFangs = 39157,
+			HuntersSting = 39159,
+			BarbarousBite = 39161,
+			PiercingFangs = 39158,
+			SwiftskinsSting = 39160,
+			RavenousBite = 39163,
 
-				PiercingFangs = 39158,
-				SwiftskinsSting = 39160,
-				RavenousBite = 39163,
+			SerpentsTail = 39183,
+			DeathRattle = 39174,
+			TwinfangBite = 39175,
+			TwinbloodBite = 39176,
+			UncoiledTwinfang = 39177,
+			UncoiledTwinblood = 39178,
 
-				HuntersSnap = 39166,
+			Bloodcoil = 39166,
+			SanguineFeast = 39167,
 
-				SerpentsTail = 39183,
+			UncoiledFury = 39168,
+			RattlingCoil = 39189,
 
-				UncoiledFury = 39168,
+			SnakeScales = 39185,
+			Backlash = 39186,
 
-				Slither = 39184,
-				SnakeScales = 39185,
-				RattlingCoil = 39189,
+			Slither = 39184,
 
-				FourthGeneration = 39172,
-				Ouroboros = 39173,
+			FirstGeneration = 39169,
+			FirstLegacy = 39179,
+			SecondGeneration = 39170,
+			SecondLegacy = 39180,
+			ThirdGeneration = 39171,
+			ThirdLegacy = 39181,
+			FourthGeneration = 39172,
+			FourthLegacy = 39182,
+			Ouroboros = 39173,
 
-				WorldSwallower = 39190;
+			WorldSwallower = 39190;
 
 		public static class Buffs
 		{
 			public const ushort
-				Reawakened = 4094,
 				Slither = 4095,
-				SnakesBane = 4098;
+
+				DeathRattleReady = 4085,
+				TwinfangBiteReady = 4086,
+				TwinbloodBiteReady = 4087,
+				UncoiledTwinfangReady = 4088,
+				UncoiledTwinbloodReady = 4089,
+				FirstGenerationReady = 4090,
+				SecondGenerationReady = 4091,
+				ThirdGenerationReady = 4092,
+				FourthGenerationReady = 4093,
+
+				HardnenedScales = 4096,
+				ArmoredScales = 4097,
+				SnakesBane = 0000000000000000,
+
+				Reawakened = 4094;
 		}
 
 		public static class Debuffs
 		{
-
-		}
-
-		public static class Config
-		{
-
+			public const ushort
+				NoxiousGash = 4099;
 		}
 
 		internal class VPRPvP_Combo : CustomComboClass
@@ -88,12 +112,6 @@ namespace UltimateCombo.Combos.PvP
 						{
 							if (WasLastWeaponskill(FourthGeneration))
 							{
-								if (IsEnabled(CustomComboPreset.VPRPvP_Slither) && ActionReady(Slither) && !HasEffect(Buffs.Slither)
-									&& HasTarget())
-								{
-									return Slither;
-								}
-
 								return OriginalHook(Ouroboros);
 							}
 
@@ -102,24 +120,12 @@ namespace UltimateCombo.Combos.PvP
 
 						if (IsEnabled(CustomComboPreset.VPRPvP_UncoiledFury) && ActionReady(UncoiledFury))
 						{
-							if (IsEnabled(CustomComboPreset.VPRPvP_Slither) && ActionReady(Slither) && !HasEffect(Buffs.Slither)
-								&& InActionRange(OriginalHook(HuntersSnap)) && HasTarget())
-							{
-								return Slither;
-							}
-
 							return UncoiledFury;
 						}
 
-						if (IsEnabled(CustomComboPreset.VPRPvP_HuntersSnap) && ActionReady(OriginalHook(HuntersSnap)))
+						if (IsEnabled(CustomComboPreset.VPRPvP_HuntersSnap) && ActionReady(OriginalHook(Bloodcoil)))
 						{
-							if (IsEnabled(CustomComboPreset.VPRPvP_Slither) && ActionReady(Slither) && !HasEffect(Buffs.Slither)
-								&& HasTarget())
-							{
-								return Slither;
-							}
-
-							return OriginalHook(HuntersSnap);
+							return OriginalHook(Bloodcoil);
 						}
 					}
 				}

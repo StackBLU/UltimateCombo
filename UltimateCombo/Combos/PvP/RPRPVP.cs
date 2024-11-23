@@ -4,45 +4,55 @@ namespace UltimateCombo.Combos.PvP
 {
 	internal static class RPRPvP
 	{
-		internal const uint
+		public const uint
 			Slice = 29538,
 			WaxingSlice = 29539,
 			InfernalSlice = 29540,
-			VoidReaping = 29543,
-			CrossReaping = 29544,
+
 			HarvestMoon = 29545,
-			PlentifulHarvest = 29546,
+
 			GrimSwathe = 29547,
-			LemuresSlice = 29548,
+			ExecutionersGuillotine = 41456,
+
+			PlentifulHarvest = 29546,
+
 			DeathWarrant = 29549,
-			ArcaneCrest = 29552,
+			FateSealed = 41457,
+
 			HellsIngress = 29550,
 			Regress = 29551,
-			Communio = 29554,
-			SoulSlice = 29566,
-			Guillotine = 34786;
 
-		internal class Buffs
+			ArcaneCrest = 29552,
+
+			TenebraeLemurum = 29553,
+			VoidReaping = 29543,
+			CrossReaping = 29544,
+			LemuresSlice = 29548,
+			Communio = 29554,
+			Perfectio = 41458;
+
+		public static class Buffs
 		{
-			internal const ushort
-				Soulsow = 2750,
-				SoulReaver = 2854,
-				GallowsOiled = 2856,
-				RipeForReaping = 2858,
-				Enshrouded = 2863,
+			public const ushort
+				ExecutionersGuillotineReady = 4307,
 				ImmortalSacrifice = 3204,
-				PlentifulHarvest = 3205;
+
+				DeathWarrant = 4308,
+
+				Threshold = 2860,
+				HellsIngress = 3207,
+
+				CrestOfTimeBorrowed = 2861,
+
+				Enshrouded = 2863,
+				RipeForReaping = 2858,
+				PerfectioParata = 4309;
 		}
 
 		internal class Debuffs
 		{
 			internal const ushort
 				DeathWarrant = 3206;
-		}
-
-		public static class Config
-		{
-
 		}
 
 		internal class RPRPvP_Combo : CustomComboClass
@@ -53,29 +63,11 @@ namespace UltimateCombo.Combos.PvP
 			{
 				if ((actionID is Slice or WaxingSlice or InfernalSlice) && IsEnabled(CustomComboPreset.RPRPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded))
-					{
-						if (GetBuffStacks(Buffs.Enshrouded) == 1)
-						{
-							return Communio;
-						}
-					}
-
-					if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded) && InActionRange(VoidReaping))
-					{
-						if (HasEffect(Buffs.RipeForReaping))
-						{
-							return CrossReaping;
-						}
-
-						return VoidReaping;
-					}
-
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.RPRPvP_Crest) && ActionReady(ArcaneCrest))
+							if (IsEnabled(CustomComboPreset.RPRPvP_ArcaneCrest) && ActionReady(ArcaneCrest))
 							{
 								return ArcaneCrest;
 							}
@@ -90,8 +82,8 @@ namespace UltimateCombo.Combos.PvP
 								return LemuresSlice;
 							}
 
-							if (IsEnabled(CustomComboPreset.RPRPvP_DeathWarrant) && HasEffect(Buffs.Soulsow)
-								&& (GetTargetHPPercent() <= 50 || GetBuffRemainingTime(Buffs.Soulsow) < 1))
+							if (IsEnabled(CustomComboPreset.RPRPvP_HarvestMoon) && ActionReady(HarvestMoon)
+								&& (GetTargetHPPercent() <= 50 || GetRemainingCharges(HarvestMoon) == 2))
 							{
 								return HarvestMoon;
 							}
@@ -102,19 +94,29 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.RPRPvP_Plentiful) && ActionReady(PlentifulHarvest))
+						if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded) && GetBuffStacks(Buffs.Enshrouded) == 1)
+						{
+							return Communio;
+						}
+
+						if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.PerfectioParata))
+						{
+							return Perfectio;
+						}
+
+						if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded) && InActionRange(VoidReaping))
+						{
+							if (HasEffect(Buffs.RipeForReaping))
+							{
+								return CrossReaping;
+							}
+
+							return VoidReaping;
+						}
+
+						if (IsEnabled(CustomComboPreset.RPRPvP_PlentifulHarvest) && ActionReady(PlentifulHarvest) && GetBuffStacks(Buffs.ImmortalSacrifice) == 8)
 						{
 							return PlentifulHarvest;
-						}
-
-						if (HasEffect(Buffs.SoulReaver) && InActionRange(Guillotine))
-						{
-							return Guillotine;
-						}
-
-						if (IsEnabled(CustomComboPreset.RPRPvP_SoulSlice) && ActionReady(SoulSlice) && InActionRange(SoulSlice))
-						{
-							return SoulSlice;
 						}
 					}
 				}

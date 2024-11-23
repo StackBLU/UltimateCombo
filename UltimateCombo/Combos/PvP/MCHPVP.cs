@@ -6,33 +6,47 @@ namespace UltimateCombo.Combos.PvP
 	{
 		public const uint
 			BlastCharge = 29402,
-			HeatBlast = 29403,
+			FullMetalField = 41469,
+			BlazingShot = 41468,
+			Wildfire = 29409,
+			Detonator = 41470,
+
 			Scattergun = 29404,
+
+			Analysis = 29414,
 			Drill = 29405,
-			BioBlaster = 29406,
+			Bioblaster = 29406,
 			AirAnchor = 29407,
 			ChainSaw = 29408,
-			Wildfire = 29409,
-			BishopTurret = 29412,
+
+			BishopAutoturret = 29412,
 			AetherMortar = 29413,
-			Analysis = 29414,
-			MarksmanSpite = 29415;
+
+			MarksmansSpite = 29415;
 
 		public static class Buffs
 		{
 			public const ushort
 				Heat = 3148,
 				Overheated = 3149,
+
+				Analysis = 3158,
 				DrillPrimed = 3150,
 				BioblasterPrimed = 3151,
 				AirAnchorPrimed = 3152,
 				ChainSawPrimed = 3153,
-				Analysis = 3158;
+
+				Wildfire = 2018,
+
+				BishopActive = 3155,
+				AetherMortar = 3156;
 		}
 
-		public static class Debuffs
+		internal class Debuffs
 		{
-			public const ushort
+			internal const ushort
+				Bioblaster = 2019,
+				ChainSaw = 3154,
 				Wildfire = 1323;
 		}
 
@@ -58,10 +72,10 @@ namespace UltimateCombo.Combos.PvP
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
-						if (IsEnabled(CustomComboPreset.MCHPvP_Spite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-							&& WasLastWeaponskill(AirAnchor) && !HasEffect(Buffs.Overheated) && EnemyHealthCurrentHp() >= 12000)
+						if (IsEnabled(CustomComboPreset.MCHPvP_MarksmansSpite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+							&& EnemyHealthCurrentHp() >= 12000 && EnemyHealthCurrentHp() <= 36000)
 						{
-							return MarksmanSpite;
+							return MarksmansSpite;
 						}
 
 						if (CanWeave(actionID))
@@ -74,17 +88,22 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.MCHPvP_Scattergun) && ActionReady(Scattergun) && !HasEffect(Buffs.Overheated)
-							&& (WasLastWeaponskill(HeatBlast) || InMeleeRange()) && InActionRange(Scattergun))
+							&& (WasLastWeaponskill(BlazingShot) || InMeleeRange()) && InActionRange(Scattergun))
 						{
 							return Scattergun;
+						}
+
+						if (IsEnabled(CustomComboPreset.MCHPvP_FullMetalField) && ActionReady(FullMetalField))
+						{
+							return FullMetalField;
 						}
 
 						if (!HasEffect(Buffs.Overheated))
 						{
 							if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill))
-								&& OriginalHook(Drill) == BioBlaster && !WasLastWeaponskill(BioBlaster) && InActionRange(BioBlaster))
+								&& OriginalHook(Drill) == Bioblaster && !WasLastWeaponskill(Bioblaster) && InActionRange(Bioblaster))
 							{
-								return BioBlaster;
+								return Bioblaster;
 							}
 
 							if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill))
