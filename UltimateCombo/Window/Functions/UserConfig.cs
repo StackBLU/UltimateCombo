@@ -1219,6 +1219,25 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
+			#region PvP Global
+
+			if (preset == CustomComboPreset.PvP_EmergencyHeals && enabled)
+			{
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
+			}
+
+			if (preset == CustomComboPreset.PvP_EmergencyGuard && enabled)
+			{
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyGuardThreshold, "");
+			}
+
+			if (preset == CustomComboPreset.PvP_QuickPurify && enabled)
+			{
+				UserConfig.DrawPvPStatusMultiChoice(PvPCommon.Config.QuickPurifyStatuses);
+			}
+
+			#endregion
+
 			#region ASTROLOGIAN
 
 			if (preset is CustomComboPreset.AST_ST_DPS_AutoDraw && enabled)
@@ -1578,24 +1597,6 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region PvP Global
-
-			if (preset == CustomComboPreset.PvP_EmergencyHeals && enabled)
-			{
-				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
-			}
-
-			if (preset == CustomComboPreset.PvP_EmergencyGuard && enabled)
-			{
-				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyGuardThreshold, "");
-			}
-
-			if (preset == CustomComboPreset.PvP_QuickPurify && enabled)
-			{
-				UserConfig.DrawPvPStatusMultiChoice(PvPCommon.Config.QuickPurifyStatuses);
-			}
-
-			#endregion
 		}
 	}
 }

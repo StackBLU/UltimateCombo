@@ -122,40 +122,34 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Expiacion);
 						}
 
-						if ((GetCooldownRemainingTime(CircleOfScorn) > 2 || !LevelChecked(CircleOfScorn))
-							&& (GetCooldownRemainingTime(OriginalHook(Expiacion)) > 2 || !LevelChecked(Expiacion))
-							&& (GetCooldownRemainingTime(FightOrFlight) > 2 || !LevelChecked(FightOrFlight))
-							&& (GetCooldownRemainingTime(OriginalHook(Imperator)) > 2 || !LevelChecked(Imperator)))
+						if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
 						{
-							if (IsEnabled(CustomComboPreset.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
+							return Intervene;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && CurrentTarget.TargetObject != LocalPlayer
+							&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
+							&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
+						{
+							if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
+								&& !WasLastAbility(OriginalHook(Sentinel)))
 							{
-								return Intervene;
+								return All.Rampart;
 							}
 
-							if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && CurrentTarget.TargetObject != LocalPlayer
-								&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
-								&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
+							if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
 							{
-								if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
-									&& !WasLastAbility(OriginalHook(Sentinel)))
-								{
-									return All.Rampart;
-								}
-
-								if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
-								{
-									return OriginalHook(Sentinel);
-								}
-
-								return Intervention;
+								return OriginalHook(Sentinel);
 							}
 
-							if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) && ActionReady(Sheltron)
-								&& !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-								Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
-							{
-								return OriginalHook(Sheltron);
-							}
+							return Intervention;
+						}
+
+						if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) && ActionReady(Sheltron)
+							&& !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
+							Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
+						{
+							return OriginalHook(Sheltron);
 						}
 					}
 
@@ -281,9 +275,9 @@ namespace UltimateCombo.Combos.PvE
 							return Intervention;
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_AoE_Sheltron) && CanWeave(actionID) &&
-							ActionReady(Sheltron) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-							Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
+						if (IsEnabled(CustomComboPreset.PLD_AoE_Sheltron) && ActionReady(Sheltron)
+							&& !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
+							Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Sheltron))
 						{
 							return OriginalHook(Sheltron);
 						}

@@ -51,7 +51,7 @@ namespace UltimateCombo.Window.Tabs
 				ImGui.TextUnformatted($"Target Object Kind: {Service.ClientState.LocalPlayer.TargetObject?.ObjectKind}");
 				ImGui.TextUnformatted($"Target is Battle Char: {Service.ClientState.LocalPlayer.TargetObject is IBattleChara}");
 				ImGui.TextUnformatted($"Mob Type: {CustomComboFunctions.GetMobType(CustomComboFunctions.CurrentTarget)}");
-				ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.IsBoss(CustomComboFunctions.CurrentTarget)}");
+				ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
 				ImGui.TextUnformatted($"In Combat: {CustomComboFunctions.InCombat()}");
 				ImGui.TextUnformatted($"Combo Time: {Math.Round(CustomComboFunctions.ComboTimer, 2)}");
 				ImGui.TextUnformatted($"# of GCDs used: {ActionWatching.NumberOfGcdsUsed}");

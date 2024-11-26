@@ -57,7 +57,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static Status? FindTargetsTargetEffect(ushort effectID)
 		{
-			return FindEffect(effectID, CurrentTarget.TargetObject, LocalPlayer?.GameObjectId);
+			return FindEffect(effectID, CurrentTarget.TargetObject, null);
 		}
 
 		public static float GetDebuffRemainingTime(ushort effectId)

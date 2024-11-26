@@ -38,12 +38,7 @@ namespace UltimateCombo.Combos.PvP
 		public static class Debuffs
 		{
 			public const ushort
-				PressurePoint = 000000000000000000;
-		}
-
-		public static class Config
-		{
-
+				PressurePoint = 3172;
 		}
 
 		internal class MNKPvP_Combo : CustomComboClass

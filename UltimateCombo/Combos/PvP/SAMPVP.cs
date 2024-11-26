@@ -47,7 +47,7 @@ namespace UltimateCombo.Combos.PvP
 		{
 			internal const ushort
 				Debana = 4306,
-				Kuzushi = 0000000000;
+				Kuzushi = 3202;
 		}
 
 		internal class SAMPvP_Combo : CustomComboClass

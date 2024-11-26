@@ -46,7 +46,8 @@ namespace UltimateCombo.Combos.PvP
 				Bunshin = 2010,
 				ShadeShift = 2011,
 
-				UnsealedSeitonTenchu = 0000000000;
+				UnsealedSeitonAnimation = 3190,
+				UnsealedSeitonTenchu = 3192;
 		}
 
 		internal class Debuffs
@@ -61,7 +62,9 @@ namespace UltimateCombo.Combos.PvP
 				SealedGokaMekkyaku = 3193,
 				SealedDoton = 3197,
 				SealedMeisui = 3198,
-				SealedHuton = 3196;
+				SealedHuton = 3196,
+
+				DeathLink = 3191;
 		}
 
 		internal class NINPvP_Combo : CustomComboClass

@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
@@ -33,6 +34,7 @@ namespace UltimateCombo.Combos.PvE
 			EyeGouge = 16158,
 			BowShock = 16159,
 			HeartOfLight = 16160,
+			HeartOfStone = 16161,
 			BurstStrike = 16162,
 			FatedCircle = 16163,
 			Aurora = 16151,
@@ -136,10 +138,19 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora) && PlayerHealthPercentageHp() < 100
-							&& !HasEffect(Buffs.Aurora))
+						if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora)
+							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
 						{
 							return Aurora;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_ST_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
+						{
+							if (CurrentTarget.TargetObject == LocalPlayer
+								|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
+							{
+								return OriginalHook(HeartOfStone);
+							}
 						}
 					}
 
@@ -253,10 +264,19 @@ namespace UltimateCombo.Combos.PvE
 							return BowShock;
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && PlayerHealthPercentageHp() < 100 && ActionReady(Aurora)
-							&& !HasEffect(Buffs.Aurora) && CanWeave(actionID))
+						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && ActionReady(Aurora)
+							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
 						{
 							return Aurora;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNB_AoE_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
+						{
+							if (CurrentTarget.TargetObject == LocalPlayer
+								|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
+							{
+								return OriginalHook(HeartOfStone);
+							}
 						}
 					}
 

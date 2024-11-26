@@ -1,4 +1,5 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
@@ -87,31 +88,47 @@ namespace UltimateCombo.Combos.PvE
 						return Tomahawk;
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate)
-						&& CanWeave(actionID) && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
-						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
-						&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
+					if (CanWeave(actionID))
 					{
-						return Infuriate;
-					}
-
-					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
-						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
-					{
-						if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
+						if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate)
+							&& Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
+							&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
+							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
 						{
-							return OriginalHook(InnerRelease);
+							return Infuriate;
 						}
 
-						if (IsEnabled(CustomComboPreset.WAR_ST_Onslaught) && ActionReady(Onslaught)
-							&& InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+						if (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
+							&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
 						{
-							return Onslaught;
-						}
+							if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
+							{
+								return OriginalHook(InnerRelease);
+							}
 
-						if (IsEnabled(CustomComboPreset.WAR_ST_Upheaval) && ActionReady(Upheaval) & InActionRange(Upheaval))
-						{
-							return Upheaval;
+							if (IsEnabled(CustomComboPreset.WAR_ST_Onslaught) && ActionReady(Onslaught)
+								&& InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+							{
+								return Onslaught;
+							}
+
+							if (IsEnabled(CustomComboPreset.WAR_ST_Upheaval) && ActionReady(Upheaval) & InActionRange(Upheaval))
+							{
+								return Upheaval;
+							}
+
+							if (IsEnabled(CustomComboPreset.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
+							{
+								if (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject))
+								{
+									return OriginalHook(NascentFlash);
+								}
+
+								if (CurrentTarget.TargetObject == LocalPlayer)
+								{
+									return OriginalHook(RawIntuition);
+								}
+							}
 						}
 					}
 
@@ -183,36 +200,52 @@ namespace UltimateCombo.Combos.PvE
 						return Holmgang;
 					}
 
-					if (IsEnabled(CustomComboPreset.WAR_AoE_Infuriate) && ActionReady(Infuriate)
-						&& CanWeave(actionID) && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
-						&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
-						&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
+					if (CanWeave(actionID))
 					{
-						return Infuriate;
-					}
-
-					if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange()
-						&& !InCombat())
-					{
-						return Onslaught;
-					}
-
-					if (CanWeave(actionID) && GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh))
-					{
-						if (IsEnabled(CustomComboPreset.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
+						if (IsEnabled(CustomComboPreset.WAR_AoE_Infuriate) && ActionReady(Infuriate)
+							&& Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
+							&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
+							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
 						{
-							return OriginalHook(InnerRelease);
+							return Infuriate;
 						}
 
-						if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught)
-							&& InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+						if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange()
+							&& !InCombat())
 						{
 							return Onslaught;
 						}
 
-						if (IsEnabled(CustomComboPreset.WAR_AoE_Orogeny) && ActionReady(Orogeny) & InActionRange(Orogeny))
+						if (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh))
 						{
-							return Orogeny;
+							if (IsEnabled(CustomComboPreset.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
+							{
+								return OriginalHook(InnerRelease);
+							}
+
+							if (IsEnabled(CustomComboPreset.WAR_AoE_Onslaught) && ActionReady(Onslaught)
+								&& InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+							{
+								return Onslaught;
+							}
+
+							if (IsEnabled(CustomComboPreset.WAR_AoE_Orogeny) && ActionReady(Orogeny) & InActionRange(Orogeny))
+							{
+								return Orogeny;
+							}
+
+							if (IsEnabled(CustomComboPreset.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
+							{
+								if (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject))
+								{
+									return OriginalHook(NascentFlash);
+								}
+
+								if (CurrentTarget.TargetObject == LocalPlayer)
+								{
+									return OriginalHook(RawIntuition);
+								}
+							}
 						}
 					}
 

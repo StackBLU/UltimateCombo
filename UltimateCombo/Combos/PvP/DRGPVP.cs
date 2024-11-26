@@ -1,5 +1,4 @@
-﻿using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
 {
@@ -47,12 +46,6 @@ namespace UltimateCombo.Combos.PvP
 		{
 			public const ushort
 				HorridRoad = 3179;
-		}
-
-		public static class Config
-		{
-			public static UserInt
-				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
 		}
 
 		internal class DRGPvP_Combo : CustomComboClass

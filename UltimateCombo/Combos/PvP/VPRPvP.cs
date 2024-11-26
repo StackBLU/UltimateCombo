@@ -59,7 +59,7 @@ namespace UltimateCombo.Combos.PvP
 
 				HardnenedScales = 4096,
 				ArmoredScales = 4097,
-				SnakesBane = 0000000000000000,
+				SnakesBane = 4098,
 
 				Reawakened = 4094;
 		}

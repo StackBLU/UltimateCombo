@@ -108,14 +108,6 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
-						{
-							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
-							{
-								return Aetherflow;
-							}
-						}
-
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
@@ -142,6 +134,14 @@ namespace UltimateCombo.Combos.PvE
 								|| TargetHasEffect(Debuffs.ChainStratagem)))
 							{
 								return EnergyDrain;
+							}
+						}
+
+						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+						{
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
+							{
+								return Aetherflow;
 							}
 						}
 					}

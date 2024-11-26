@@ -35,7 +35,7 @@ namespace UltimateCombo.Combos.PvP
 		internal class Debuffs
 		{
 			internal const ushort
-				MiracleOfNature = 000000000000;
+				MiracleOfNature = 3085;
 		}
 
 		public static class Config

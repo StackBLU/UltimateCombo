@@ -1,124 +1,122 @@
-﻿using UltimateCombo.ComboHelper.Functions;
+﻿using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
 {
 	internal static class RDMPvP
 	{
 		public const uint
-			Ruin3 = 29664,
-			Necrotize = 41483,
-			Ruin4 = 41482,
-			MountainBuster = 29671,
-			Slipstream = 29669,
-			CrimsonCyclone = 29667,
-			CrimsonStrike = 29668,
-			RadiantAegis = 29670,
+			Jolt3 = 41486,
+			GrandImpact = 41487,
 
-			SummonBahamut = 29673,
-			SummonPhoenix = 29678,
-			Deathflare = 41484,
-			BrandOfPurgatory = 41485,
+			EnchantedRiposte = 41488,
+			EnchantedZwerchhau = 41489,
+			EnchantedRedoublement = 41490,
+			Scorch = 41491,
 
-			AstralImpulse = 29665,
-			FountainOfFire = 29666,
+			Resolution = 41492,
 
-			//Unused (Pet skills)
-			Megaflare = 29675,
-			Wyrmwave = 29676,
-			EverlastingFlight = 29680,
-			ScarletFlame = 29681;
+			Embolden = 41494,
+			Prefulgence = 41495,
+
+			CorpsACorps = 29699,
+			Displacement = 29700,
+
+			Forte = 41496,
+			ViceOfThorns = 41493,
+
+			SouthernCross = 41498;
 
 		public static class Buffs
 		{
 			public const ushort
-				FurtherRuin = 4399,
-				Slipstream = 3226,
-				CrimsonStrikeReady = 4400,
-				RadiantAegis = 3224,
+				Dualcast = 1393,
+				Displacement = 3243,
 
-				DreadwyrmTrance = 3228,
-				FirebirdTrance = 3229,
-				EverlastingFlight = 3230;
+				Embolden = 2282,
+				PrefulgenceReady = 4322,
+
+				Forte = 4320,
+				ThornedFlourish = 4321,
+
+				EnchantedRiposte = 3234,
+				EnchantedZwercchaur = 3235,
+				EnchantedRedoublement = 3236;
 		}
 
 		internal class Debuffs
 		{
 			internal const ushort
-				Slipping = 3227,
-				ScarletFlame = 3231,
-				Revelation = 3232;
+				Monomachy = 3242,
+				Scorch = 4319;
 		}
 
-		public static class Config
+		internal class RDMPvP_Combo : CustomComboClass
 		{
-			public static UserInt
-				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
-		}
-
-		/*internal class SMNPvP_Combo : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SMNPvP_Combo;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RDMPvP_Combo;
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Ruin3 or Ruin4) && IsEnabled(CustomComboPreset.SMNPvP_Combo))
+				if ((actionID is Jolt3 or GrandImpact) && IsEnabled(CustomComboPreset.RDMPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.WARPvP_PrimalScream) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
+					if (IsEnabled(CustomComboPreset.RDMPvP_SouthernCross) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+						&& WasLastAbility(ViceOfThorns))
 					{
-						return PrimalScream;
+						return SouthernCross;
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.SMNPvP_Deathflare) && IsEnabled(Deathflare))
+							if (IsEnabled(CustomComboPreset.RDMPvP_Displacement) && ActionReady(Displacement) && WasLastAbility(EnchantedRedoublement))
 							{
-								return Deathflare;
+								return Displacement;
 							}
 
-							if (IsEnabled(CustomComboPreset.SMNPvP_BrandOfPurgatory) && IsEnabled(BrandOfPurgatory))
+							if (IsEnabled(CustomComboPreset.RDMPvP_Forte) && ActionReady(Forte) && WasLastAbility(CorpsACorps))
 							{
-								return BrandOfPurgatory;
+								return Forte;
 							}
 
-							if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
+							if (IsEnabled(CustomComboPreset.RDMPvP_Embolden) && ActionReady(Embolden))
 							{
-								return CrimsonCyclone;
+								return Embolden;
 							}
 
-							if (IsEnabled(CustomComboPreset.SMNPvP_Necrotize) && ActionReady(Necrotize)
-								&& !HasEffect(Buffs.FurtherRuin))
+							if (IsEnabled(CustomComboPreset.RDMPvP_ViceOfThorns) && HasEffect(Buffs.ThornedFlourish))
 							{
-								return Necrotize;
-							}
-
-							if (IsEnabled(CustomComboPreset.SMNPvP_RadiantAegis) && ActionReady(RadiantAegis))
-							{
-								return RadiantAegis;
+								return ViceOfThorns;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream)
-							&& !IsMoving)
+						if (IsEnabled(CustomComboPreset.RDMPvP_Prefulgence) && HasEffect(Buffs.PrefulgenceReady))
 						{
-							return Slipstream;
+							return Prefulgence;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster))
+						if (IsEnabled(CustomComboPreset.RDMPvP_Resolution) && ActionReady(Resolution))
 						{
-							return MountainBuster;
+							return Resolution;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonStrike) && HasEffect(Buffs.CrimsonStrikeReady))
+						if (IsEnabled(CustomComboPreset.RDMPvP_Melee) && ActionReady(OriginalHook(EnchantedRiposte)))
 						{
-							return CrimsonCyclone;
+							if (IsEnabled(CustomComboPreset.RDMPvP_CorpsACorps) && ActionReady(CorpsACorps)
+								&& (!TargetHasEffect(Debuffs.Monomachy) || !InActionRange(OriginalHook(EnchantedRiposte))))
+							{
+								return CorpsACorps;
+							}
+
+							if (InActionRange(OriginalHook(EnchantedRiposte)))
+							{
+								return OriginalHook(EnchantedRiposte);
+							}
 						}
 					}
 				}
 
 				return actionID;
 			}
-		}*/
+		}
 	}
 }

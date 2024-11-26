@@ -233,5 +233,20 @@ namespace UltimateCombo.Combos.PvP
 					|| (HasEffectAny(Debuffs.Silence) && selectedStatuses[6]));
 			}
 		}
+
+		internal class IgnoreSAMKuzuchi : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_IgnoreSAMKuzuchi;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && HasBattleTarget() & TargetHasEffectAny(SAMPvP.Buffs.Chiten))
+				{
+					return OriginalHook(11);
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

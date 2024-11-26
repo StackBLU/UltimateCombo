@@ -32,7 +32,7 @@ namespace UltimateCombo.Combos.PvP
 				TorcleaverReady = 4289,
 
 				BlackestNight = 1308,
-				DarkArts = 0000000000000000000000000000,
+				DarkArts = 3034,
 
 				SaltedEarth = 3036,
 				SaltedEarthDefense = 3037,

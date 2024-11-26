@@ -142,8 +142,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.DRK_ST_Oblation) && ActionReady(Oblation)
-								&& GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
-								&& !HasEffect(Buffs.Oblation))
+								&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
 							{
 								return Oblation;
 							}
@@ -258,8 +257,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.DRK_AoE_Oblation) && ActionReady(Oblation)
-							&& GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
-							&& !HasEffect(Buffs.Oblation))
+							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
 						{
 							return Oblation;
 						}

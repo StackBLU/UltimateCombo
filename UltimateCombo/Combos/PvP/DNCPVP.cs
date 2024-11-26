@@ -1,4 +1,3 @@
-using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
@@ -28,6 +27,9 @@ namespace UltimateCombo.Combos.PvP
 		public static class Buffs
 		{
 			public const ushort
+				ClosedPosition = 2026,
+				DancePartner = 2027,
+
 				EnAvant = 2048,
 				Bladecatcher = 3159,
 				FlourishingSaberDance = 3160,
@@ -44,13 +46,7 @@ namespace UltimateCombo.Combos.PvP
 		internal class Debuffs
 		{
 			internal const ushort
-				LordOfCrownsDebuff = 1451;
-		}
-
-		public static class Config
-		{
-			public static UserInt
-				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
+				Seduced = 3024;
 		}
 
 		internal class DNCPvP_Combo : CustomComboClass

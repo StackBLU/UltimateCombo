@@ -63,11 +63,6 @@ namespace UltimateCombo.Combos.PvP
 				RelentlessShrapnel = 3053;
 		}
 
-		public static class Config
-		{
-
-		}
-
 		internal class GNBPvP_Combo : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNBPvP_Combo;

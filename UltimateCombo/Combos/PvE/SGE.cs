@@ -120,7 +120,8 @@ namespace UltimateCombo.Combos.PvE
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
-							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || GetPartyMembers().Length == 0))
+							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || GetPartyMembers().Length == 0)
+							&& ((HasBattleTarget() && TargetIsBoss()) || !HasEffect(Buffs.Kardia)))
 						{
 							return Kardia;
 						}
@@ -203,7 +204,8 @@ namespace UltimateCombo.Combos.PvE
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
-							&& !TargetsTargetHasEffect(Buffs.Kardion))
+							&& !TargetsTargetHasEffect(Buffs.Kardion)
+							&& ((HasBattleTarget() && TargetIsBoss()) || !HasEffect(Buffs.Kardia)))
 						{
 							return Kardia;
 						}
@@ -293,45 +295,6 @@ namespace UltimateCombo.Combos.PvE
 						&& HasEffect(Buffs.EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis2))
 					{
 						return Pepsis;
-					}
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class SGE_OverProtect : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_OverProtect;
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.SGE_OverProtect))
-				{
-					if (actionID is Kerachole && ActionReady(Kerachole))
-					{
-						if (!HasEffectAny(Buffs.Kerachole) && !HasEffectAny(SCH.Buffs.SacredSoil))
-						{
-							return Kerachole;
-						}
-						return OriginalHook(11);
-					}
-
-					if (actionID is Panhaima && ActionReady(Panhaima))
-					{
-						if (!HasEffectAny(Buffs.Panhaima))
-						{
-							return Panhaima;
-						}
-						return OriginalHook(11);
-					}
-
-					if (actionID is Philosophia && ActionReady(Philosophia))
-					{
-						if (!HasEffectAny(Buffs.Eudaimonia))
-						{
-							return Philosophia;
-						}
-						return OriginalHook(11);
 					}
 				}
 

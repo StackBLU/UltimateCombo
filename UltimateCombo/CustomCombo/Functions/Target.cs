@@ -356,11 +356,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			return 0;
 		}
 
-		internal static unsafe bool IsBoss(IGameObject target)
+		internal static unsafe bool TargetIsBoss()
 		{
 			if (HasBattleTarget())
 			{
-				if (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank is 2 or 6)
+				if (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(CurrentTarget.DataId).Rank is 2 or 6)
 				{
 					return true;
 				}

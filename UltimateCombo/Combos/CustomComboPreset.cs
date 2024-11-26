@@ -140,39 +140,43 @@ namespace UltimateCombo.Combos
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Tomahawk", "", WAR.JobID)]
-		WAR_ST_Tomahawk = 18009,
+		WAR_ST_Tomahawk = 18001,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Storm's Eye", "", WAR.JobID)]
-		WAR_ST_StormsEye = 18001,
+		WAR_ST_StormsEye = 18002,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Upheaval", "", WAR.JobID)]
-		WAR_ST_Upheaval = 18002,
+		WAR_ST_Upheaval = 18003,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Onslaught", "", WAR.JobID)]
-		WAR_ST_Onslaught = 18003,
+		WAR_ST_Onslaught = 18004,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Inner Beast / Fell Cleave & Inner Chaos", "", WAR.JobID)]
-		WAR_ST_FellCleave = 18004,
+		WAR_ST_FellCleave = 18005,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Infuriate", "", WAR.JobID)]
-		WAR_ST_Infuriate = 18005,
+		WAR_ST_Infuriate = 18006,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Inner Release > Primal Wrath", "", WAR.JobID)]
-		WAR_ST_InnerRelease = 18006,
+		WAR_ST_InnerRelease = 18007,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Primal Rend > Primal Ruination", "", WAR.JobID)]
-		WAR_ST_PrimalRend = 18007,
+		WAR_ST_PrimalRend = 18008,
 
 		[ParentCombo(WAR_ST_DPS)]
 		[CustomComboInfo("Holmgang", "", WAR.JobID)]
-		WAR_ST_Invuln = 18008,
+		WAR_ST_Invuln = 18009,
+
+		[ParentCombo(WAR_ST_DPS)]
+		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
+		WAR_ST_Bloodwhetting = 18010,
 
 		#endregion
 
@@ -209,6 +213,10 @@ namespace UltimateCombo.Combos
 		[ParentCombo(WAR_AoE_DPS)]
 		[CustomComboInfo("Holmgang", "", WAR.JobID)]
 		WAR_AoE_Invuln = 18027,
+
+		[ParentCombo(WAR_AoE_DPS)]
+		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
+		WAR_AoE_Bloodwhetting = 18028,
 
 		#endregion
 
@@ -344,43 +352,47 @@ namespace UltimateCombo.Combos
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Lightning Shot", "", GNB.JobID)]
-		GNB_ST_LightningShot = 7010,
+		GNB_ST_LightningShot = 7001,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("No Mercy > Sonic Break", "", GNB.JobID)]
-		GNB_ST_NoMercy = 7001,
+		GNB_ST_NoMercy = 7002,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Burst Strike > Hypervelocity", "", GNB.JobID)]
-		GNB_ST_Burst = 7002,
+		GNB_ST_Burst = 7003,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Gnashing Fang > Savage Claw > Wicked Talon", "", GNB.JobID)]
-		GNB_ST_Gnashing = 7003,
+		GNB_ST_Gnashing = 7004,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Danger Zone / Blasting Zone", "", GNB.JobID)]
-		GNB_ST_BlastingZone = 7004,
+		GNB_ST_BlastingZone = 7005,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Bow Shock", "", GNB.JobID)]
-		GNB_ST_BowShock = 7005,
+		GNB_ST_BowShock = 7006,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Double Down", "", GNB.JobID)]
-		GNB_ST_DoubleDown = 7006,
+		GNB_ST_DoubleDown = 7007,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Bloodfest > Reign of Beasts > Noble Blood > Lion Heart", "", GNB.JobID)]
-		GNB_ST_Bloodfest = 7007,
+		GNB_ST_Bloodfest = 7008,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Aurora", "", GNB.JobID)]
-		GNB_ST_Aurora = 7008,
+		GNB_ST_Aurora = 7009,
+
+		[ParentCombo(GNB_ST_DPS)]
+		[CustomComboInfo("Heart of Stone / Heart of Corundum", "", GNB.JobID)]
+		GNB_ST_HeartOfStone = 7010,
 
 		[ParentCombo(GNB_ST_DPS)]
 		[CustomComboInfo("Superbolide", "", GNB.JobID)]
-		GNB_ST_Invuln = 7009,
+		GNB_ST_Invuln = 7011,
 
 		#endregion
 
@@ -419,12 +431,16 @@ namespace UltimateCombo.Combos
 		GNB_AoE_Aurora = 7027,
 
 		[ParentCombo(GNB_AoE_DPS)]
+		[CustomComboInfo("Heart of Stone / Heart of Corundum", "", GNB.JobID)]
+		GNB_AoE_HeartOfStone = 7028,
+
+		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Trajectory", "", GNB.JobID)]
-		GNB_AoE_Trajectory = 7028,
+		GNB_AoE_Trajectory = 7029,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Superbolide", "", GNB.JobID)]
-		GNB_AoE_Invuln = 7029,
+		GNB_AoE_Invuln = 7030,
 
 		#endregion
 
@@ -2444,6 +2460,26 @@ namespace UltimateCombo.Combos
 
 		#region PvP
 
+		#region PvP GLOBALS - 1100000
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Emergency Heals %", "", All.JobID)]
+		PvP_EmergencyHeals = 1100000,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Emergency Guard %", "", All.JobID)]
+		PvP_EmergencyGuard = 1100001,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Purify", "", All.JobID)]
+		PvP_QuickPurify = 1100002,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Ignore SAM when Chiten is active", "", All.JobID)]
+		PvP_IgnoreSAMKuzuchi = 1100003,
+
+		#endregion
+
 		#region ASTROLOGIAN - 111000
 
 		[PvPCustomCombo]
@@ -2464,6 +2500,39 @@ namespace UltimateCombo.Combos
 
 		#region BLACK MAGE - 112000
 
+		[PvPCustomCombo]
+		[CustomComboInfo("Combo Mode", "", BLM.JobID)]
+		BLMPvP_Combo = 112000,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Auto-swap elements", "", BLM.JobID)]
+		BLMPvP_Swap = 112001,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Paradox", "", BLM.JobID)]
+		BLMPvP_Paradox = 112002,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Xenoglossy", "", BLM.JobID)]
+		BLMPvP_Xenoglossy = 112003,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Burst", "", BLM.JobID)]
+		BLMPvP_Burst = 112004,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Lethargy", "", BLM.JobID)]
+		BLMPvP_Lethargy = 112005,
+
+		[PvPCustomCombo]
+		[ParentCombo(BLMPvP_Combo)]
+		[CustomComboInfo("Soul Resonance", "", BLM.JobID)]
+		BLMPvP_SoulResonance = 112006,
 
 		#endregion
 
@@ -2664,27 +2733,27 @@ namespace UltimateCombo.Combos
 		MCHPvP_Combo = 118000,
 
 		[PvPCustomCombo]
-		[ParentCombo(ASTPvP_Combo)]
+		[ParentCombo(MCHPvP_Combo)]
 		[CustomComboInfo("Drill > Bioblaster > Air Anchor > Chain Saw", "", MCH.JobID)]
 		MCHPvP_Weapons = 118001,
 
 		[PvPCustomCombo]
-		[ParentCombo(ASTPvP_Combo)]
+		[ParentCombo(MCHPvP_Combo)]
 		[CustomComboInfo("Scattergun", "", MCH.JobID)]
 		MCHPvP_Scattergun = 118002,
 
 		[PvPCustomCombo]
-		[ParentCombo(ASTPvP_Combo)]
+		[ParentCombo(MCHPvP_Combo)]
 		[CustomComboInfo("Wildfire", "", MCH.JobID)]
 		MCHPvP_Wildfire = 118003,
 
 		[PvPCustomCombo]
-		[ParentCombo(ASTPvP_Combo)]
+		[ParentCombo(MCHPvP_Combo)]
 		[CustomComboInfo("Full Metal Field", "", MCH.JobID)]
 		MCHPvP_FullMetalField = 118004,
 
 		[PvPCustomCombo]
-		[ParentCombo(ASTPvP_Combo)]
+		[ParentCombo(MCHPvP_Combo)]
 		[CustomComboInfo("Marksman's Spite", "", MCH.JobID)]
 		MCHPvP_MarksmansSpite = 118005,
 
@@ -2778,7 +2847,44 @@ namespace UltimateCombo.Combos
 
 		#region PICTOMANCER - 130000
 
+		[PvPCustomCombo]
+		[CustomComboInfo("Combo Mode", "", PCT.JobID)]
+		PCTPvP_Combo = 130000,
 
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Auto Subtractive Palette swapping", "", PCT.JobID)]
+		PCTPvP_AutoPalette = 130001,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Creature Motifs", "", PCT.JobID)]
+		PCTPvP_CreatureMotifs = 130002,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Living Muses", "", PCT.JobID)]
+		PCTPvP_LivingMuses = 130003,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Mog of the Ages & Retribution of the Madeen", "", PCT.JobID)]
+		PCTPvP_Portraits = 130004,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Holy in White & Comet in Black", "", PCT.JobID)]
+		PCTPvP_Paints = 130005,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Tempera Coat", "", PCT.JobID)]
+		PCTPvP_TemperaCoat = 130006,
+
+		[PvPCustomCombo]
+		[ParentCombo(PCTPvP_Combo)]
+		[CustomComboInfo("Star Prism", "", PCT.JobID)]
+		PCTPvP_StarPrism = 130007,
 
 		#endregion
 
@@ -2875,7 +2981,54 @@ namespace UltimateCombo.Combos
 
 		#region RED MAGE - 123000
 
+		[PvPCustomCombo]
+		[CustomComboInfo("Combo Mode", "", RDM.JobID)]
+		RDMPvP_Combo = 123000,
 
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Melee Combo", "", RDM.JobID)]
+		RDMPvP_Melee = 123001,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Corps-a-Corps", "", RDM.JobID)]
+		RDMPvP_CorpsACorps = 123002,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Displacement", "", RDM.JobID)]
+		RDMPvP_Displacement = 123003,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Resolution", "", RDM.JobID)]
+		RDMPvP_Resolution = 123004,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Embolden", "", RDM.JobID)]
+		RDMPvP_Embolden = 123005,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Prefulgence", "", RDM.JobID)]
+		RDMPvP_Prefulgence = 123006,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Forte", "", RDM.JobID)]
+		RDMPvP_Forte = 123007,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("ViceOfThorns", "", RDM.JobID)]
+		RDMPvP_ViceOfThorns = 123008,
+
+		[PvPCustomCombo]
+		[ParentCombo(RDMPvP_Combo)]
+		[CustomComboInfo("Southern Cross", "", RDM.JobID)]
+		RDMPvP_SouthernCross = 123009,
 
 		#endregion
 
@@ -2929,32 +3082,32 @@ namespace UltimateCombo.Combos
 		SAMPvP_Combo = 125000,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Soten", "", SAM.JobID)]
 		SAMPvP_Soten = 125001,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Meikyo Shisui > Tendo Setsugekka > Tendo Kaeshi Setsugekka", "", SAM.JobID)]
 		SAMPvP_MeikyoShisui = 125002,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Ogi Namikiri > Kaeshi Namikiri", "", SAM.JobID)]
 		SAMPvP_Namikiri = 125003,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Mineuchi", "", SAM.JobID)]
 		SAMPvP_Mineuchi = 125004,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Chiten", "", SAM.JobID)]
 		SAMPvP_Chiten = 125005,
 
 		[PvPCustomCombo]
-		[ParentCombo(NINPvP_Combo)]
+		[ParentCombo(SAMPvP_Combo)]
 		[CustomComboInfo("Zantetsuken", "", SAM.JobID)]
 		SAMPvP_Zantetsuken = 125006,
 
@@ -3129,17 +3282,17 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
+		[CustomComboInfo("Miracle of Nature", "", WHM.JobID)]
 		WHMPvP_MiracleOfNature = 129001,
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
+		[CustomComboInfo("Aquaveil", "", WHM.JobID)]
 		WHMPvP_Aquaveil = 129002,
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
+		[CustomComboInfo("Seraph Strike", "", WHM.JobID)]
 		WHMPvP_SeraphStrike = 129003,
 
 		[PvPCustomCombo]
@@ -3149,12 +3302,12 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
+		[CustomComboInfo("Cure III", "", WHM.JobID)]
 		WHMPvP_Cure3 = 129005,
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
+		[CustomComboInfo("Afflatus Purgation", "", WHM.JobID)]
 		WHMPvP_AfflatusPurgation = 129006,
 
 		#endregion
@@ -3404,22 +3557,6 @@ namespace UltimateCombo.Combos
 		Variant_Rampart = 100054,
 
 		#endregion
-
-		#endregion
-
-		#region PvP GLOBALS - 1100000
-
-		[PvPCustomCombo]
-		[CustomComboInfo("Emergency Heals %", "", All.JobID)]
-		PvP_EmergencyHeals = 1100000,
-
-		[PvPCustomCombo]
-		[CustomComboInfo("Emergency Guard %", "", All.JobID)]
-		PvP_EmergencyGuard = 1100010,
-
-		[PvPCustomCombo]
-		[CustomComboInfo("Purify", "", All.JobID)]
-		PvP_QuickPurify = 1100020,
 
 		#endregion
 

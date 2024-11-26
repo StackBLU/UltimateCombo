@@ -35,12 +35,15 @@ namespace UltimateCombo.Combos.PvP
 
 				HolySheltron = 3026,
 				SwordOath = 1991,
-				ShieldOath = 000000000000000000000000000000000,
+				ShieldOath = 3188,
 
 				ConfiteorReady = 3028,
 
+				Cover = 1300,
+				Covered = 1301,
+
 				HallowedGround = 1302,
-				Phalanx = 0000000000000000000000000000000,
+				Phalanx = 3210,
 				BladeOfFaithReady = 3250;
 		}
 
