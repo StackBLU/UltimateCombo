@@ -94,19 +94,14 @@ namespace UltimateCombo.Combos.PvP
 							return Xenoglossy;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLMPvP_Paradox) && HasEffect(Buffs.Paradox))
+						if (IsEnabled(CustomComboPreset.BLMPvP_Paradox) && HasEffect(Buffs.Paradox) && !HasEffect(Buffs.SoulResonance))
 						{
 							return Paradox;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLMPvP_Swap) && WasLastSpell(HighFire2))
+						if (IsMoving)
 						{
-							return Blizzard;
-						}
-
-						if (IsEnabled(CustomComboPreset.BLMPvP_Swap) && WasLastSpell(HighBlizzard2))
-						{
-							return Fire;
+							return OriginalHook(Blizzard);
 						}
 					}
 				}

@@ -2506,33 +2506,28 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(BLMPvP_Combo)]
-		[CustomComboInfo("Auto-swap elements", "", BLM.JobID)]
-		BLMPvP_Swap = 112001,
-
-		[PvPCustomCombo]
-		[ParentCombo(BLMPvP_Combo)]
 		[CustomComboInfo("Paradox", "", BLM.JobID)]
-		BLMPvP_Paradox = 112002,
+		BLMPvP_Paradox = 112001,
 
 		[PvPCustomCombo]
 		[ParentCombo(BLMPvP_Combo)]
 		[CustomComboInfo("Xenoglossy", "", BLM.JobID)]
-		BLMPvP_Xenoglossy = 112003,
+		BLMPvP_Xenoglossy = 112002,
 
 		[PvPCustomCombo]
 		[ParentCombo(BLMPvP_Combo)]
 		[CustomComboInfo("Burst", "", BLM.JobID)]
-		BLMPvP_Burst = 112004,
+		BLMPvP_Burst = 112003,
 
 		[PvPCustomCombo]
 		[ParentCombo(BLMPvP_Combo)]
 		[CustomComboInfo("Lethargy", "", BLM.JobID)]
-		BLMPvP_Lethargy = 112005,
+		BLMPvP_Lethargy = 112004,
 
 		[PvPCustomCombo]
 		[ParentCombo(BLMPvP_Combo)]
 		[CustomComboInfo("Soul Resonance", "", BLM.JobID)]
-		BLMPvP_SoulResonance = 112006,
+		BLMPvP_SoulResonance = 112005,
 
 		#endregion
 
