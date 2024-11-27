@@ -68,7 +68,7 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.RDMPvP_Displacement) && ActionReady(Displacement) && WasLastAbility(EnchantedRedoublement))
+							if (IsEnabled(CustomComboPreset.RDMPvP_Displacement) && ActionReady(Displacement) && WasLastAction(EnchantedRedoublement))
 							{
 								return Displacement;
 							}

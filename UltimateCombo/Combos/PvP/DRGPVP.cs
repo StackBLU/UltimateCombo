@@ -67,29 +67,19 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && ActionReady(Geirskogul))
-							{
-								return Geirskogul;
-							}
-
-							if (IsEnabled(CustomComboPreset.DRGPvP_Geirskogul) && HasEffect(Buffs.NastrondReady) && GetBuffRemainingTime(Buffs.NastrondReady) < 1)
-							{
-								return Nastrond;
-							}
-
-							if (IsEnabled(CustomComboPreset.DRGPvP_HighJump) && ActionReady(HighJump))
-							{
-								return HighJump;
-							}
-
 							if (IsEnabled(CustomComboPreset.DRGPvP_HorridRoar) && ActionReady(HorridRoar) && WasLastAbility(HighJump))
 							{
 								return HorridRoar;
 							}
+
+							if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && HasEffect(Buffs.NastrondReady) && GetBuffRemainingTime(Buffs.NastrondReady) <= 1.5)
+							{
+								return Nastrond;
+							}
 						}
 
 						if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus)
-							&& (MaxActionRange(WyrmwindThrust) || (HasBattleTarget() && GetTargetDistance() > (GetBuffRemainingTime(Buffs.FirstmindsFocus) / 100) + 5)))
+							&& HasTarget() && GetTargetDistance() > 15)
 						{
 							return WyrmwindThrust;
 						}

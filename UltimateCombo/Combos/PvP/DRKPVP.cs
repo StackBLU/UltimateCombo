@@ -52,7 +52,7 @@ namespace UltimateCombo.Combos.PvP
 		{
 			public static UserInt
 				DRKPvP_Shadowbringer = new("DRKPvP_Shadowbringer", 75),
-				DRKPvP_Impalement = new("DRKPvP_Impalement", 40);
+				DRKPvP_Impalement = new("DRKPvP_Impalement", 50);
 		}
 
 		internal class DRKPvP_Combo : CustomComboClass
@@ -66,12 +66,23 @@ namespace UltimateCombo.Combos.PvP
 				{
 					if (IsEnabled(CustomComboPreset.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{
-						if (PlayerHealthPercentageHp() < 90 && LocalPlayer.CurrentMp >= 2500)
+						if (PlayerHealthPercentageHp() < 50 && LocalPlayer.CurrentMp >= 2500)
 						{
 							return PvPCommon.Recuperate;
 						}
 
 						return Eventide;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRKPvP_SaltAndDarkness) && (IsEnabled(SaltAndDarkness) || WasLastAbility(SaltedEarth)))
+					{
+						return SaltAndDarkness;
+					}
+
+					if (IsEnabled(CustomComboPreset.DRKPvP_SaltedEarth) && ActionReady(SaltedEarth)
+						&& WasLastAbility(Plunge))
+					{
+						return SaltedEarth;
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
@@ -91,18 +102,6 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.DRKPvP_SaltAndDarkness) && IsEnabled(SaltAndDarkness)
-							&& WasLastAbility(SaltedEarth))
-						{
-							return SaltAndDarkness;
-						}
-
-						if (IsEnabled(CustomComboPreset.DRKPvP_SaltedEarth) && ActionReady(SaltedEarth)
-							&& WasLastAbility(Plunge))
-						{
-							return SaltedEarth;
-						}
-
 						if (IsEnabled(CustomComboPreset.DRKPvP_Plunge) && ActionReady(Plunge))
 						{
 							return Plunge;
@@ -114,7 +113,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(Impalement)
-							&& PlayerHealthPercentageHp() > GetOptionValue(Config.DRKPvP_Impalement)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRKPvP_Impalement)
 							&& InActionRange(Impalement))
 						{
 							return Impalement;

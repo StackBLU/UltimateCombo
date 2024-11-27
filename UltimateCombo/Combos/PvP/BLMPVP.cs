@@ -83,7 +83,7 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.BLMPvP_Burst) && WasLastAbility(AetherialManipulation))
+						if (IsEnabled(CustomComboPreset.BLMPvP_Burst) && ActionReady(Burst) && WasLastAbility(AetherialManipulation))
 						{
 							return Burst;
 						}
@@ -91,7 +91,7 @@ namespace UltimateCombo.Combos.PvP
 						if (IsEnabled(CustomComboPreset.BLMPvP_Xenoglossy) && ActionReady(Xenoglossy)
 							&& (GetRemainingCharges(Xenoglossy) == GetMaxCharges(Xenoglossy) || PlayerHealthPercentageHp() <= 50))
 						{
-							return Paradox;
+							return Xenoglossy;
 						}
 
 						if (IsEnabled(CustomComboPreset.BLMPvP_Paradox) && HasEffect(Buffs.Paradox))

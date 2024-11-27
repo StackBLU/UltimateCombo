@@ -24,6 +24,12 @@ namespace UltimateCombo.ComboHelper.Functions
 			return eff?.RemainingTime ?? 0;
 		}
 
+		public static float GetTargetsBuffRemainingTime(ushort effectId)
+		{
+			Status? eff = FindTargetEffectAny(effectId);
+			return eff?.RemainingTime ?? 0;
+		}
+
 		public static Status? FindEffect(ushort effectID)
 		{
 			return FindEffect(effectID, LocalPlayer, LocalPlayer?.GameObjectId);

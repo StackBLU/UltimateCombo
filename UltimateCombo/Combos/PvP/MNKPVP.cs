@@ -50,43 +50,57 @@ namespace UltimateCombo.Combos.PvP
 				if ((actionID is DragonKick or TwinSnakes or Demolish or LeapingOpo or RisingRaptor or PouncingCoeurl or PhantomRush)
 					&& IsEnabled(CustomComboPreset.MNKPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.MNKPvP_Meteodrive) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue() && TargetHasEffect(Debuffs.PressurePoint))
+					if (IsEnabled(CustomComboPreset.MNKPvP_Meteodrive) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+						&& TargetHasEffectAny(PvPCommon.Buffs.Guard) && GetTargetsBuffRemainingTime(PvPCommon.Buffs.Guard) <= 4)
 					{
 						return Meteodrive;
+					}
+
+					if (CanWeave(actionID))
+					{
+						if (IsEnabled(CustomComboPreset.MNKPvP_RiddleOfEarth) && ActionReady(RiddleOfEarth))
+						{
+							return RiddleOfEarth;
+						}
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.MNKPvP_RiddleOfEarth) && ActionReady(RiddleOfEarth))
-							{
-								return RiddleOfEarth;
-							}
-
-							if (IsEnabled(CustomComboPreset.MNKPvP_Thunderclap) && ActionReady(Thunderclap) && (!InMeleeRange() || !HasEffect(Buffs.Thunderclap)))
-							{
-								return Thunderclap;
-							}
-
-							if (IsEnabled(CustomComboPreset.MNKPvP_RisingPhoenix) && ActionReady(RisingPhoenix) && WasLastWeaponskill(WindsReply)
-								&& !HasEffect(Buffs.FireResonance))
+							if (IsEnabled(CustomComboPreset.MNKPvP_RisingPhoenix) && ActionReady(RisingPhoenix)
+								&& (WasLastWeaponskill(WindsReply) || WasLastWeaponskill(PouncingCoeurl))
+								&& !WasLastAction(RisingPhoenix))
 							{
 								return RisingPhoenix;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.MNKPvP_RiddleOfEarth) && IsEnabled(EarthsReply) && GetBuffRemainingTime(Buffs.EarthResonance) < 1)
+						if (IsEnabled(CustomComboPreset.MNKPvP_Thunderclap) && ActionReady(Thunderclap)
+							&& !InActionRange(DragonKick) && (HasEffect(Buffs.FireResonance) || WasLastWeaponskill(WindsReply)))
 						{
-							return EarthsReply;
+							return Thunderclap;
 						}
 
-						if (IsEnabled(CustomComboPreset.MNKPvP_FlintsReply) && ActionReady(FlintsReply) && !InMeleeRange())
+						if (!WasLastAbility(RisingPhoenix))
 						{
-							return FlintsReply;
+							if (IsEnabled(CustomComboPreset.MNKPvP_RiddleOfEarth) && IsEnabled(EarthsReply) && GetBuffRemainingTime(Buffs.EarthResonance) < 2)
+							{
+								return EarthsReply;
+							}
+
+							if (IsEnabled(CustomComboPreset.MNKPvP_FlintsReply) && HasEffect(Buffs.FiresRumination) && !WasLastWeaponskill(WindsReply))
+							{
+								return FiresReply;
+							}
+
+							if (IsEnabled(CustomComboPreset.MNKPvP_FlintsReply) && ActionReady(FlintsReply) && !InActionRange(DragonKick))
+							{
+								return FlintsReply;
+							}
 						}
 
-						if (IsEnabled(CustomComboPreset.MNKPvP_WindsReply) && ActionReady(FlintsReply) && WasLastWeaponskill(PouncingCoeurl))
+						if (IsEnabled(CustomComboPreset.MNKPvP_WindsReply) && ActionReady(WindsReply) && WasLastWeaponskill(PouncingCoeurl))
 						{
 							return WindsReply;
 						}

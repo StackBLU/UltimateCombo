@@ -71,7 +71,8 @@ namespace UltimateCombo.Combos.PvP
 			{
 				if ((actionID is KeenEdge or BrutalShell or SolidBarrel or BurstStrike) && IsEnabled(CustomComboPreset.GNBPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.GNBPvP_RelentlessRush) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
+					if (IsEnabled(CustomComboPreset.GNBPvP_RelentlessRush) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+						&& InActionRange(RelentlessRush))
 					{
 						return RelentlessRush;
 					}
@@ -80,7 +81,9 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.GNBPvP_Continuation) && ActionReady(OriginalHook(Continuation)))
+							if (IsEnabled(CustomComboPreset.GNBPvP_Continuation)
+								&& (HasEffect(Buffs.ReadyToBlast) || HasEffect(Buffs.ReadyToGouge)
+								|| HasEffect(Buffs.ReadyToRaze) || HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)))
 							{
 								return OriginalHook(Continuation);
 							}
@@ -90,20 +93,20 @@ namespace UltimateCombo.Combos.PvP
 								return HeartOfCorundum;
 							}
 
-							if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && ActionReady(RoughDivide)
-								&& (!InMeleeRange() || !HasEffect(Buffs.NoMercy)))
-							{
-								return RoughDivide;
-							}
-
 							if (IsEnabled(CustomComboPreset.GNBPvP_BlastingZone) && ActionReady(BlastingZone)
-								&& GetTargetHPPercent() <= 50 && HasBattleTarget())
+								&& GetTargetHPPercent() <= 50 && HasTarget())
 							{
 								return BlastingZone;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.GNBPvP_FatedCircle) && ActionReady(FatedCircle))
+						if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && ActionReady(RoughDivide)
+							&& (!InMeleeRange() || !HasEffect(Buffs.NoMercy)))
+						{
+							return RoughDivide;
+						}
+
+						if (IsEnabled(CustomComboPreset.GNBPvP_FatedCircle) && ActionReady(FatedCircle) && InActionRange(FatedCircle))
 						{
 							return FatedCircle;
 						}

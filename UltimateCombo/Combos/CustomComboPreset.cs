@@ -2658,8 +2658,8 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(DRGPvP_Combo)]
-		[CustomComboInfo("Geirskogul > Nastrond", "", DRG.JobID)]
-		DRGPvP_Geirskogul = 116001,
+		[CustomComboInfo("Nastrond", "", DRG.JobID)]
+		DRGPvP_Nastrond = 116001,
 
 		[PvPCustomCombo]
 		[ParentCombo(DRGPvP_Combo)]
@@ -2668,18 +2668,13 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(DRGPvP_Combo)]
-		[CustomComboInfo("High Jump", "", DRG.JobID)]
-		DRGPvP_HighJump = 116003,
-
-		[PvPCustomCombo]
-		[ParentCombo(DRGPvP_Combo)]
 		[CustomComboInfo("Horrid Roar", "", DRG.JobID)]
-		DRGPvP_HorridRoar = 116004,
+		DRGPvP_HorridRoar = 116003,
 
 		[PvPCustomCombo]
 		[ParentCombo(DRGPvP_Combo)]
 		[CustomComboInfo("Wyrmwind Thrust", "", DRG.JobID)]
-		DRGPvP_WyrmwindThrust = 116005,
+		DRGPvP_WyrmwindThrust = 116004,
 
 		#endregion
 

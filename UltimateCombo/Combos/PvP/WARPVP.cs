@@ -52,7 +52,7 @@ namespace UltimateCombo.Combos.PvP
 		public static class Config
 		{
 			public static UserInt
-				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 50);
+				WARPvP_Bloodwhetting = new("WARPvP_Bloodwhetting", 75);
 		}
 
 		internal class WARPvP_Combo : CustomComboClass
@@ -73,6 +73,12 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
+							if (IsEnabled(CustomComboPreset.WARPvP_Bloodwhetting) && ActionReady(Bloodwhetting)
+								&& PlayerHealthPercentageHp() < GetOptionValue(Config.WARPvP_Bloodwhetting))
+							{
+								return Bloodwhetting;
+							}
+
 							if (IsEnabled(CustomComboPreset.WARPvP_Onslaught) && ActionReady(Onslaught))
 							{
 								return Onslaught;
@@ -83,23 +89,16 @@ namespace UltimateCombo.Combos.PvP
 							{
 								return Orogeny;
 							}
-
-							if (IsEnabled(CustomComboPreset.WARPvP_Bloodwhetting) && ActionReady(Bloodwhetting)
-								&& PlayerHealthPercentageHp() < GetOptionValue(Config.WARPvP_Bloodwhetting))
-							{
-								return Bloodwhetting;
-							}
-
-							if (IsEnabled(CustomComboPreset.WARPvP_Blota) && ActionReady(Blota)
-								&& InActionRange(Blota))
-							{
-								return Blota;
-							}
 						}
 
 						if (IsEnabled(CustomComboPreset.WARPvP_PrimalRend) && ActionReady(PrimalRend))
 						{
 							return PrimalRend;
+						}
+
+						if (IsEnabled(CustomComboPreset.WARPvP_Blota) && ActionReady(Blota) && !InMeleeRange())
+						{
+							return Blota;
 						}
 
 						if (IsEnabled(CustomComboPreset.WARPvP_PrimalRuination) && HasEffect(Buffs.PrimalRuinationReady))

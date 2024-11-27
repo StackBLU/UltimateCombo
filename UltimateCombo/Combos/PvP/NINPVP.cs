@@ -114,7 +114,7 @@ namespace UltimateCombo.Combos.PvP
 							}
 
 							if (IsEnabled(CustomComboPreset.NINPvP_HyoshoRanryu) && !HasEffect(Debuffs.SealedHyoshoRanryu)
-								&& GetTargetHPPercent() >= 60 && HasBattleTarget())
+								&& GetTargetHPPercent() >= 60 && HasTarget())
 							{
 								return HyoshoRanryu;
 							}

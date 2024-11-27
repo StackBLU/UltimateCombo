@@ -108,7 +108,7 @@ namespace UltimateCombo.Combos.PvP
 
 						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonStrike) && HasEffect(Buffs.CrimsonStrikeReady))
 						{
-							return CrimsonCyclone;
+							return CrimsonStrike;
 						}
 					}
 				}

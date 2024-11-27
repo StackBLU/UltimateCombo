@@ -47,7 +47,6 @@ namespace UltimateCombo.Combos.PvP
 		}
 
 		internal static readonly List<uint>
-			MovmentSkills = [WARPvP.Onslaught],
 			GlobalSkills = [Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint];
 
 		internal class GlobalEmergencyHeals : CustomComboClass
@@ -66,11 +65,10 @@ namespace UltimateCombo.Combos.PvP
 					return OriginalHook(11);
 				}
 
-				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
+				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID))
 				{
-					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && PlayerHealthPercentageHp() > 25
-						&& (IsOffCooldown(DRKPvP.Impalement) || WasLastAction(DRKPvP.Impalement)
-						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2)))
+					if ((LocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsOffCooldown(DRKPvP.Impalement))
+						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2))
 					{
 						return actionID;
 					}
@@ -129,7 +127,7 @@ namespace UltimateCombo.Combos.PvP
 					return OriginalHook(11);
 				}
 
-				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID) && !MovmentSkills.Contains(actionID))
+				if (Execute() && InPvP() && !GlobalSkills.Contains(actionID))
 				{
 					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && HasEffect(DRKPvP.Buffs.UndeadRedemption))
 					{
@@ -240,7 +238,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && HasBattleTarget() & TargetHasEffectAny(SAMPvP.Buffs.Chiten))
+				if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten))
 				{
 					return OriginalHook(11);
 				}
