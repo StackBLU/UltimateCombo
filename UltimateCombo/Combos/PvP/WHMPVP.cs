@@ -1,5 +1,4 @@
-﻿using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.CustomCombo;
 
 namespace UltimateCombo.Combos.PvP
 {
@@ -38,13 +37,6 @@ namespace UltimateCombo.Combos.PvP
 				MiracleOfNature = 3085;
 		}
 
-		public static class Config
-		{
-			public static UserInt
-				WHMPvP_MiracleOfNature = new("WHMPvP_MiracleOfNature", 30),
-				WHMPvP_Cure3 = new("WHMPvP_Cure3", 40);
-		}
-
 		internal class WHMPvP_Combo : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMPvP_Combo;
@@ -57,20 +49,9 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.WHMPvP_MiracleOfNature) && ActionReady(MiracleOfNature)
-								&& GetTargetHPPercent() < GetOptionValue(Config.WHMPvP_MiracleOfNature))
-							{
-								return MiracleOfNature;
-							}
-
 							if (IsEnabled(CustomComboPreset.WHMPvP_Aquaveil) && ActionReady(Aquaveil))
 							{
 								return Aquaveil;
-							}
-
-							if (IsEnabled(CustomComboPreset.WHMPvP_SeraphStrike) && ActionReady(SeraphStrike))
-							{
-								return SeraphStrike;
 							}
 						}
 
@@ -81,13 +62,13 @@ namespace UltimateCombo.Combos.PvP
 					}
 
 					if (IsEnabled(CustomComboPreset.WHMPvP_Cure3) && HasEffect(Buffs.Cure3Ready) && !WasLastAction(SeraphStrike)
-						&& (PlayerHealthPercentageHp() < GetOptionValue(Config.WHMPvP_Cure3) || GetBuffRemainingTime(Buffs.Cure3Ready) < 3
-						|| (GetTargetHPPercent() < GetOptionValue(Config.WHMPvP_Cure3) && HasFriendlyTarget())))
+						&& (LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 16000 || GetBuffRemainingTime(Buffs.Cure3Ready) < 5
+						|| HasFriendlyTarget()))
 					{
 						return Cure3;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHMPvP_SeraphStrike) && HasEffect(Buffs.SacredSight))
+					if (HasEffect(Buffs.SacredSight))
 					{
 						return Glare4;
 					}

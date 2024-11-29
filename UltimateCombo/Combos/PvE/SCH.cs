@@ -297,11 +297,6 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is FeyBlessing or SummonSeraph or Consolation) && IsEnabled(CustomComboPreset.SCH_SeraphBlessing))
 				{
-					if (ActionReady(FeyBlessing) && Gauge.SeraphTimer == 0)
-					{
-						return FeyBlessing;
-					}
-
 					if (ActionReady(Consolation) && Gauge.SeraphTimer > 0)
 					{
 						return Consolation;
@@ -310,6 +305,11 @@ namespace UltimateCombo.Combos.PvE
 					if (ActionReady(SummonSeraph))
 					{
 						return SummonSeraph;
+					}
+
+					if (ActionReady(FeyBlessing) && Gauge.SeraphTimer == 0)
+					{
+						return FeyBlessing;
 					}
 				}
 

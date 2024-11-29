@@ -75,6 +75,12 @@ namespace UltimateCombo.Combos.PvP
 								return Chiten;
 							}
 
+							if (IsEnabled(CustomComboPreset.SAMPvP_Chiten) && HasEffect(Buffs.ZanshinReady)
+								&& (LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 12000 || GetBuffRemainingTime(Buffs.ZanshinReady) <= 2))
+							{
+								return Zanshin;
+							}
+
 							if (IsEnabled(CustomComboPreset.SAMPvP_Soten) && ActionReady(Soten)
 								&& !HasEffect(Buffs.Kaiten) && InActionRange(Soten))
 							{
@@ -98,16 +104,24 @@ namespace UltimateCombo.Combos.PvP
 							return Soten;
 						}
 
-						if (IsEnabled(CustomComboPreset.SAMPvP_MeikyoShisui)
-							&& (HasEffect(Buffs.TendoSetsugekkaReady) || lastComboMove is TendoSetsugekka) && InActionRange(TendoSetsugekka))
+						if (IsEnabled(CustomComboPreset.SAMPvP_MeikyoShisui) && WasLastWeaponskill(TendoSetsugekka) && InActionRange(TendoSetsugekka))
 						{
-							return OriginalHook(TendoSetsugekka);
+							return TendoKaeshiSetsugekka;
 						}
 
-						if (IsEnabled(CustomComboPreset.SAMPvP_Namikiri)
-							&& (ActionReady(OgiNamikiri) || lastComboMove is OgiNamikiri) && InActionRange(OgiNamikiri))
+						if (IsEnabled(CustomComboPreset.SAMPvP_MeikyoShisui) && HasEffect(Buffs.TendoSetsugekkaReady) && InActionRange(TendoSetsugekka))
 						{
-							return OriginalHook(OgiNamikiri);
+							return TendoSetsugekka;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAMPvP_Namikiri) && WasLastWeaponskill(OgiNamikiri) && InActionRange(OgiNamikiri))
+						{
+							return KaeshiNamikiri;
+						}
+
+						if (IsEnabled(CustomComboPreset.SAMPvP_Namikiri) && ActionReady(OgiNamikiri) && InActionRange(OgiNamikiri))
+						{
+							return OgiNamikiri;
 						}
 					}
 				}

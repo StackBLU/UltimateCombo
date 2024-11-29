@@ -101,7 +101,7 @@ namespace UltimateCombo.Combos.PvP
 							return Slipstream;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster))
+						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster) && InActionRange(MountainBuster))
 						{
 							return MountainBuster;
 						}

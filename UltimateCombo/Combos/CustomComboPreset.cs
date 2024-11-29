@@ -3176,23 +3176,23 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(VPRPvP_Combo)]
-		[CustomComboInfo("Backlash", "", VPR.JobID)]
-		VPRPvP_Backlash = 131001,
-
-		[PvPCustomCombo]
-		[ParentCombo(VPRPvP_Combo)]
-		[CustomComboInfo("Slither", "", VPR.JobID)]
-		VPRPvP_Slither = 131002,
+		[CustomComboInfo("Bloodcoil & Sanguine Feast", "", VPR.JobID)]
+		VPRPvP_Bloodcoil = 131001,
 
 		[PvPCustomCombo]
 		[ParentCombo(VPRPvP_Combo)]
 		[CustomComboInfo("Uncoiled Fury", "", VPR.JobID)]
-		VPRPvP_UncoiledFury = 131003,
+		VPRPvP_UncoiledFury = 131002,
 
 		[PvPCustomCombo]
 		[ParentCombo(VPRPvP_Combo)]
-		[CustomComboInfo("Hunter's Snap", "", VPR.JobID)]
-		VPRPvP_HuntersSnap = 131004,
+		[CustomComboInfo("Serpent's Tail", "", VPR.JobID)]
+		VPRPvP_SerpentsTail = 131003,
+
+		[PvPCustomCombo]
+		[ParentCombo(VPRPvP_Combo)]
+		[CustomComboInfo("Backlash", "", VPR.JobID)]
+		VPRPvP_Backlash = 131004,
 
 		[PvPCustomCombo]
 		[ParentCombo(VPRPvP_Combo)]
@@ -3272,18 +3272,8 @@ namespace UltimateCombo.Combos
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Miracle of Nature", "", WHM.JobID)]
-		WHMPvP_MiracleOfNature = 129001,
-
-		[PvPCustomCombo]
-		[ParentCombo(WHMPvP_Combo)]
 		[CustomComboInfo("Aquaveil", "", WHM.JobID)]
 		WHMPvP_Aquaveil = 129002,
-
-		[PvPCustomCombo]
-		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Seraph Strike", "", WHM.JobID)]
-		WHMPvP_SeraphStrike = 129003,
 
 		[PvPCustomCombo]
 		[ParentCombo(WHMPvP_Combo)]
@@ -3294,11 +3284,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(WHMPvP_Combo)]
 		[CustomComboInfo("Cure III", "", WHM.JobID)]
 		WHMPvP_Cure3 = 129005,
-
-		[PvPCustomCombo]
-		[ParentCombo(WHMPvP_Combo)]
-		[CustomComboInfo("Afflatus Purgation", "", WHM.JobID)]
-		WHMPvP_AfflatusPurgation = 129006,
 
 		#endregion
 

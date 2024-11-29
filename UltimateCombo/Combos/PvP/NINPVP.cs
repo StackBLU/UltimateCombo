@@ -84,7 +84,7 @@ namespace UltimateCombo.Combos.PvP
 						return OriginalHook(SeitonTenchu);
 					}
 
-					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard) && !HasEffect(Buffs.Hidden) && !WasLastAbility(Shukuchi))
+					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard) && !HasEffect(Buffs.Hidden))
 					{
 						if (CanWeave(actionID))
 						{
@@ -100,7 +100,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.NINPvP_ThreeMudra) && ActionReady(ThreeMudra) && !HasEffect(Buffs.ThreeMudra)
-							&& (CanWeave(actionID) || !InMeleeRange()))
+							&& (CanWeave(actionID) || !InActionRange(SpinningEdge)))
 						{
 							return ThreeMudra;
 						}
@@ -127,8 +127,8 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.NINPvP_Shuriken) && ActionReady(FumaShuriken)
-							&& (!HasEffect(Buffs.Hidden) || (HasEffect(Buffs.Hidden) && !InMeleeRange()))
-							&& (!InMeleeRange() || GetRemainingCharges(FumaShuriken) == GetMaxCharges(FumaShuriken)))
+							&& (!HasEffect(Buffs.Hidden) || (HasEffect(Buffs.Hidden) && !InActionRange(SpinningEdge)))
+							&& (!InActionRange(SpinningEdge) || GetRemainingCharges(FumaShuriken) == GetMaxCharges(FumaShuriken)))
 						{
 							return FumaShuriken;
 						}

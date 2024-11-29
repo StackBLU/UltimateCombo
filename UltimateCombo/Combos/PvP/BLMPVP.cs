@@ -68,7 +68,8 @@ namespace UltimateCombo.Combos.PvP
 				if ((actionID is Fire or Fire3 or Fire4 or HighFire2 or Flare or Blizzard or Blizzard3 or Blizzard4 or HighBlizzard2 or Freeze)
 					&& IsEnabled(CustomComboPreset.BLMPvP_Combo))
 				{
-					if (IsEnabled(CustomComboPreset.BLMPvP_SoulResonance) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
+					if (IsEnabled(CustomComboPreset.BLMPvP_SoulResonance) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+						&& PlayerHealthPercentageHp() > 25)
 					{
 						return SoulResonance;
 					}
@@ -98,11 +99,11 @@ namespace UltimateCombo.Combos.PvP
 						{
 							return Paradox;
 						}
+					}
 
-						if (IsMoving)
-						{
-							return OriginalHook(Blizzard);
-						}
+					if (IsMoving || (HasEffect(Buffs.UmbralIce3) && !HasEffect(Buffs.SoulResonance)))
+					{
+						return OriginalHook(Blizzard);
 					}
 				}
 

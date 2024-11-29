@@ -84,12 +84,10 @@ namespace UltimateCombo.Combos.PvP
 						return OriginalHook(SnakeScales);
 					}
 
-					if (CanWeave(actionID))
+					if (IsEnabled(CustomComboPreset.VPRPvP_SerpentsTail) && IsEnabled(OriginalHook(SerpentsTail))
+						&& IsOffCooldown(OriginalHook(SerpentsTail)))
 					{
-						if (IsEnabled(OriginalHook(SerpentsTail)))
-						{
-							return OriginalHook(SerpentsTail);
-						}
+						return OriginalHook(SerpentsTail);
 					}
 
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
@@ -123,11 +121,26 @@ namespace UltimateCombo.Combos.PvP
 							return UncoiledFury;
 						}
 
-						if (IsEnabled(CustomComboPreset.VPRPvP_HuntersSnap) && ActionReady(OriginalHook(Bloodcoil)))
+						if (IsEnabled(CustomComboPreset.VPRPvP_Bloodcoil) && ActionReady(OriginalHook(Bloodcoil)))
 						{
 							return OriginalHook(Bloodcoil);
 						}
 					}
+				}
+
+				if ((actionID is SnakeScales or Backlash) && IsEnabled(CustomComboPreset.VPRPvP_Backlash))
+				{
+					if (HasEffect(Buffs.SnakesBane))
+					{
+						return OriginalHook(SnakeScales);
+					}
+
+					if (IsOffCooldown(SnakeScales) || !HasEffect(Buffs.HardnenedScales))
+					{
+						return SnakeScales;
+					}
+
+					return OriginalHook(11);
 				}
 
 				return actionID;

@@ -71,11 +71,11 @@ namespace UltimateCombo.Combos.PvP
 							{
 								return HorridRoar;
 							}
+						}
 
-							if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && HasEffect(Buffs.NastrondReady) && GetBuffRemainingTime(Buffs.NastrondReady) <= 1.5)
-							{
-								return Nastrond;
-							}
+						if (IsEnabled(CustomComboPreset.DRGPvP_Nastrond) && HasEffect(Buffs.NastrondReady) && GetBuffRemainingTime(Buffs.NastrondReady) <= 1)
+						{
+							return Nastrond;
 						}
 
 						if (IsEnabled(CustomComboPreset.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus)

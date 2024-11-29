@@ -51,8 +51,8 @@ namespace UltimateCombo.Combos.PvP
 		public static class Config
 		{
 			public static UserInt
-				DRKPvP_Shadowbringer = new("DRKPvP_Shadowbringer", 75),
-				DRKPvP_Impalement = new("DRKPvP_Impalement", 50);
+				DRKPvP_Shadowbringer = new("DRKPvP_Shadowbringer", 50),
+				DRKPvP_Impalement = new("DRKPvP_Impalement", 75);
 		}
 
 		internal class DRKPvP_Combo : CustomComboClass
@@ -90,13 +90,13 @@ namespace UltimateCombo.Combos.PvP
 						if (CanWeave(actionID))
 						{
 							if (IsEnabled(CustomComboPreset.DRKPvP_BlackestNight) && ActionReady(TheBlackestNight)
-								&& !HasEffect(Buffs.BlackestNight) && !HasEffect(Buffs.DarkArts))
+								&& !HasEffect(Buffs.BlackestNight) && !HasEffect(Buffs.DarkArts) && !WasLastAction(TheBlackestNight))
 							{
 								return TheBlackestNight;
 							}
 
 							if (IsEnabled(CustomComboPreset.DRKPvP_Shadowbringer) && ActionReady(Shadowbringer)
-								&& PlayerHealthPercentageHp() > GetOptionValue(Config.DRKPvP_Shadowbringer))
+								&& PlayerHealthPercentageHp() > GetOptionValue(Config.DRKPvP_Shadowbringer) && !WasLastAction(Shadowbringer))
 							{
 								return Shadowbringer;
 							}
@@ -113,8 +113,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(Impalement)
-							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRKPvP_Impalement)
-							&& InActionRange(Impalement))
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.DRKPvP_Impalement))
 						{
 							return Impalement;
 						}

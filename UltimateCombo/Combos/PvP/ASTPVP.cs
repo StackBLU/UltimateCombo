@@ -62,7 +62,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is AspectedBenefic && IsEnabled(CustomComboPreset.ASTPvP_Combo))
+				if (actionID is FallMalefic && IsEnabled(CustomComboPreset.ASTPvP_Combo))
 				{
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{

@@ -6,14 +6,14 @@ namespace UltimateCombo.Combos.PvP
 	internal static class PCTPvP
 	{
 		public const uint
-			FireInRed = 39192,
+			FireInRed = 39191,
 			AeroInGreen = 39192,
 			WaterInBlue = 39193,
 			BlizzardInCyan = 39194,
 			StoneInYellow = 39195,
 			ThunderInMagenta = 39196,
 
-			CreatureMotif = 39200,
+			CreatureMotif = 39204,
 			PomMotif = 39200,
 			WingMotif = 39201,
 			ClawMotif = 39202,
@@ -32,7 +32,7 @@ namespace UltimateCombo.Combos.PvP
 			HolyInWhite = 39198,
 			CometInBlack = 39199,
 
-			MogOfTheAges = 29782,
+			MogOfTheAges = 39782,
 			RetributionOfTheMadeen = 39783,
 
 			TemperaCoat = 39211,
@@ -87,7 +87,7 @@ namespace UltimateCombo.Combos.PvP
 		public static class Config
 		{
 			public static UserInt
-				PCTPvP_AutoSubtractive = new("PCTPvP_AutoSubtractive", 50);
+				PCTPvP_AutoPalette = new("PCTPvP_AutoPalette", 50);
 		}
 
 		internal class PCTPvP_Combo : CustomComboClass
@@ -100,27 +100,11 @@ namespace UltimateCombo.Combos.PvP
 					&& IsEnabled(CustomComboPreset.PCTPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.PCTPvP_CreatureMotifs) && ActionReady(OriginalHook(CreatureMotif))
-						&& !IsMoving && !InCombat()
+						&& (!IsMoving || HasEffect(Buffs.QuickSketch)) && !InCombat()
 						&& (HasEffect(Buffs.PomSketch) || HasEffect(Buffs.WingSketch)
 						|| HasEffect(Buffs.ClawSketch) || HasEffect(Buffs.MawSketch)))
 					{
 						return OriginalHook(CreatureMotif);
-					}
-
-					if (IsEnabled(CustomComboPreset.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)))
-					{
-						if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
-							|| PlayerHealthPercentageHp() < GetOptionValue(Config.PCTPvP_AutoSubtractive)))
-						{
-							return OriginalHook(SubtractivePalette);
-						}
-
-						if ((!IsMoving || (IsMoving && GetRemainingCharges(OriginalHook(HolyInWhite)) >= 1
-							&& PlayerHealthPercentageHp() >= GetOptionValue(Config.PCTPvP_AutoSubtractive)))
-							&& !HasEffect(Buffs.SubtractivePalette))
-						{
-							return OriginalHook(SubtractivePalette);
-						}
 					}
 
 					if (CanWeave(actionID))
@@ -135,7 +119,7 @@ namespace UltimateCombo.Combos.PvP
 					{
 						if (IsEnabled(CustomComboPreset.PCTPvP_StarPrism) && ActionReady(OriginalHook(AdventOfChocobastion))
 							&& HasEffect(Buffs.Starstruck) && (LocalPlayer.CurrentHp <= (LocalPlayer.MaxHp - 8000) ||
-							GetBuffRemainingTime(Buffs.Starstruck) < 5))
+							GetBuffRemainingTime(Buffs.Starstruck) < 5) && !WasLastAction(AdventOfChocobastion))
 						{
 							return OriginalHook(AdventOfChocobastion);
 						}
@@ -162,8 +146,24 @@ namespace UltimateCombo.Combos.PvP
 						}
 					}
 
+					if (IsEnabled(CustomComboPreset.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)))
+					{
+						if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
+							|| PlayerHealthPercentageHp() < GetOptionValue(Config.PCTPvP_AutoPalette)))
+						{
+							return OriginalHook(SubtractivePalette);
+						}
+
+						if ((!IsMoving || (IsMoving && GetRemainingCharges(OriginalHook(HolyInWhite)) >= 1
+							&& PlayerHealthPercentageHp() >= GetOptionValue(Config.PCTPvP_AutoPalette)))
+							&& !HasEffect(Buffs.SubtractivePalette))
+						{
+							return OriginalHook(SubtractivePalette);
+						}
+					}
+
 					if (IsEnabled(CustomComboPreset.PCTPvP_CreatureMotifs) && ActionReady(OriginalHook(CreatureMotif))
-						&& !IsMoving
+						&& (!IsMoving || HasEffect(Buffs.QuickSketch))
 						&& (HasEffect(Buffs.PomSketch) || HasEffect(Buffs.WingSketch)
 						|| HasEffect(Buffs.ClawSketch) || HasEffect(Buffs.MawSketch)))
 					{

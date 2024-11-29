@@ -59,16 +59,12 @@ namespace UltimateCombo.Combos.PvP
 						return Kardia;
 					}
 
-					if (IsEnabled(CustomComboPreset.SGEPvP_Mesotes) && IsEnabled(Mesotes) && HasEffect(Buffs.Mesotes) && !HasEffect(Buffs.MesotesBuff))
-					{
-						return Mesotes;
-					}
-
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (CanWeave(actionID))
 						{
-							if (IsEnabled(CustomComboPreset.SGEPvP_Toxikon) && ActionReady(OriginalHook(Toxikon)) && !TargetHasEffect(Debuffs.Toxikon))
+							if (IsEnabled(CustomComboPreset.SGEPvP_Toxikon) && ActionReady(OriginalHook(Toxikon)) && !TargetHasEffect(Debuffs.Toxikon)
+								&& !WasLastAction(OriginalHook(Toxikon)))
 							{
 								return OriginalHook(Toxikon);
 							}
@@ -91,7 +87,7 @@ namespace UltimateCombo.Combos.PvP
 							return Phlegma3;
 						}
 
-						if (IsEnabled(CustomComboPreset.SGEPvP_Psyche) && ActionReady(Psyche))
+						if (IsEnabled(CustomComboPreset.SGEPvP_Psyche) && IsEnabled(Psyche))
 						{
 							return Psyche;
 						}

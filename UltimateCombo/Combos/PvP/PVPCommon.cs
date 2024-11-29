@@ -144,6 +144,11 @@ namespace UltimateCombo.Combos.PvP
 						return actionID;
 					}
 
+					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(DRKPvP.Impalement))
+					{
+						return DRKPvP.Impalement;
+					}
+
 					return OriginalHook(Guard);
 				}
 

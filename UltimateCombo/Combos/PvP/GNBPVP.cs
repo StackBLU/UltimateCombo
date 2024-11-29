@@ -101,7 +101,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.GNBPvP_RoughDivide) && ActionReady(RoughDivide)
-							&& (!InMeleeRange() || !HasEffect(Buffs.NoMercy)))
+							&& (!InActionRange(KeenEdge) || !HasEffect(Buffs.NoMercy)))
 						{
 							return RoughDivide;
 						}

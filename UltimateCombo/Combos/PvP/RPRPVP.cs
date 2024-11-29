@@ -82,13 +82,8 @@ namespace UltimateCombo.Combos.PvP
 								return LemuresSlice;
 							}
 
-							if (IsEnabled(CustomComboPreset.RPRPvP_HarvestMoon) && ActionReady(HarvestMoon)
-								&& (GetTargetHPPercent() <= 50 || GetRemainingCharges(HarvestMoon) == 2))
-							{
-								return HarvestMoon;
-							}
-
-							if (IsEnabled(CustomComboPreset.RPRPvP_GrimSwathe) && ActionReady(GrimSwathe) && InActionRange(GrimSwathe))
+							if (IsEnabled(CustomComboPreset.RPRPvP_GrimSwathe) && ActionReady(GrimSwathe) && InActionRange(GrimSwathe)
+								&& !HasEffect(Buffs.Enshrouded))
 							{
 								return GrimSwathe;
 							}
@@ -117,6 +112,12 @@ namespace UltimateCombo.Combos.PvP
 						if (IsEnabled(CustomComboPreset.RPRPvP_PlentifulHarvest) && ActionReady(PlentifulHarvest) && GetBuffStacks(Buffs.ImmortalSacrifice) == 8)
 						{
 							return PlentifulHarvest;
+						}
+
+						if (IsEnabled(CustomComboPreset.RPRPvP_HarvestMoon) && ActionReady(HarvestMoon)
+							&& (GetTargetHPPercent() <= 50 || GetRemainingCharges(HarvestMoon) == GetMaxCharges(HarvestMoon)))
+						{
+							return HarvestMoon;
 						}
 					}
 				}

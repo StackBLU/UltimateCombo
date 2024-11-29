@@ -96,7 +96,7 @@ namespace UltimateCombo.Combos.PvP
 							return PrimalRend;
 						}
 
-						if (IsEnabled(CustomComboPreset.WARPvP_Blota) && ActionReady(Blota) && !InMeleeRange())
+						if (IsEnabled(CustomComboPreset.WARPvP_Blota) && ActionReady(Blota) && !InActionRange(HeavySwing))
 						{
 							return Blota;
 						}

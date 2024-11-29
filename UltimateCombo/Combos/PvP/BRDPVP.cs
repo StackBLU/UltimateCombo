@@ -76,7 +76,7 @@ namespace UltimateCombo.Combos.PvP
 							return ApexArrow;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRDPvP_BlastArrow) && ActionReady(BlastArrow))
+						if (IsEnabled(CustomComboPreset.BRDPvP_BlastArrow) && IsEnabled(BlastArrow))
 						{
 							return BlastArrow;
 						}

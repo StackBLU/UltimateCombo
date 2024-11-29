@@ -216,11 +216,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			return ActionManager.Instance()->ActionQueued;
 		}
 
-		public static unsafe bool IsActionHighlighted(ActionType actionType, uint actionID)
-		{
-			return ActionManager.Instance()->IsActionHighlighted(actionType, actionID);
-		}
-
 		public static unsafe void AssignBlueMageActionToSlot(int slot, uint actionID)
 		{
 			ActionManager.Instance()->AssignBlueMageActionToSlot(slot, actionID);

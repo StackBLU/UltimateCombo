@@ -1418,10 +1418,10 @@ namespace UltimateCombo.Window.Functions
 
 			#region PICTOMANCER
 
-			/*if (preset == CustomComboPreset.PCTPvP_AutoSubtractive && enabled)
+			if (preset == CustomComboPreset.PCTPvP_AutoPalette && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoSubtractive, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
-			}*/
+				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoPalette, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
+			}
 
 			#endregion
 
@@ -1588,10 +1588,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region PvP
 
-			if (preset is CustomComboPreset.WHMPvP_Cure3 && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, WHMPvP.Config.WHMPvP_Cure3, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
+
 
 			#endregion
 
