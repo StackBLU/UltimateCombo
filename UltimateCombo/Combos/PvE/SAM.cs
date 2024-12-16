@@ -239,12 +239,12 @@ namespace UltimateCombo.Combos.PvE
 
 						if (lastComboMove is Hakaze or Gyofu)
 						{
-							if (!HasEffect(Buffs.Fuka) || (!Gauge.Sen.HasFlag(Sen.KA) && ActionReady(Shifu)))
+							if (!HasEffect(Buffs.Fuka) || ((!Gauge.Sen.HasFlag(Sen.KA)) && ActionReady(Shifu)))
 							{
 								return Shifu;
 							}
 
-							if (!HasEffect(Buffs.Fugetsu) || (!Gauge.Sen.HasFlag(Sen.GETSU) && ActionReady(Jinpu)))
+							if (!HasEffect(Buffs.Fugetsu) || ((!Gauge.Sen.HasFlag(Sen.GETSU)) && ActionReady(Jinpu)))
 							{
 								return Jinpu;
 							}
@@ -365,19 +365,21 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (lastComboMove is Fuga or Fuko)
 						{
-							if (!HasEffect(Buffs.Fuka) || (!Gauge.Sen.HasFlag(Sen.KA) && ActionReady(Oka)))
+							if (!HasEffect(Buffs.Fuka) || ((!Gauge.Sen.HasFlag(Sen.KA)) && ActionReady(Oka)))
 							{
 								return Oka;
 							}
 
-							if (!HasEffect(Buffs.Fugetsu) || (!Gauge.Sen.HasFlag(Sen.GETSU) && ActionReady(Mangetsu)))
+							if (!HasEffect(Buffs.Fugetsu) || ((!Gauge.Sen.HasFlag(Sen.GETSU)) && ActionReady(Mangetsu)))
 							{
 								return Mangetsu;
 							}
 						}
 					}
+
 					return OriginalHook(Fuga);
 				}
+
 				return actionID;
 			}
 		}

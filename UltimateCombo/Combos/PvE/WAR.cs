@@ -83,7 +83,7 @@ namespace UltimateCombo.Combos.PvE
 						return Holmgang;
 					}
 
-					if (!InCombat() && ActionReady(Tomahawk) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.WAR_ST_Tomahawk) && !InCombat() && ActionReady(Tomahawk) && !InMeleeRange())
 					{
 						return Tomahawk;
 					}
@@ -98,7 +98,7 @@ namespace UltimateCombo.Combos.PvE
 							return Infuriate;
 						}
 
-						if (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
+						if ((GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
 							&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
 						{
 							if (IsEnabled(CustomComboPreset.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
@@ -134,7 +134,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.WAR_ST_FellCleave) && ActionReady(OriginalHook(FellCleave))
 						&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
-						&& GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
+						&& (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
 						&& (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)
 						|| (Gauge.BeastGauge >= GetOptionValue(Config.WAR_FellCleaveGauge)
 						&& (LevelChecked(InnerRelease)
@@ -216,7 +216,7 @@ namespace UltimateCombo.Combos.PvE
 							return Onslaught;
 						}
 
-						if (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh))
+						if (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
 						{
 							if (IsEnabled(CustomComboPreset.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
 							{
@@ -250,7 +250,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.WAR_AoE_Decimate) && ActionReady(OriginalHook(Decimate))
-						&& GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh)
+						&& (GetBuffRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
 						&& (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)
 						|| (Gauge.BeastGauge >= GetOptionValue(Config.WAR_DecimateGauge)
 						&& (LevelChecked(InnerRelease)

@@ -345,7 +345,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (lastComboActionID is SpinningEdge)
+						if (lastComboActionID is SpinningEdge && ActionReady(GustSlash))
 						{
 							return GustSlash;
 						}

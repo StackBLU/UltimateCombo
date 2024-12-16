@@ -245,7 +245,10 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(HuntersSting);
 							}
 
-							return OriginalHook(SwiftskinsSting);
+							if (ActionReady(OriginalHook(SwiftskinsSting)))
+							{
+								return OriginalHook(SwiftskinsSting);
+							}
 						}
 
 						if (lastComboMove is SwiftskinsSting or HuntersSting)
@@ -270,7 +273,10 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(HindsbaneFang);
 							}
 
-							return OriginalHook(HindstingStrike);
+							if (ActionReady(OriginalHook(HindstingStrike)))
+							{
+								return OriginalHook(HindstingStrike);
+							}
 						}
 
 						if (HasEffect(Buffs.HonedReavers))
@@ -431,7 +437,10 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(HuntersBite);
 							}
 
-							return OriginalHook(SwiftskinsBite);
+							if (ActionReady(OriginalHook(SwiftskinsBite)))
+							{
+								return OriginalHook(SwiftskinsBite);
+							}
 						}
 
 						if (lastComboMove is SwiftskinsBite or HuntersBite)
@@ -446,7 +455,10 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(BloodiedMaw);
 							}
 
-							return OriginalHook(BloodiedMaw);
+							if (ActionReady(OriginalHook(BloodiedMaw)))
+							{
+								return OriginalHook(BloodiedMaw);
+							}
 						}
 
 						if (HasEffect(Buffs.HonedReavers))
@@ -459,8 +471,10 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(SteelMaw);
 						}
 					}
+
 					return SteelMaw;
 				}
+
 				return actionID;
 			}
 		}
@@ -509,6 +523,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -557,6 +572,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -582,6 +598,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 				}
+
 				return actionID;
 			}
 		}

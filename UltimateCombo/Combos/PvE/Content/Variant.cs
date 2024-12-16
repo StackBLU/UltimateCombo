@@ -88,7 +88,8 @@ namespace UltimateCombo.Combos.PvE.Content
 				if (IsEnabled(CustomComboPreset.Variant_Cure))
 				{
 					if (ActionReady(VariantCure) && IsEnabled(VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure)
+						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && HasEffect(NIN.Buffs.Kassatsu))
 					{
 						return VariantCure;
 					}
@@ -139,7 +140,8 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Variant_Ultimatum))
 				{
-					if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID))
+					if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID)
+						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && HasEffect(NIN.Buffs.Kassatsu))
 					{
 						return VariantUltimatum;
 					}
@@ -176,7 +178,8 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Variant_Rampart))
 				{
-					if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID))
+					if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID)
+						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && HasEffect(NIN.Buffs.Kassatsu))
 					{
 						return VariantRampart;
 					}

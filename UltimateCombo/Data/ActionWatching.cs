@@ -237,8 +237,7 @@ namespace UltimateCombo.Data
 			}
 
 			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas
-				or ConditionFlag.Jumping61 or ConditionFlag.Mounted
-				or ConditionFlag.Unconscious)
+				or ConditionFlag.Jumping61 or ConditionFlag.Mounted)
 			{
 				CombatActions.Clear();
 				LastAbility = 0;

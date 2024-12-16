@@ -211,7 +211,7 @@ namespace UltimateCombo.Combos.PvE
 						return Tillana;
 					}
 
-					if (IsEnabled(CustomComboPreset.DNC_ST_Technical) && HasEffect(Buffs.DanceOfTheDawnReady))
+					if (IsEnabled(CustomComboPreset.DNC_ST_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50)
 					{
 						return DanceOfTheDawn;
 					}
@@ -243,7 +243,7 @@ namespace UltimateCombo.Combos.PvE
 						return Fountainfall;
 					}
 
-					if (comboTime > 0 && lastComboMove is Cascade)
+					if (comboTime > 0 && lastComboMove is Cascade && ActionReady(Fountain))
 					{
 						return Fountain;
 					}
@@ -365,7 +365,7 @@ namespace UltimateCombo.Combos.PvE
 						return Tillana;
 					}
 
-					if (IsEnabled(CustomComboPreset.DNC_AoE_Technical) && HasEffect(Buffs.DanceOfTheDawnReady))
+					if (IsEnabled(CustomComboPreset.DNC_AoE_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50)
 					{
 						return DanceOfTheDawn;
 					}

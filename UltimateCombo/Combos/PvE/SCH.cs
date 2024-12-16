@@ -60,7 +60,8 @@ namespace UltimateCombo.Combos.PvE
 				SacredSoil = 299,
 				Recitation = 1896,
 				Dissipation = 791,
-				ImpactImminent = 3882;
+				ImpactImminent = 3882,
+				Seraphism = 3884;
 		}
 
 		internal static class Debuffs
@@ -106,16 +107,16 @@ namespace UltimateCombo.Combos.PvE
 						ActionWatching.CombatActions.Clear();
 					}
 
+					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0
+						&& LocalPlayer.CurrentMp < 1000)
+					{
+						return Aetherflow;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
-							&& Gauge.SeraphTimer < 5000)
-							{
-								return OriginalHook(SummonSeraph);
-							}
-
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
 							{
 								if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
@@ -129,11 +130,23 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
+							&& Gauge.SeraphTimer < 5000)
+							{
+								return OriginalHook(SummonSeraph);
+							}
+
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
 								&& (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
 								|| TargetHasEffect(Debuffs.ChainStratagem)))
 							{
 								return EnergyDrain;
+							}
+
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
+								&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 10)
+							{
+								return Dissipation;
 							}
 						}
 
@@ -180,6 +193,12 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is ArtOfWar or ArtOfWarII) && IsEnabled(CustomComboPreset.SCH_AoE_DPS))
 				{
+					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0
+						&& LocalPlayer.CurrentMp < 1000)
+					{
+						return Aetherflow;
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.SCH_AoE_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
@@ -205,6 +224,12 @@ namespace UltimateCombo.Combos.PvE
 							|| TargetHasEffect(Debuffs.ChainStratagem)))
 						{
 							return EnergyDrain;
+						}
+
+						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_Dissipation) && ActionReady(Dissipation)
+							&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 10)
+						{
+							return Dissipation;
 						}
 					}
 
@@ -273,7 +298,8 @@ namespace UltimateCombo.Combos.PvE
 						return EnergyDrain;
 					}
 
-					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation)))
+					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation)
+						&& !HasEffect(Buffs.Seraphism)))
 					{
 						return Dissipation;
 					}
@@ -332,6 +358,23 @@ namespace UltimateCombo.Combos.PvE
 					if (ActionReady(Protraction))
 					{
 						return Protraction;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_NoDissipate : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_NoDissipate;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is Dissipation && IsEnabled(CustomComboPreset.SCH_NoDissipate))
+				{
+					if (HasEffect(Buffs.Seraphism))
+					{
+						return OriginalHook(11);
 					}
 				}
 

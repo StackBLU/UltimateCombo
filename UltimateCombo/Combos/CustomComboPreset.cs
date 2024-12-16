@@ -617,6 +617,10 @@ namespace UltimateCombo.Combos
 		SCH_ST_DPS_EnergyDrain = 16003,
 
 		[ParentCombo(SCH_ST_DPS)]
+		[CustomComboInfo("Dissipation", "", SCH.JobID)]
+		SCH_ST_DPS_Dissipation = 16008,
+
+		[ParentCombo(SCH_ST_DPS)]
 		[CustomComboInfo("Consolation", "", SCH.JobID)]
 		SCH_ST_DPS_Seraph = 16004,
 
@@ -647,6 +651,10 @@ namespace UltimateCombo.Combos
 		[ParentCombo(SCH_AoE_DPS)]
 		[CustomComboInfo("Energy Drain", "", SCH.JobID)]
 		SCH_AoE_DPS_EnergyDrain = 16022,
+
+		[ParentCombo(SCH_AoE_DPS)]
+		[CustomComboInfo("Dissipation", "", SCH.JobID)]
+		SCH_AoE_DPS_Dissipation = 16025,
 
 		[ParentCombo(SCH_AoE_DPS)]
 		[CustomComboInfo("Chain Stratagem > Baneful Impact", "", SCH.JobID)]
@@ -683,6 +691,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(SCH.Recitation, SCH.Protraction)]
 		[CustomComboInfo("Recitation & Protraction", "", SCH.JobID)]
 		SCH_ProRecitation = 16044,
+
+		[ReplaceSkill(SCH.Dissipation)]
+		[CustomComboInfo("No Dissipation while Seraphism is active", "", SCH.JobID)]
+		SCH_NoDissipate = 16045,
 
 		#endregion
 

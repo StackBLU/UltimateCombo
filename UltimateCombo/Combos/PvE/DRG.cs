@@ -127,7 +127,8 @@ namespace UltimateCombo.Combos.PvE
 								return LifeSurge;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(DragonfireDive) && InMeleeRangeNoMovement())
+							if (IsEnabled(CustomComboPreset.DRG_ST_Dragonfire) && ActionReady(DragonfireDive)
+								&& (InMeleeRangeNoMovement() || Gauge.LOTDTimer < 10))
 							{
 								return DragonfireDive;
 							}
@@ -140,7 +141,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.DRG_ST_Stardiver) && ActionReady(Stardiver) && Gauge.IsLOTDActive
 								&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability
-								&& InMeleeRangeNoMovement())
+								&& (InMeleeRangeNoMovement() || Gauge.LOTDTimer < 10))
 							{
 								return Stardiver;
 							}
@@ -244,7 +245,7 @@ namespace UltimateCombo.Combos.PvE
 							return Geirskogul;
 						}
 
-						if (IsEnabled(CustomComboPreset.DRG_AoE_Dragonfire) && ActionReady(DragonfireDive) && InMeleeRangeNoMovement())
+						if (IsEnabled(CustomComboPreset.DRG_AoE_Dragonfire) && ActionReady(DragonfireDive))
 						{
 							return DragonfireDive;
 						}
@@ -256,8 +257,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.DRG_AoE_Stardiver) && ActionReady(Stardiver) && Gauge.IsLOTDActive
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability
-							&& InMeleeRangeNoMovement())
+							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)
 						{
 							return Stardiver;
 						}

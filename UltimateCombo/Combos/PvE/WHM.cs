@@ -153,6 +153,7 @@ namespace UltimateCombo.Combos.PvE
 						return Glare4;
 					}
 				}
+
 				return actionID;
 			}
 		}
