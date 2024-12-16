@@ -136,7 +136,7 @@ namespace UltimateCombo.Combos.PvE
 								&& ((Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Pom)
 								&& Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Wings)
 								&& Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Claw)
-								&& Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse)))
+								&& Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse) || !LevelChecked(RetributionOfTheMadeen)))
 							{
 								return OriginalHook(MogOfTheAges);
 							}
@@ -300,7 +300,7 @@ namespace UltimateCombo.Combos.PvE
 								&& ((Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Pom)
 								&& Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Wings)
 								&& Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Claw)
-								&& Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse)))
+								&& Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse) || !LevelChecked(RetributionOfTheMadeen)))
 							{
 								return OriginalHook(MogOfTheAges);
 							}
