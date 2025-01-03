@@ -6,6 +6,254 @@ namespace UltimateCombo.Combos
 {
 	public enum CustomComboPreset
 	{
+		#region Extra
+
+		#region REQUIRED - 0
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", All.JobID)]
+		AdvAny = 0,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", FSH.JobID)]
+		DolAny = AdvAny + FSH.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", PLD.JobID)]
+		PldAny = AdvAny + PLD.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", WAR.JobID)]
+		WarAny = AdvAny + WAR.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DRK.JobID)]
+		DrkAny = AdvAny + DRK.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", GNB.JobID)]
+		GnbAny = AdvAny + GNB.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", WHM.JobID)]
+		WhmAny = AdvAny + WHM.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SCH.JobID)]
+		SchAny = AdvAny + SCH.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", AST.JobID)]
+		AstAny = AdvAny + AST.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SGE.JobID)]
+		SgeAny = AdvAny + SGE.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", MNK.JobID)]
+		MnkAny = AdvAny + MNK.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DRG.JobID)]
+		DrgAny = AdvAny + DRG.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", NIN.JobID)]
+		NinAny = AdvAny + NIN.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SAM.JobID)]
+		SamAny = AdvAny + SAM.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", RPR.JobID)]
+		RprAny = AdvAny + RPR.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", VPR.JobID)]
+		VprAny = AdvAny + VPR.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BRD.JobID)]
+		BrdAny = AdvAny + BRD.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", MCH.JobID)]
+		MchAny = AdvAny + MCH.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DNC.JobID)]
+		DncAny = AdvAny + DNC.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BLM.JobID)]
+		BlmAny = AdvAny + BLM.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SMN.JobID)]
+		SmnAny = AdvAny + SMN.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", RDM.JobID)]
+		RdmAny = AdvAny + RDM.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", PCT.JobID)]
+		PctAny = AdvAny + PCT.JobID,
+
+		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BLU.JobID)]
+		BluAny = AdvAny + BLU.JobID,
+
+		[CustomComboInfo("Disabled", "This should not be used", All.JobID)]
+		Disabled = 99999,
+
+		#endregion
+
+		#region FISHING - 51000
+
+		[ConflictingCombos(FSH_CastHook)]
+		[ReplaceSkill(FSH.Cast, FSH.Rest)]
+		[CustomComboInfo("Cast to Rest", "", FSH.JobID)]
+		FSH_CastRest = 51000,
+
+		[ConflictingCombos(FSH_CastRest)]
+		[ReplaceSkill(FSH.Cast, FSH.Hook)]
+		[CustomComboInfo("Cast to Hook", "", FSH.JobID)]
+		FSH_CastHook = 51001,
+
+		[CustomComboInfo("Fishing skills to Spearfishing skills when underwater", "", FSH.JobID)]
+		FSH_FishingToSpearfishing = 51002,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.Cast, FSH.Gig)]
+		[CustomComboInfo("Cast to Gig", "", FSH.JobID)]
+		FSH_CastGig = 51003,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.Chum, FSH.BaitedBreath)]
+		[CustomComboInfo("Chum to Baited Breath", "", FSH.JobID)]
+		FSH_Chum_BaitedBreath = 51004,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.PrecisionHookset, FSH.VitalSight)]
+		[CustomComboInfo("Precision Hookset to Vital Sight", "", FSH.JobID)]
+		FSH_PrecisionSight = 51005,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.PowerfulHookset, FSH.ElectricCurrent)]
+		[CustomComboInfo("Powerful Hookset to Electric Current", "", FSH.JobID)]
+		FSH_PowerfulCurrent = 51006,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.Mooch, FSH.MoochII, FSH.SharkEye, FSH.SharkEyeII)]
+		[CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
+		FSH_MoochEye = 51007,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.PrizeCatch, FSH.NaturesBounty)]
+		[CustomComboInfo("Prize Catch to Nature's Bounty", "", FSH.JobID)]
+		FSH_PrizeBounty = 51008,
+
+		[ParentCombo(FSH_FishingToSpearfishing)]
+		[ReplaceSkill(FSH.SurfaceSlap, FSH.VeteranTrade)]
+		[CustomComboInfo("Surface Slap to Veteran Trade", "", FSH.JobID)]
+		FSH_SurfaceTrade = 51009,
+
+		#endregion
+
+		#region ALL - 100000
+
+		[CustomComboInfo("Auto Chocobo Stance", "", All.JobID)]
+		All_Choco = 100000,
+
+		#region Role Actions
+
+		[ReplaceSkill(All.TrueNorth, All.SecondWind, All.Bloodbath, All.LucidDreaming, All.ArmsLength)]
+		[CustomComboInfo("Role Actions", "", All.JobID)]
+		All_RoleActions = 100010,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("True North", "", All.JobID)]
+		All_TrueNorth = 100011,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Second Wind", "", All.JobID)]
+		All_SecondWind = 100012,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Bloodbath", "", All.JobID)]
+		All_Bloodbath = 100013,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
+		All_Healer_Lucid = 100014,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
+		All_Mage_Lucid = 100015,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
+		All_BLU_Lucid = 100016,
+
+		[ParentCombo(All_RoleActions)]
+		[CustomComboInfo("Arm's Length", "", All.JobID)]
+		All_ArmsLength = 100017,
+
+		#endregion
+
+		#region Protections
+
+		[ReplaceSkill(All.Reprisal, All.Feint, All.Addle)]
+		[CustomComboInfo("Mitigation Overwrite Protection", "", All.JobID)]
+		All_MitigationProtections = 100030,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Reprisal", "", All.JobID)]
+		All_Tank_Reprisal = 100031,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Feint", "", All.JobID)]
+		All_Melee_Feint = 100032,
+
+		[ParentCombo(All_MitigationProtections)]
+		[CustomComboInfo("Addle", "", All.JobID)]
+		All_Caster_Addle = 100033,
+
+		[ReplaceSkill(All.TrueNorth)]
+		[CustomComboInfo("True North Protection", "", All.JobID)]
+		All_Melee_TrueNorth = 100034,
+
+		[ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
+		[CustomComboInfo("Ranged Mitigation Protection", "", All.JobID)]
+		All_Ranged_Mitigation = 100035,
+
+		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
+		[CustomComboInfo("Swift Raise (Includes Thin Air for WHM and Dualcast for RDM)", "", All.JobID)]
+		All_Raise = 100036,
+
+		#endregion
+
+		#region Bozja
+
+		[Bozja]
+		[ReplaceSkill(Bozja.FlareStar)]
+		[CustomComboInfo("Lost Flare Star", "", All.JobID)]
+		Bozja_LFS = 100040,
+
+		#endregion
+
+		#region Variant
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantCure_Image)]
+		[CustomComboInfo("Variant Cure", "", All.JobID)]
+		Variant_Cure = 100050,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantUltimatum)]
+		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
+		Variant_Ultimatum = 100051,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantRaise, Variant.VariantRaise2)]
+		[CustomComboInfo("Variant Raise", "", All.JobID)]
+		Variant_Raise = 100052,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantSpiritDart_Image)]
+		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
+		Variant_SpiritDart = 100053,
+
+		[Variant]
+		[ReplaceSkill(Variant.VariantRampart_Image)]
+		[CustomComboInfo("Variant Rampart", "", All.JobID)]
+		Variant_Rampart = 100054,
+
+		#endregion
+
+		#endregion
+
+		#endregion
+
 		#region PvE
 
 		#region Tanks
@@ -695,6 +943,10 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(SCH.Dissipation)]
 		[CustomComboInfo("No Dissipation while Seraphism is active", "", SCH.JobID)]
 		SCH_NoDissipate = 16045,
+
+		[ReplaceSkill(SCH.SummonSeraph)]
+		[CustomComboInfo("Prevent Summon Seraph after just having used Whisper Dawn, Fey Blessing, or Fey Illumination", "", SCH.JobID)]
+		SCH_SeraphNoWaste = 16046,
 
 		#endregion
 
@@ -3296,254 +3548,6 @@ namespace UltimateCombo.Combos
 		[ParentCombo(WHMPvP_Combo)]
 		[CustomComboInfo("Cure III", "", WHM.JobID)]
 		WHMPvP_Cure3 = 129005,
-
-		#endregion
-
-		#endregion
-
-		#region Extra
-
-		#region REQUIRED - 0
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", All.JobID)]
-		AdvAny = 0,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", FSH.JobID)]
-		DolAny = AdvAny + FSH.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", PLD.JobID)]
-		PldAny = AdvAny + PLD.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", WAR.JobID)]
-		WarAny = AdvAny + WAR.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DRK.JobID)]
-		DrkAny = AdvAny + DRK.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", GNB.JobID)]
-		GnbAny = AdvAny + GNB.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", WHM.JobID)]
-		WhmAny = AdvAny + WHM.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SCH.JobID)]
-		SchAny = AdvAny + SCH.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", AST.JobID)]
-		AstAny = AdvAny + AST.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SGE.JobID)]
-		SgeAny = AdvAny + SGE.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", MNK.JobID)]
-		MnkAny = AdvAny + MNK.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DRG.JobID)]
-		DrgAny = AdvAny + DRG.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", NIN.JobID)]
-		NinAny = AdvAny + NIN.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SAM.JobID)]
-		SamAny = AdvAny + SAM.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", RPR.JobID)]
-		RprAny = AdvAny + RPR.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", VPR.JobID)]
-		VprAny = AdvAny + VPR.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BRD.JobID)]
-		BrdAny = AdvAny + BRD.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", MCH.JobID)]
-		MchAny = AdvAny + MCH.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", DNC.JobID)]
-		DncAny = AdvAny + DNC.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BLM.JobID)]
-		BlmAny = AdvAny + BLM.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", SMN.JobID)]
-		SmnAny = AdvAny + SMN.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", RDM.JobID)]
-		RdmAny = AdvAny + RDM.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", PCT.JobID)]
-		PctAny = AdvAny + PCT.JobID,
-
-		[CustomComboInfo("Any", "This should not be displayed. This always returns true when used with IsEnabled", BLU.JobID)]
-		BluAny = AdvAny + BLU.JobID,
-
-		[CustomComboInfo("Disabled", "This should not be used", All.JobID)]
-		Disabled = 99999,
-
-		#endregion
-
-		#region FISHING - 51000
-
-		[ConflictingCombos(FSH_CastHook)]
-		[ReplaceSkill(FSH.Cast, FSH.Rest)]
-		[CustomComboInfo("Cast to Rest", "", FSH.JobID)]
-		FSH_CastRest = 51000,
-
-		[ConflictingCombos(FSH_CastRest)]
-		[ReplaceSkill(FSH.Cast, FSH.Hook)]
-		[CustomComboInfo("Cast to Hook", "", FSH.JobID)]
-		FSH_CastHook = 51001,
-
-		[CustomComboInfo("Fishing skills to Spearfishing skills when underwater", "", FSH.JobID)]
-		FSH_FishingToSpearfishing = 51002,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Cast, FSH.Gig)]
-		[CustomComboInfo("Cast to Gig", "", FSH.JobID)]
-		FSH_CastGig = 51003,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Chum, FSH.BaitedBreath)]
-		[CustomComboInfo("Chum to Baited Breath", "", FSH.JobID)]
-		FSH_Chum_BaitedBreath = 51004,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.PrecisionHookset, FSH.VitalSight)]
-		[CustomComboInfo("Precision Hookset to Vital Sight", "", FSH.JobID)]
-		FSH_PrecisionSight = 51005,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.PowerfulHookset, FSH.ElectricCurrent)]
-		[CustomComboInfo("Powerful Hookset to Electric Current", "", FSH.JobID)]
-		FSH_PowerfulCurrent = 51006,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.Mooch, FSH.MoochII, FSH.SharkEye, FSH.SharkEyeII)]
-		[CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
-		FSH_MoochEye = 51007,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.PrizeCatch, FSH.NaturesBounty)]
-		[CustomComboInfo("Prize Catch to Nature's Bounty", "", FSH.JobID)]
-		FSH_PrizeBounty = 51008,
-
-		[ParentCombo(FSH_FishingToSpearfishing)]
-		[ReplaceSkill(FSH.SurfaceSlap, FSH.VeteranTrade)]
-		[CustomComboInfo("Surface Slap to Veteran Trade", "", FSH.JobID)]
-		FSH_SurfaceTrade = 51009,
-
-		#endregion
-
-		#region ALL - 100000
-
-		[CustomComboInfo("Auto Chocobo Stance", "", All.JobID)]
-		All_Choco = 100000,
-
-		#region Role Actions
-
-		[ReplaceSkill(All.TrueNorth, All.SecondWind, All.Bloodbath, All.LucidDreaming, All.ArmsLength)]
-		[CustomComboInfo("Role Actions", "", All.JobID)]
-		All_RoleActions = 100010,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("True North", "", All.JobID)]
-		All_TrueNorth = 100011,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Second Wind", "", All.JobID)]
-		All_SecondWind = 100012,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Bloodbath", "", All.JobID)]
-		All_Bloodbath = 100013,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - WHM/SCH/AST/SGE", "", All.JobID)]
-		All_Healer_Lucid = 100014,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - SMN/RDM/PCT", "", All.JobID)]
-		All_Mage_Lucid = 100015,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Lucid Dreaming - BLU", "", All.JobID)]
-		All_BLU_Lucid = 100016,
-
-		[ParentCombo(All_RoleActions)]
-		[CustomComboInfo("Arm's Length", "", All.JobID)]
-		All_ArmsLength = 100017,
-
-		#endregion
-
-		#region Protections
-
-		[ReplaceSkill(All.Reprisal, All.Feint, All.Addle)]
-		[CustomComboInfo("Mitigation Overwrite Protection", "", All.JobID)]
-		All_MitigationProtections = 100030,
-
-		[ParentCombo(All_MitigationProtections)]
-		[CustomComboInfo("Reprisal", "", All.JobID)]
-		All_Tank_Reprisal = 100031,
-
-		[ParentCombo(All_MitigationProtections)]
-		[CustomComboInfo("Feint", "", All.JobID)]
-		All_Melee_Feint = 100032,
-
-		[ParentCombo(All_MitigationProtections)]
-		[CustomComboInfo("Addle", "", All.JobID)]
-		All_Caster_Addle = 100033,
-
-		[ReplaceSkill(All.TrueNorth)]
-		[CustomComboInfo("True North Protection", "", All.JobID)]
-		All_Melee_TrueNorth = 100034,
-
-		[ReplaceSkill(MCH.Tactician, BRD.Troubadour, DNC.ShieldSamba)]
-		[CustomComboInfo("Ranged Mitigation Protection", "", All.JobID)]
-		All_Ranged_Mitigation = 100035,
-
-		[ReplaceSkill(WHM.Raise, SCH.Resurrection, AST.Ascend, SGE.Egeiro, RDM.Verraise, BLU.AngelWhisper)]
-		[CustomComboInfo("Swift Raise (Includes Thin Air for WHM and Dualcast for RDM)", "", All.JobID)]
-		All_Raise = 100036,
-
-		#endregion
-
-		#region Bozja
-
-		[Bozja]
-		[ReplaceSkill(Bozja.FlareStar)]
-		[CustomComboInfo("Lost Flare Star", "", All.JobID)]
-		Bozja_LFS = 100040,
-
-		#endregion
-
-		#region Variant
-
-		[Variant]
-		[ReplaceSkill(Variant.VariantCure_Image)]
-		[CustomComboInfo("Variant Cure", "", All.JobID)]
-		Variant_Cure = 100050,
-
-		[Variant]
-		[ReplaceSkill(Variant.VariantUltimatum)]
-		[CustomComboInfo("Variant Ultimatum", "", All.JobID)]
-		Variant_Ultimatum = 100051,
-
-		[Variant]
-		[ReplaceSkill(Variant.VariantRaise, Variant.VariantRaise2)]
-		[CustomComboInfo("Variant Raise", "", All.JobID)]
-		Variant_Raise = 100052,
-
-		[Variant]
-		[ReplaceSkill(Variant.VariantSpiritDart_Image)]
-		[CustomComboInfo("Variant Spirit Dart", "", All.JobID)]
-		Variant_SpiritDart = 100053,
-
-		[Variant]
-		[ReplaceSkill(Variant.VariantRampart_Image)]
-		[CustomComboInfo("Variant Rampart", "", All.JobID)]
-		Variant_Rampart = 100054,
-
-		#endregion
 
 		#endregion
 

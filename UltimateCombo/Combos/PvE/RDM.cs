@@ -111,12 +111,12 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (CanWeave(actionID)
-						&& (!WasLastWeaponskill(EnchantedRiposte) || (WasLastWeaponskill(EnchantedRiposte)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-							&& (!WasLastWeaponskill(EnchantedZwerchhau) || (WasLastWeaponskill(EnchantedZwerchhau)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-							&& (!WasLastWeaponskill(EnchantedRedoublement) || (WasLastWeaponskill(EnchantedRedoublement)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
+						&& (!WasLastWeaponskill(EnchantedRiposte)
+						|| (WasLastWeaponskill(EnchantedRiposte) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
+						&& (!WasLastWeaponskill(EnchantedZwerchhau)
+						|| (WasLastWeaponskill(EnchantedZwerchhau) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
+						&& (!WasLastWeaponskill(EnchantedRedoublement)
+						|| (WasLastWeaponskill(EnchantedRedoublement) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
@@ -202,25 +202,31 @@ namespace UltimateCombo.Combos.PvE
 						return Scorch;
 					}
 
-					if ((ActionReady(Verholy) || ActionReady(Verflare)) && Gauge.ManaStacks is 3)
+					if (Gauge.ManaStacks is 3)
 					{
-						ActionWatching.LastWeaponskill = 0;
-						if (Gauge.BlackMana >= Gauge.WhiteMana)
+						if (ActionReady(Verholy))
 						{
-							return Verholy;
+							ActionWatching.LastWeaponskill = 0;
+							if (Gauge.BlackMana >= Gauge.WhiteMana)
+							{
+								return Verholy;
+							}
 						}
 
-						if (Gauge.WhiteMana >= Gauge.BlackMana)
+						if (ActionReady(Verflare))
 						{
-							return Verflare;
+							ActionWatching.LastWeaponskill = 0;
+							if (Gauge.WhiteMana >= Gauge.BlackMana)
+							{
+								return Verflare;
+							}
 						}
 					}
 
-					if ((IsEnabled(CustomComboPreset.RDM_ST_Swords) || IsEnabled(CustomComboPreset.RDM_ST_Manafication))
-						&& !HasEffect(Buffs.Dualcast)
+					if (IsEnabled(CustomComboPreset.RDM_ST_Swords) && !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
-						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && (Gauge.WhiteMana > 50 || Gauge.BlackMana > 50))
+						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(OriginalHook(EnchantedRiposte))
 						|| WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))))
@@ -236,7 +242,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (Gauge.ManaStacks == 2)
 							{
-								return EnchantedRedoublement;
+								return OriginalHook(EnchantedRedoublement);
 							}
 						}
 
@@ -251,21 +257,22 @@ namespace UltimateCombo.Combos.PvE
 
 							if (Gauge.ManaStacks == 1)
 							{
-								return EnchantedZwerchhau;
+								return OriginalHook(EnchantedZwerchhau);
 							}
 						}
 
 						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
-							&& InActionRange(EnchantedRiposte))
+								&& InActionRange(EnchantedRiposte))
 							{
 								return Corpsacorps;
 							}
 
 							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedRiposte)))
 							{
-								return EnchantedRiposte;
+								ActionWatching.LastWeaponskill = 0;
+								return OriginalHook(EnchantedRiposte);
 							}
 						}
 					}
@@ -389,17 +396,24 @@ namespace UltimateCombo.Combos.PvE
 						return GrandImpact;
 					}
 
-					if ((ActionReady(Verholy) || ActionReady(Verflare)) && Gauge.ManaStacks is 3)
+					if (Gauge.ManaStacks is 3)
 					{
-						ActionWatching.LastWeaponskill = 0;
-						if (Gauge.BlackMana >= Gauge.WhiteMana)
+						if (ActionReady(Verholy))
 						{
-							return Verholy;
+							ActionWatching.LastWeaponskill = 0;
+							if (Gauge.BlackMana >= Gauge.WhiteMana)
+							{
+								return Verholy;
+							}
 						}
 
-						if (Gauge.WhiteMana >= Gauge.BlackMana)
+						if (ActionReady(Verflare))
 						{
-							return Verflare;
+							ActionWatching.LastWeaponskill = 0;
+							if (Gauge.WhiteMana >= Gauge.BlackMana)
+							{
+								return Verflare;
+							}
 						}
 					}
 
@@ -407,7 +421,7 @@ namespace UltimateCombo.Combos.PvE
 						&& !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
-						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && (Gauge.WhiteMana > 50 || Gauge.BlackMana > 50))
+						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana > 50 && Gauge.BlackMana > 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
 						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetTrois))))

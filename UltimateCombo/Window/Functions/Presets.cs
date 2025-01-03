@@ -24,7 +24,7 @@ namespace UltimateCombo.Window.Functions
 			CustomComboPreset? parent = PresetStorage.GetParent(preset);
 			BlueInactiveAttribute? blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
-			if (ImGui.Checkbox($"{info.FancyName}###{info.FancyName}{i}", ref enabled))
+			if (ImGui.Checkbox($"{info.FancyName}", ref enabled))
 			{
 				if (enabled)
 				{

@@ -1238,73 +1238,86 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region ASTROLOGIAN
+			#region Tanks
 
-			if (preset is CustomComboPreset.AST_ST_DPS_AutoDraw && enabled)
+			#region PALADIN
+
+			if (preset == CustomComboPreset.PLD_ST_Sheltron && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
+				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_Sheltron, "Oath Gauge", 150, SliderIncrements.Fives);
 			}
 
-			if (preset is CustomComboPreset.AST_AoE_DPS_AutoDraw && enabled)
+			if (preset == CustomComboPreset.PLD_ST_Intervention && enabled)
 			{
-				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
+				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_Intervention, "Oath Gauge", 150, SliderIncrements.Fives);
+			}
+
+			if (preset == CustomComboPreset.PLD_AoE_Sheltron && enabled)
+			{
+				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_Sheltron, "Oath Gauge", 150, SliderIncrements.Fives);
+			}
+
+			if (preset == CustomComboPreset.PLD_AoE_Intervention && enabled)
+			{
+				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_Intervention, "Oath Gauge", 150, SliderIncrements.Fives);
+			}
+
+			if (preset == CustomComboPreset.PLD_ST_Invuln && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_Invuln, "", 150, SliderIncrements.Ones);
+			}
+
+			if (preset == CustomComboPreset.PLD_AoE_Invuln && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_Invuln, "", 150, SliderIncrements.Ones);
 			}
 
 			#region PvP
 
-			if (preset is CustomComboPreset.ASTPvP_AspectedBenefic && enabled)
+			if (preset is CustomComboPreset.PLDPvP_Phalanx && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, ASTPvP.Config.ASTPvP_AspectedBenefic, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, PLDPvP.Config.PLDPvP_Phalanx, "Triggers when you have less than or equal to this % of HP, or after using Guardian", 150, SliderIncrements.Fives);
 			}
 
 			#endregion
 
 			#endregion
 
-			#region BLACK MAGE
+			#region WARRIOR
 
+			if (preset == CustomComboPreset.WAR_ST_StormsEye && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefresh, "Seconds remaining before refreshing Surging Tempest", 150, SliderIncrements.Ones);
+			}
 
+			if (preset == CustomComboPreset.WAR_ST_FellCleave && enabled)
+			{
+				UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend", 150, SliderIncrements.Fives);
+			}
+
+			if (preset == CustomComboPreset.WAR_AoE_Decimate && enabled)
+			{
+				UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend", 150, SliderIncrements.Fives);
+			}
+
+			if (preset == CustomComboPreset.WAR_ST_Invuln && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_ST_Invuln, "", 150, SliderIncrements.Ones);
+			}
+
+			if (preset == CustomComboPreset.WAR_AoE_Invuln && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_AoE_Invuln, "", 150, SliderIncrements.Ones);
+			}
+
+			#region PvP
+
+			if (preset is CustomComboPreset.WARPvP_Bloodwhetting && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, WARPvP.Config.WARPvP_Bloodwhetting, "Triggers when you have less than or equal to this % of HP", 150, SliderIncrements.Fives);
+			}
 
 			#endregion
-
-			#region BLUE MAGE
-
-			if (preset is CustomComboPreset.BLU_ManaGain && enabled)
-			{
-				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, "Blood Drain MP Threshold", 150, SliderIncrements.Hundreds);
-			}
-
-			if (preset is CustomComboPreset.BLU_Treasure_Healer_Pomcure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasurePomcure, "Pomcure HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			if (preset is CustomComboPreset.BLU_Treasure_Healer_Gobskin && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureGobskin, "Shield % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			if (preset is CustomComboPreset.BLU_Treasure_Tank_WhiteWind && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureWhiteWind, "White Wind HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			if (preset is CustomComboPreset.BLU_Treasure_Tank_Rehydration && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureRehydration, "Rehydration HP % Threshold", 150, SliderIncrements.Fives);
-			}
-
-			#endregion
-
-			#region BARD
-
-
-
-			#endregion
-
-			#region DANCER
-
-
 
 			#endregion
 
@@ -1361,12 +1374,6 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region DRAGOON
-
-
-
-			#endregion
-
 			#region GUNBREAKER
 
 			if (preset == CustomComboPreset.GNB_ST_Invuln && enabled)
@@ -1381,32 +1388,13 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region MACHINIST
-
-			if (preset is CustomComboPreset.MCH_ST_Hypercharge && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_Hypercharge, "Heat Threshold", 150, SliderIncrements.Fives);
-			}
-
-			if (preset is CustomComboPreset.MCH_ST_Queen && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_Queen, "Battery Threshold", 150, SliderIncrements.Fives);
-			}
-
-			if (preset is CustomComboPreset.MCH_AoE_Hypercharge && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Hypercharge, "Heat Threshold", 150, SliderIncrements.Fives);
-			}
-
 			#endregion
 
-			#region MONK
+			#region Healers
+
+			#region WHITE MAGE
 
 
-
-			#endregion
-
-			#region NINJA
 
 			#region PvP
 
@@ -1416,67 +1404,32 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region PICTOMANCER
+			#region SCHOLAR
 
-			if (preset == CustomComboPreset.PCTPvP_AutoPalette && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoPalette, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
-			}
+
 
 			#endregion
 
-			#region PALADIN
+			#region ASTROLOGIAN
 
-			if (preset == CustomComboPreset.PLD_ST_Sheltron && enabled)
+			if (preset is CustomComboPreset.AST_ST_DPS_AutoDraw && enabled)
 			{
-				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_Sheltron, "Oath Gauge", 150, SliderIncrements.Fives);
+				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_ST_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
 			}
 
-			if (preset == CustomComboPreset.PLD_ST_Intervention && enabled)
+			if (preset is CustomComboPreset.AST_AoE_DPS_AutoDraw && enabled)
 			{
-				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_ST_Intervention, "Oath Gauge", 150, SliderIncrements.Fives);
-			}
-
-			if (preset == CustomComboPreset.PLD_AoE_Sheltron && enabled)
-			{
-				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_Sheltron, "Oath Gauge", 150, SliderIncrements.Fives);
-			}
-
-			if (preset == CustomComboPreset.PLD_AoE_Intervention && enabled)
-			{
-				UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_Intervention, "Oath Gauge", 150, SliderIncrements.Fives);
-			}
-
-			if (preset == CustomComboPreset.PLD_ST_Invuln && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_Invuln, "", 150, SliderIncrements.Ones);
-			}
-
-			if (preset == CustomComboPreset.PLD_AoE_Invuln && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_AoE_Invuln, "", 150, SliderIncrements.Ones);
+				UserConfig.DrawAdditionalBoolChoice(AST.Config.AST_AoE_DPS_UseDefenseCards, "Use Arrow/Spire/Bole/Ewer", "");
 			}
 
 			#region PvP
 
-			if (preset is CustomComboPreset.PLDPvP_Phalanx && enabled)
+			if (preset is CustomComboPreset.ASTPvP_AspectedBenefic && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, PLDPvP.Config.PLDPvP_Phalanx, "Triggers when you have less than or equal to this % of HP, or after using Guardian", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, ASTPvP.Config.ASTPvP_AspectedBenefic, "Triggers when you have less than this % of HP", 150, SliderIncrements.Fives);
 			}
 
 			#endregion
-
-			#endregion
-
-			#region REAPER
-
-
-
-			#endregion
-
-			#region RED MAGE
-
-
 
 			#endregion
 
@@ -1504,6 +1457,32 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
+			#endregion
+
+			#region Melee DPS
+
+			#region MONK
+
+
+
+			#endregion
+
+			#region DRAGOON
+
+
+
+			#endregion
+
+			#region NINJA
+
+			#region PvP
+
+
+
+			#endregion
+
+			#endregion
+
 			#region SAMURAI
 
 			if (preset is CustomComboPreset.SAM_ST_Shinten && enabled)
@@ -1518,7 +1497,58 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region SCHOLAR
+			#region REAPER
+
+
+
+			#endregion
+
+			#region VIPER
+
+
+
+			#endregion
+
+			#endregion
+
+			#region Physical Ranged DPS
+
+			#region BARD
+
+
+
+			#endregion
+
+			#region MACHINIST
+
+			if (preset is CustomComboPreset.MCH_ST_Hypercharge && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_Hypercharge, "Heat Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.MCH_ST_Queen && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_ST_Queen, "Battery Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.MCH_AoE_Hypercharge && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, MCH.Config.MCH_AoE_Hypercharge, "Heat Threshold", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
+
+			#region DANCER
+
+
+
+			#endregion
+
+			#endregion
+
+			#region Magical Ranged DPS
+
+			#region BLACK MAGE
 
 
 
@@ -1538,62 +1568,51 @@ namespace UltimateCombo.Window.Functions
 
 			#endregion
 
-			#region VIPER
+			#region RED MAGE
 
 
 
 			#endregion
 
-			#region WARRIOR
+			#region PICTOMANCER
 
-			if (preset == CustomComboPreset.WAR_ST_StormsEye && enabled)
+			if (preset == CustomComboPreset.PCTPvP_AutoPalette && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 30, WAR.Config.WAR_SurgingRefresh, "Seconds remaining before refreshing Surging Tempest", 150, SliderIncrements.Ones);
+				UserConfig.DrawSliderInt(0, 100, PCTPvP.Config.PCTPvP_AutoPalette, "Triggers Subtractive Palette when above this % HP", 150, SliderIncrements.Fives);
 			}
 
-			if (preset == CustomComboPreset.WAR_ST_FellCleave && enabled)
+			#endregion
+
+			#region BLUE MAGE
+
+			if (preset is CustomComboPreset.BLU_ManaGain && enabled)
 			{
-				UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_FellCleaveGauge, "Minimum gauge to spend", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, "Blood Drain MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
-			if (preset == CustomComboPreset.WAR_AoE_Decimate && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Healer_Pomcure && enabled)
 			{
-				UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, "Minimum gauge to spend", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasurePomcure, "Pomcure HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
-			if (preset == CustomComboPreset.WAR_ST_Invuln && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Healer_Gobskin && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_ST_Invuln, "", 150, SliderIncrements.Ones);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureGobskin, "Shield % Threshold", 150, SliderIncrements.Fives);
 			}
 
-			if (preset == CustomComboPreset.WAR_AoE_Invuln && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Tank_WhiteWind && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, WAR.Config.WAR_AoE_Invuln, "", 150, SliderIncrements.Ones);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureWhiteWind, "White Wind HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
-			#region PvP
-
-			if (preset is CustomComboPreset.WARPvP_Bloodwhetting && enabled)
+			if (preset is CustomComboPreset.BLU_Treasure_Tank_Rehydration && enabled)
 			{
-				UserConfig.DrawSliderInt(0, 100, WARPvP.Config.WARPvP_Bloodwhetting, "Triggers when you have less than or equal to this % of HP", 150, SliderIncrements.Fives);
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureRehydration, "Rehydration HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
 			#endregion
 
 			#endregion
-
-			#region WHITE MAGE
-
-
-
-			#region PvP
-
-
-
-			#endregion
-
-			#endregion
-
 		}
 	}
 }

@@ -115,7 +115,8 @@ namespace UltimateCombo.Combos.PvE
 							if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
 								&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
 								&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
-								|| Gauge.HasDarkArts || !LevelChecked(TheBlackestNight) || LocalPlayer.CurrentMp >= 9500))
+								|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
+								|| LocalPlayer.CurrentMp >= 9500))
 							{
 								return OriginalHook(EdgeOfShadow);
 							}
@@ -231,7 +232,8 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
 							&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)
 							&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
-							|| Gauge.HasDarkArts || !LevelChecked(TheBlackestNight) || LocalPlayer.CurrentMp >= 9500))
+							|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
+							|| LocalPlayer.CurrentMp >= 9500))
 						{
 							return OriginalHook(FloodOfShadow);
 						}

@@ -95,7 +95,16 @@ namespace UltimateCombo.Window.Tabs
 																							 && !PresetStorage.IsEureka(x.Preset)
 																							 && !PresetStorage.IsVariant(x.Preset)))
 			{
-				InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 2f.Scale(), ContentsOffset = 5f.Scale(), ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
+				InfoBox presetBox = new()
+				{
+					Color = Colors.Grey,
+					BorderThickness = 2f.Scale(),
+					ContentsOffset = 5f.Scale(),
+					ContentsAction = () =>
+					{
+						Presets.DrawPreset(preset, info, ref i);
+					}
+				};
 
 				if (Service.Configuration.HideConflictedCombos)
 				{

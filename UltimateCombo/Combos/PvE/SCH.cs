@@ -144,7 +144,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
-								&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 10)
+								&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 5)
 							{
 								return Dissipation;
 							}
@@ -373,6 +373,23 @@ namespace UltimateCombo.Combos.PvE
 				if (actionID is Dissipation && IsEnabled(CustomComboPreset.SCH_NoDissipate))
 				{
 					if (HasEffect(Buffs.Seraphism))
+					{
+						return OriginalHook(11);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class SCH_SeraphNoWaste : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_SeraphNoWaste;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is SummonSeraph && IsEnabled(CustomComboPreset.SCH_SeraphNoWaste))
+				{
+					if (WasLastAction(WhisperingDawn) || WasLastAction(FeyIllumination) || WasLastAction(FeyBlessing))
 					{
 						return OriginalHook(11);
 					}
