@@ -177,9 +177,10 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (lastComboMove is TrueThrust or RaidenThrust)
 						{
-							if ((ActionReady(ChaosThrust) && GetDebuffRemainingTime(Debuffs.ChaosThrust) < 7 && !LevelChecked(ChaoticSpring))
+							if (ActionReady(OriginalHook(Disembowel))
+								&& ((ActionReady(ChaosThrust) && GetDebuffRemainingTime(Debuffs.ChaosThrust) < 7 && !LevelChecked(ChaoticSpring))
 								|| (ActionReady(ChaoticSpring) && GetDebuffRemainingTime(Debuffs.ChaoticSpring) < 7)
-								|| !HasEffect(Buffs.PowerSurge))
+								|| !HasEffect(Buffs.PowerSurge)))
 							{
 								return OriginalHook(Disembowel);
 							}

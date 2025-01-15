@@ -138,7 +138,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
 								&& (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-								|| TargetHasEffect(Debuffs.ChainStratagem)))
+								|| TargetHasEffectAny(Debuffs.ChainStratagem)))
 							{
 								return EnergyDrain;
 							}

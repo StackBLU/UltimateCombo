@@ -290,7 +290,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2) && !HasEffect(Buffs.Medica2) && !HasEffect(Buffs.Medica3)
-						&& (ActionReady(Medica2) || ActionReady(Medica3)))
+						&& !WasLastSpell(Medica2) && !WasLastSpell(Medica3) && (ActionReady(Medica2) || ActionReady(Medica3)))
 					{
 						return OriginalHook(Medica3);
 					}

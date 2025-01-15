@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -64,7 +65,7 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				DRK_ST_ManaSaver = new("DRK_ST_ManaSaver", 6000),
-				DRK_AoE_ManaSaver = new("DRK_AoE_ManaSaver", 6000),
+				DRK_AoE_ManaSaver = new("DRK_AoE_ManaSaver", 3000),
 				DRK_BloodspillerGauge = new("DRK_BloodspillerGauge", 50),
 				DRK_QuietusGauge = new("DRK_QuietusGauge", 50),
 				DRK_AoE_Abyssal = new("DRK_AoE_Abyssal", 25),
@@ -92,7 +93,7 @@ namespace UltimateCombo.Combos.PvE
 						return TheBlackestNight;
 					}
 
-					if (!InCombat() && ActionReady(Unmend) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.DRK_ST_Unmend) && !InCombat() && ActionReady(Unmend) && !InMeleeRange())
 					{
 						return Unmend;
 					}
@@ -105,47 +106,51 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(EdgeOfShadow);
 						}
 
-						if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && ActionReady(LivingShadow))
+						if (!HasEffect(Bozja.Buffs.BloodRage))
 						{
-							return LivingShadow;
-						}
-
-						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
-						{
-							if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
-								&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
-								&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
-								|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
-								|| LocalPlayer.CurrentMp >= 9500))
+							if (IsEnabled(CustomComboPreset.DRK_ST_LivingShadow) && ActionReady(LivingShadow))
 							{
-								return OriginalHook(EdgeOfShadow);
+								return LivingShadow;
 							}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_Delirium) && ActionReady(OriginalHook(Delirium)))
+							if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 							{
-								return OriginalHook(Delirium);
-							}
+								if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
+									&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
+									&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow) || HasEffect(Bozja.Buffs.AutoEther)))
+									|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
+									|| LocalPlayer.CurrentMp >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && LocalPlayer.CurrentMp >= 3000)))
+								{
+									return OriginalHook(EdgeOfShadow);
+								}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_SaltedEarth) && ActionReady(OriginalHook(SaltedEarth)))
-							{
-								return OriginalHook(SaltedEarth);
-							}
+								if (IsEnabled(CustomComboPreset.DRK_ST_Delirium) && ActionReady(OriginalHook(Delirium)))
+								{
+									return OriginalHook(Delirium);
+								}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer)
-								&& !WasLastAbility(Shadowbringer) && Gauge.ShadowTimeRemaining > 0)
-							{
-								return Shadowbringer;
-							}
+								if (IsEnabled(CustomComboPreset.DRK_ST_SaltedEarth) && ActionReady(OriginalHook(SaltedEarth)))
+								{
+									return OriginalHook(SaltedEarth);
+								}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_Carve) && ActionReady(CarveAndSpit))
-							{
-								return CarveAndSpit;
-							}
+								if (IsEnabled(CustomComboPreset.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer)
+									&& !WasLastAbility(Shadowbringer) && Gauge.ShadowTimeRemaining > 0)
+								{
+									return Shadowbringer;
+								}
 
-							if (IsEnabled(CustomComboPreset.DRK_ST_Oblation) && ActionReady(Oblation)
-								&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
-							{
-								return Oblation;
+								if (IsEnabled(CustomComboPreset.DRK_ST_Carve) && ActionReady(CarveAndSpit))
+								{
+									return CarveAndSpit;
+								}
+
+								if (IsEnabled(CustomComboPreset.DRK_ST_Oblation) && ActionReady(Oblation)
+									&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
+									|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Oblation) == GetMaxCharges(Oblation))))
+								{
+									return Oblation;
+								}
 							}
 						}
 					}
@@ -259,7 +264,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.DRK_AoE_Oblation) && ActionReady(Oblation)
-							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
+							&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Oblation))
+							|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Oblation) == GetMaxCharges(Oblation))))
 						{
 							return Oblation;
 						}

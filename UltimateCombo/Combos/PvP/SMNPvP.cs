@@ -95,8 +95,7 @@ namespace UltimateCombo.Combos.PvP
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream)
-							&& !IsMoving)
+						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream) && !IsMoving)
 						{
 							return Slipstream;
 						}

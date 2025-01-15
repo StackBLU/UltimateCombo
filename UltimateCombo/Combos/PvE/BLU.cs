@@ -595,7 +595,8 @@ namespace UltimateCombo.Combos.PvE
 						return PeculiarLight;
 					}
 
-					if (!TargetHasEffect(Debuffs.PeatPelt) && !HasEffect(Buffs.DeepClean) && !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
+					if (!TargetHasEffect(Debuffs.PeatPelt) && (!HasEffect(Buffs.DeepClean) || GetBuffRemainingTime(Buffs.DeepClean) < 2)
+						&& !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
 					{
 						return PeatPelt;
 					}

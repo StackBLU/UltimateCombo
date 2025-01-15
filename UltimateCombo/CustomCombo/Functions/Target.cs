@@ -360,7 +360,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (HasBattleTarget())
 			{
-				if (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(CurrentTarget.DataId).Rank is 2 or 6)
+				if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(CurrentTarget.DataId).Rank is 2)
 				{
 					return true;
 				}

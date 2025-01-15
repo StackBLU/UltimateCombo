@@ -1,8 +1,10 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
+using UltimateCombo.Services;
 
 namespace UltimateCombo.Combos.PvE
 {
@@ -94,12 +96,12 @@ namespace UltimateCombo.Combos.PvE
 						return HallowedGround;
 					}
 
-					if (!InCombat() && ActionReady(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && !InCombat() && ActionReady(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !InMeleeRange())
 					{
 						return HolySpirit;
 					}
 
-					if (CanWeave(actionID) && ActionWatching.NumberOfGcdsUsed >= 4)
+					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks) && !HasEffect(Bozja.Buffs.BloodRage))
 					{
 						if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
 						{

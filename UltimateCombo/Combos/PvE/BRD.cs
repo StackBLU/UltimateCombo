@@ -134,7 +134,8 @@ namespace UltimateCombo.Combos.PvE
 								return RadiantFinale;
 							}
 
-							if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes) && HasEffect(Buffs.RadiantFinale))
+							if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes)
+								&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
 							{
 								return RagingStrikes;
 							}
@@ -149,7 +150,7 @@ namespace UltimateCombo.Combos.PvE
 								return Sidewinder;
 							}
 
-							if (IsEnabled(CustomComboPreset.BRD_ST_Bloodletter) && ActionReady(Bloodletter)
+							if (IsEnabled(CustomComboPreset.BRD_ST_Bloodletter) && ActionReady(OriginalHook(Bloodletter))
 								&& ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
 								|| (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
 								&& GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 7.5f)
@@ -268,7 +269,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Raging) && ActionReady(RagingStrikes)
-							&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RagingStrikes)))
+							&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
 						{
 							return RagingStrikes;
 						}
@@ -283,7 +284,7 @@ namespace UltimateCombo.Combos.PvE
 							return Sidewinder;
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Rain) && ActionReady(RainOfDeath)
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Rain) && ActionReady(OriginalHook(RainOfDeath))
 							&& ((GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)))
 							|| (GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)) - 1
 							&& GetCooldownChargeRemainingTime(OriginalHook(RainOfDeath)) <= 7.5f)

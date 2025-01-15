@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -88,12 +89,12 @@ namespace UltimateCombo.Combos.PvE
 						return Tomahawk;
 					}
 
-					if (CanWeave(actionID))
+					if (CanWeave(actionID) && !HasEffect(Bozja.Buffs.BloodRage))
 					{
 						if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate)
 							&& Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
 							&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
-							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady))
+							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady) && (IsEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
 						{
 							return Infuriate;
 						}

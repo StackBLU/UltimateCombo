@@ -26,7 +26,7 @@ The following are just a few of the amazing features:
 * Better controller support
 * Blue Mage combos for all mimicries
 * Variant / Bozja / Eureka logic (beta)
-* Crazy overpowered PvP combos (beta)
+* Crazy overpowered PvP combos
 
 <h2 align="center">Installation</h2>
 

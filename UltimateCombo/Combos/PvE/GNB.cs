@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -100,7 +101,7 @@ namespace UltimateCombo.Combos.PvE
 						return Superbolide;
 					}
 
-					if (!InCombat() && ActionReady(LightningShot) && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.GNB_ST_LightningShot) && !InCombat() && ActionReady(LightningShot) && !InMeleeRange())
 					{
 						return LightningShot;
 					}
@@ -114,42 +115,46 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Continuation);
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
-							&& (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
+						if (!HasEffect(Bozja.Buffs.BloodRage))
 						{
-							return Bloodfest;
-						}
-
-						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
-						{
-							if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
+							if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
+								&& (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)) && (IsEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
 							{
-								return NoMercy;
+								return Bloodfest;
 							}
 
-							if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
+							if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 							{
-								return BowShock;
+								if (IsEnabled(CustomComboPreset.GNB_ST_NoMercy) && ActionReady(NoMercy))
+								{
+									return NoMercy;
+								}
+
+								if (IsEnabled(CustomComboPreset.GNB_ST_BowShock) && ActionReady(BowShock))
+								{
+									return BowShock;
+								}
+
+								if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(OriginalHook(BlastingZone)))
+								{
+									return OriginalHook(BlastingZone);
+								}
 							}
 
-							if (IsEnabled(CustomComboPreset.GNB_ST_BlastingZone) && ActionReady(OriginalHook(BlastingZone)))
+							if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora)
+								&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
+									|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))))
 							{
-								return OriginalHook(BlastingZone);
+								return Aurora;
 							}
-						}
 
-						if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora)
-							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
-						{
-							return Aurora;
-						}
-
-						if (IsEnabled(CustomComboPreset.GNB_ST_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
-						{
-							if (CurrentTarget.TargetObject == LocalPlayer
-								|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
+							if (IsEnabled(CustomComboPreset.GNB_ST_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
 							{
-								return OriginalHook(HeartOfStone);
+								if (CurrentTarget.TargetObject == LocalPlayer
+									|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
+								{
+									return OriginalHook(HeartOfStone);
+								}
 							}
 						}
 					}
@@ -265,7 +270,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && ActionReady(Aurora)
-							&& CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
+														&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
+								|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))))
 						{
 							return Aurora;
 						}

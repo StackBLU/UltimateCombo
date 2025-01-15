@@ -95,7 +95,6 @@ namespace UltimateCombo.Combos.PvE
 				SearingLight = 2703,
 				RubysGlimmer = 3873,
 				RefulgentLux = 3874,
-				CrimsonCycloneReady = 2704,
 				CrimsonStrikeReady = 4403;
 		}
 
@@ -200,7 +199,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone)
-						&& (HasEffect(Buffs.CrimsonCycloneReady) || HasEffect(Buffs.CrimsonStrikeReady)))
+						&& (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
 						{
@@ -329,7 +328,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone)
-						&& (HasEffect(Buffs.CrimsonCycloneReady) || HasEffect(Buffs.CrimsonStrikeReady)))
+						&& (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
 						{

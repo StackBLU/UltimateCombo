@@ -141,8 +141,12 @@ namespace UltimateCombo.Combos
 
 		#region ALL - 100000
 
+		#region Chocobo
+
 		[CustomComboInfo("Auto Chocobo Stance", "", All.JobID)]
 		All_Choco = 100000,
+
+		#endregion
 
 		#region Role Actions
 
@@ -215,8 +219,28 @@ namespace UltimateCombo.Combos
 		#region Bozja
 
 		[Bozja]
+		[ReplaceSkill(Bozja.BloodRage)]
+		[CustomComboInfo("Blood Rage", "", All.JobID)]
+		Bozja_BloodRage = 100043,
+
+		[Bozja]
+		[ReplaceSkill(Bozja.FontOfPower, Bozja.BannerOfHonoredSacrifice, Bozja.BannerOfNobleEnds)]
+		[CustomComboInfo("Font of Power & Banner of Honored Sacrifice / Banner of Noble Ends", "", All.JobID)]
+		Bozja_FoP_HSac_NEnds = 100041,
+
+		[Bozja]
+		[ReplaceSkill(Bozja.FontOfMagic, Bozja.Chainspell)]
+		[CustomComboInfo("Font of Magic & Chainspell", "", All.JobID)]
+		Bozja_FoM_CS = 100044,
+
+		[Bozja]
+		[ReplaceSkill(Bozja.Assassination)]
+		[CustomComboInfo("Assassination", "", All.JobID)]
+		Bozja_Assassination = 100042,
+
+		[Bozja]
 		[ReplaceSkill(Bozja.FlareStar)]
-		[CustomComboInfo("Lost Flare Star", "", All.JobID)]
+		[CustomComboInfo("Lost Flare Star - BLM only at the moment", "", All.JobID)]
 		Bozja_LFS = 100040,
 
 		#endregion
@@ -419,12 +443,12 @@ namespace UltimateCombo.Combos
 		WAR_ST_PrimalRend = 18008,
 
 		[ParentCombo(WAR_ST_DPS)]
-		[CustomComboInfo("Holmgang", "", WAR.JobID)]
-		WAR_ST_Invuln = 18009,
+		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
+		WAR_ST_Bloodwhetting = 18009,
 
 		[ParentCombo(WAR_ST_DPS)]
-		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
-		WAR_ST_Bloodwhetting = 18010,
+		[CustomComboInfo("Holmgang", "", WAR.JobID)]
+		WAR_ST_Invuln = 18010,
 
 		#endregion
 
@@ -459,12 +483,12 @@ namespace UltimateCombo.Combos
 		WAR_AoE_PrimalRend = 18026,
 
 		[ParentCombo(WAR_AoE_DPS)]
-		[CustomComboInfo("Holmgang", "", WAR.JobID)]
-		WAR_AoE_Invuln = 18027,
+		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
+		WAR_AoE_Bloodwhetting = 18027,
 
 		[ParentCombo(WAR_AoE_DPS)]
-		[CustomComboInfo("Raw Intuition / Bloodwhetting & Nascent Flash", "", WAR.JobID)]
-		WAR_AoE_Bloodwhetting = 18028,
+		[CustomComboInfo("Holmgang", "", WAR.JobID)]
+		WAR_AoE_Invuln = 18028,
 
 		#endregion
 
@@ -679,12 +703,12 @@ namespace UltimateCombo.Combos
 		GNB_AoE_Aurora = 7027,
 
 		[ParentCombo(GNB_AoE_DPS)]
-		[CustomComboInfo("Heart of Stone / Heart of Corundum", "", GNB.JobID)]
-		GNB_AoE_HeartOfStone = 7028,
+		[CustomComboInfo("Trajectory", "", GNB.JobID)]
+		GNB_AoE_Trajectory = 7028,
 
 		[ParentCombo(GNB_AoE_DPS)]
-		[CustomComboInfo("Trajectory", "", GNB.JobID)]
-		GNB_AoE_Trajectory = 7029,
+		[CustomComboInfo("Heart of Stone / Heart of Corundum", "", GNB.JobID)]
+		GNB_AoE_HeartOfStone = 7029,
 
 		[ParentCombo(GNB_AoE_DPS)]
 		[CustomComboInfo("Superbolide", "", GNB.JobID)]
@@ -2222,14 +2246,6 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(BLM.Triplecast, All.Swiftcast)]
 		[CustomComboInfo("Triple Cast / Swiftcast Protection", "", BLM.JobID)]
 		BLM_TriplecastProtect = 2045,
-
-		#endregion
-
-		#region Bozja
-
-		/*[Bozja]
-		[CustomComboInfo("Don't enable this it does nothing", "", BLM.JobID)]
-		Bozja_Test = 2071,*/
 
 		#endregion
 
