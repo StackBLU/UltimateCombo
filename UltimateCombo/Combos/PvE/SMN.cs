@@ -151,7 +151,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.SMN_ST_EnergyDrain)
 							&& (ActionReady(EnergyDrain) || Gauge.AetherflowStacks > 0))
 						{
-							if (Gauge.AetherflowStacks > 0 && HasEffect(Buffs.SearingLight))
+							if (Gauge.AetherflowStacks > 0 && (HasEffect(Buffs.SearingLight) || !LevelChecked(SearingLight)))
 							{
 								return OriginalHook(Necrotize);
 							}
@@ -281,7 +281,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.SMN_AoE_EnergySiphon)
 							&& (ActionReady(EnergySiphon) || Gauge.AetherflowStacks > 0))
 						{
-							if (Gauge.AetherflowStacks > 0 && HasEffect(Buffs.SearingLight))
+							if (Gauge.AetherflowStacks > 0 && (HasEffect(Buffs.SearingLight) || !LevelChecked(SearingLight)))
 							{
 								return OriginalHook(Painflare);
 							}

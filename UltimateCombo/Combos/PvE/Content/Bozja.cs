@@ -92,17 +92,17 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat())
 				{
-					if (IsEnabled(FontOfPower))
+					if ((IsEnabled(FontOfPower) && !HasEffect(Buffs.BloodRage)) || (IsEnabled(FontOfPower) && HasEffect(Buffs.BloodRush)))
 					{
 						return FontOfPower;
 					}
 
-					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower) || !IsEnabled(FontOfPower)) && IsEnabled(BannerOfHonoredSacrifice))
+					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)) && IsEnabled(BannerOfHonoredSacrifice))
 					{
 						return BannerOfHonoredSacrifice;
 					}
 
-					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower) || !IsEnabled(FontOfPower)) && IsEnabled(BannerOfNobleEnds))
+					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)) && IsEnabled(BannerOfNobleEnds))
 					{
 						return BannerOfNobleEnds;
 					}
@@ -122,10 +122,10 @@ namespace UltimateCombo.Combos.PvE.Content
 				{
 					if (IsEnabled(FontOfMagic))
 					{
-						return FontOfPower;
+						return FontOfMagic;
 					}
 
-					if ((WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic) || !IsEnabled(FontOfMagic)) && IsEnabled(Chainspell))
+					if ((WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)) && IsEnabled(Chainspell))
 					{
 						return Chainspell;
 					}

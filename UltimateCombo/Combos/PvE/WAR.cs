@@ -94,7 +94,8 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.WAR_ST_Infuriate) && ActionReady(Infuriate)
 							&& Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
 							&& !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
-							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady) && (IsEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
+							&& !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady)
+							&& (HasEffect(Bozja.Buffs.BloodRush) || !HasEffect(Bozja.Buffs.Reminiscence)))
 						{
 							return Infuriate;
 						}

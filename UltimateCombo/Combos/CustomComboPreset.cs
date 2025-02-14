@@ -969,7 +969,7 @@ namespace UltimateCombo.Combos
 		SCH_NoDissipate = 16045,
 
 		[ReplaceSkill(SCH.SummonSeraph)]
-		[CustomComboInfo("Prevent Summon Seraph after just having used Whisper Dawn, Fey Blessing, or Fey Illumination", "", SCH.JobID)]
+		[CustomComboInfo("Prevent Summon Seraph after just having used Whispering Dawn, Fey Blessing, or Fey Illumination", "", SCH.JobID)]
 		SCH_SeraphNoWaste = 16046,
 
 		#endregion

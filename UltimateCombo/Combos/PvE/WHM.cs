@@ -203,11 +203,6 @@ namespace UltimateCombo.Combos.PvE
 					{
 						return Glare4;
 					}
-
-					if (IsEnabled(CustomComboPreset.WHM_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast))
-					{
-						return All.Swiftcast;
-					}
 				}
 
 				return actionID;

@@ -78,11 +78,6 @@ namespace UltimateCombo.Combos.PvP
 								return BrandOfPurgatory;
 							}
 
-							if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
-							{
-								return CrimsonCyclone;
-							}
-
 							if (IsEnabled(CustomComboPreset.SMNPvP_Necrotize) && ActionReady(Necrotize)
 								&& !HasEffect(Buffs.FurtherRuin))
 							{
@@ -98,6 +93,11 @@ namespace UltimateCombo.Combos.PvP
 						if (IsEnabled(CustomComboPreset.SMNPvP_Slipstream) && ActionReady(Slipstream) && !IsMoving)
 						{
 							return Slipstream;
+						}
+
+						if (IsEnabled(CustomComboPreset.SMNPvP_CrimsonCyclone) && ActionReady(CrimsonCyclone))
+						{
+							return CrimsonCyclone;
 						}
 
 						if (IsEnabled(CustomComboPreset.SMNPvP_MountainBuster) && ActionReady(MountainBuster) && InActionRange(MountainBuster))

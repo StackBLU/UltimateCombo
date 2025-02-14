@@ -322,12 +322,12 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(CustomComboPreset.RDM_AoE_DPS))
 				{
 					if (CanWeave(actionID)
-						&& (!WasLastWeaponskill(EnchantedMoulinet) || (WasLastWeaponskill(EnchantedMoulinet)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-							&& (!WasLastWeaponskill(EnchantedMoulinetDeux) || (WasLastWeaponskill(EnchantedMoulinetDeux)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-							&& (!WasLastWeaponskill(EnchantedMoulinetTrois) || (WasLastWeaponskill(EnchantedMoulinetTrois)
-							&& ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
+						&& (!WasLastWeaponskill(EnchantedMoulinet)
+						|| (WasLastWeaponskill(EnchantedMoulinet) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
+						&& (!WasLastWeaponskill(EnchantedMoulinetDeux)
+						|| (WasLastWeaponskill(EnchantedMoulinetDeux) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
+						&& (!WasLastWeaponskill(EnchantedMoulinetTrois)
+						|| (WasLastWeaponskill(EnchantedMoulinetTrois) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
@@ -417,27 +417,26 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if ((IsEnabled(CustomComboPreset.RDM_AoE_Swords) || IsEnabled(CustomComboPreset.RDM_AoE_Manafication))
-						&& !HasEffect(Buffs.Dualcast)
+					if (IsEnabled(CustomComboPreset.RDM_AoE_Swords) && !HasEffect(Buffs.Dualcast)
 						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
-						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana > 50 && Gauge.BlackMana > 50)
+						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
-						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
-						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetTrois))))
+						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinet))
+						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))))
 					{
 						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& !InActionRange(EnchantedMoulinetTrois))
+								&& InActionRange(EnchantedMoulinetTrois))
 							{
 								return Corpsacorps;
 							}
 
 							if (Gauge.ManaStacks == 2)
 							{
-								return EnchantedMoulinetTrois;
+								return OriginalHook(EnchantedMoulinetTrois);
 							}
 						}
 
@@ -445,28 +444,29 @@ namespace UltimateCombo.Combos.PvE
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& !InActionRange(EnchantedMoulinetDeux))
+								&& InActionRange(EnchantedMoulinetDeux))
 							{
 								return Corpsacorps;
 							}
 
 							if (Gauge.ManaStacks == 1)
 							{
-								return EnchantedMoulinetDeux;
+								return OriginalHook(EnchantedMoulinetDeux);
 							}
 						}
 
 						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& !InActionRange(EnchantedMoulinet))
+								&& InActionRange(EnchantedMoulinet))
 							{
 								return Corpsacorps;
 							}
 
 							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedMoulinet)))
 							{
-								return EnchantedMoulinet;
+								ActionWatching.LastWeaponskill = 0;
+								return OriginalHook(EnchantedMoulinet);
 							}
 						}
 					}

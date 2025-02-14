@@ -113,27 +113,33 @@ namespace UltimateCombo.Combos.PvE
 						return Aetherflow;
 					}
 
+					if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+					{
+						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
+						{
+							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
+							{
+								return ChainStratagem;
+							}
+						}
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
-							{
-								if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
-								{
-									return ChainStratagem;
-								}
-
-								if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
-								{
-									return BanefulImpaction;
-								}
-							}
-
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
 							&& Gauge.SeraphTimer < 5000)
 							{
 								return OriginalHook(SummonSeraph);
+							}
+
+							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
+							{
+								if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
+								{
+									return BanefulImpaction;
+								}
 							}
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
@@ -144,6 +150,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
+								&& !HasEffect(Buffs.Seraphism) && Gauge.SeraphTimer == 0
 								&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 5)
 							{
 								return Dissipation;
@@ -227,6 +234,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_Dissipation) && ActionReady(Dissipation)
+							&& !HasEffect(Buffs.Seraphism) && Gauge.SeraphTimer == 0
 							&& Gauge.Aetherflow == 0 && IsOnCooldown(Aetherflow) && GetDebuffRemainingTime(Debuffs.ChainStratagem) >= 10)
 						{
 							return Dissipation;
