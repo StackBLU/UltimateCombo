@@ -93,7 +93,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist)
-						&& Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
+						&& Gauge.BeastChakra.Contains(BeastChakra.None) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
 						&& (!InCombat()
 						|| (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm) && !HasEffect(Buffs.CoeurlForm))))
 					{
@@ -128,7 +128,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.MNK_ST_PerfectBalance) && ActionReady(PerfectBalance)
 							&& (GetCooldownRemainingTime(RiddleOfFire) < 5 || !LevelChecked(RiddleOfFire) || HasEffect(Buffs.RiddleOfFire))
-							&& !HasEffect(Buffs.PerfectBalance) && Gauge.BeastChakra.Contains(BeastChakra.NONE)
+							&& !HasEffect(Buffs.PerfectBalance) && Gauge.BeastChakra.Contains(BeastChakra.None)
 							&& (WasLastWeaponskill(OriginalHook(Bootshine)) || WasLastWeaponskill(DragonKick)))
 						{
 							return PerfectBalance;
@@ -145,14 +145,14 @@ namespace UltimateCombo.Combos.PvE
 						return WindsReply;
 					}
 
-					if (IsEnabled(CustomComboPreset.MNK_ST_Blitz) && ActionReady(OriginalHook(MasterfulBlitz)) && !Gauge.BeastChakra.Contains(BeastChakra.NONE))
+					if (IsEnabled(CustomComboPreset.MNK_ST_Blitz) && ActionReady(OriginalHook(MasterfulBlitz)) && !Gauge.BeastChakra.Contains(BeastChakra.None))
 					{
 						return OriginalHook(MasterfulBlitz);
 					}
 
 					if (HasEffect(Buffs.PerfectBalance))
 					{
-						if (Gauge.Nadi.HasFlag(Nadi.SOLAR) && Gauge.Nadi.HasFlag(Nadi.LUNAR))
+						if (Gauge.Nadi.HasFlag(Nadi.Solar) && Gauge.Nadi.HasFlag(Nadi.Lunar))
 						{
 							if (ActionReady(OriginalHook(Bootshine)) && Gauge.OpoOpoFury >= 1)
 							{
@@ -165,9 +165,9 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (!Gauge.Nadi.HasFlag(Nadi.SOLAR))
+						if (!Gauge.Nadi.HasFlag(Nadi.Solar))
 						{
-							if (!Gauge.BeastChakra.Contains(BeastChakra.OPOOPO))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.OpoOpo))
 							{
 								if (ActionReady(OriginalHook(Bootshine)) && Gauge.OpoOpoFury >= 1)
 								{
@@ -180,7 +180,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (!Gauge.BeastChakra.Contains(BeastChakra.RAPTOR))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.Raptor))
 							{
 								if (ActionReady(OriginalHook(TrueStrike)) && Gauge.RaptorFury >= 1)
 								{
@@ -193,7 +193,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (!Gauge.BeastChakra.Contains(BeastChakra.COEURL))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.Coeurl))
 							{
 								if (ActionReady(OriginalHook(SnapPunch)) && Gauge.CoeurlFury >= 1)
 								{
@@ -207,7 +207,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (!Gauge.Nadi.HasFlag(Nadi.LUNAR))
+						if (!Gauge.Nadi.HasFlag(Nadi.Lunar))
 						{
 							if (ActionReady(OriginalHook(Bootshine)) && Gauge.OpoOpoFury >= 1)
 							{
@@ -276,7 +276,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (ActionReady(FormShift) && !HasEffect(Buffs.FormlessFist)
-						&& Gauge.BeastChakra.Contains(BeastChakra.NONE) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
+						&& Gauge.BeastChakra.Contains(BeastChakra.None) && !InMeleeRange() && !HasEffect(Buffs.PerfectBalance)
 						&& (!InCombat()
 						|| (!HasEffect(Buffs.OpoOpoForm) && !HasEffect(Buffs.RaptorForm) && !HasEffect(Buffs.CoeurlForm))))
 					{
@@ -302,7 +302,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.MNK_AoE_PerfectBalance) && ActionReady(PerfectBalance)
 							&& (GetCooldownRemainingTime(RiddleOfFire) < 5 || !LevelChecked(RiddleOfFire) || HasEffect(Buffs.RiddleOfFire))
-							&& !HasEffect(Buffs.PerfectBalance) && Gauge.BeastChakra.Contains(BeastChakra.NONE)
+							&& !HasEffect(Buffs.PerfectBalance) && Gauge.BeastChakra.Contains(BeastChakra.None)
 							&& WasLastWeaponskill(OriginalHook(ArmOfTheDestroyer)))
 						{
 							return PerfectBalance;
@@ -325,14 +325,14 @@ namespace UltimateCombo.Combos.PvE
 						return WindsReply;
 					}
 
-					if (IsEnabled(CustomComboPreset.MNK_AoE_Blitz) && ActionReady(OriginalHook(MasterfulBlitz)) && !Gauge.BeastChakra.Contains(BeastChakra.NONE))
+					if (IsEnabled(CustomComboPreset.MNK_AoE_Blitz) && ActionReady(OriginalHook(MasterfulBlitz)) && !Gauge.BeastChakra.Contains(BeastChakra.None))
 					{
 						return OriginalHook(MasterfulBlitz);
 					}
 
 					if (HasEffect(Buffs.PerfectBalance))
 					{
-						if (Gauge.Nadi.HasFlag(Nadi.SOLAR) && Gauge.Nadi.HasFlag(Nadi.LUNAR))
+						if (Gauge.Nadi.HasFlag(Nadi.Solar) && Gauge.Nadi.HasFlag(Nadi.Lunar))
 						{
 							if (ActionReady(OriginalHook(ArmOfTheDestroyer)))
 							{
@@ -340,9 +340,9 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (!Gauge.Nadi.HasFlag(Nadi.SOLAR))
+						if (!Gauge.Nadi.HasFlag(Nadi.Solar))
 						{
-							if (!Gauge.BeastChakra.Contains(BeastChakra.OPOOPO))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.OpoOpo))
 							{
 								if (ActionReady(OriginalHook(ArmOfTheDestroyer)))
 								{
@@ -350,7 +350,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (!Gauge.BeastChakra.Contains(BeastChakra.RAPTOR))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.Raptor))
 							{
 								if (ActionReady(FourPointFury))
 								{
@@ -358,7 +358,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (!Gauge.BeastChakra.Contains(BeastChakra.COEURL))
+							if (!Gauge.BeastChakra.Contains(BeastChakra.Coeurl))
 							{
 								if (ActionReady(Rockbreaker))
 								{
@@ -367,7 +367,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (!Gauge.Nadi.HasFlag(Nadi.LUNAR))
+						if (!Gauge.Nadi.HasFlag(Nadi.Lunar))
 						{
 							if (ActionReady(OriginalHook(ArmOfTheDestroyer)))
 							{

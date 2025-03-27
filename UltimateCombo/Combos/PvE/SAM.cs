@@ -98,8 +98,8 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Hakaze or Gyofu or Jinpu or Gekko or Shifu or Kasha or Yukikaze)
 					&& IsEnabled(CustomComboPreset.SAM_ST_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
-						&& ActionReady(MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
+					if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && ActionReady(MeikyoShisui) && !InCombat()
+						&& !HasEffect(Buffs.MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
 					{
 						return MeikyoShisui;
 					}
@@ -161,8 +161,8 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.SAM_ST_Hagakure) && ActionReady(Hagakure)
 								&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
-								&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU))
-								&& !(Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.SETSU)))
+								&& (Gauge.Sen.HasFlag(Sen.Ka) || Gauge.Sen.HasFlag(Sen.Getsu) || Gauge.Sen.HasFlag(Sen.Setsu))
+								&& !(Gauge.Sen.HasFlag(Sen.Ka) && Gauge.Sen.HasFlag(Sen.Getsu) && Gauge.Sen.HasFlag(Sen.Setsu)))
 							{
 								return Hagakure;
 							}
@@ -188,14 +188,14 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.SAM_ST_Higanbana) && GetDebuffRemainingTime(Debuffs.Higanbana) < 5
 						&& OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
-						&& (Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.SETSU))
+						&& (Gauge.Sen.HasFlag(Sen.Getsu) || Gauge.Sen.HasFlag(Sen.Ka) || Gauge.Sen.HasFlag(Sen.Setsu))
 						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() > LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
 					{
 						return OriginalHook(Iaijutsu);
 					}
 
-					if (Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.KA) && Gauge.Sen.HasFlag(Sen.SETSU)
+					if (Gauge.Sen.HasFlag(Sen.Getsu) && Gauge.Sen.HasFlag(Sen.Ka) && Gauge.Sen.HasFlag(Sen.Setsu)
 						&& IsEnabled(CustomComboPreset.SAM_ST_Iaijutsu)
 						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
 					{
@@ -204,17 +204,17 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.MeikyoShisui))
 					{
-						if (!Gauge.Sen.HasFlag(Sen.KA) && ActionReady(Kasha))
+						if (!Gauge.Sen.HasFlag(Sen.Ka) && ActionReady(Kasha))
 						{
 							return Kasha;
 						}
 
-						if (!Gauge.Sen.HasFlag(Sen.GETSU) && ActionReady(Gekko))
+						if (!Gauge.Sen.HasFlag(Sen.Getsu) && ActionReady(Gekko))
 						{
 							return Gekko;
 						}
 
-						if (!Gauge.Sen.HasFlag(Sen.SETSU) && ActionReady(Yukikaze))
+						if (!Gauge.Sen.HasFlag(Sen.Setsu) && ActionReady(Yukikaze))
 						{
 							return Yukikaze;
 						}
@@ -239,17 +239,17 @@ namespace UltimateCombo.Combos.PvE
 
 						if (lastComboMove is Hakaze or Gyofu)
 						{
-							if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.KA)))
+							if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.Ka)))
 							{
 								return Shifu;
 							}
 
-							if (ActionReady(Jinpu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.Sen.HasFlag(Sen.GETSU)))
+							if (ActionReady(Jinpu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.Sen.HasFlag(Sen.Getsu)))
 							{
 								return Jinpu;
 							}
 
-							if (ActionReady(Yukikaze) && !Gauge.Sen.HasFlag(Sen.SETSU))
+							if (ActionReady(Yukikaze) && !Gauge.Sen.HasFlag(Sen.Setsu))
 							{
 								return Yukikaze;
 							}
@@ -271,8 +271,8 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Fuga or Fuko or Mangetsu or Oka) && IsEnabled(CustomComboPreset.SAM_AoE_DPS))
 				{
-					if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && !InCombat() && !HasEffect(Buffs.MeikyoShisui)
-						&& ActionReady(MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
+					if (IsEnabled(CustomComboPreset.SAM_AoE_Meikyo) && ActionReady(MeikyoShisui) && !InCombat()
+						&& !HasEffect(Buffs.MeikyoShisui) && GetRemainingCharges(MeikyoShisui) == 2)
 					{
 						return MeikyoShisui;
 					}
@@ -321,7 +321,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.SAM_AoE_Hagakure) && ActionReady(Hagakure)
 							&& ActionReady(Ikishoten) && GetRemainingCharges(MeikyoShisui) == 2
-							&& (Gauge.Sen.HasFlag(Sen.KA) || Gauge.Sen.HasFlag(Sen.GETSU) || Gauge.Sen.HasFlag(Sen.SETSU)))
+							&& (Gauge.Sen.HasFlag(Sen.Ka) || Gauge.Sen.HasFlag(Sen.Getsu) || Gauge.Sen.HasFlag(Sen.Setsu)))
 						{
 							return Hagakure;
 						}
@@ -343,19 +343,19 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(TsubameGaeshi);
 					}
 
-					if (IsEnabled(CustomComboPreset.SAM_AoE_Iaijutsu) && Gauge.Sen.HasFlag(Sen.GETSU) && Gauge.Sen.HasFlag(Sen.KA))
+					if (IsEnabled(CustomComboPreset.SAM_AoE_Iaijutsu) && Gauge.Sen.HasFlag(Sen.Getsu) && Gauge.Sen.HasFlag(Sen.Ka))
 					{
 						return OriginalHook(Iaijutsu);
 					}
 
 					if (HasEffect(Buffs.MeikyoShisui))
 					{
-						if (!Gauge.Sen.HasFlag(Sen.KA) && ActionReady(Oka))
+						if (!Gauge.Sen.HasFlag(Sen.Ka) && ActionReady(Oka))
 						{
 							return Oka;
 						}
 
-						if (!Gauge.Sen.HasFlag(Sen.GETSU) && ActionReady(Mangetsu))
+						if (!Gauge.Sen.HasFlag(Sen.Getsu) && ActionReady(Mangetsu))
 						{
 							return Mangetsu;
 						}
@@ -365,12 +365,12 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (lastComboMove is Fuga or Fuko)
 						{
-							if (ActionReady(Oka) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.KA)))
+							if (ActionReady(Oka) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.Ka)))
 							{
 								return Oka;
 							}
 
-							if (ActionReady(Mangetsu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.Sen.HasFlag(Sen.GETSU)))
+							if (ActionReady(Mangetsu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.Sen.HasFlag(Sen.Getsu)))
 							{
 								return Mangetsu;
 							}

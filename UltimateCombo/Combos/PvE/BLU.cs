@@ -286,7 +286,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsOffCooldown(WingedReprobation) && actionID is MoonFlute && IsSpellActive(WingedReprobation) && WasLastAbility(SeaShanty)
-							&& FindEffect(Buffs.WingedReprobation).StackCount == 1)
+							&& FindEffect(Buffs.WingedReprobation).Param == 1)
 						{
 							return WingedReprobation;
 						}

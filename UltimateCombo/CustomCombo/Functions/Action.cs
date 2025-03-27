@@ -168,7 +168,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static unsafe bool IsAutoAttacking()
 		{
-			return UIState.Instance()->WeaponState.IsAutoAttacking;
+			return UIState.Instance()->WeaponState.AutoAttackState.IsAutoAttacking;
 		}
 
 		public static unsafe bool IsUnsheathed()

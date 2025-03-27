@@ -137,10 +137,12 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(Ninjutsu);
 						}
+
 						if (WasLastAbility(ChiCombo))
 						{
 							return JinCombo;
 						}
+
 						if (WasLastAbility(Ten))
 						{
 							return ChiCombo;

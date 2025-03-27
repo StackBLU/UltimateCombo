@@ -9,7 +9,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			get
 			{
-				return AgentMap.Instance() is not null && AgentMap.Instance()->IsPlayerMoving > 0;
+				return AgentMap.Instance() is not null && AgentMap.Instance()->IsPlayerMoving;
 			}
 		}
 	}

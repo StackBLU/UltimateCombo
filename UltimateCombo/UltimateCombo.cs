@@ -489,7 +489,7 @@ namespace UltimateCombo
 							{
 								foreach (Dalamud.Game.ClientState.Statuses.Status status in Service.ClientState.LocalPlayer.StatusList)
 								{
-									file.WriteLine($"ID: {status.StatusId}, Count: {status.StackCount}, Source: {status.SourceId} Name: {ActionWatching.GetStatusName(status.StatusId)}");
+									file.WriteLine($"ID: {status.StatusId}, Count: {status.Param}, Source: {status.SourceId} Name: {ActionWatching.GetStatusName(status.StatusId)}");
 								}
 							}
 

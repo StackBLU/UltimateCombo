@@ -141,9 +141,7 @@ namespace UltimateCombo.Combos.PvE
 								}
 							}
 
-							if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora)
-								&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
-									|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))))
+							if (IsEnabled(CustomComboPreset.GNB_ST_Aurora) && ActionReady(Aurora) && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))
 							{
 								return Aurora;
 							}
@@ -269,9 +267,7 @@ namespace UltimateCombo.Combos.PvE
 							return BowShock;
 						}
 
-						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && ActionReady(Aurora)
-														&& ((CurrentTarget.TargetObject == LocalPlayer && !HasEffect(Buffs.Aurora))
-								|| (CurrentTarget.TargetObject != LocalPlayer && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))))
+						if (IsEnabled(CustomComboPreset.GNB_AoE_Aurora) && ActionReady(Aurora) && GetRemainingCharges(Aurora) == GetMaxCharges(Aurora))
 						{
 							return Aurora;
 						}

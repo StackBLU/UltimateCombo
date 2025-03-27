@@ -95,23 +95,23 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && InCombat())
 						{
-							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ARMY || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 12000)
+							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
 							{
 								return WanderersMinuet;
 							}
 
-							if (ActionReady(MagesBallad) && (Gauge.Song is Song.WANDERER || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 3000)
+							if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
 							{
 								return MagesBallad;
 							}
 
-							if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.MAGE || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 3000)
+							if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
 							{
 								return ArmysPaeon;
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && Gauge.Song is Song.WANDERER && (Gauge.Repertoire == 3
+						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
 							|| (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
 						{
 							return PitchPerfect;
@@ -232,23 +232,23 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Songs) && InCombat())
 						{
-							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ARMY || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 12000)
+							if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
 							{
 								return WanderersMinuet;
 							}
 
-							if (ActionReady(MagesBallad) && (Gauge.Song is Song.WANDERER || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 3000)
+							if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
 							{
 								return MagesBallad;
 							}
 
-							if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.MAGE || Gauge.Song is Song.NONE) && Gauge.SongTimer <= 3000)
+							if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
 							{
 								return ArmysPaeon;
 							}
 						}
 
-						if (Gauge.Song is Song.WANDERER && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
+						if (Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
 						{
 							return PitchPerfect;
 						}

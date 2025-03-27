@@ -12,10 +12,10 @@ namespace UltimateCombo.ComboHelper.Functions
 			return FindEffect(effectID) is not null;
 		}
 
-		public static byte GetBuffStacks(ushort effectId)
+		public static ushort GetBuffStacks(ushort effectId)
 		{
 			Status? eff = FindEffect(effectId);
-			return eff?.StackCount ?? 0;
+			return eff?.Param ?? 0;
 		}
 
 		public static float GetBuffRemainingTime(ushort effectId)
@@ -50,7 +50,7 @@ namespace UltimateCombo.ComboHelper.Functions
 			return FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 		}
 
-		public static byte FindTargetEffectStacks(ushort effectID)
+		public static ushort FindTargetEffectStacks(ushort effectID)
 		{
 			Status? effect = FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
 			if (effect == null)
@@ -58,7 +58,7 @@ namespace UltimateCombo.ComboHelper.Functions
 				return 0;
 			}
 
-			return effect.StackCount;
+			return effect.Param;
 		}
 
 		public static Status? FindTargetsTargetEffect(ushort effectID)

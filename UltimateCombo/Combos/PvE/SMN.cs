@@ -170,7 +170,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_ST_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
-							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0
+							&& Gauge.AttunementTimerRemaining == 0 && Gauge.Attunement == 0
 							&& (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)))
 						{
 							return OriginalHook(EnkindleBahamut);
@@ -209,12 +209,12 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
-					if (Gauge.AttunmentTimerRemaining > 0 && Gauge.Attunement > 0)
+					if (Gauge.AttunementTimerRemaining > 0 && Gauge.Attunement > 0)
 					{
 						return OriginalHook(Gemshine);
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_ST_SummonElements) && Gauge.AttunmentTimerRemaining == 0
+					if (IsEnabled(CustomComboPreset.SMN_ST_SummonElements) && Gauge.AttunementTimerRemaining == 0
 						&& Gauge.SummonTimerRemaining == 0 && !IsOffCooldown(OriginalHook(SummonBahamut)))
 					{
 						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)
@@ -300,7 +300,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SMN_AoE_Enkindle) && ActionReady(OriginalHook(EnkindleBahamut))
-							&& Gauge.AttunmentTimerRemaining == 0 && Gauge.Attunement == 0
+							&& Gauge.AttunementTimerRemaining == 0 && Gauge.Attunement == 0
 							&& (WasLastSpell(AstralFlare) || WasLastSpell(BrandOfPurgatory) || WasLastSpell(UmbralFlare)))
 						{
 							return OriginalHook(EnkindleBahamut);
@@ -338,12 +338,12 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(AstralFlow);
 					}
 
-					if (Gauge.AttunmentTimerRemaining > 0 && Gauge.Attunement > 0)
+					if (Gauge.AttunementTimerRemaining > 0 && Gauge.Attunement > 0)
 					{
 						return OriginalHook(PreciousBrilliance);
 					}
 
-					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonElements) && Gauge.AttunmentTimerRemaining == 0
+					if (IsEnabled(CustomComboPreset.SMN_AoE_SummonElements) && Gauge.AttunementTimerRemaining == 0
 						&& Gauge.SummonTimerRemaining == 0 && !IsOffCooldown(OriginalHook(SummonBahamut)))
 					{
 						if (ActionReady(OriginalHook(SummonGaruda)) && Gauge.IsGarudaReady)

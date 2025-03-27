@@ -2168,7 +2168,7 @@ namespace UltimateCombo.Combos
 		BLM_ST_Manafont = 2004,
 
 		[ParentCombo(BLM_ST_DPS)]
-		[CustomComboInfo("Ley Lines > Between the Lines", "", BLM.JobID)]
+		[CustomComboInfo("Ley Lines", "", BLM.JobID)]
 		BLM_ST_LeyLines = 2005,
 
 		[ParentCombo(BLM_ST_DPS)]
@@ -2208,7 +2208,7 @@ namespace UltimateCombo.Combos
 		BLM_AoE_Manafont = 2024,
 
 		[ParentCombo(BLM_AoE_DPS)]
-		[CustomComboInfo("Ley Lines > Between the Lines", "", BLM.JobID)]
+		[CustomComboInfo("Ley Lines", "", BLM.JobID)]
 		BLM_AoE_LeyLines = 2025,
 
 		[ParentCombo(BLM_AoE_DPS)]

@@ -7,7 +7,7 @@
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <Copyright></Copyright>
     <PackageProjectUrl></PackageProjectUrl>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
   </PropertyGroup>
 
@@ -40,7 +40,7 @@
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageIcon>logo.png</PackageIcon>
-    <AssemblyVersion>1.0.0.54</AssemblyVersion>
+    <AssemblyVersion>1.0.0.55</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -49,6 +49,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn>1701;1702;8604</NoWarn>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>

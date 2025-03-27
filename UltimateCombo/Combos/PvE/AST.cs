@@ -160,7 +160,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && ActionReady(Divination))
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && (ActionReady(Divination) || GetCooldownRemainingTime(Divination) < 3))
 							{
 								if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 								{
@@ -172,37 +172,37 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
 								&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
-								&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+								&& (Gauge.DrawnCards.Any(x => x is CardType.Balance) || Gauge.DrawnCards.Any(x => x is CardType.Spear)))
 							{
 								return OriginalHook(Play1);
 							}
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
 								&& Config.AST_ST_DPS_UseDefenseCards
-								&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
+								&& (Gauge.DrawnCards.Any(x => x is CardType.Arrow) || Gauge.DrawnCards.Any(x => x is CardType.Bole)))
 							{
 								return OriginalHook(Play2);
 							}
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
 								&& Config.AST_ST_DPS_UseDefenseCards
-								&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
+								&& (Gauge.DrawnCards.Any(x => x is CardType.Spire) || Gauge.DrawnCards.Any(x => x is CardType.Ewer)))
 							{
 								return OriginalHook(Play3);
 							}
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
-								&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+								&& Gauge.DrawnCrownCard.HasFlag(CardType.Lord) && HasEffect(Buffs.Divination))
 							{
 								return OriginalHook(MinorArcana);
 							}
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
-								&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
-								&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_ST_DPS_UseDefenseCards)))
+								&& (Gauge.DrawnCards.All(x => x is CardType.None) || (!Gauge.DrawnCards.Any(x => x is CardType.Balance)
+								&& !Gauge.DrawnCards.Any(x => x is CardType.Spear) && !Config.AST_ST_DPS_UseDefenseCards)))
 							{
-								if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
-									|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
+								if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord)
+									|| Gauge.DrawnCrownCard.HasFlag(CardType.Lady)))
 								{
 									return OriginalHook(MinorArcana);
 								}
@@ -274,7 +274,7 @@ namespace UltimateCombo.Combos.PvE
 							return Lightspeed;
 						}
 
-						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && ActionReady(Divination))
+						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && (ActionReady(Divination) || GetCooldownRemainingTime(Divination) < 3))
 						{
 							if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 							{
@@ -286,37 +286,37 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
 							&& (HasEffect(Buffs.Divination) || !LevelChecked(Divination))
-							&& (Gauge.DrawnCards.Any(x => x is CardType.BALANCE) || Gauge.DrawnCards.Any(x => x is CardType.SPEAR)))
+							&& (Gauge.DrawnCards.Any(x => x is CardType.Balance) || Gauge.DrawnCards.Any(x => x is CardType.Spear)))
 						{
 							return OriginalHook(Play1);
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play2))
 							&& Config.AST_AoE_DPS_UseDefenseCards
-							&& (Gauge.DrawnCards.Any(x => x is CardType.ARROW) || Gauge.DrawnCards.Any(x => x is CardType.BOLE)))
+							&& (Gauge.DrawnCards.Any(x => x is CardType.Arrow) || Gauge.DrawnCards.Any(x => x is CardType.Bole)))
 						{
 							return OriginalHook(Play2);
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play3))
 							&& Config.AST_AoE_DPS_UseDefenseCards
-							&& (Gauge.DrawnCards.Any(x => x is CardType.SPIRE) || Gauge.DrawnCards.Any(x => x is CardType.EWER)))
+							&& (Gauge.DrawnCards.Any(x => x is CardType.Spire) || Gauge.DrawnCards.Any(x => x is CardType.Ewer)))
 						{
 							return OriginalHook(Play3);
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_MinorArcana) && ActionReady(OriginalHook(MinorArcana))
-							&& Gauge.DrawnCrownCard.HasFlag(CardType.LORD) && HasEffect(Buffs.Divination))
+							&& Gauge.DrawnCrownCard.HasFlag(CardType.Lord) && HasEffect(Buffs.Divination))
 						{
 							return OriginalHook(MinorArcana);
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoDraw) && ActionReady(OriginalHook(AstralDraw))
-							&& (Gauge.DrawnCards.All(x => x is CardType.NONE) || (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE)
-							&& !Gauge.DrawnCards.Any(x => x is CardType.SPEAR) && !Config.AST_AoE_DPS_UseDefenseCards)))
+							&& (Gauge.DrawnCards.All(x => x is CardType.None) || (!Gauge.DrawnCards.Any(x => x is CardType.Balance)
+							&& !Gauge.DrawnCards.Any(x => x is CardType.Spear) && !Config.AST_AoE_DPS_UseDefenseCards)))
 						{
-							if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.LORD)
-								|| Gauge.DrawnCrownCard.HasFlag(CardType.LADY)))
+							if (ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord)
+								|| Gauge.DrawnCrownCard.HasFlag(CardType.Lady)))
 							{
 								return OriginalHook(MinorArcana);
 							}
@@ -446,7 +446,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (actionID is Play1)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.BALANCE) && !Gauge.DrawnCards.Any(x => x is CardType.SPEAR))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.Balance) && !Gauge.DrawnCards.Any(x => x is CardType.Spear))
 					{
 						return OriginalHook(AstralDraw);
 					}
@@ -456,7 +456,7 @@ namespace UltimateCombo.Combos.PvE
 
 				if (actionID is Play2)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.ARROW) && !Gauge.DrawnCards.Any(x => x is CardType.BOLE))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.Arrow) && !Gauge.DrawnCards.Any(x => x is CardType.Bole))
 					{
 						return OriginalHook(AstralDraw);
 					}
@@ -466,7 +466,7 @@ namespace UltimateCombo.Combos.PvE
 
 				if (actionID is Play3)
 				{
-					if (!Gauge.DrawnCards.Any(x => x is CardType.SPIRE) && !Gauge.DrawnCards.Any(x => x is CardType.EWER))
+					if (!Gauge.DrawnCards.Any(x => x is CardType.Spire) && !Gauge.DrawnCards.Any(x => x is CardType.Ewer))
 					{
 						return OriginalHook(AstralDraw);
 					}

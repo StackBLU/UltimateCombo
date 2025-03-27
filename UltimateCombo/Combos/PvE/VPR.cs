@@ -125,16 +125,16 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.VPR_ST_Finishers) && ActionReady(OriginalHook(SerpentsTail))
-							&& Gauge.SerpentCombo is SerpentCombo.DEATHRATTLE)
+							&& Gauge.SerpentCombo is SerpentCombo.DeathRattle)
 						{
 							return DeathRattle;
 						}
 
 						if (IsEnabled(CustomComboPreset.VPR_ST_Reawaken) && ActionReady(OriginalHook(SerpentsTail)) &&
-							(Gauge.SerpentCombo is SerpentCombo.FIRSTLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.SECONDLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.THIRDLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.FOURTHLEGACY))
+							(Gauge.SerpentCombo is SerpentCombo.FirstLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.SecondLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.ThirdLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.FourthLegacy))
 						{
 							return OriginalHook(SerpentsTail);
 						}
@@ -328,16 +328,16 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.VPR_AoE_Finishers) && ActionReady(OriginalHook(LastLash))
-							&& Gauge.SerpentCombo is SerpentCombo.LASTLASH)
+							&& Gauge.SerpentCombo is SerpentCombo.LastLash)
 						{
 							return LastLash;
 						}
 
 						if (IsEnabled(CustomComboPreset.VPR_AoE_Reawaken) && ActionReady(OriginalHook(SerpentsTail)) &&
-							(Gauge.SerpentCombo is SerpentCombo.FIRSTLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.SECONDLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.THIRDLEGACY ||
-							Gauge.SerpentCombo is SerpentCombo.FOURTHLEGACY))
+							(Gauge.SerpentCombo is SerpentCombo.FirstLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.SecondLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.ThirdLegacy ||
+							Gauge.SerpentCombo is SerpentCombo.FourthLegacy))
 						{
 							return OriginalHook(SerpentsTail);
 						}
