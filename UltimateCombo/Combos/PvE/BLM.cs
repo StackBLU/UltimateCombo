@@ -88,11 +88,18 @@ namespace UltimateCombo.Combos.PvE
 			{
 				return 3;
 			}
+
 			if (level >= 80)
 			{
 				return 2;
 			}
-			return 1;
+
+			if (level >= 70)
+			{
+				return 1;
+			}
+
+			return 0;
 		}
 
 		private static BLMGauge Gauge
@@ -120,14 +127,13 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire)
+						if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire
+							&& !Gauge.IsParadoxActive)
 						{
 							return All.Swiftcast;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier)
-							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
+						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier) && Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
 							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
 						{
 							return Amplifier;
@@ -135,103 +141,28 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
-							&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) || (IsMoving && Gauge.PolyglotStacks == 0) || HasEffect(Buffs.CircleOfPower)))
+							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+								&& HasEffect(Buffs.CircleOfPower))
 							{
 								return Triplecast;
 							}
 
-							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
+							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines) && !WasLastAction(LeyLines))
 							{
 								return LeyLines;
 							}
 						}
 					}
 
-					// Bozja
-					if (IsEnabled(CustomComboPreset.Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
-						&& (GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 7 || LocalPlayer.CurrentMp <= 4000)
-						&& HasEffect(Bozja.Buffs.FontOfMagic) && !WasLastAction(Bozja.FontOfMagic) && !WasLastSpell(Bozja.FlareStar))
+					if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+						&& IsMoving && InCombat())
 					{
-						if (WasLastSpell(Blizzard4) && GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 5)
-						{
-							return Bozja.FlareStar;
-						}
-
-						if (Gauge.InUmbralIce && !WasLastSpell(Blizzard4))
-						{
-							return Blizzard4;
-						}
-
-						if (!Gauge.InUmbralIce)
-						{
-							return Blizzard3;
-						}
+						return Triplecast;
 					}
 
-					if (IsEnabled(CustomComboPreset.Bozja_LFS) && HasEffect(Bozja.Buffs.Reminiscence)
-						&& (GetDebuffRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !TargetHasEffect(Bozja.Debuffs.FlareStar)
-						|| (IsOffCooldown(Bozja.FontOfMagic) && IsEnabled(Bozja.FontOfMagic))))
-					{
-						if (WasLastAction(Blizzard4) && (IsOnCooldown(Bozja.FontOfMagic) || !IsEnabled(Bozja.FontOfMagic)))
-						{
-							return Bozja.FlareStar;
-						}
-
-						if (WasLastAction(Bozja.FontOfMagic))
-						{
-							return Blizzard4;
-						}
-
-						if (WasLastAction(All.LucidDreaming) && IsEnabled(Bozja.FontOfMagic))
-						{
-							return Bozja.FontOfMagic;
-						}
-
-						if (ActionReady(All.LucidDreaming) && WasLastAction(Blizzard4))
-						{
-							return All.LucidDreaming;
-						}
-
-						if (!Gauge.InUmbralIce)
-						{
-							return Blizzard3;
-						}
-
-						return Blizzard4;
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
-					{
-						return FlareStar;
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont)
-						&& (LocalPlayer.CurrentMp == 0 || (LocalPlayer.CurrentMp < 1600 && LocalPlayer.Level < 72))
-						&& HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire)
-					{
-						return Manafont;
-					}
-
-					//90+
-					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InAstralFire)
-					{
-						return Paradox;
-					}
-
-					//90+
-					if (ActionReady(Despair) && Gauge.InAstralFire && !Gauge.IsParadoxActive && LevelChecked(Paradox)
-						&& LocalPlayer.CurrentMp <= 1200 && LocalPlayer.CurrentMp >= 800)
-					{
-						return Despair;
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder))
-						&& HasEffect(Buffs.Thunderhead) && LocalPlayer.CurrentMp != 0
+					if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
 						&& (EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10 || EnemyHealthMaxHp() == 44)
-						&& (Gauge.InUmbralIce
-						|| (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) < 3 && !WasLastSpell(Blizzard4))))
+						&& (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 1.5))
 					{
 						return OriginalHook(Thunder);
 					}
@@ -240,135 +171,73 @@ namespace UltimateCombo.Combos.PvE
 						&& ((Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) && Gauge.EnochianTimer <= 10000)
 						|| Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) + 1
 						|| (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level))
-						|| (Gauge.InUmbralIce && Gauge.PolyglotStacks > MaxPolyglot(LocalPlayer.Level) - MaxPolyglot(LocalPlayer.Level))
 						|| ActionWatching.NumberOfGcdsUsed == 4
-						|| (IsMoving && ActionWatching.NumberOfGcdsUsed >= 10))
-						&& (GetBuffRemainingTime(Buffs.Firestarter) >= 10 || !HasEffect(Buffs.Firestarter)))
+						|| (IsMoving && ActionWatching.NumberOfGcdsUsed >= 10)))
 					{
 						return Xenoglossy;
 					}
 
-					if (ActionReady(All.LucidDreaming) && !Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 800)
+					if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire
+						&& LocalPlayer.CurrentMp == 0)
 					{
-						return All.LucidDreaming;
+						return Manafont;
 					}
 
-					//90+
-					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InUmbralIce)
+					if (IsEnabled(CustomComboPreset.BLM_ST_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
 					{
+						return FlareStar;
+					}
+
+					if (ActionReady(Paradox) && Gauge.IsParadoxActive)
+					{
+						if (HasEffect(Buffs.Firestarter) && Gauge.InAstralFire)
+						{
+							return Fire3;
+						}
+
 						return Paradox;
 					}
 
-					if (LocalPlayer.Level < 35)
+					if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer.CurrentMp <= 1600 && LocalPlayer.CurrentMp >= 800)
 					{
-						if (LocalPlayer.CurrentMp < 1600 || (Gauge.InUmbralIce && LocalPlayer.CurrentMp < 8000))
-						{
-							if (ActionReady(All.Swiftcast))
-							{
-								return All.Swiftcast;
-							}
-
-							return Blizzard;
-						}
+						return Despair;
 					}
 
-					if (LocalPlayer.Level < 72)
-					{
-						if (ActionReady(Fire) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 3200
-							&& !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
-						{
-							return Fire;
-						}
-
-						if (ActionReady(UmbralSoul) && Gauge.InUmbralIce && !WasLastSpell(UmbralSoul)
-							&& !WasLastSpell(Blizzard4) && LocalPlayer.CurrentMp < 10000)
-						{
-							if (LocalPlayer.Level >= 58)
-							{
-								return Blizzard4;
-							}
-
-							return UmbralSoul;
-						}
-
-						if (ActionReady(Blizzard3) && LocalPlayer.CurrentMp < 1600)
-						{
-							return Blizzard3;
-						}
-
-						if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600)
-						{
-							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && CanWeave(actionID)
-								&& !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast))
-							{
-								return Triplecast;
-							}
-
-							return Fire4;
-						}
-					}
-
-					if (LocalPlayer.Level < 90)
-					{
-						if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 800
-							|| HasEffect(Bozja.Buffs.AutoEther) || (LocalPlayer.CurrentMp < 2400 && !HasEffect(Bozja.Buffs.FontOfMagic)))
-						{
-							if (ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast))
-							{
-								return All.Swiftcast;
-							}
-
-							if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast)
-								&& !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast))
-							{
-								return Triplecast;
-							}
-
-							if (IsEnabled(CustomComboPreset.BLM_ST_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
-							{
-								return LeyLines;
-							}
-
-							if (LocalPlayer.CurrentMp >= 3200 && !HasEffect(Bozja.Buffs.AutoEther))
-							{
-								return Fire;
-							}
-
-							return Despair;
-						}
-
-						if (ActionReady(Blizzard3) && !Gauge.InAstralFire && !Gauge.InUmbralIce && HasEffect(Bozja.Buffs.Reminiscence))
-						{
-							return Blizzard3;
-						}
-					}
-
-					if (ActionReady(Blizzard4) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(Blizzard4)
-						&& !WasLastAction(Bozja.FlareStar))
+					if (ActionReady(Blizzard4) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastSpell(Blizzard4) && !WasLastAction(Bozja.FlareStar))
 					{
 						return Blizzard4;
 					}
 
-					if (ActionReady(Blizzard3) && !WasLastAction(Transpose) && ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
-						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800
-						&& !WasLastAbility(Manafont))))
+					if (!LevelChecked(Blizzard3) && LocalPlayer.CurrentMp < 1600)
+					{
+						if (ActionReady(All.LucidDreaming))
+						{
+							return All.LucidDreaming;
+						}
+
+						return Blizzard;
+					}
+
+					if (!LevelChecked(Blizzard4) && LevelChecked(Blizzard3) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(UmbralSoul))
+					{
+						return UmbralSoul;
+					}
+
+					if (ActionReady(Blizzard3) && !WasLastAction(Transpose)
+						&& ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
+						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800)
+						|| (!LevelChecked(Despair) && LocalPlayer.CurrentMp < 1600) && !WasLastSpell(Blizzard4)))
 					{
 						return Blizzard3;
 					}
 
-					if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600
-						&& !WasLastAction(Transpose) && !WasLastAction(Blizzard4))
+					if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600 && !WasLastAction(Transpose) && !WasLastSpell(Blizzard4))
 					{
-						if (IsEnabled(CustomComboPreset.BLM_ST_Triplecast) && ActionReady(Triplecast) && CanWeave(actionID)
-							&& !HasEffect(Buffs.Triplecast) && !HasEffect(All.Buffs.Swiftcast) && LocalPlayer.Level < 86)
-						{
-							return Triplecast;
-						}
-
 						return Fire4;
 					}
 
-					if (ActionReady(Fire3) && ((!Gauge.InAstralFire && !Gauge.InUmbralIce)
+					if (ActionReady(Fire3)
+						&& ((!Gauge.InAstralFire && !Gauge.InUmbralIce)
 						|| (Gauge.InUmbralIce && LocalPlayer.CurrentMp == 10000) || WasLastSpell(Blizzard4)
 						|| HasEffect(Buffs.Firestarter)))
 					{
@@ -395,104 +264,92 @@ namespace UltimateCombo.Combos.PvE
 				{
 					if (CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.BLM_AoE_Swiftcast) && ActionReady(All.Swiftcast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire)
+						if (IsEnabled(CustomComboPreset.BLM_AoE_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire
+							&& !Gauge.IsParadoxActive)
 						{
 							return All.Swiftcast;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && ActionReady(Triplecast)
-							&& !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire && !HasEffect(All.Buffs.Swiftcast)
-							&& (GetRemainingCharges(Triplecast) == GetMaxCharges(Triplecast) || (IsMoving && Gauge.PolyglotStacks == 0) || HasEffect(Buffs.CircleOfPower)))
-						{
-							return Triplecast;
-						}
-
-						if (IsEnabled(CustomComboPreset.BLM_AoE_Amplifier) && ActionReady(Amplifier)
-							&& Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
+						if (IsEnabled(CustomComboPreset.BLM_AoE_Amplifier) && ActionReady(Amplifier) && Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
 							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
 						{
 							return Amplifier;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines))
+						if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+							&& HasEffect(Buffs.CircleOfPower))
+						{
+							return Triplecast;
+						}
+
+						if (IsEnabled(CustomComboPreset.BLM_AoE_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines) && !WasLastAction(LeyLines))
 						{
 							return LeyLines;
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_AoE_FlareStar) && ActionReady(FlareStar)
-						&& LocalPlayer.CurrentMp == 0 && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Triplecast) && ActionReady(Triplecast) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast)
+						&& IsMoving && InCombat())
 					{
-						return FlareStar;
+						return Triplecast;
 					}
 
-					if (IsEnabled(CustomComboPreset.BLM_AoE_Manafont) && ActionReady(Manafont) && LocalPlayer.CurrentMp == 0
-						&& HasEffect(Buffs.CircleOfPower))
-					{
-						return Manafont;
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_AoE_Foul) && ActionReady(Foul) && Gauge.PolyglotStacks >= 1)
-					{
-						return Foul;
-					}
-
-					if (IsEnabled(CustomComboPreset.BLM_AoE_Thunder) && ActionReady(OriginalHook(Thunder2)) && HasEffect(Buffs.Thunderhead)
-						&& GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder2)]) < 3)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
+						&& (EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10 || EnemyHealthMaxHp() == 44)
+						&& (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder2)]) <= 1.5))
 					{
 						return OriginalHook(Thunder2);
 					}
 
-					if (LocalPlayer.Level < 60)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Foul) && ActionReady(Foul) && Gauge.PolyglotStacks >= 1
+						&& ((Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) && Gauge.EnochianTimer <= 10000)
+						|| Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level) + 1
+						|| (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(LocalPlayer.Level))
+						|| IsMoving))
 					{
-						if (Gauge.InUmbralIce && !WasLastSpell(UmbralSoul) && LocalPlayer.CurrentMp < 10000)
-						{
-							if (LocalPlayer.Level < 35)
-							{
-								if (ActionReady(All.LucidDreaming))
-								{
-									return All.LucidDreaming;
-								}
-
-								return Blizzard;
-							}
-
-							return UmbralSoul;
-						}
-
-						if (LocalPlayer.CurrentMp == 0)
-						{
-							return Blizzard2;
-						}
-
-						if (ActionReady(Flare) && LocalPlayer.CurrentMp < 3000 && LocalPlayer.CurrentMp >= 800)
-						{
-							return Flare;
-						}
-
-						if (ActionReady(OriginalHook(Fire2)) && LocalPlayer.CurrentMp >= 3000)
-						{
-							return Fire2;
-						}
+						return Foul;
 					}
 
-					if (ActionReady(Flare) && Gauge.InAstralFire && LocalPlayer.CurrentMp > 0)
+					if (IsEnabled(CustomComboPreset.BLM_AoE_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire
+						&& LocalPlayer.CurrentMp == 0)
+					{
+						return Manafont;
+					}
+
+					if (IsEnabled(CustomComboPreset.BLM_AoE_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
+					{
+						return FlareStar;
+					}
+
+					if (ActionReady(Flare) && Gauge.InAstralFire && LocalPlayer.CurrentMp <= 3000 && LocalPlayer.CurrentMp >= 800)
 					{
 						return Flare;
 					}
 
-					if (ActionReady(OriginalHook(Fire2)) && Gauge.UmbralHearts == 3)
-					{
-						return OriginalHook(Fire2);
-					}
-
-					if (ActionReady(Freeze) && Gauge.InUmbralIce)
+					if (ActionReady(Freeze) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastSpell(OriginalHook(Freeze)))
 					{
 						return Freeze;
 					}
 
-					return OriginalHook(Blizzard2);
+					if (ActionReady(OriginalHook(Blizzard2)) && Gauge.InAstralFire && LocalPlayer.CurrentMp == 0 && !WasLastSpell(OriginalHook(Freeze)))
+					{
+						return OriginalHook(Blizzard2);
+					}
+
+					if (LevelChecked(FlareStar) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 3000)
+					{
+						return Flare;
+					}
+
+					if (Gauge.InUmbralIce && (LocalPlayer.CurrentMp == 10000 || WasLastSpell(Freeze)))
+					{
+						return Transpose;
+					}
+
+					if (ActionReady(OriginalHook(Fire2)) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 3000)
+					{
+						return OriginalHook(Fire2);
+					}
 				}
 
 				return actionID;
@@ -528,15 +385,14 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Xenoglossy && IsEnabled(CustomComboPreset.BLM_XenoParadox))
+				if ((actionID is Xenoglossy or Paradox or Despair) && IsEnabled(CustomComboPreset.BLM_XenoParadox))
 				{
-					if (ActionReady(Paradox) && Gauge.IsParadoxActive && Gauge.InAstralFire)
+					if (ActionReady(Paradox) && Gauge.IsParadoxActive)
 					{
 						return Paradox;
 					}
 
-					if (ActionReady(Despair) && ActionReady(All.Swiftcast) && Gauge.InAstralFire
-						&& !Gauge.IsParadoxActive && (LocalPlayer.CurrentMp == 1200))
+					if (ActionReady(Despair) && Gauge.InAstralFire && (LocalPlayer.CurrentMp <= 1600))
 					{
 						return Despair;
 					}
