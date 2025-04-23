@@ -124,25 +124,28 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
+							if (TargetIsBoss())
 							{
-								return BattleVoice;
-							}
+								if (IsEnabled(CustomComboPreset.BRD_ST_BattleVoice) && ActionReady(BattleVoice))
+								{
+									return BattleVoice;
+								}
 
-							if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
-							{
-								return RadiantFinale;
-							}
+								if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
+								{
+									return RadiantFinale;
+								}
 
-							if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes)
-								&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
-							{
-								return RagingStrikes;
-							}
+								if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes)
+									&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+								{
+									return RagingStrikes;
+								}
 
-							if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
-							{
-								return Barrage;
+								if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
+								{
+									return Barrage;
+								}
 							}
 
 							if (IsEnabled(CustomComboPreset.BRD_ST_Sidewinder) && ActionReady(Sidewinder))
@@ -193,7 +196,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && HasEffect(Buffs.RadiantEncoreReady))
+					if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && HasEffect(Buffs.RadiantEncoreReady) && HasEffect(Buffs.RagingStrikes))
 					{
 						return RadiantEncore;
 					}

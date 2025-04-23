@@ -2688,11 +2688,11 @@ namespace UltimateCombo.Combos
 		[ParentCombo(BLU_Treasure_Tank)]
 		[CustomComboInfo("Auto Spell Setting\n" +
 			"Ram's Voice = Shock Strike\n" +
-			"Missile = Glass Dance\n" +
-			"Ultravibration = Quasar\n" +
+			"Missile = Qusar\n" +
+			"Ultravibration = Rehydration\n" +
 			"Hydro Pull = Sea Shanty\n" +
 			"You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
-			"You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.\n" +
+			"You MUST NOT have Shock Strike, Quasar, Rehydration, or Sea Shanty active in the spellbook.\n" +
 			"When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
 		BLU_Treasure_Tank_AutoSpell = 70061,
 

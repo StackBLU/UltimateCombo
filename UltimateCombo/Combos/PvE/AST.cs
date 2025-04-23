@@ -160,7 +160,8 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && (ActionReady(Divination) || GetCooldownRemainingTime(Divination) < 3))
+							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && LevelChecked(Divination) &&
+								(IsOffCooldown(Divination) || GetCooldownRemainingTime(Divination) < 2) && TargetIsBoss())
 							{
 								if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
 								{
@@ -405,7 +406,8 @@ namespace UltimateCombo.Combos.PvE
 						&& (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
 						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 5
 						|| HasEffect(Buffs.NeutralSect)
-						|| HasEffect(Buffs.Horoscope)))
+						|| HasEffect(Buffs.Horoscope)
+						|| WasLastAbility(NeutralSect)))
 					{
 						return OriginalHook(AspectedHelios);
 					}

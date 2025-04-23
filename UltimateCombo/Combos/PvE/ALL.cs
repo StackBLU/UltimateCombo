@@ -446,29 +446,29 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Mage_Lucid) || LocalPlayer.CurrentMp <= 1000)
-							&& (LocalPlayer.ClassJob.Value.RowId == SMN.JobID
-							|| LocalPlayer.ClassJob.Value.RowId == RDM.JobID
-							|| LocalPlayer.ClassJob.Value.RowId == PCT.JobID))
-						{
-							return LucidDreaming;
-						}
-
-						if (IsEnabled(CustomComboPreset.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) || LocalPlayer.CurrentMp <= 1000)
-							&& LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
-						{
-							if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor)
-							{
-								return LucidDreaming;
-							}
-						}
-
 						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength)
 							&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 						{
 							return ArmsLength;
+						}
+					}
+
+					if (IsEnabled(CustomComboPreset.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Mage_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000)
+						&& (LocalPlayer.ClassJob.Value.RowId == SMN.JobID
+						|| LocalPlayer.ClassJob.Value.RowId == RDM.JobID
+						|| LocalPlayer.ClassJob.Value.RowId == PCT.JobID))
+					{
+						return LucidDreaming;
+					}
+
+					if (IsEnabled(CustomComboPreset.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 4000)
+						&& LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
+					{
+						if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor)
+						{
+							return LucidDreaming;
 						}
 					}
 				}

@@ -117,7 +117,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
 						{
-							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem))
+							if (ActionReady(ChainStratagem) && !TargetHasEffectAny(Debuffs.ChainStratagem) && TargetIsBoss())
 							{
 								return ChainStratagem;
 							}

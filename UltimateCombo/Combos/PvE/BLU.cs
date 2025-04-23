@@ -17,7 +17,6 @@ namespace UltimateCombo.Combos.PvE
 			PeculiarLight = 11421,
 			Eruption = 11427,
 			SharpenedKnife = 11400,
-			GlassDance = 11430,
 			SonicBoom = 18308,
 			Surpanakha = 18323,
 			Nightbloom = 23290,
@@ -663,7 +662,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AutoSpell)
 							&& CurrentTarget == null && !InCombat() && !IsCasting()
-							&& IsOffCooldown(ShockStrike) && IsOffCooldown(GlassDance) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
+							&& IsOffCooldown(ShockStrike) && IsOffCooldown(Gobskin) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
 						{
@@ -679,9 +678,9 @@ namespace UltimateCombo.Combos.PvE
 										}
 									}
 
-									if (GetActiveBlueMageActionInSlot(21) == GlassDance)
+									if (GetActiveBlueMageActionInSlot(21) == Gobskin)
 									{
-										if (IsOffCooldown(GlassDance) && IsSpellActive(GlassDance))
+										if (IsOffCooldown(Gobskin) && IsSpellActive(Gobskin))
 										{
 											AssignBlueMageActionToSlot(21, Missile);
 										}
@@ -739,7 +738,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AutoSpell)
 							&& CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
 							&& IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
-							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(GlassDance)
+							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(Gobskin)
 							|| !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
 						{
 							for (int i = 0; i < 24; i++)
@@ -759,7 +758,7 @@ namespace UltimateCombo.Combos.PvE
 									{
 										if (IsOffCooldown(Missile) && IsSpellActive(Missile))
 										{
-											AssignBlueMageActionToSlot(21, GlassDance);
+											AssignBlueMageActionToSlot(21, Gobskin);
 										}
 									}
 
@@ -797,9 +796,9 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_Pomcure)
 							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure)
 							&& IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
-							&& !HasEffect(Buffs.AngelsSnack))
+							&& !HasEffect(Buffs.AngelsSnack) && !WasLastSpell(AngelsSnack))
 						{
-							if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast))
+							if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast) && !WasLastSpell(Pomcure))
 							{
 								return All.Swiftcast;
 							}
@@ -885,7 +884,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_AutoSpell)
 							&& CurrentTarget == null && !InCombat() && !IsCasting()
-							&& IsOffCooldown(ShockStrike) && IsOffCooldown(GlassDance) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
+							&& IsOffCooldown(ShockStrike) && IsOffCooldown(Gobskin) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
 						{
@@ -934,7 +933,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Rehydration) && IsSpellActive(Rehydration)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureRehydration))
+							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureRehydration) && !WasLastSpell(Devour) && !WasLastSpell(WhiteWind))
 						{
 							if (ActionReady(All.Swiftcast))
 							{
@@ -947,16 +946,16 @@ namespace UltimateCombo.Combos.PvE
 							return Rehydration;
 						}
 
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Devour) && IsOffCooldown(Devour) && IsSpellActive(Devour))
+						{
+							return Devour;
+						}
+
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
 							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureWhiteWind)
 							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;
-						}
-
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Devour) && IsOffCooldown(Devour) && IsSpellActive(Devour))
-						{
-							return Devour;
 						}
 					}
 
@@ -975,7 +974,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_AutoSpell)
 							&& CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
 							&& IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
-							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(GlassDance)
+							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(Gobskin)
 							|| !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
 						{
 							for (int i = 0; i < 24; i++)
@@ -1020,7 +1019,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Rehydration) && IsSpellActive(Rehydration)
 							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureRehydration)
-							&& ActionReady(All.Swiftcast) && !WasLastSpell(WhiteWind))
+							&& ActionReady(All.Swiftcast) && !WasLastSpell(WhiteWind) && !WasLastSpell(Devour) && !WasLastSpell(WhiteWind))
 						{
 							return All.Swiftcast;
 						}
@@ -1030,16 +1029,16 @@ namespace UltimateCombo.Combos.PvE
 							return Rehydration;
 						}
 
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Devour) && IsOffCooldown(Devour) && IsSpellActive(Devour))
+						{
+							return Devour;
+						}
+
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
 							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureWhiteWind)
 							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;
-						}
-
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Devour) && IsOffCooldown(Devour) && IsSpellActive(Devour))
-						{
-							return Devour;
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_BreathOfMagic) && EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
