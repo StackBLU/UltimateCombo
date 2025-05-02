@@ -311,6 +311,75 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
+		internal class GNB_BurstCont : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_BurstCont;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is BurstStrike && IsEnabled(CustomComboPreset.GNB_BurstCont))
+				{
+					if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToBlast))
+					{
+						return OriginalHook(Continuation);
+					}
+
+					if (ActionReady(BurstStrike))
+					{
+						return BurstStrike;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class GNB_GnashCont : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_GnashCont;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is GnashingFang && IsEnabled(CustomComboPreset.GNB_GnashCont))
+				{
+					if (ActionReady(Continuation) && (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge)))
+					{
+						return OriginalHook(Continuation);
+					}
+
+					if (ActionReady(OriginalHook(GnashingFang)))
+					{
+						return OriginalHook(GnashingFang);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class GNB_FatedCont : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_FatedCont;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is FatedCircle && IsEnabled(CustomComboPreset.GNB_FatedCont))
+				{
+					if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToRaze))
+					{
+						return OriginalHook(Continuation);
+					}
+
+					if (ActionReady(FatedCircle))
+					{
+						return FatedCircle;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
 		internal class GNB_AuroraProtection : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.GNB_AuroraProtection;

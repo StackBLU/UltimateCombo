@@ -354,5 +354,31 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		internal class PLD_Intervention : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PLD_Intervention;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is Intervention && IsEnabled(CustomComboPreset.PLD_Intervention))
+				{
+					if (Gauge.OathGauge >= 50)
+					{
+						if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Guardian)))
+						{
+							return All.Rampart;
+						}
+
+						if (ActionReady(OriginalHook(Guardian)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
+						{
+							return OriginalHook(Guardian);
+						}
+					}
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

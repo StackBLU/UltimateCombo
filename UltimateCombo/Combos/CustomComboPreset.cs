@@ -390,13 +390,17 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-		[ReplaceSkill(PLD.Requiescat, PLD.Imperator)]
+		[ReplaceSkill(PLD.Requiescat, PLD.Imperator, PLD.Confiteor, PLD.BladeOfFaith, PLD.BladeOfTruth, PLD.BladeOfValor, PLD.BladeOfHonor)]
 		[CustomComboInfo("Requiescat / Imperator > Confiteor > Faith > Truth > Valor > Honor", "", PLD.JobID)]
 		PLD_Blades = 11040,
 
 		[ReplaceSkill(PLD.CircleOfScorn, PLD.SpiritsWithin, PLD.Expiacion)]
-		[CustomComboInfo("Circle of Scorn & Spirits Within / Expiacion", "", PLD.JobID)]
+		[CustomComboInfo("Circle of Scorn & Spirits Within > Expiacion", "", PLD.JobID)]
 		PLD_ExpiScorn = 11041,
+
+		[ReplaceSkill(All.Rampart, PLD.Sentinel, PLD.Guardian, PLD.Intervention)]
+		[CustomComboInfo("Rampart & Sentinel / Guardian > Intervention", "", PLD.JobID)]
+		PLD_Intervention = 11042,
 
 		#endregion
 
@@ -494,7 +498,21 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ReplaceSkill(WAR.Infuriate, WAR.InnerBeast, WAR.FellCleave, WAR.InnerChaos)]
+		[CustomComboInfo("Infuriate > Inner Beast / Fell Cleave / Inner Chaos", "", WAR.JobID)]
+		WAR_InfurCleav = 18040,
 
+		[ReplaceSkill(WAR.Infuriate, WAR.SteelCyclone, WAR.Decimate, WAR.ChaoticCyclone)]
+		[CustomComboInfo("Infuriate > Steel Cyclone / Decimate / Chaotic Cyclone", "", WAR.JobID)]
+		WAR_InfurCyclo = 18041,
+
+		[ReplaceSkill(WAR.Berserk, WAR.InnerRelease, WAR.InnerBeast, WAR.FellCleave, WAR.PrimalWrath, WAR.PrimalRend, WAR.PrimalRuination)]
+		[CustomComboInfo("Berserk / Inner Release > Inner Beast / Fell Cleave > Primal Wrath > Primal Rend > Primal Ruination", "", WAR.JobID)]
+		WAR_Release = 18042,
+
+		[ReplaceSkill(WAR.ThrillOfBattle, WAR.ShakeItOff)]
+		[CustomComboInfo("Thrill of Battle > Shake It Off", "", WAR.JobID)]
+		WAR_ThrillShake = 18043,
 
 		#endregion
 
@@ -608,7 +626,13 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ReplaceSkill(DRK.BloodWeapon, DRK.Delirium, DRK.Bloodspiller, DRK.ScarletDelirium, DRK.Comeuppance, DRK.Torcleaver)]
+		[CustomComboInfo("Blood Weapon / Delirium > Bloodspiller / Cleave Combo", "", DRK.JobID)]
+		DRK_DelirSpiller = 5050,
 
+		[ReplaceSkill(DRK.BloodWeapon, DRK.Delirium, DRK.Quietus, DRK.Impalement)]
+		[CustomComboInfo("Blood Weapon / Delirium > Quietus / Impalement", "", DRK.JobID)]
+		DRK_DelirQuiet = 5051,
 
 		#endregion
 
@@ -718,9 +742,21 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ReplaceSkill(GNB.BurstStrike, GNB.Hypervelocity)]
+		[CustomComboInfo("Burst Strike > Hypervelocity", "", GNB.JobID)]
+		GNB_BurstCont = 7040,
+
+		[ReplaceSkill(GNB.GnashingFang, GNB.JugularRip, GNB.SavageClaw, GNB.AbdomenTear, GNB.WickedTalon, GNB.EyeGouge)]
+		[CustomComboInfo("Gnashing Fang > Jugular Rip > Savagae Claw > Abdomen Tear > Wicked Talon > Eye Gouge", "", GNB.JobID)]
+		GNB_GnashCont = 7041,
+
+		[ReplaceSkill(GNB.FatedCircle, GNB.FatedBrand)]
+		[CustomComboInfo("Fated Circle > Fated Brand", "", GNB.JobID)]
+		GNB_FatedCont = 7042,
+
 		[ReplaceSkill(GNB.Aurora)]
 		[CustomComboInfo("Aurora Overwrite Protection", "", GNB.JobID)]
-		GNB_AuroraProtection = 7040,
+		GNB_AuroraProtection = 7043,
 
 		#endregion
 

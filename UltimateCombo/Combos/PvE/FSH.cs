@@ -50,6 +50,7 @@ namespace UltimateCombo.Combos.PvE
 				TruthOfMountains = 222,
 				Triangulate = 217,
 				Prospect = 225,
+				Chum = 763,
 				EurekaMoment = 2765;
 		}
 
@@ -70,6 +71,7 @@ namespace UltimateCombo.Combos.PvE
 						return Rest;
 					}
 				}
+
 				return actionID;
 			}
 		}
@@ -86,6 +88,7 @@ namespace UltimateCombo.Combos.PvE
 						return Hook;
 					}
 				}
+
 				return actionID;
 			}
 		}

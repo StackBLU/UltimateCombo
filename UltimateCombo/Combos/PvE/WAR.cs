@@ -16,6 +16,7 @@ namespace UltimateCombo.Combos.PvE
 			HeavySwing = 31,
 			Maim = 37,
 			Berserk = 38,
+			ThrillOfBattle = 40,
 			Overpower = 41,
 			StormsPath = 42,
 			Holmgang = 43,
@@ -37,7 +38,8 @@ namespace UltimateCombo.Combos.PvE
 			PrimalRend = 25753,
 			PrimalWrath = 36924,
 			PrimalRuination = 36925,
-			Onslaught = 7386;
+			Onslaught = 7386,
+			ShakeItOff = 7388;
 
 		public static class Buffs
 		{
@@ -49,7 +51,8 @@ namespace UltimateCombo.Combos.PvE
 				Wrathful = 3901,
 				PrimalRuinationReady = 3834,
 				BurgeoningFury = 3833,
-				Berserk = 86;
+				Berserk = 86,
+				ThrillOfBattle = 87;
 		}
 
 		private static WARGauge Gauge
@@ -281,6 +284,113 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					return Overpower;
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class WAR_InfurCleav : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_InfurCleav;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is InnerBeast or FellCleave) && IsEnabled(CustomComboPreset.WAR_InfurCleav))
+				{
+					if (ActionReady(Infuriate) && (!HasEffect(Buffs.NascentChaos) || (!LevelChecked(ChaoticCyclone) && Gauge.BeastGauge < 50)))
+					{
+						return Infuriate;
+					}
+
+					if ((ActionReady(OriginalHook(FellCleave)) && HasEffect(Buffs.NascentChaos)) || Gauge.BeastGauge >= 50 || HasEffect(Buffs.InnerRelease))
+					{
+						return OriginalHook(FellCleave);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class WAR_InfurCyclo : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_InfurCyclo;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is SteelCyclone or Decimate) && IsEnabled(CustomComboPreset.WAR_InfurCyclo))
+				{
+					if (ActionReady(Infuriate) && (!HasEffect(Buffs.NascentChaos) || (!LevelChecked(ChaoticCyclone) && Gauge.BeastGauge < 50)))
+					{
+						return Infuriate;
+					}
+
+					if ((ActionReady(OriginalHook(Decimate)) && HasEffect(Buffs.NascentChaos)) || Gauge.BeastGauge >= 50 || HasEffect(Buffs.InnerRelease))
+					{
+						return OriginalHook(Decimate);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class WAR_Release : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_Release;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is InnerRelease or Berserk) && IsEnabled(CustomComboPreset.WAR_Release))
+				{
+					if (ActionReady(OriginalHook(InnerRelease)))
+					{
+						return OriginalHook(InnerRelease);
+					}
+
+					if (HasEffect(Buffs.InnerRelease))
+					{
+						return OriginalHook(FellCleave);
+					}
+
+					if (HasEffect(Buffs.PrimalRendReady))
+					{
+						return PrimalRend;
+					}
+
+					if (HasEffect(Buffs.PrimalRuinationReady))
+					{
+						return PrimalRuination;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class WAR_ThrillShake : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WAR_ThrillShake;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is ThrillOfBattle or ShakeItOff) && IsEnabled(CustomComboPreset.WAR_ThrillShake))
+				{
+					if (ActionReady(ThrillOfBattle))
+					{
+						return ThrillOfBattle;
+					}
+
+					if (ActionReady(ShakeItOff))
+					{
+						if (HasEffect(Buffs.ThrillOfBattle) || GetCooldownRemainingTime(ThrillOfBattle) < (GetCooldown(ThrillOfBattle).CooldownTotal - 10))
+						{
+							return ShakeItOff;
+						}
+
+						return OriginalHook(11);
+					}
 				}
 
 				return actionID;

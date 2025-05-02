@@ -292,5 +292,51 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		internal class DRK_DelirSpiller : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_DelirSpiller;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is Bloodspiller && IsEnabled(CustomComboPreset.DRK_DelirSpiller))
+				{
+					if (ActionReady(OriginalHook(Delirium)))
+					{
+						return OriginalHook(Delirium);
+					}
+
+					if (HasEffect(Buffs.Delirium) || Gauge.Blood >= 50)
+					{
+						return OriginalHook(Bloodspiller);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class DRK_DelirQuiet : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DRK_DelirQuiet;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if (actionID is Quietus && IsEnabled(CustomComboPreset.DRK_DelirQuiet))
+				{
+					if (ActionReady(OriginalHook(Delirium)))
+					{
+						return OriginalHook(Delirium);
+					}
+
+					if (HasEffect(Buffs.Delirium) || Gauge.Blood >= 50)
+					{
+						return OriginalHook(Quietus);
+					}
+				}
+
+				return actionID;
+			}
+		}
 	}
 }
