@@ -63,7 +63,9 @@ namespace UltimateCombo.Combos.PvE
 			Missile = 11405,
 			AethericMimicry = 18322,
 			WhiteWind = 11406,
-			Rehydration = 34566;
+			Rehydration = 34566,
+			Blaze = 23278,
+			Electrogenesis = 18298;
 
 		public static class Buffs
 		{
@@ -129,6 +131,7 @@ namespace UltimateCombo.Combos.PvE
 		{
 			public static UserInt
 				BLU_ManaGain = new("BLU_ManaGain", 2000),
+				BLU_TankWhiteWind = new("BLU_TankWhiteWind", 50),
 				BLU_TreasurePomcure = new("BLU_TreasurePomcure", 75),
 				BLU_TreasureGobskin = new("BLU_TreasureGobskin", 5),
 				BLU_TreasureWhiteWind = new("BLU_TreasureWhiteWind", 60),
@@ -592,6 +595,11 @@ namespace UltimateCombo.Combos.PvE
 					if (IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight))
 					{
 						return PeculiarLight;
+					}
+
+					if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TankWhiteWind) && LocalPlayer.CurrentMp >= 1500)
+					{
+						return WhiteWind;
 					}
 
 					if (!TargetHasEffect(Debuffs.PeatPelt) && (!HasEffect(Buffs.DeepClean) || GetBuffRemainingTime(Buffs.DeepClean) < 2)

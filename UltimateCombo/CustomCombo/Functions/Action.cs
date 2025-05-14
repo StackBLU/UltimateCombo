@@ -92,6 +92,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			return LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 5);
 		}
 
+		public static bool DutyActionReady(uint id)
+		{
+			return IsEnabled(id) && IsOffCooldown(id);
+		}
+
 		public static bool WasLastAction(uint id)
 		{
 			return ActionWatching.LastAction == id;

@@ -221,12 +221,22 @@ namespace UltimateCombo.Combos
 		[Bozja]
 		[ReplaceSkill(Bozja.BloodRage)]
 		[CustomComboInfo("Blood Rage", "", All.JobID)]
-		Bozja_BloodRage = 100043,
+		Bozja_BloodRage = 100040,
+
+		[Bozja]
+		[ReplaceSkill(WHM.ThinAir, Bozja.SeraphStrike)]
+		[CustomComboInfo("Thin Air > Seraph Strike", "", All.JobID)]
+		Bozja_Seraph = 100041,
 
 		[Bozja]
 		[ReplaceSkill(Bozja.FontOfPower, Bozja.BannerOfHonoredSacrifice, Bozja.BannerOfNobleEnds)]
 		[CustomComboInfo("Font of Power & Banner of Honored Sacrifice / Banner of Noble Ends", "", All.JobID)]
-		Bozja_FoP_HSac_NEnds = 100041,
+		Bozja_FoP_HSac_NEnds = 100042,
+
+		[Bozja]
+		[ReplaceSkill(Bozja.Assassination)]
+		[CustomComboInfo("Assassination", "", All.JobID)]
+		Bozja_Assassination = 100043,
 
 		[Bozja]
 		[ReplaceSkill(Bozja.FontOfMagic, Bozja.Chainspell)]
@@ -234,14 +244,9 @@ namespace UltimateCombo.Combos
 		Bozja_FoM_CS = 100044,
 
 		[Bozja]
-		[ReplaceSkill(Bozja.Assassination)]
-		[CustomComboInfo("Assassination", "", All.JobID)]
-		Bozja_Assassination = 100042,
-
-		[Bozja]
 		[ReplaceSkill(Bozja.FlareStar)]
 		[CustomComboInfo("Lost Flare Star - BLM only at the moment", "", All.JobID)]
-		Bozja_LFS = 100040,
+		Bozja_LFS = 100045,
 
 		#endregion
 
@@ -1152,7 +1157,7 @@ namespace UltimateCombo.Combos
 
 		#region Single Target DPS
 
-		[ReplaceSkill(SGE.Dosis, SGE.Dosis2, SGE.Dosis3)]
+		[ReplaceSkill(SGE.Dosis1, SGE.Dosis2, SGE.Dosis3)]
 		[CustomComboInfo("Single Target DPS", "", SGE.JobID)]
 		SGE_ST_DPS = 14000,
 
@@ -1196,7 +1201,7 @@ namespace UltimateCombo.Combos
 
 		#region AoE DPS
 
-		[ReplaceSkill(SGE.Dyskrasia, SGE.Dyskrasia2)]
+		[ReplaceSkill(SGE.Dyskrasia1, SGE.Dyskrasia2)]
 		[CustomComboInfo("AoE DPS", "", SGE.JobID)]
 		SGE_AoE_DPS = 14020,
 
@@ -1248,7 +1253,7 @@ namespace UltimateCombo.Combos
 
 		#region AoE Heals
 
-		[ReplaceSkill(SGE.Prognosis, SGE.EukrasianPrognosis)]
+		[ReplaceSkill(SGE.Prognosis, SGE.EukrasianPrognosis1, SGE.EukrasianPrognosis2)]
 		[CustomComboInfo("AoE Heals", "", SGE.JobID)]
 		SGE_AoE_Heals = 14050,
 
@@ -2650,10 +2655,14 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Tank Combo (Doesn't work while solo)", "Mighty Guard, Toad Oil, and Devour Checks, then Peculiar Light, Peat Pelt, and Deep Clean", BLU.JobID)]
 		BLU_Tanking = 70030,
 
+		[ParentCombo(BLU_Tanking)]
+		[CustomComboInfo("White Wind", "", BLU.JobID)]
+		BLU_Tank_WhiteWind = 70031,
+
 		[BlueInactive(BLU.GoblinPunch, BLU.BloodDrain, BLU.ChocoMeteor)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor)]
 		[CustomComboInfo("Blood Drain", "", BLU.JobID)]
-		BLU_ManaGain = 70031,
+		BLU_ManaGain = 70032,
 
 		[BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]

@@ -432,8 +432,8 @@ namespace UltimateCombo.Combos.PvE
 						{
 							if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
 							{
-								if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis) && !WasLastSpell(SGE.EukrasianPrognosis2)
-									&& !WasLastSpell(SGE.EukrasianDosis) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
+								if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis1) && !WasLastSpell(SGE.EukrasianPrognosis2)
+									&& !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
 									&& !WasLastSpell(SGE.EukrasianDyskrasia))
 								{
 									return LucidDreaming;
@@ -466,7 +466,7 @@ namespace UltimateCombo.Combos.PvE
 						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 4000)
 						&& LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
 					{
-						if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor)
+						if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor or BLU.Electrogenesis or BLU.Blaze)
 						{
 							return LucidDreaming;
 						}

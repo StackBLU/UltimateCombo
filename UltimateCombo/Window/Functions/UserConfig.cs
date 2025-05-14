@@ -1590,6 +1590,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, "Blood Drain MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
+			if (preset is CustomComboPreset.BLU_Tank_WhiteWind && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TankWhiteWind, "White Wind HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
 			if (preset is CustomComboPreset.BLU_Treasure_Healer_Pomcure && enabled)
 			{
 				UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasurePomcure, "Pomcure HP % Threshold", 150, SliderIncrements.Fives);

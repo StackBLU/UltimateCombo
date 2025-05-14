@@ -26,25 +26,25 @@ namespace UltimateCombo.Combos.PvE
 			Panhaima = 24311,
 			Holos = 24310,
 			EukrasianDiagnosis = 24291,
-			EukrasianPrognosis = 24292,
+			EukrasianPrognosis1 = 24292,
+			EukrasianPrognosis2 = 37034,
 			Egeiro = 24287,
 
-			Dosis = 24283,
+			Dosis1 = 24283,
 			Dosis2 = 24306,
 			Dosis3 = 24312,
-			EukrasianDosis = 24293,
+			EukrasianDosis1 = 24293,
 			EukrasianDosis2 = 24308,
 			EukrasianDosis3 = 24314,
 			Phlegma = 24289,
 			Phlegma2 = 24307,
 			Phlegma3 = 24313,
-			Dyskrasia = 24297,
+			Dyskrasia1 = 24297,
 			Dyskrasia2 = 24315,
 			Toxikon = 24304,
 			Pneuma = 24318,
 			EukrasianDyskrasia = 37032,
 			Psyche = 37033,
-			EukrasianPrognosis2 = 37034,
 
 			Soteria = 24294,
 			Zoe = 24300,
@@ -71,7 +71,7 @@ namespace UltimateCombo.Combos.PvE
 		internal static class Debuffs
 		{
 			internal const ushort
-				EukrasianDosis = 2614,
+				EukrasianDosis1 = 2614,
 				EukrasianDosis2 = 2615,
 				EukrasianDosis3 = 2616,
 				EukrasianDyskrasia = 3897;
@@ -80,9 +80,12 @@ namespace UltimateCombo.Combos.PvE
 		internal static readonly Dictionary<uint, ushort>
 			DosisList = new()
 			{
-				{ Dosis,  Debuffs.EukrasianDosis  },
+				{ Dosis1, Debuffs.EukrasianDosis1 },
 				{ Dosis2, Debuffs.EukrasianDosis2 },
-				{ Dosis3, Debuffs.EukrasianDosis3 }
+				{ Dosis3, Debuffs.EukrasianDosis3 },
+				{ EukrasianDosis1, Debuffs.EukrasianDosis1 },
+				{ EukrasianDosis2, Debuffs.EukrasianDosis2 },
+				{ EukrasianDosis3, Debuffs.EukrasianDosis3 }
 			};
 
 		public static SGEGauge Gauge
@@ -107,16 +110,16 @@ namespace UltimateCombo.Combos.PvE
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_ST_DPS;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Dosis or Dosis2 or Dosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
+				if ((actionID is Dosis1 or Dosis2 or Dosis3 or EukrasianDosis1 or EukrasianDosis2 or EukrasianDosis3) && IsEnabled(CustomComboPreset.SGE_ST_DPS))
 				{
-					if ((WasLastSpell(EukrasianPrognosis) || WasLastSpell(EukrasianPrognosis2)) && !InCombat())
+					if ((WasLastSpell(EukrasianPrognosis1) || WasLastSpell(EukrasianPrognosis2)) && !InCombat())
 					{
 						ActionWatching.CombatActions.Clear();
 					}
 
 					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
-						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
-						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
+						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis1) && !WasLastSpell(EukrasianPrognosis2)
+						&& !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
@@ -155,10 +158,10 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(EukrasianDosis))
+					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1))
 						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis)]) <= 3
+						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3
 						|| ActionWatching.NumberOfGcdsUsed == 11))
 					{
 						if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))
@@ -166,7 +169,7 @@ namespace UltimateCombo.Combos.PvE
 							return Eukrasia;
 						}
 
-						return OriginalHook(Dosis);
+						return OriginalHook(Dosis1);
 					}
 
 					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma)
@@ -184,7 +187,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Toxikon);
 					}
 
-					return OriginalHook(Dosis);
+					return OriginalHook(Dosis1);
 				}
 
 				return actionID;
@@ -196,11 +199,11 @@ namespace UltimateCombo.Combos.PvE
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_DPS;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Dyskrasia or Dyskrasia2) && IsEnabled(CustomComboPreset.SGE_AoE_DPS))
+				if ((actionID is Dyskrasia1 or Dyskrasia2 or EukrasianDyskrasia) && IsEnabled(CustomComboPreset.SGE_AoE_DPS))
 				{
 					if (CanWeave(actionID)
-						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis) && !WasLastSpell(EukrasianPrognosis2)
-						&& !WasLastSpell(EukrasianDosis) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
+						&& !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis1) && !WasLastSpell(EukrasianPrognosis2)
+						&& !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
@@ -252,7 +255,7 @@ namespace UltimateCombo.Combos.PvE
 						return OriginalHook(Phlegma);
 					}
 
-					return OriginalHook(Dyskrasia);
+					return OriginalHook(Dyskrasia1);
 				}
 
 				return actionID;
@@ -289,10 +292,10 @@ namespace UltimateCombo.Combos.PvE
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SGE_AoE_Heals;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Prognosis or EukrasianPrognosis or EukrasianPrognosis2) && IsEnabled(CustomComboPreset.SGE_AoE_Heals))
+				if ((actionID is Prognosis or EukrasianPrognosis1 or EukrasianPrognosis2) && IsEnabled(CustomComboPreset.SGE_AoE_Heals))
 				{
 					if (IsEnabled(CustomComboPreset.SGE_AoE_Heals_Pepsis) && ActionReady(Pepsis)
-						&& HasEffect(Buffs.EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis2))
+						&& HasEffect(Buffs.EukrasianPrognosis) && !WasLastAction(EukrasianPrognosis1) && !WasLastAction(EukrasianPrognosis2))
 					{
 						return Pepsis;
 					}

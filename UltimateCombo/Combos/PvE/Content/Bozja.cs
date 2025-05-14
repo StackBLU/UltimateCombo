@@ -84,75 +84,6 @@ namespace UltimateCombo.Combos.PvE.Content
 			}
 		}*/
 
-		internal class Bozja_FoP_HSac_NEnds : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_FoP_HSac_NEnds;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat())
-				{
-					if ((IsEnabled(FontOfPower) && !HasEffect(Buffs.BloodRage)) || (IsEnabled(FontOfPower) && HasEffect(Buffs.BloodRush)))
-					{
-						return FontOfPower;
-					}
-
-					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)) && IsEnabled(BannerOfHonoredSacrifice))
-					{
-						return BannerOfHonoredSacrifice;
-					}
-
-					if ((WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)) && IsEnabled(BannerOfNobleEnds))
-					{
-						return BannerOfNobleEnds;
-					}
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class Bozja_FoM_CS : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_FoM_CS;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat())
-				{
-					if (IsEnabled(FontOfMagic))
-					{
-						return FontOfMagic;
-					}
-
-					if ((WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)) && IsEnabled(Chainspell))
-					{
-						return Chainspell;
-					}
-				}
-
-				return actionID;
-			}
-		}
-
-		internal class Bozja_Assassination : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_Assassination;
-
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat())
-				{
-					if (IsEnabled(Assassination) && InActionRange(Assassination))
-					{
-						return Assassination;
-					}
-				}
-
-				return actionID;
-			}
-		}
-
 		internal class Bozja_BloodRage : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_BloodRage;
@@ -161,7 +92,7 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat())
 				{
-					if (IsEnabled(BloodRage))
+					if (DutyActionReady(BloodRage) && HasActionEquipped(BloodRage))
 					{
 						return BloodRage;
 					}
@@ -189,6 +120,99 @@ namespace UltimateCombo.Combos.PvE.Content
 						{
 							return GNB.Trajectory;
 						}
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Bozja_Seraph : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_Seraph;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && LocalPlayer.ClassJob.Value.RowId == WHM.JobID)
+				{
+					if (DutyActionReady(SeraphStrike) && HasActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
+					{
+						return WHM.ThinAir;
+					}
+
+					if (DutyActionReady(SeraphStrike) && HasActionEquipped(SeraphStrike) && HasEffect(WHM.Buffs.ThinAir)
+						&& (InMeleeRange() || GetBuffRemainingTime(WHM.Buffs.ThinAir) < 3))
+					{
+						return SeraphStrike;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Bozja_FoP_HSac_NEnds : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_FoP_HSac_NEnds;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat())
+				{
+					if (DutyActionReady(FontOfPower) && HasActionEquipped(FontOfPower) && (!HasEffect(Buffs.BloodRage) || HasEffect(Buffs.BloodRush)))
+					{
+						return FontOfPower;
+					}
+
+					if (DutyActionReady(BannerOfHonoredSacrifice) && HasActionEquipped(BannerOfHonoredSacrifice) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
+					{
+						return BannerOfHonoredSacrifice;
+					}
+
+					if (DutyActionReady(BannerOfNobleEnds) && HasActionEquipped(BannerOfNobleEnds) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
+					{
+						return BannerOfNobleEnds;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Bozja_Assassination : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_Assassination;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat())
+				{
+					if (DutyActionReady(Assassination) && HasActionEquipped(Assassination) && InActionRange(Assassination))
+					{
+						return Assassination;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Bozja_FoM_CS : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_FoM_CS;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat())
+				{
+					if (DutyActionReady(FontOfMagic) && HasActionEquipped(FontOfMagic))
+					{
+						return FontOfMagic;
+					}
+
+					if (DutyActionReady(Chainspell) && HasActionEquipped(Chainspell) && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)))
+					{
+						return Chainspell;
 					}
 				}
 
