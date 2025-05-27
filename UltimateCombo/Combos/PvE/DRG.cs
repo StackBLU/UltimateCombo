@@ -101,7 +101,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.DRG_ST_BattleLitany) && ActionReady(BattleLitany))
+							if (IsEnabled(CustomComboPreset.DRG_ST_BattleLitany) && ActionReady(BattleLitany) && TargetIsBoss())
 							{
 								return BattleLitany;
 							}

@@ -152,7 +152,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && ActionReady(Embolden))
+							if (IsEnabled(CustomComboPreset.RDM_ST_Embolden) && ActionReady(Embolden) && TargetIsBoss())
 							{
 								return Embolden;
 							}

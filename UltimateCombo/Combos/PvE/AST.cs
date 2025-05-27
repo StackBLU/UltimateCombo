@@ -402,7 +402,7 @@ namespace UltimateCombo.Combos.PvE
 						return SunSign;
 					}
 
-					if (ActionReady(Helios)
+					if (ActionReady(AspectedHelios)
 						&& (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
 						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 5
 						|| HasEffect(Buffs.NeutralSect)

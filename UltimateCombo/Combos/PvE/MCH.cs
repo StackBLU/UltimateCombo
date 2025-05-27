@@ -99,7 +99,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer))
+							if (IsEnabled(CustomComboPreset.MCH_ST_Barrel) && ActionReady(BarrelStabilizer) && TargetIsBoss())
 							{
 								return BarrelStabilizer;
 							}

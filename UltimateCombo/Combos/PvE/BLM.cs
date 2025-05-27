@@ -125,6 +125,60 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Fire or Fire3 or Fire4 or Blizzard or Blizzard3 or Blizzard4) && IsEnabled(CustomComboPreset.BLM_ST_DPS))
 				{
+					//Bozja
+					{
+						if (HasEffect(Bozja.Buffs.Reminiscence) && IsEnabled(CustomComboPreset.Bozja_LFS))
+						{
+							if (HasEffect(Bozja.Buffs.FontOfMagic) && GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 7)
+							{
+								if (WasLastSpell(Blizzard4) && GetBuffRemainingTime(Bozja.Buffs.FontOfMagic) < 5)
+								{
+									return Bozja.FlareStar;
+								}
+
+								if (Gauge.InUmbralIce && !WasLastSpell(Blizzard4))
+								{
+									return Blizzard4;
+								}
+
+								if (!Gauge.InUmbralIce)
+								{
+									return Blizzard3;
+								}
+							}
+
+							if (GetDebuffRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !TargetHasEffect(Bozja.Debuffs.FlareStar) || DutyActionReady(Bozja.FontOfMagic))
+							{
+								if (WasLastAction(Blizzard4) && (HasEffect(Bozja.Buffs.FontOfMagic) || DutyActionNotEquipped(Bozja.FontOfMagic)))
+								{
+									return Bozja.FlareStar;
+								}
+
+								if (WasLastAction(Bozja.FontOfMagic))
+								{
+									return Blizzard4;
+								}
+
+								if (WasLastAction(All.LucidDreaming) && DutyActionReady(Bozja.FontOfMagic))
+								{
+									return Bozja.FontOfMagic;
+								}
+
+								if (ActionReady(All.LucidDreaming) && WasLastAction(Blizzard4))
+								{
+									return All.LucidDreaming;
+								}
+
+								if (!Gauge.InUmbralIce)
+								{
+									return Blizzard3;
+								}
+
+								return Blizzard4;
+							}
+						}
+					}
+
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.BLM_ST_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Buffs.Triplecast) && Gauge.InAstralFire
@@ -134,7 +188,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLM_ST_Amplifier) && ActionReady(Amplifier) && Gauge.PolyglotStacks < MaxPolyglot(LocalPlayer.Level)
-							&& (Gauge.InUmbralIce || Gauge.InAstralFire))
+							&& (Gauge.InUmbralIce || Gauge.InAstralFire) && TargetIsBoss())
 						{
 							return Amplifier;
 						}
@@ -198,7 +252,7 @@ namespace UltimateCombo.Combos.PvE
 						return Paradox;
 					}
 
-					if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer.CurrentMp <= 1600 && LocalPlayer.CurrentMp >= 800)
+					if (ActionReady(Despair) && Gauge.InAstralFire && ((LocalPlayer.CurrentMp <= 1600 && LocalPlayer.CurrentMp >= 800) || HasEffect(Bozja.Buffs.AutoEther)))
 					{
 						return Despair;
 					}
@@ -208,27 +262,30 @@ namespace UltimateCombo.Combos.PvE
 						return Blizzard4;
 					}
 
-					if (!LevelChecked(Blizzard3) && LocalPlayer.CurrentMp < 1600)
+					//Level Checks
 					{
-						if (ActionReady(All.LucidDreaming))
+						if (!LevelChecked(Blizzard3) && LocalPlayer.CurrentMp < 1600)
 						{
-							return All.LucidDreaming;
+							if (ActionReady(All.LucidDreaming))
+							{
+								return All.LucidDreaming;
+							}
+
+							return Blizzard;
 						}
 
-						return Blizzard;
-					}
+						if (!LevelChecked(Blizzard4) && LevelChecked(Blizzard3) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(UmbralSoul))
+						{
+							return UmbralSoul;
+						}
 
-					if (!LevelChecked(Blizzard4) && LevelChecked(Blizzard3) && Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && !WasLastAction(UmbralSoul))
-					{
-						return UmbralSoul;
-					}
-
-					if (ActionReady(Blizzard3) && !WasLastAction(Transpose)
-						&& ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
-						|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800)
-						|| (!LevelChecked(Despair) && LocalPlayer.CurrentMp < 1600) && !WasLastSpell(Blizzard4)))
-					{
-						return Blizzard3;
+						if (ActionReady(Blizzard3) && !WasLastAction(Transpose)
+							&& ((Gauge.InAstralFire && LocalPlayer.CurrentMp < 800)
+							|| (!Gauge.InAstralFire && !Gauge.InUmbralIce && LocalPlayer.CurrentMp < 10000 && LocalPlayer.CurrentMp >= 800)
+							|| (!LevelChecked(Despair) && LocalPlayer.CurrentMp < 1600 && !WasLastSpell(Blizzard4))))
+						{
+							return Blizzard3;
+						}
 					}
 
 					if (ActionReady(Fire4) && Gauge.InAstralFire && LocalPlayer.CurrentMp >= 1600 && !WasLastAction(Transpose) && !WasLastSpell(Blizzard4))

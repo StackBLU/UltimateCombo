@@ -116,7 +116,7 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep)
 						&& (ActionWatching.NumberOfGcdsUsed >= 10 || Service.Configuration.IgnoreGCDChecks))
 					{
-						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
+						if (IsEnabled(CustomComboPreset.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish) && TargetIsBoss())
 						{
 							return Devilment;
 						}

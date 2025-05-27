@@ -360,7 +360,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (HasBattleTarget())
 			{
-				if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(CurrentTarget.DataId).Rank is 2)
+				if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(CurrentTarget.DataId).Rank is 2 || EnemyHealthMaxHp() == 44)
 				{
 					return true;
 				}

@@ -427,29 +427,31 @@ namespace UltimateCombo.Combos.PvE
 							return Bloodbath;
 						}
 
-						if (IsEnabled(CustomComboPreset.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-							&& (LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) || LocalPlayer.CurrentMp <= 1000))
-						{
-							if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
-							{
-								if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis1) && !WasLastSpell(SGE.EukrasianPrognosis2)
-									&& !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
-									&& !WasLastSpell(SGE.EukrasianDyskrasia))
-								{
-									return LucidDreaming;
-								}
-							}
 
-							if (LocalPlayer.ClassJob.Value.RowId is WHM.JobID or SCH.JobID or AST.JobID)
-							{
-								return LucidDreaming;
-							}
-						}
 
 						if (IsEnabled(CustomComboPreset.All_ArmsLength) && ActionReady(ArmsLength) && IsEnabled(ArmsLength)
 							&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 						{
 							return ArmsLength;
+						}
+					}
+
+					if (IsEnabled(CustomComboPreset.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000))
+					{
+						if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
+						{
+							if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis1) && !WasLastSpell(SGE.EukrasianPrognosis2)
+								&& !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
+								&& !WasLastSpell(SGE.EukrasianDyskrasia))
+							{
+								return LucidDreaming;
+							}
+						}
+
+						if (LocalPlayer.ClassJob.Value.RowId is WHM.JobID or SCH.JobID or AST.JobID)
+						{
+							return LucidDreaming;
 						}
 					}
 

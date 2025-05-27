@@ -117,7 +117,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (!HasEffect(Bozja.Buffs.BloodRage))
 						{
-							if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
+							if (IsEnabled(CustomComboPreset.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0 && TargetIsBoss()
 								&& (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)) && (IsEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
 							{
 								return Bloodfest;

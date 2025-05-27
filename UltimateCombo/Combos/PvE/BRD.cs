@@ -111,17 +111,6 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
-							|| (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
-						{
-							return PitchPerfect;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow))
-						{
-							return EmpyrealArrow;
-						}
-
 						if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (TargetIsBoss())
@@ -131,18 +120,17 @@ namespace UltimateCombo.Combos.PvE
 									return BattleVoice;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
 								{
 									return RadiantFinale;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes)
-									&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes) && (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
 								{
 									return RagingStrikes;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
 								{
 									return Barrage;
 								}
@@ -162,6 +150,17 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Bloodletter);
 							}
 						}
+
+						if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
+							|| (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
+						{
+							return PitchPerfect;
+						}
+
+						if (IsEnabled(CustomComboPreset.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow))
+						{
+							return EmpyrealArrow;
+						}
 					}
 
 					if (IsEnabled(CustomComboPreset.BRD_ST_Apex) && HasEffect(Buffs.BlastArrowReady))
@@ -169,7 +168,7 @@ namespace UltimateCombo.Combos.PvE
 						return BlastArrow;
 					}
 
-					if (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthCurrentHp() == 44)
+					if (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 					{
 						if (IsEnabled(CustomComboPreset.BRD_ST_DoTs) && ActionReady(IronJaws)
 							&& ((TargetHasEffect(Debuffs.VenomousBite) && GetDebuffRemainingTime(Debuffs.VenomousBite) < 3)
@@ -251,6 +250,26 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
+						if (IsEnabled(CustomComboPreset.BRD_AoE_BattleVoice) && ActionReady(BattleVoice))
+						{
+							return BattleVoice;
+						}
+
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantFinale) && (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
+						{
+							return RadiantFinale;
+						}
+
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Raging) && ActionReady(RagingStrikes) && (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
+						{
+							return RagingStrikes;
+						}
+
+						if (IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(Barrage) && (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
+						{
+							return Barrage;
+						}
+
 						if (Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
 						{
 							return PitchPerfect;
@@ -259,27 +278,6 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Empyreal) && ActionReady(EmpyrealArrow))
 						{
 							return EmpyrealArrow;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_AoE_BattleVoice) && ActionReady(BattleVoice))
-						{
-							return BattleVoice;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantFinale) && HasEffect(Buffs.BattleVoice))
-						{
-							return RadiantFinale;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Raging) && ActionReady(RagingStrikes)
-							&& (HasEffect(Buffs.RadiantFinale) || !LevelChecked(RadiantFinale)))
-						{
-							return RagingStrikes;
-						}
-
-						if (IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(Barrage) && HasEffect(Buffs.RagingStrikes))
-						{
-							return Barrage;
 						}
 
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Sidewinder) && ActionReady(Sidewinder))

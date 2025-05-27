@@ -139,7 +139,7 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(SerpentsTail);
 						}
 
-						if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && ActionReady(SerpentsIre))
+						if (IsEnabled(CustomComboPreset.VPR_ST_SerpentsIre) && ActionReady(SerpentsIre) && TargetIsBoss())
 						{
 							return SerpentsIre;
 						}

@@ -143,7 +143,7 @@ namespace UltimateCombo.Combos.PvE
 							return SearingFlash;
 						}
 
-						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && ActionReady(SearingLight))
+						if (IsEnabled(CustomComboPreset.SMN_ST_SearingLight) && ActionReady(SearingLight) && TargetIsBoss())
 						{
 							return SearingLight;
 						}

@@ -111,9 +111,14 @@ namespace UltimateCombo.ComboHelper.Functions
 			}
 		}
 
-		public static bool HasActionEquipped(uint actionId)
+		public static bool DutyActionEquipped(uint actionId)
 		{
-			return (DutyAction1 == actionId && HasCharges(actionId)) || (DutyAction2 == actionId && HasCharges(actionId));
+			return (DutyAction1 == actionId) || (DutyAction2 == actionId);
+		}
+
+		public static bool DutyActionNotEquipped(uint actionId)
+		{
+			return (DutyAction1 != actionId) && (DutyAction2 != actionId);
 		}
 	}
 }

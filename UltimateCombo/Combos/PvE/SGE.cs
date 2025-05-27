@@ -236,7 +236,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(EukrasianDyskrasia))
+					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1))
 						&& (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || (GetDebuffRemainingTime(Debuffs.EukrasianDyskrasia) <= 3)))
 					{
 						if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))
@@ -244,7 +244,7 @@ namespace UltimateCombo.Combos.PvE
 							return Eukrasia;
 						}
 
-						return OriginalHook(EukrasianDyskrasia);
+						return OriginalHook(Dyskrasia1);
 					}
 
 					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma)

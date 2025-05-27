@@ -130,12 +130,12 @@ namespace UltimateCombo.Combos.PvE
 		public static class Config
 		{
 			public static UserInt
-				BLU_ManaGain = new("BLU_ManaGain", 2000),
+				BLU_ManaGain = new("BLU_ManaGain", 1500),
 				BLU_TankWhiteWind = new("BLU_TankWhiteWind", 50),
 				BLU_TreasurePomcure = new("BLU_TreasurePomcure", 75),
 				BLU_TreasureGobskin = new("BLU_TreasureGobskin", 5),
 				BLU_TreasureWhiteWind = new("BLU_TreasureWhiteWind", 60),
-				BLU_TreasureRehydration = new("BLU_TreasureRehydration", 50);
+				BLU_TreasureRehydration = new("BLU_TreasureRehydration", 30);
 		}
 
 		internal class BLU_MoonFluteOpener : CustomComboClass
@@ -582,7 +582,7 @@ namespace UltimateCombo.Combos.PvE
 						return MightyGuard;
 					}
 
-					if (!HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil))
+					if (IsEnabled(CustomComboPreset.BLU_Tank_ToadOil) && !HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil))
 					{
 						return ToadOil;
 					}
@@ -592,7 +592,7 @@ namespace UltimateCombo.Combos.PvE
 						return Devour;
 					}
 
-					if (IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight))
+					if (IsEnabled(CustomComboPreset.BLU_Tank_Peculiar) && IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight))
 					{
 						return PeculiarLight;
 					}
@@ -602,13 +602,13 @@ namespace UltimateCombo.Combos.PvE
 						return WhiteWind;
 					}
 
-					if (!TargetHasEffect(Debuffs.PeatPelt) && (!HasEffect(Buffs.DeepClean) || GetBuffRemainingTime(Buffs.DeepClean) < 2)
-						&& !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
+					if (IsEnabled(CustomComboPreset.BLU_Tank_PeatClean) && !TargetHasEffect(Debuffs.PeatPelt)
+						&& (!HasEffect(Buffs.DeepClean) || GetBuffRemainingTime(Buffs.DeepClean) < 2) && !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
 					{
 						return PeatPelt;
 					}
 
-					if ((WasLastSpell(PeatPelt) || TargetHasEffect(Debuffs.PeatPelt)) && IsSpellActive(DeepClean))
+					if (IsEnabled(CustomComboPreset.BLU_Tank_PeatClean) && (WasLastSpell(PeatPelt) || TargetHasEffect(Debuffs.PeatPelt)) && IsSpellActive(DeepClean))
 					{
 						return DeepClean;
 					}

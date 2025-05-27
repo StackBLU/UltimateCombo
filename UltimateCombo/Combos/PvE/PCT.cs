@@ -114,7 +114,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && InCombat())
 					{
-						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse))
+						if (IsEnabled(CustomComboPreset.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && TargetIsBoss()
 							&& Gauge.LandscapeMotifDrawn
 							&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
 						{

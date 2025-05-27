@@ -155,15 +155,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor)
-						&& (HasEffect(Buffs.ConfiteorReady) || (HasEffect(Buffs.Requiescat) && LevelChecked(BladeOfFaith)))
-						&& LocalPlayer.CurrentMp >= 1000)
+					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && LocalPlayer.CurrentMp >= 1000
+						&& (HasEffect(Buffs.ConfiteorReady) || WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)))
 					{
 						return OriginalHook(Confiteor);
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_ST_FightOrFlight) && HasEffect(Buffs.GoringBladeReady)
-						&& (WasLastSpell(BladeOfValor) || !LevelChecked(OriginalHook(BladeOfFaith))))
+						&& (WasLastSpell(BladeOfValor) || !LevelChecked(OriginalHook(BladeOfFaith)) || GetBuffRemainingTime(Buffs.GoringBladeReady) < 5))
 					{
 						return GoringBlade;
 					}
@@ -285,9 +284,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor)
-						&& (HasEffect(Buffs.ConfiteorReady) || (HasEffect(Buffs.Requiescat) && LevelChecked(BladeOfFaith)))
-						&& LocalPlayer.CurrentMp >= 1000)
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && LocalPlayer.CurrentMp >= 1000
+						&& (HasEffect(Buffs.ConfiteorReady) || WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)))
 					{
 						return OriginalHook(Confiteor);
 					}

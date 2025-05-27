@@ -92,7 +92,7 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat())
 				{
-					if (DutyActionReady(BloodRage) && HasActionEquipped(BloodRage))
+					if (DutyActionReady(BloodRage) && DutyActionEquipped(BloodRage))
 					{
 						return BloodRage;
 					}
@@ -135,12 +135,12 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && LocalPlayer.ClassJob.Value.RowId == WHM.JobID)
 				{
-					if (DutyActionReady(SeraphStrike) && HasActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
+					if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
 					{
 						return WHM.ThinAir;
 					}
 
-					if (DutyActionReady(SeraphStrike) && HasActionEquipped(SeraphStrike) && HasEffect(WHM.Buffs.ThinAir)
+					if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && HasEffect(WHM.Buffs.ThinAir)
 						&& (InMeleeRange() || GetBuffRemainingTime(WHM.Buffs.ThinAir) < 3))
 					{
 						return SeraphStrike;
@@ -159,17 +159,17 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat())
 				{
-					if (DutyActionReady(FontOfPower) && HasActionEquipped(FontOfPower) && (!HasEffect(Buffs.BloodRage) || HasEffect(Buffs.BloodRush)))
+					if (DutyActionReady(FontOfPower) && DutyActionEquipped(FontOfPower) && (!HasEffect(Buffs.BloodRage) || HasEffect(Buffs.BloodRush)))
 					{
 						return FontOfPower;
 					}
 
-					if (DutyActionReady(BannerOfHonoredSacrifice) && HasActionEquipped(BannerOfHonoredSacrifice) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
+					if (DutyActionReady(BannerOfHonoredSacrifice) && DutyActionEquipped(BannerOfHonoredSacrifice) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
 					{
 						return BannerOfHonoredSacrifice;
 					}
 
-					if (DutyActionReady(BannerOfNobleEnds) && HasActionEquipped(BannerOfNobleEnds) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
+					if (DutyActionReady(BannerOfNobleEnds) && DutyActionEquipped(BannerOfNobleEnds) && (WasLastAction(FontOfPower) || HasEffect(Buffs.FontOfPower)))
 					{
 						return BannerOfNobleEnds;
 					}
@@ -187,7 +187,7 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat())
 				{
-					if (DutyActionReady(Assassination) && HasActionEquipped(Assassination) && InActionRange(Assassination))
+					if (DutyActionReady(Assassination) && DutyActionEquipped(Assassination) && InActionRange(Assassination))
 					{
 						return Assassination;
 					}
@@ -203,14 +203,14 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat())
+				if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionNotEquipped(FlareStar))
 				{
-					if (DutyActionReady(FontOfMagic) && HasActionEquipped(FontOfMagic))
+					if (DutyActionReady(FontOfMagic) && DutyActionEquipped(FontOfMagic))
 					{
 						return FontOfMagic;
 					}
 
-					if (DutyActionReady(Chainspell) && HasActionEquipped(Chainspell) && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)))
+					if (DutyActionReady(Chainspell) && DutyActionEquipped(Chainspell) && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)))
 					{
 						return Chainspell;
 					}

@@ -109,7 +109,7 @@ namespace UltimateCombo.Combos.PvE
 								return RiddleOfFire;
 							}
 
-							if (IsEnabled(CustomComboPreset.MNK_ST_Brother) && ActionReady(Brotherhood))
+							if (IsEnabled(CustomComboPreset.MNK_ST_Brother) && ActionReady(Brotherhood) && TargetIsBoss())
 							{
 								return Brotherhood;
 							}

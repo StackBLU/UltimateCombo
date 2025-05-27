@@ -103,7 +103,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
-						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
+						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind) && TargetIsBoss())
 						{
 							return PresenceOfMind;
 						}

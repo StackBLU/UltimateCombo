@@ -126,7 +126,7 @@ namespace UltimateCombo.Combos.PvE
 							return Sacrificium;
 						}
 
-						if (IsEnabled(CustomComboPreset.RPR_ST_Arcane) && ActionReady(ArcaneCircle))
+						if (IsEnabled(CustomComboPreset.RPR_ST_Arcane) && ActionReady(ArcaneCircle) && TargetIsBoss())
 						{
 							return ArcaneCircle;
 						}

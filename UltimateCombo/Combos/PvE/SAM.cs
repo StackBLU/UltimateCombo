@@ -114,7 +114,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50)
+							if (IsEnabled(CustomComboPreset.SAM_ST_Ikishoten) && ActionReady(Ikishoten) && Gauge.Kenki <= 50 && TargetIsBoss())
 							{
 								return Ikishoten;
 							}
@@ -190,7 +190,7 @@ namespace UltimateCombo.Combos.PvE
 						&& OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
 						&& (Gauge.Sen.HasFlag(Sen.Getsu) || Gauge.Sen.HasFlag(Sen.Ka) || Gauge.Sen.HasFlag(Sen.Setsu))
 						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
-						&& (EnemyHealthCurrentHp() > LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
+						&& (EnemyHealthCurrentHp() > (LocalPlayer.MaxHp * 2) || EnemyHealthMaxHp() == 44))
 					{
 						return OriginalHook(Iaijutsu);
 					}

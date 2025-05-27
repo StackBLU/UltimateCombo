@@ -2659,15 +2659,27 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("White Wind", "", BLU.JobID)]
 		BLU_Tank_WhiteWind = 70031,
 
+		[ParentCombo(BLU_Tanking)]
+		[CustomComboInfo("Toad Oil", "", BLU.JobID)]
+		BLU_Tank_ToadOil = 70032,
+
+		[ParentCombo(BLU_Tanking)]
+		[CustomComboInfo("Peculiar Light", "", BLU.JobID)]
+		BLU_Tank_Peculiar = 70033,
+
+		[ParentCombo(BLU_Tanking)]
+		[CustomComboInfo("Peat Pelt > Deep Clean", "", BLU.JobID)]
+		BLU_Tank_PeatClean = 70034,
+
 		[BlueInactive(BLU.GoblinPunch, BLU.BloodDrain, BLU.ChocoMeteor)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor)]
 		[CustomComboInfo("Blood Drain", "", BLU.JobID)]
-		BLU_ManaGain = 70032,
+		BLU_ManaGain = 70035,
 
 		[BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
 		[ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
 		[CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
-		BLU_PhantomEnder = 70033,
+		BLU_PhantomEnder = 70036,
 
 		#region Treasure Healer
 
