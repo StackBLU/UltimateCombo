@@ -279,6 +279,38 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
+		#region Occult Crescent
+
+		[Occult]
+		[CustomComboInfo("Phantom Monk", "", All.JobID)]
+		Occult_Monk = 100060,
+
+		[Occult]
+		[ParentCombo(Occult_Monk)]
+		[ReplaceSkill(Occult.PhantomKick)]
+		[CustomComboInfo("Phantom Kick", "", All.JobID)]
+		Occult_PhantomKick = 100061,
+
+		[Occult]
+		[ParentCombo(Occult_Monk)]
+		[ReplaceSkill(Occult.OccultCounter)]
+		[CustomComboInfo("Occult Counter", "", All.JobID)]
+		Occult_Counter = 100062,
+
+		[Occult]
+		[ParentCombo(Occult_Monk)]
+		[ReplaceSkill(Occult.Counterstance)]
+		[CustomComboInfo("Counterstance", "", All.JobID)]
+		Occult_Counterstance = 100063,
+
+		[Occult]
+		[ParentCombo(Occult_Monk)]
+		[ReplaceSkill(Occult.OccultChakra)]
+		[CustomComboInfo("Occult Chakra", "", All.JobID)]
+		Occult_Chakra = 100064,
+
+		#endregion
+
 		#endregion
 
 		#endregion

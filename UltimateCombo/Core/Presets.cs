@@ -12,6 +12,7 @@ namespace UltimateCombo.Core
 	{
 		private static HashSet<CustomComboPreset>? PvPCombos;
 		private static HashSet<CustomComboPreset>? BozjaCombos;
+		private static HashSet<CustomComboPreset>? OccultCombos;
 		private static HashSet<CustomComboPreset>? EurekaCombos;
 		private static HashSet<CustomComboPreset>? VariantCombos;
 		private static Dictionary<CustomComboPreset, CustomComboPreset[]>? ConflictingCombos;
@@ -25,6 +26,10 @@ namespace UltimateCombo.Core
 
 			BozjaCombos = Enum.GetValues<CustomComboPreset>()
 				.Where(preset => preset.GetAttribute<BozjaAttribute>() != default)
+				.ToHashSet();
+
+			OccultCombos = Enum.GetValues<CustomComboPreset>()
+				.Where(preset => preset.GetAttribute<OccultAttribute>() != default)
 				.ToHashSet();
 
 			EurekaCombos = Enum.GetValues<CustomComboPreset>()
@@ -60,6 +65,11 @@ namespace UltimateCombo.Core
 		public static bool IsBozja(CustomComboPreset preset)
 		{
 			return BozjaCombos.Contains(preset);
+		}
+
+		public static bool IsOccult(CustomComboPreset preset)
+		{
+			return OccultCombos.Contains(preset);
 		}
 
 		public static bool IsEureka(CustomComboPreset preset)

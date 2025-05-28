@@ -206,7 +206,6 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (ActionReady(Verholy))
 						{
-							ActionWatching.LastWeaponskill = 0;
 							if (Gauge.BlackMana >= Gauge.WhiteMana)
 							{
 								return Verholy;
@@ -215,7 +214,6 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionReady(Verflare))
 						{
-							ActionWatching.LastWeaponskill = 0;
 							if (Gauge.WhiteMana >= Gauge.BlackMana)
 							{
 								return Verflare;
@@ -228,14 +226,13 @@ namespace UltimateCombo.Combos.PvE
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
-						|| WasLastWeaponskill(OriginalHook(EnchantedRiposte))
-						|| WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))))
+						|| WasLastWeaponskill(EnchantedRiposte)
+						|| WasLastWeaponskill(EnchantedZwerchhau)))
 					{
-						if (WasLastWeaponskill(OriginalHook(EnchantedZwerchhau))
+						if (WasLastWeaponskill(EnchantedZwerchhau)
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedRedoublement))
+							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedRedoublement))
 							{
 								return Corpsacorps;
 							}
@@ -246,11 +243,10 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (WasLastWeaponskill(OriginalHook(EnchantedRiposte))
+						if (WasLastWeaponskill(EnchantedRiposte)
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedZwerchhau))
+							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedZwerchhau))
 							{
 								return Corpsacorps;
 							}
@@ -261,17 +257,16 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
+						if (InActionRange(EnchantedRiposte) && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+							&& ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedRiposte))
+							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedRiposte))
 							{
 								return Corpsacorps;
 							}
 
-							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedRiposte)))
+							if (Gauge.ManaStacks == 0)
 							{
-								ActionWatching.LastWeaponskill = 0;
 								return OriginalHook(EnchantedRiposte);
 							}
 						}
@@ -400,7 +395,6 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (ActionReady(Verholy))
 						{
-							ActionWatching.LastWeaponskill = 0;
 							if (Gauge.BlackMana >= Gauge.WhiteMana)
 							{
 								return Verholy;
@@ -409,7 +403,6 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionReady(Verflare))
 						{
-							ActionWatching.LastWeaponskill = 0;
 							if (Gauge.WhiteMana >= Gauge.BlackMana)
 							{
 								return Verflare;
@@ -422,14 +415,13 @@ namespace UltimateCombo.Combos.PvE
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
-						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinet))
-						|| WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))))
+						|| WasLastWeaponskill(EnchantedMoulinet)
+						|| WasLastWeaponskill(EnchantedMoulinetDeux)))
 					{
 						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux))
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedMoulinetTrois))
+							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedMoulinetTrois))
 							{
 								return Corpsacorps;
 							}
@@ -443,8 +435,7 @@ namespace UltimateCombo.Combos.PvE
 						if (WasLastWeaponskill(OriginalHook(EnchantedMoulinet))
 							&& ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedMoulinetDeux))
+							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedMoulinetDeux))
 							{
 								return Corpsacorps;
 							}
@@ -455,17 +446,16 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay))
+						if (InActionRange(EnchantedMoulinet) && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+							&& ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps)
-								&& InActionRange(EnchantedMoulinet))
+							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedMoulinet))
 							{
 								return Corpsacorps;
 							}
 
-							if (Gauge.ManaStacks == 0 && InActionRange(OriginalHook(EnchantedMoulinet)))
+							if (Gauge.ManaStacks == 0 && InActionRange(EnchantedMoulinet))
 							{
-								ActionWatching.LastWeaponskill = 0;
 								return OriginalHook(EnchantedMoulinet);
 							}
 						}

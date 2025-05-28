@@ -159,6 +159,12 @@ namespace UltimateCombo.Window
 				}
 				ImGui.Spacing();
 
+				if (ImGui.Selectable("Occult", OpenWindow == OpenWindow.Occult))
+				{
+					OpenWindow = OpenWindow.Occult;
+				}
+				ImGui.Spacing();
+
 				if (ImGui.Selectable("Settings", OpenWindow == OpenWindow.Settings))
 				{
 					OpenWindow = OpenWindow.Settings;
@@ -201,6 +207,10 @@ namespace UltimateCombo.Window
 					BozjaWindow.Draw();
 					break;
 
+				case OpenWindow.Occult:
+					OccultWindow.Draw();
+					break;
+
 				case OpenWindow.Variant:
 					VariantWindow.Draw();
 					break;
@@ -215,7 +225,8 @@ namespace UltimateCombo.Window
 
 				default:
 					break;
-			};
+			}
+			;
 		}
 
 		public void Dispose()
@@ -232,8 +243,9 @@ namespace UltimateCombo.Window
 		Eureka = 3,
 		Bozja = 4,
 		Variant = 5,
-		Settings = 6,
-		About = 7,
-		Debug = 8
+		Occult = 6,
+		Settings = 7,
+		About = 8,
+		Debug = 9
 	}
 }

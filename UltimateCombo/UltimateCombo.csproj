@@ -40,7 +40,7 @@
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageIcon>logo.png</PackageIcon>
-    <AssemblyVersion>1.0.0.60</AssemblyVersion>
+    <AssemblyVersion>1.0.0.61</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

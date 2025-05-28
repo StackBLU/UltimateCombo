@@ -3,7 +3,7 @@
 namespace UltimateCombo.Attributes
 {
 	[AttributeUsage(AttributeTargets.Field)]
-	internal class BozjaAttribute : Attribute
+	internal class OccultAttribute : Attribute
 	{
 	}
 }
