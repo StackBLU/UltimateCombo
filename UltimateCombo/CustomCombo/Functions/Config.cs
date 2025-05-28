@@ -28,7 +28,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		}
 	}
 
-	internal class UserData(string v)
+	public class UserData(string v)
 	{
 		protected string pName = v;
 
@@ -38,7 +38,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		}
 	}
 
-	internal class UserFloat : UserData
+	public class UserFloat : UserData
 	{
 		// Constructor with only the string parameter
 		public UserFloat(string v) : this(v, 0.0f) { }
@@ -60,7 +60,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		}
 	}
 
-	internal class UserInt : UserData
+	public class UserInt : UserData
 	{
 		// Constructor with only the string parameter
 		public UserInt(string v) : this(v, 0) { } // Chaining to the other constructor with a default value
@@ -82,7 +82,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		}
 	}
 
-	internal class UserBool : UserData
+	public class UserBool : UserData
 	{
 		// Constructor with only the string parameter
 		public UserBool(string v) : this(v, false) { }
@@ -104,7 +104,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		}
 	}
 
-	internal class UserIntArray(string v) : UserData(v)
+	public class UserIntArray(string v) : UserData(v)
 	{
 		public string Name
 		{

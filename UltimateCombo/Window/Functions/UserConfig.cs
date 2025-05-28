@@ -1170,10 +1170,7 @@ namespace UltimateCombo.Window.Functions
 
 			#region All
 
-			if (preset is CustomComboPreset.Variant_Cure && enabled)
-			{
-				UserConfig.DrawSliderInt(0, 100, Variant.Config.Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
-			}
+			#region Role Actions
 
 			if (preset is CustomComboPreset.All_SecondWind && enabled)
 			{
@@ -1200,6 +1197,10 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 10000, All.Config.All_BLU_Lucid, "MP Threshold", 150, SliderIncrements.Hundreds);
 			}
 
+			#endregion
+
+			#region Chocobo Actions
+
 			if (preset is CustomComboPreset.All_Choco && enabled)
 			{
 				UserConfig.DrawAdditionalBoolChoice(All.Config.All_ChocoAuto, "Automatically command Chocobo?", "");
@@ -1216,6 +1217,56 @@ namespace UltimateCombo.Window.Functions
 			{
 				UserConfig.DrawSliderInt(0, 100, All.Config.All_ChocoHP, "HP % Threshold", 150, SliderIncrements.Fives);
 			}
+
+			#endregion
+
+			#region Variant Actions
+
+			if (preset is CustomComboPreset.Variant_Cure && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, Variant.Config.Variant_Cure, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			#endregion
+
+			#region Occult Actions
+
+			if (preset is CustomComboPreset.Occult_PhantomResuscitation && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, Occult.Config.Occult_PhantomResuscitation, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.Occult_Pray && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, Occult.Config.Occult_Pray, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.Occult_Heal && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, Occult.Config.Occult_Heal, "HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
+			if (preset is CustomComboPreset.Occult_Predict && enabled)
+			{
+				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Phantom Judgement", "", 1, 150);
+				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Cleansing", "", 2, 150);
+				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Blessing", "", 3, 150);
+				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Starfall", "", 4, 150);
+			}
+
+			if (preset is CustomComboPreset.Occult_HolySilverCannon && enabled)
+			{
+				UserConfig.DrawRadioButton(Occult.Config.Occult_HolySilverCannon, "Holy Cannon", "", 1, 150);
+				UserConfig.DrawRadioButton(Occult.Config.Occult_HolySilverCannon, "Silver Cannon", "", 2, 150);
+			}
+
+			if (preset is CustomComboPreset.Occult_DarkShockCannon && enabled)
+			{
+				UserConfig.DrawRadioButton(Occult.Config.Occult_DarkShockCannon, "Dark Cannon", "", 1, 150);
+				UserConfig.DrawRadioButton(Occult.Config.Occult_DarkShockCannon, "Shock Cannon", "", 2, 150);
+			}
+
+			#endregion
 
 			#endregion
 
