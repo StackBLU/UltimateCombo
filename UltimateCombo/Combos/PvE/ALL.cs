@@ -432,7 +432,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000))
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Healer_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000
+						|| (!InCombat() && LocalPlayer.CurrentMp <= 8000)))
 					{
 						if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
 						{
@@ -451,7 +452,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Mage_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000)
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_Mage_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 1000
+						|| (!InCombat() && LocalPlayer.CurrentMp <= 8000))
 						&& (LocalPlayer.ClassJob.Value.RowId == SMN.JobID
 						|| LocalPlayer.ClassJob.Value.RowId == RDM.JobID
 						|| LocalPlayer.ClassJob.Value.RowId == PCT.JobID))
@@ -460,7 +462,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsEnabled(LucidDreaming)
-						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 4000)
+						&& ((LocalPlayer.CurrentMp <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID)) || LocalPlayer.CurrentMp <= 4000
+						|| (!InCombat() && LocalPlayer.CurrentMp <= 8000))
 						&& LocalPlayer.ClassJob.Value.RowId == BLU.JobID)
 					{
 						if (actionID is BLU.SonicBoom or BLU.GoblinPunch or BLU.ChocoMeteor or BLU.Electrogenesis or BLU.Blaze)

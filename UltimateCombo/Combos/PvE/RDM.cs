@@ -222,9 +222,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RDM_ST_Swords) && !HasEffect(Buffs.Dualcast)
-						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
+						&& (Gauge.BlackMana >= 90 || Gauge.WhiteMana >= 90
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
-						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(EnchantedRiposte)
 						|| WasLastWeaponskill(EnchantedZwerchhau)))
@@ -257,7 +256,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (InActionRange(EnchantedRiposte) && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+						if ((GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
 							&& ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedRiposte))
@@ -411,9 +410,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RDM_AoE_Swords) && !HasEffect(Buffs.Dualcast)
-						&& (Gauge.BlackMana == 100 || Gauge.WhiteMana == 100
+						&& (Gauge.BlackMana >= 90 || Gauge.WhiteMana >= 90
 						|| (HasEffect(Buffs.Embolden) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
-						|| (GetCooldownRemainingTime(Buffs.Manafication) <= 15 && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
 						|| HasEffect(Buffs.MagickedSwordPlay)
 						|| WasLastWeaponskill(EnchantedMoulinet)
 						|| WasLastWeaponskill(EnchantedMoulinetDeux)))
@@ -446,7 +444,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (InActionRange(EnchantedMoulinet) && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+						if ((GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
 							&& ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
 						{
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedMoulinet))

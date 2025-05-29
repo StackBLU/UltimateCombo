@@ -145,7 +145,9 @@ namespace UltimateCombo.Combos.PvE
 									return CarveAndSpit;
 								}
 
-								if (IsEnabled(CustomComboPreset.DRK_ST_Oblation) && ActionReady(Oblation) && GetRemainingCharges(Oblation) == GetMaxCharges(Oblation))
+								if (IsEnabled(CustomComboPreset.DRK_ST_Oblation) && ActionReady(Oblation)
+									&& (GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
+									|| (GetRemainingCharges(Oblation) == 1 && GetCooldownChargeRemainingTime(Oblation) < 30)))
 								{
 									return Oblation;
 								}
@@ -261,7 +263,9 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Delirium);
 						}
 
-						if (IsEnabled(CustomComboPreset.DRK_AoE_Oblation) && ActionReady(Oblation) && GetRemainingCharges(Oblation) == GetMaxCharges(Oblation))
+						if (IsEnabled(CustomComboPreset.DRK_AoE_Oblation) && ActionReady(Oblation)
+							&& (GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
+							|| (GetRemainingCharges(Oblation) == 1 && GetCooldownChargeRemainingTime(Oblation) < 30)))
 						{
 							return Oblation;
 						}

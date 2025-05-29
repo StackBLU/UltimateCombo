@@ -154,7 +154,13 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_PhantomKick) && DutyActionReady(PhantomKick))
+					if (IsEnabled(CustomComboPreset.Occult_Chakra) && DutyActionReady(OccultChakra) && PlayerHealthPercentageHp() < 30)
+					{
+						return OccultChakra;
+					}
+
+					if (IsEnabled(CustomComboPreset.Occult_PhantomKick) && DutyActionReady(PhantomKick)
+						&& GetBuffRemainingTime(Buffs.PhantomKick) < 3 && InActionRange(PhantomKick))
 					{
 						return PhantomKick;
 					}
@@ -168,11 +174,6 @@ namespace UltimateCombo.Combos.PvE.Content
 						&& CurrentTarget.TargetObject == LocalPlayer && GetBuffRemainingTime(Buffs.Counterstance) < 2)
 					{
 						return Counterstance;
-					}
-
-					if (IsEnabled(CustomComboPreset.Occult_Chakra) && DutyActionReady(OccultChakra) && PlayerHealthPercentageHp() < 25)
-					{
-						return OccultChakra;
 					}
 				}
 

@@ -127,6 +127,11 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(ThirdEye);
 							}
 
+							if (IsEnabled(CustomComboPreset.SAM_ST_Senei) && ActionReady(Senei) && ActionReady(Senei) && Gauge.Kenki >= 25)
+							{
+								return Senei;
+							}
+
 							if (IsEnabled(CustomComboPreset.SAM_ST_Meikyo) && ActionReady(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui)
 								&& !HasEffect(Buffs.Tendo) && !WasLastWeaponskill(Hakaze) && !WasLastWeaponskill(Gyofu)
 								&& !WasLastWeaponskill(Jinpu) && !WasLastWeaponskill(Shifu)
@@ -143,11 +148,6 @@ namespace UltimateCombo.Combos.PvE
 							if (IsEnabled(CustomComboPreset.SAM_ST_Shoha) && ActionReady(Shoha) && Gauge.MeditationStacks == 3)
 							{
 								return Shoha;
-							}
-
-							if (IsEnabled(CustomComboPreset.SAM_ST_Senei) && ActionReady(Senei) && ActionReady(Senei) && Gauge.Kenki >= 25)
-							{
-								return Senei;
 							}
 
 							if (IsEnabled(CustomComboPreset.SAM_ST_Shinten) && ActionReady(Shinten)
@@ -169,14 +169,17 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SAM_ST_Kaeshi) && WasLastWeaponskill(OgiNamikiri))
+					if (TargetHasEffect(Debuffs.Higanbana))
 					{
-						return KaeshiNamikiri;
-					}
+						if (IsEnabled(CustomComboPreset.SAM_ST_Kaeshi) && WasLastWeaponskill(OgiNamikiri))
+						{
+							return KaeshiNamikiri;
+						}
 
-					if (IsEnabled(CustomComboPreset.SAM_ST_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady) && GetRemainingCharges(MeikyoShisui) == 0)
-					{
-						return OgiNamikiri;
+						if (IsEnabled(CustomComboPreset.SAM_ST_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady) && GetRemainingCharges(MeikyoShisui) == 0)
+						{
+							return OgiNamikiri;
+						}
 					}
 
 					if (IsEnabled(CustomComboPreset.SAM_ST_Tsubame) && (HasEffect(Buffs.TsubameReady)
@@ -204,14 +207,14 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.MeikyoShisui))
 					{
-						if (!Gauge.Sen.HasFlag(Sen.Ka) && ActionReady(Kasha))
-						{
-							return Kasha;
-						}
-
 						if (!Gauge.Sen.HasFlag(Sen.Getsu) && ActionReady(Gekko))
 						{
 							return Gekko;
+						}
+
+						if (!Gauge.Sen.HasFlag(Sen.Ka) && ActionReady(Kasha))
+						{
+							return Kasha;
 						}
 
 						if (!Gauge.Sen.HasFlag(Sen.Setsu) && ActionReady(Yukikaze))
@@ -239,9 +242,9 @@ namespace UltimateCombo.Combos.PvE
 
 						if (lastComboMove is Hakaze or Gyofu)
 						{
-							if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.Ka)))
+							if (ActionReady(Yukikaze) && !Gauge.Sen.HasFlag(Sen.Setsu))
 							{
-								return Shifu;
+								return Yukikaze;
 							}
 
 							if (ActionReady(Jinpu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.Sen.HasFlag(Sen.Getsu)))
@@ -249,9 +252,9 @@ namespace UltimateCombo.Combos.PvE
 								return Jinpu;
 							}
 
-							if (ActionReady(Yukikaze) && !Gauge.Sen.HasFlag(Sen.Setsu))
+							if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.Sen.HasFlag(Sen.Ka)))
 							{
-								return Yukikaze;
+								return Shifu;
 							}
 						}
 					}
