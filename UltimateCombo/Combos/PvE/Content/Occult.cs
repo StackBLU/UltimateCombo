@@ -256,9 +256,9 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle))
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict))
+					if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat())
 					{
 						return Predict;
 					}
@@ -286,7 +286,7 @@ namespace UltimateCombo.Combos.PvE.Content
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation))
+					if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && InCombat())
 					{
 						return PhantomRejuvenation;
 					}
