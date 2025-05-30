@@ -111,21 +111,19 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (CanWeave(actionID)
-						&& (!WasLastWeaponskill(EnchantedRiposte)
+						&& (!WasLastGCD(EnchantedRiposte)
 						|| (WasLastWeaponskill(EnchantedRiposte) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-						&& (!WasLastWeaponskill(EnchantedZwerchhau)
+						&& (!WasLastGCD(EnchantedZwerchhau)
 						|| (WasLastWeaponskill(EnchantedZwerchhau) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-						&& (!WasLastWeaponskill(EnchantedRedoublement)
+						&& (!WasLastGCD(EnchantedRedoublement)
 						|| (WasLastWeaponskill(EnchantedRedoublement) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
-								&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
-								&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden)
+								&& !HasEffect(Buffs.Acceleration)
 								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
-								&& !WasLastSpell(Resolution) && !WasLastWeaponskill(EnchantedRiposte)
-								&& !WasLastWeaponskill(EnchantedZwerchhau) && !WasLastWeaponskill(EnchantedRedoublement))
+								&& !WasLastGCD(EnchantedRiposte) && !WasLastGCD(EnchantedZwerchhau) && !WasLastGCD(EnchantedRedoublement))
 							{
 								return All.Swiftcast;
 							}
@@ -139,12 +137,10 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && ActionReady(Acceleration)
-								&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && Gauge.ManaStacks == 0
+								&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.GrandImpactReady) && Gauge.ManaStacks == 0
 								&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
-								&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15)
 								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
-								&& !WasLastSpell(Resolution) && !WasLastWeaponskill(EnchantedRiposte)
-								&& !WasLastWeaponskill(EnchantedZwerchhau) && !WasLastWeaponskill(EnchantedRedoublement))
+								&& !WasLastGCD(EnchantedRiposte) && !WasLastGCD(EnchantedZwerchhau) && !WasLastGCD(EnchantedRedoublement))
 							{
 								return Acceleration;
 							}
@@ -159,7 +155,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.RDM_ST_Manafication) && ActionReady(Manafication)
 								&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
-								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
+								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch)
 								&& Gauge.ManaStacks == 0)
 							{
 								return Manafication;
@@ -309,11 +305,11 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(CustomComboPreset.RDM_AoE_DPS))
 				{
 					if (CanWeave(actionID)
-						&& (!WasLastWeaponskill(EnchantedMoulinet)
+						&& (!WasLastGCD(EnchantedMoulinet)
 						|| (WasLastWeaponskill(EnchantedMoulinet) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-						&& (!WasLastWeaponskill(EnchantedMoulinetDeux)
+						&& (!WasLastGCD(EnchantedMoulinetDeux)
 						|| (WasLastWeaponskill(EnchantedMoulinetDeux) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
-						&& (!WasLastWeaponskill(EnchantedMoulinetTrois)
+						&& (!WasLastGCD(EnchantedMoulinetTrois)
 						|| (WasLastWeaponskill(EnchantedMoulinetTrois) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
@@ -325,7 +321,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && ActionReady(Manafication)
 								&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
-								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch) && !WasLastSpell(Resolution)
+								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch)
 								&& Gauge.ManaStacks == 0)
 							{
 								return Manafication;

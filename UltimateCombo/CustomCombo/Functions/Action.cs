@@ -2,6 +2,7 @@
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using System;
+using UltimateCombo.Combos.PvE;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
 
@@ -115,6 +116,11 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static bool WasLastSpell(uint id)
 		{
 			return ActionWatching.LastSpell == id;
+		}
+
+		public static bool WasLastGCD(uint id)
+		{
+			return ActionWatching.LastGCD == id;
 		}
 
 		public static bool WasLastAbility(uint? id)
@@ -239,6 +245,30 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static unsafe void SwapBlueMageActionSlots(int slotA, int slotB)
 		{
 			ActionManager.Instance()->SwapBlueMageActionSlots(slotA, slotB);
+		}
+
+		public static bool SafeToWeaponskillCombo()
+		{
+			if (!WasLastSpell(RDM.Verflare) && !WasLastSpell(RDM.Verholy) && !WasLastSpell(RDM.Scorch)
+				&& !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
+				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		public static bool SafeToSpellCombo()
+		{
+			if (!WasLastSpell(RDM.Verflare) && !WasLastSpell(RDM.Verholy) && !WasLastSpell(RDM.Scorch)
+				&& !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
+				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois))
+			{
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

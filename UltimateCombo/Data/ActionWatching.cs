@@ -65,9 +65,11 @@ namespace UltimateCombo.Data
 					{
 						case 2: //Spell
 							LastSpell = header.ActionId;
+							LastGCD = header.ActionId;
 							break;
 						case 3: //Weaponskill
 							LastWeaponskill = header.ActionId;
+							LastGCD = header.ActionId;
 							break;
 						case 4: //Ability
 							LastAbility = header.ActionId;
@@ -187,6 +189,7 @@ namespace UltimateCombo.Data
 		public static uint LastWeaponskill { get; set; } = 0;
 		public static uint LastAbility { get; set; } = 0;
 		public static uint LastSpell { get; set; } = 0;
+		public static uint LastGCD { get; set; } = 0;
 
 		public static TimeSpan TimeSinceLastAction
 		{

@@ -93,7 +93,7 @@ namespace UltimateCombo.Combos.PvE.Content
 		{
 			public static UserInt
 				Occult_PhantomResuscitation = new("Occult_PhantomResuscitation", 65),
-				Occult_Pray = new("Occult_Pray", 50),
+				Occult_Pray = new("Occult_Pray", 75),
 				Occult_Heal = new("Occult_Heal", 50);
 
 			public static UserIntArray
@@ -129,14 +129,15 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Pray) && DutyActionReady(Pray)
-						&& !HasEffect(Buffs.Pray) && PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Pray))
+					if (IsEnabled(CustomComboPreset.Occult_Pray) && DutyActionReady(Pray) && !HasEffect(Buffs.Pray)
+						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Pray) && SafeToWeaponskillCombo())
 					{
 						return Pray;
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_Heal) && DutyActionReady(OccultHeal)
-						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Heal))
+						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Heal)
+						&& LocalPlayer.CurrentMp >= 5000)
 					{
 						return OccultHeal;
 					}
@@ -240,7 +241,8 @@ namespace UltimateCombo.Combos.PvE.Content
 						return HerosRime;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_OffensiveAria) && DutyActionReady(OffensiveAria) && !HasEffect(Buffs.HerosRime))
+					if (IsEnabled(CustomComboPreset.Occult_OffensiveAria) && DutyActionReady(OffensiveAria) && CanWeave(actionID)
+						&& (!HasEffect(Buffs.OffensiveAria) || GetBuffRemainingTime(Buffs.OffensiveAria) < 3))
 					{
 						return OffensiveAria;
 					}
