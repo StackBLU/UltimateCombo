@@ -120,6 +120,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			return (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
 		}
 
+		public static float PlayerHealthPercentageHpPvP()
+		{
+			return (float)LocalPlayer.CurrentHp / (LocalPlayer.MaxHp - 15000) * 100;
+		}
+
 		public static bool HasBattleTarget()
 		{
 			return CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy or (BattleNpcSubKind)1 };

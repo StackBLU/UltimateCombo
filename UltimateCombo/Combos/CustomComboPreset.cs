@@ -1,6 +1,7 @@
 ﻿using UltimateCombo.Attributes;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Combos.PvE.Content;
+using UltimateCombo.Combos.PvP;
 
 namespace UltimateCombo.Combos
 {
@@ -2994,20 +2995,122 @@ namespace UltimateCombo.Combos
 		#region PvP GLOBALS - 1100000
 
 		[PvPCustomCombo]
-		[CustomComboInfo("Emergency Heals %", "", All.JobID)]
-		PvP_EmergencyHeals = 1100000,
+		[ReplaceSkill(PvPCommon.Recuperate)]
+		[CustomComboInfo("Recuperate", "", All.JobID)]
+		PvP_Recuperate = 1100000,
 
 		[PvPCustomCombo]
-		[CustomComboInfo("Emergency Guard %", "", All.JobID)]
-		PvP_EmergencyGuard = 1100001,
+		[ReplaceSkill(PvPCommon.Guard)]
+		[CustomComboInfo("Guard", "", All.JobID)]
+		PvP_Guard = 1100001,
 
 		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Purify)]
 		[CustomComboInfo("Purify", "", All.JobID)]
-		PvP_QuickPurify = 1100002,
+		PvP_Purify = 1100002,
 
 		[PvPCustomCombo]
+		[ReplaceSkill(SAMPvP.Chiten)]
 		[CustomComboInfo("Ignore SAM when Chiten is active", "", All.JobID)]
 		PvP_IgnoreSAMKuzuchi = 1100003,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Tank PvP Role Actions", "", All.JobID)]
+		TankPvP_RoleActions = 1100010,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Rampage)]
+		[ParentCombo(TankPvP_RoleActions)]
+		[CustomComboInfo("Rampage", "", All.JobID)]
+		TankPvP_Rampage = 1100011,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Rampart)]
+		[ParentCombo(TankPvP_RoleActions)]
+		[CustomComboInfo("Rampart", "", All.JobID)]
+		TankPvP_Rampart = 1100012,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.FullSwing)]
+		[ParentCombo(TankPvP_RoleActions)]
+		[CustomComboInfo("Full Swing", "", All.JobID)]
+		TankPvP_FullSwing = 1100013,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Healer PvP Role Actions", "", All.JobID)]
+		HealerPvP_RoleActions = 1100020,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Stoneskin2)]
+		[ParentCombo(HealerPvP_RoleActions)]
+		[CustomComboInfo("Stoneskin II", "", All.JobID)]
+		HealerPvP_Stoneskin2 = 1100021,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Diabrosis)]
+		[ParentCombo(HealerPvP_RoleActions)]
+		[CustomComboInfo("Diabrosis", "", All.JobID)]
+		HealerPvP_Diabrosis = 1100022,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Melee PvP Role Actions", "", All.JobID)]
+		MeleePvP_RoleActions = 1100030,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Bloodbath)]
+		[ParentCombo(MeleePvP_RoleActions)]
+		[CustomComboInfo("Bloodbath", "", All.JobID)]
+		MeleePvP_Bloodbath = 1100031,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Swift)]
+		[ParentCombo(MeleePvP_RoleActions)]
+		[CustomComboInfo("Swift", "", All.JobID)]
+		MeleePvP_Swift = 1100032,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Smite)]
+		[ParentCombo(MeleePvP_RoleActions)]
+		[CustomComboInfo("Smite", "", All.JobID)]
+		MeleePvP_Smite = 1100033,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Ranged PvP Role Actions", "", All.JobID)]
+		RangedPvP_RoleActions = 1100040,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Dervish)]
+		[ParentCombo(RangedPvP_RoleActions)]
+		[CustomComboInfo("Dervish", "", All.JobID)]
+		RangedPvP_Dervish = 1100041,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Bravery)]
+		[ParentCombo(RangedPvP_RoleActions)]
+		[CustomComboInfo("Bravery", "", All.JobID)]
+		RangedPvP_Bravery = 1100042,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.EagleEyeShot)]
+		[ParentCombo(RangedPvP_RoleActions)]
+		[CustomComboInfo("Eagle Eye Shot", "", All.JobID)]
+		RangedPvP_EagleEyeShot = 1100043,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Mage PvP Role Actions", "", All.JobID)]
+		MagePvP_RoleActions = 1100050,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.PhantomDart)]
+		[ParentCombo(MagePvP_RoleActions)]
+		[CustomComboInfo("Phantom Dart", "", All.JobID)]
+		MagePvP_PhantomDart = 1100051,
+
+		[PvPCustomCombo]
+		[ReplaceSkill(PvPCommon.Rust)]
+		[ParentCombo(MagePvP_RoleActions)]
+		[CustomComboInfo("Rust", "", All.JobID)]
+		MagePvP_Rust = 1100052,
 
 		#endregion
 

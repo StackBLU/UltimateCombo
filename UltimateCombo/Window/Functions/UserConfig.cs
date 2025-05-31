@@ -488,75 +488,6 @@ namespace UltimateCombo.Window.Functions
 			}
 		}
 
-		public static void DrawPvPStatusMultiChoice(string config)
-		{
-			bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
-
-			ImGui.Columns(4, $"{config}", false);
-
-			if (values.Length == 0)
-			{
-				Array.Resize(ref values, 7);
-			}
-
-			if (ImGui.Checkbox($"Stun###{config}0", ref values[0]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Deep Freeze###{config}1", ref values[1]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Half Asleep###{config}2", ref values[2]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Sleep###{config}3", ref values[3]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Bind###{config}4", ref values[4]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Heavy###{config}5", ref values[5]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.NextColumn();
-
-			if (ImGui.Checkbox($"Silence###{config}6", ref values[6]))
-			{
-				PluginConfiguration.SetCustomBoolArrayValue(config, values);
-				Service.Configuration.Save();
-			}
-
-			ImGui.Columns(1);
-			ImGui.Spacing();
-		}
-
 		public static void DrawRoleGridMultiChoice(string config)
 		{
 			bool[]? values = PluginConfiguration.GetCustomBoolArrayValue(config);
@@ -1272,19 +1203,35 @@ namespace UltimateCombo.Window.Functions
 
 			#region PvP Global
 
-			if (preset == CustomComboPreset.PvP_EmergencyHeals && enabled)
+			if (preset == CustomComboPreset.PvP_Recuperate && enabled)
 			{
-				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyHealThreshold, "");
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.Recuperate, "HP % Threshold");
 			}
 
-			if (preset == CustomComboPreset.PvP_EmergencyGuard && enabled)
+			if (preset == CustomComboPreset.PvP_Guard && enabled)
 			{
-				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.EmergencyGuardThreshold, "");
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.Guard, "HP % Threshold");
 			}
 
-			if (preset == CustomComboPreset.PvP_QuickPurify && enabled)
+			if (preset == CustomComboPreset.PvP_Purify && enabled)
 			{
-				UserConfig.DrawPvPStatusMultiChoice(PvPCommon.Config.QuickPurifyStatuses);
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Stun, "Stun", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_DeepFreeze, "Deep Freeze", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_HalfAsleep, "Half Asleep", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Sleep, "Sleep", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Bind, "Bind", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Heavy, "Heavy", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Silence, "Silence", "");
+			}
+
+			if (preset == CustomComboPreset.TankPvP_Rampart && enabled)
+			{
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.TankPvP_Rampart, "HP % Threshold");
+			}
+
+			if (preset == CustomComboPreset.MeleePvP_Bloodbath && enabled)
+			{
+				UserConfig.DrawSliderInt(1, 100, PvPCommon.Config.MeleePvP_Bloodbath, "HP % Threshold");
 			}
 
 			#endregion

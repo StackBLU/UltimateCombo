@@ -20,12 +20,12 @@
 <h2 align="center">Features</h2>
 
 Ultimate Combo is based off of several combo plugins, but has completely new logic, features, and many quality of life improvements.<br>
-The following are just a few of the amazing features:
+The following are just a few of said features:
 * Fresh, custom, and smooth PvE combo logic, updated for Dawntrail, for all classes
 * Intuitive UI
 * Better controller support
 * Blue Mage combos for all mimicries
-* Variant / Bozja / Eureka logic (beta)
+* Occult Crescent / Variant / Bozja / Eureka logic
 * Crazy overpowered PvP combos
 
 <h2 align="center">Installation</h2>
