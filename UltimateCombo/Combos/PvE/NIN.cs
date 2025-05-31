@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
@@ -11,6 +10,8 @@ namespace UltimateCombo.Combos.PvE
 	internal class NIN
 	{
 		public const byte JobID = 30;
+
+		public static List<uint> MudraCheck = ActionWatching.CombatActions;
 
 		public const uint
 			SpinningEdge = 2240,
@@ -134,7 +135,7 @@ namespace UltimateCombo.Combos.PvE
 					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && ActionReady(Ten)
 						&& (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
 					{
-						if (OriginalHook(Ninjutsu) is Suiton)
+						if (OriginalHook(Ninjutsu) == Suiton)
 						{
 							return OriginalHook(Ninjutsu);
 						}
@@ -222,7 +223,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && InCombat())
+					if (IsEnabled(CustomComboPreset.NIN_ST_Mudras))
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
@@ -242,12 +243,11 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || GetBuffRemainingTime(Buffs.Kassatsu) < 5))
+						if (HasEffect(Buffs.Kassatsu) || WasLastAbility(Kassatsu))
 						{
 							if (LevelChecked(HyoshoRanryu))
 							{
-								if (OriginalHook(Ninjutsu) is HyoshoRanryu)
+								if (OriginalHook(Ninjutsu) == HyoshoRanryu && MudraCheck[^2] == TenCombo && MudraCheck[^1] == JinCombo)
 								{
 									return OriginalHook(Ninjutsu);
 								}
@@ -257,45 +257,53 @@ namespace UltimateCombo.Combos.PvE
 									return JinCombo;
 								}
 
-								return TenCombo;
+								if (TargetHasEffect(TrickList[OriginalHook(TrickAttack)])
+									|| (GetBuffRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
+								{
+									return TenCombo;
+								}
 							}
 
-							if (OriginalHook(Ninjutsu) is Raiton)
+							if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == JinCombo && MudraCheck[^1] == ChiCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(TenCombo))
+							if (WasLastAbility(JinCombo))
 							{
 								return ChiCombo;
 							}
 
-							return TenCombo;
+							if (TargetHasEffect(TrickList[OriginalHook(TrickAttack)])
+								|| (GetBuffRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
+							{
+								return JinCombo;
+							}
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20
-							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
+						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAbility(Jin)))
 						{
-							if (OriginalHook(Ninjutsu) is Raiton)
+							if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == Jin && MudraCheck[^1] == ChiCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(Ten))
+							if (WasLastAbility(Jin))
 							{
 								return ChiCombo;
 							}
 
-							return Ten;
+							if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20)
+							{
+								return Jin;
+							}
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten))
-							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
+						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAbility(Ten)))
 						{
-							if (OriginalHook(Ninjutsu) is Suiton)
+							if (OriginalHook(Ninjutsu) == Suiton && MudraCheck[^3] == Ten && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == JinCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
@@ -310,7 +318,10 @@ namespace UltimateCombo.Combos.PvE
 								return ChiCombo;
 							}
 
-							return Ten;
+							if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker))
+							{
+								return Ten;
+							}
 						}
 					}
 
@@ -336,7 +347,7 @@ namespace UltimateCombo.Combos.PvE
 							if (ActionReady(AeolianEdge)
 								&& ((Gauge.Kazematoi >= 1
 								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])
-								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 5 && EnemyHealthMaxHp() != 44)))
+								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 15 && EnemyHealthMaxHp() != 44)))
 								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
 							{
 								return AeolianEdge;
@@ -450,7 +461,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && InCombat())
+					if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras))
 					{
 						if (HasEffect(Buffs.TenChiJin))
 						{
@@ -470,10 +481,10 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-							&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || GetBuffRemainingTime(Buffs.Kassatsu) < 5))
+						if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
-							if (OriginalHook(Ninjutsu) is GokaMekkyaku or Katon)
+							if ((OriginalHook(Ninjutsu) == GokaMekkyaku || OriginalHook(Ninjutsu) == Katon)
+								&& MudraCheck[^2] == ChiCombo && MudraCheck[^1] == TenCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
@@ -483,14 +494,17 @@ namespace UltimateCombo.Combos.PvE
 								return TenCombo;
 							}
 
-							return ChiCombo;
+							if (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || (GetBuffRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
+							{
+								return ChiCombo;
+							}
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 15
-							&& !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
+						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
-							if (OriginalHook(Ninjutsu) is Katon)
+							if (OriginalHook(Ninjutsu) == Katon
+								&& MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
@@ -500,13 +514,15 @@ namespace UltimateCombo.Combos.PvE
 								return TenCombo;
 							}
 
-							return Chi;
+							if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20)
+							{
+								return Chi;
+							}
 						}
 
-						if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
+						if ((HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
 						{
-							if (OriginalHook(Ninjutsu) is Huton)
+							if (OriginalHook(Ninjutsu) == Huton && MudraCheck[^3] == Chi && MudraCheck[^2] == JinCombo && MudraCheck[^1] == TenCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
@@ -521,7 +537,10 @@ namespace UltimateCombo.Combos.PvE
 								return JinCombo;
 							}
 
-							return Chi;
+							if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker))
+							{
+								return Chi;
+							}
 						}
 					}
 

@@ -32,7 +32,7 @@ namespace UltimateCombo.Data
 
 		private static readonly Dictionary<string, List<uint>> statusCache = [];
 
-		internal static readonly List<uint> CombatActions = [];
+		public static readonly List<uint> CombatActions = [];
 
 		private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
 		private static readonly Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;

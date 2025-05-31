@@ -451,6 +451,26 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
+		#region Samurai
+
+		[Occult]
+		[CustomComboInfo("Phantom Samurai", "", All.JobID)]
+		Occult_Samurai = 100130,
+
+		[Occult]
+		[ParentCombo(Occult_Samurai)]
+		[ReplaceSkill(Occult.Mineuchi)]
+		[CustomComboInfo("Mineuchi", "", All.JobID)]
+		Occult_Mineuchi = 100131,
+
+		[Occult]
+		[ParentCombo(Occult_Samurai)]
+		[ReplaceSkill(Occult.Iainuki)]
+		[CustomComboInfo("Iainuki", "", All.JobID)]
+		Occult_Iainuki = 100132,
+
+		#endregion
+
 		#endregion
 
 		#endregion

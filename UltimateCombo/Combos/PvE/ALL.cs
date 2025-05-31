@@ -93,7 +93,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Reprisal && IsEnabled(CustomComboPreset.All_Tank_Reprisal))
+				if (actionID is Reprisal && IsEnabled(CustomComboPreset.All_Tank_Reprisal) && SafeToUse())
 				{
 					if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
 					{
@@ -111,7 +111,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Addle && IsEnabled(CustomComboPreset.All_Caster_Addle))
+				if (actionID is Addle && IsEnabled(CustomComboPreset.All_Caster_Addle) && SafeToUse())
 				{
 					if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
 					{
@@ -129,7 +129,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is Feint && IsEnabled(CustomComboPreset.All_Melee_Feint))
+				if (actionID is Feint && IsEnabled(CustomComboPreset.All_Melee_Feint) && SafeToUse())
 				{
 					if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
 					{
@@ -147,7 +147,7 @@ namespace UltimateCombo.Combos.PvE
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (actionID is TrueNorth && IsEnabled(CustomComboPreset.All_Melee_TrueNorth))
+				if (actionID is TrueNorth && IsEnabled(CustomComboPreset.All_Melee_TrueNorth) && SafeToUse())
 				{
 					if (HasEffect(Buffs.TrueNorth))
 					{
@@ -261,8 +261,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (IsEnabled(CustomComboPreset.All_RoleActions))
 				{
-					if (CanDelayedWeave(actionID)
-						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(VPR.Buffs.Reawakened))
+					if (CanDelayedWeave(actionID) && SafeToUse())
 					{
 						if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(TrueNorth) && IsEnabled(TrueNorth)
 							&& TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || GetBuffRemainingTime(Buffs.TrueNorth) < 1))
@@ -407,8 +406,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (CanWeave(actionID)
-						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(VPR.Buffs.Reawakened))
+					if (CanWeave(actionID) && SafeToUse())
 					{
 						if (IsEnabled(CustomComboPreset.All_SecondWind) && ActionReady(SecondWind) && IsEnabled(SecondWind)
 							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_SecondWind))
@@ -437,9 +435,7 @@ namespace UltimateCombo.Combos.PvE
 					{
 						if (LocalPlayer.ClassJob.Value.RowId == SGE.JobID)
 						{
-							if (!WasLastSpell(SGE.Eukrasia) && !WasLastSpell(SGE.EukrasianPrognosis1) && !WasLastSpell(SGE.EukrasianPrognosis2)
-								&& !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis2)
-								&& !WasLastSpell(SGE.EukrasianDyskrasia))
+							if (SafeToUse())
 							{
 								return LucidDreaming;
 							}

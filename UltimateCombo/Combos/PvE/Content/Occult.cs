@@ -44,7 +44,12 @@ namespace UltimateCombo.Combos.PvE.Content
 			HolyCannon = 41627,
 			DarkCannon = 41628,
 			ShockCannon = 41629,
-			SilverCannon = 41630;
+			SilverCannon = 41630,
+
+			Mineuchi = 41603,
+			Shirahadori = 41604,
+			Iainuki = 41605,
+			Zeninage = 41606;
 
 		public static class PhantomJobs
 		{
@@ -94,7 +99,7 @@ namespace UltimateCombo.Combos.PvE.Content
 			public static UserInt
 				Occult_PhantomResuscitation = new("Occult_PhantomResuscitation", 65),
 				Occult_Pray = new("Occult_Pray", 75),
-				Occult_Heal = new("Occult_Heal", 50);
+				Occult_Heal = new("Occult_Heal", 25);
 
 			public static UserIntArray
 				Occult_Prediction = new("Occult_Prediction"),
@@ -108,7 +113,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_PhantomResuscitation) && DutyActionReady(OccultResuscitation)
 						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_PhantomResuscitation))
@@ -127,10 +132,10 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_Pray) && DutyActionReady(Pray) && !HasEffect(Buffs.Pray)
-						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Pray) && SafeToWeaponskillCombo())
+						&& PlayerHealthPercentageHp() < GetOptionValue(Config.Occult_Pray))
 					{
 						return Pray;
 					}
@@ -153,7 +158,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_Chakra) && DutyActionReady(OccultChakra) && PlayerHealthPercentageHp() < 30)
 					{
@@ -188,7 +193,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_Slowga) && DutyActionReady(OccultSlowga) && !TargetHasEffectAny(Debuffs.Slow))
 					{
@@ -234,7 +239,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime))
 					{
@@ -258,7 +263,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle))
+				if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat())
 					{
@@ -304,7 +309,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire))
 					{
@@ -335,6 +340,29 @@ namespace UltimateCombo.Combos.PvE.Content
 						{
 							return ShockCannon;
 						}
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Occult_Samurai : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Occult_Samurai;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse())
+				{
+					if (IsEnabled(CustomComboPreset.Occult_Mineuchi) && DutyActionReady(Mineuchi))
+					{
+						return Mineuchi;
+					}
+
+					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki))
+					{
+						return Iainuki;
 					}
 				}
 

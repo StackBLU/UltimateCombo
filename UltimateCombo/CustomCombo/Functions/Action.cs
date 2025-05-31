@@ -247,23 +247,13 @@ namespace UltimateCombo.ComboHelper.Functions
 			ActionManager.Instance()->SwapBlueMageActionSlots(slotA, slotB);
 		}
 
-		public static bool SafeToWeaponskillCombo()
+		public static bool SafeToUse()
 		{
 			if (!WasLastSpell(RDM.Verflare) && !WasLastSpell(RDM.Verholy) && !WasLastSpell(RDM.Scorch)
 				&& !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
-				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois))
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		public static bool SafeToSpellCombo()
-		{
-			if (!WasLastSpell(RDM.Verflare) && !WasLastSpell(RDM.Verholy) && !WasLastSpell(RDM.Scorch)
-				&& !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
-				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois))
+				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois)
+				&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && !HasEffect(VPR.Buffs.Reawakened)
+				&& !WasLastSpell(SGE.Eukrasia))
 			{
 				return true;
 			}

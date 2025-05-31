@@ -85,11 +85,10 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Variant_Cure))
+				if (IsEnabled(CustomComboPreset.Variant_Cure) && SafeToUse())
 				{
 					if (ActionReady(VariantCure) && IsEnabled(VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure)
-						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin))
+						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
 					{
 						return VariantCure;
 					}
@@ -105,7 +104,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Variant_Raise))
+				if (IsEnabled(CustomComboPreset.Variant_Raise) && SafeToUse())
 				{
 					if (IsEnabled(VariantCure)
 						&& (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
@@ -138,10 +137,9 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Variant_Ultimatum))
+				if (IsEnabled(CustomComboPreset.Variant_Ultimatum) && SafeToUse())
 				{
-					if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID)
-						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin))
+					if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID))
 					{
 						return VariantUltimatum;
 					}
@@ -176,10 +174,9 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Variant_Rampart))
+				if (IsEnabled(CustomComboPreset.Variant_Rampart) && SafeToUse())
 				{
-					if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID)
-						&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin))
+					if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID))
 					{
 						return VariantRampart;
 					}
