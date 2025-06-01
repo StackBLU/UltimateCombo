@@ -121,8 +121,8 @@ namespace UltimateCombo.Combos.PvE
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
 							if (IsEnabled(CustomComboPreset.RDM_ST_Swift) && ActionReady(All.Swiftcast)
-								&& !HasEffect(Buffs.Acceleration)
-								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
+								&& !HasEffect(Buffs.Acceleration) && (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
+								&& Gauge.ManaStacks == 0 && !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
 								&& !WasLastGCD(EnchantedRiposte) && !WasLastGCD(EnchantedZwerchhau) && !WasLastGCD(EnchantedRedoublement))
 							{
 								return All.Swiftcast;
@@ -138,7 +138,9 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && ActionReady(Acceleration)
 								&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.GrandImpactReady) && Gauge.ManaStacks == 0
-								&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
+								&& (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
+								&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration)
+								|| (GetRemainingCharges(Acceleration) == 1 && GetCooldownChargeRemainingTime(Acceleration) < 10))
 								&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
 								&& !WasLastGCD(EnchantedRiposte) && !WasLastGCD(EnchantedZwerchhau) && !WasLastGCD(EnchantedRedoublement))
 							{
@@ -186,6 +188,12 @@ namespace UltimateCombo.Combos.PvE
 								return Prefulgence;
 							}
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady)
+						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5))
+					{
+						return GrandImpact;
 					}
 
 					if (ActionReady(Resolution) && WasLastSpell(Scorch))
@@ -260,12 +268,6 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady)
-						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5))
-					{
-						return GrandImpact;
-					}
-
 					if (HasEffect(Buffs.Dualcast) || HasEffect(Buffs.Acceleration) || HasEffect(All.Buffs.Swiftcast))
 					{
 						if (Gauge.BlackMana >= Gauge.WhiteMana)
@@ -312,25 +314,23 @@ namespace UltimateCombo.Combos.PvE
 						&& (!WasLastGCD(EnchantedMoulinetTrois)
 						|| (WasLastWeaponskill(EnchantedMoulinetTrois) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
 					{
-						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+						if (IsEnabled(CustomComboPreset.RDM_AoE_Embolden) && ActionReady(Embolden))
 						{
-							if (IsEnabled(CustomComboPreset.RDM_AoE_Embolden) && ActionReady(Embolden))
-							{
-								return Embolden;
-							}
+							return Embolden;
+						}
 
-							if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && ActionReady(Manafication)
-								&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
-								&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch)
-								&& Gauge.ManaStacks == 0)
-							{
-								return Manafication;
-							}
+						if (IsEnabled(CustomComboPreset.RDM_AoE_Manafication) && ActionReady(Manafication)
+							&& (HasEffect(Buffs.Embolden) || GetCooldownRemainingTime(Embolden) > 90)
+							&& !WasLastSpell(Verholy) && !WasLastSpell(Verflare) && !WasLastSpell(Scorch)
+							&& Gauge.ManaStacks == 0)
+						{
+							return Manafication;
 						}
 
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Swift) && ActionReady(All.Swiftcast)
-							&& Gauge.WhiteMana < 100 && Gauge.BlackMana < 100
-							&& !HasEffect(Buffs.Acceleration) && !HasEffect(Buffs.Embolden))
+							&& !HasEffect(Buffs.Acceleration) && (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
+							&& Gauge.ManaStacks == 0 && !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
+							&& !WasLastGCD(EnchantedMoulinet) && !WasLastGCD(EnchantedMoulinetDeux) && !WasLastGCD(EnchantedMoulinetTrois))
 						{
 							return All.Swiftcast;
 						}
@@ -341,9 +341,12 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.RDM_AoE_Accel) && ActionReady(Acceleration)
-							&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast)
-							&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration))
-							&& (Gauge.BlackMana < 50 || Gauge.WhiteMana < 50 || GetCooldownRemainingTime(Manafication) > 15))
+							&& !HasEffect(Buffs.Acceleration) && !HasEffect(All.Buffs.Swiftcast) && !HasEffect(Buffs.GrandImpactReady) && Gauge.ManaStacks == 0
+							&& (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
+							&& (HasEffect(Buffs.Embolden) || GetRemainingCharges(Acceleration) == GetMaxCharges(Acceleration)
+							|| (GetRemainingCharges(Acceleration) == 1 && GetCooldownChargeRemainingTime(Acceleration) < 10))
+							&& !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
+							&& !WasLastGCD(EnchantedMoulinet) && !WasLastGCD(EnchantedMoulinetDeux) && !WasLastGCD(EnchantedMoulinetTrois))
 						{
 							return Acceleration;
 						}

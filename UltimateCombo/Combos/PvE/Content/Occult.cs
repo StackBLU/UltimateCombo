@@ -239,7 +239,9 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && InCombat() && SafeToUse())
+				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && InCombat() && SafeToUse()
+					&& ((IsEnabled(CustomComboPreset.Occult_Bard_Utility) && (actionID is OffensiveAria or HerosRime))
+					|| !IsEnabled(CustomComboPreset.Occult_Bard_Utility)))
 				{
 					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime))
 					{
@@ -309,7 +311,10 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && InCombat() && SafeToUse())
+				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && InCombat() && SafeToUse()
+					&& ((IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility)
+					&& (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
+					|| !IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility)))
 				{
 					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire))
 					{
@@ -318,7 +323,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 					if (IsEnabled(CustomComboPreset.Occult_HolySilverCannon))
 					{
-						if (DutyActionReady(HolyCannon) && GetOptionValue(Config.Occult_HolySilverCannon) == 1)
+						if (DutyActionReady(HolyCannon) && (GetOptionValue(Config.Occult_HolySilverCannon) == 1 || !DutyActionReady(SilverCannon)))
 						{
 							return HolyCannon;
 						}
@@ -331,12 +336,12 @@ namespace UltimateCombo.Combos.PvE.Content
 
 					if (IsEnabled(CustomComboPreset.Occult_DarkShockCannon))
 					{
-						if (DutyActionReady(Blessing) && GetOptionValue(Config.Occult_DarkShockCannon) == 1)
+						if (DutyActionReady(DarkCannon) && (GetOptionValue(Config.Occult_DarkShockCannon) == 1 || !DutyActionReady(ShockCannon)))
 						{
 							return DarkCannon;
 						}
 
-						if (DutyActionReady(Starfall) && GetOptionValue(Config.Occult_DarkShockCannon) == 2)
+						if (DutyActionReady(ShockCannon) && GetOptionValue(Config.Occult_DarkShockCannon) == 2)
 						{
 							return ShockCannon;
 						}
