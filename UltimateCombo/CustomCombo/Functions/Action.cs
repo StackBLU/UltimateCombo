@@ -253,7 +253,9 @@ namespace UltimateCombo.ComboHelper.Functions
 				&& !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
 				&& !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois)
 				&& !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && !HasEffect(VPR.Buffs.Reawakened)
-				&& !WasLastSpell(SGE.Eukrasia))
+				&& !WasLastSpell(SGE.Eukrasia)
+				&& !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis3)
+				&& !WasLastSpell(SGE.EukrasianDyskrasia))
 			{
 				return true;
 			}

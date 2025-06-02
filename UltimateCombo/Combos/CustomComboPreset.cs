@@ -394,7 +394,7 @@ namespace UltimateCombo.Combos
 
 		[Occult]
 		[ParentCombo(Occult_Bard)]
-		[CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Phantom Action I/II/III/IV/V\", instead of your main GCD", "", All.JobID)]
+		[CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Execute Phantom Action\", instead of your main GCD", "", All.JobID)]
 		Occult_Bard_Utility = 100095,
 
 		[Occult]
@@ -439,7 +439,7 @@ namespace UltimateCombo.Combos
 
 		[Occult]
 		[ParentCombo(Occult_Cannoneer)]
-		[CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Phantom Action I/II/III/IV/V\", instead of your main GCD", "", All.JobID)]
+		[CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Execute Phantom Action\", instead of your main GCD", "", All.JobID)]
 		Occult_Cannoneer_Utility = 100125,
 
 		[Occult]

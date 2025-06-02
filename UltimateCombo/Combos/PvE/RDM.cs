@@ -191,7 +191,8 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady)
-						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5))
+						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5)
+						&& SafeToUse())
 					{
 						return GrandImpact;
 					}
@@ -377,7 +378,7 @@ namespace UltimateCombo.Combos.PvE
 						return Scorch;
 					}
 
-					if (IsEnabled(CustomComboPreset.RDM_AoE_Accel) && HasEffect(Buffs.GrandImpactReady))
+					if (IsEnabled(CustomComboPreset.RDM_AoE_Accel) && HasEffect(Buffs.GrandImpactReady) && SafeToUse())
 					{
 						return GrandImpact;
 					}
