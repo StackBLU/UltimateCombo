@@ -217,6 +217,121 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
+		#region Eureka
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Martialist, Eureka.Guardian, Eureka.Watcher, Eureka.Indomitable, Eureka.Aetherweaver, Eureka.Ordained, Eureka.Templar,
+			Eureka.Platebearer, Eureka.Skirmisher, Eureka.Irregular, Eureka.Elder, Eureka.Duelist, Eureka.Fiendhunter, Eureka.Breathtaker, Eureka.Remembered)]
+		[CustomComboInfo("Wisdoms & Spirit of the Remembered", "", All.JobID)]
+		Eureka_Wisdoms = 100500,
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Bloodbath, Eureka.MagicBurst, Eureka.DoubleEdge, Eureka.EagleEyeShot)]
+		[CustomComboInfo("Offensive Actions", "", All.JobID)]
+		Eureka_Offensive = 100501,
+
+		[Eureka]
+		[ParentCombo(Eureka_Offensive)]
+		[CustomComboInfo("Bloodbath", "", All.JobID)]
+		Eureka_Bloodbath = 100502,
+
+		[Eureka]
+		[ParentCombo(Eureka_Offensive)]
+		[CustomComboInfo("Magic Burst", "", All.JobID)]
+		Eureka_MagicBurst = 100503,
+
+		[Eureka]
+		[ParentCombo(Eureka_Offensive)]
+		[CustomComboInfo("Double Edge", "", All.JobID)]
+		Eureka_DoubleEdge = 100504,
+
+		[Eureka]
+		[ParentCombo(Eureka_Offensive)]
+		[CustomComboInfo("Eagle Eye Shot", "", All.JobID)]
+		Eureka_EagleEyeShot = 100505,
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Cure, Eureka.Cure2)]
+		[CustomComboInfo("Curative Actions", "", All.JobID)]
+		Eureka_Curative = 100510,
+
+		[Eureka]
+		[ParentCombo(Eureka_Curative)]
+		[CustomComboInfo("Cure", "", All.JobID)]
+		Eureka_Cure = 100511,
+
+		[Eureka]
+		[ParentCombo(Eureka_Curative)]
+		[CustomComboInfo("Cure II", "", All.JobID)]
+		Eureka_Cure2 = 100512,
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Swift, Eureka.Featherfoot, Eureka.Feint, Eureka.Backstep)]
+		[CustomComboInfo("Tactical Actions", "", All.JobID)]
+		Eureka_Tactical = 100520,
+
+		[Eureka]
+		[ParentCombo(Eureka_Tactical)]
+		[CustomComboInfo("Swift", "", All.JobID)]
+		Eureka_Swift = 100521,
+
+		[Eureka]
+		[ParentCombo(Eureka_Tactical)]
+		[CustomComboInfo("Featherfoot", "", All.JobID)]
+		Eureka_Featherfoot = 100522,
+
+		[Eureka]
+		[ParentCombo(Eureka_Tactical)]
+		[CustomComboInfo("Feint", "", All.JobID)]
+		Eureka_Feint = 100523,
+
+		[Eureka]
+		[ParentCombo(Eureka_Tactical)]
+		[CustomComboInfo("Backstep", "", All.JobID)]
+		Eureka_Backstep = 100524,
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Paralyze, Eureka.SpiritDart, Eureka.Tranquilizer)]
+		[CustomComboInfo("Inimical Actions", "", All.JobID)]
+		Eureka_Inimical = 100530,
+
+		[Eureka]
+		[ParentCombo(Eureka_Inimical)]
+		[CustomComboInfo("Paralyze", "", All.JobID)]
+		Eureka_Paralyze = 100531,
+
+		[Eureka]
+		[ParentCombo(Eureka_Inimical)]
+		[CustomComboInfo("Spirit Dart", "", All.JobID)]
+		Eureka_SpiritDart = 100532,
+
+		[Eureka]
+		[ParentCombo(Eureka_Inimical)]
+		[CustomComboInfo("Tranquilizer", "", All.JobID)]
+		Eureka_Tranquilizer = 100533,
+
+		[Eureka]
+		[ReplaceSkill(Eureka.Protect, Eureka.Shell, Eureka.Stoneskin)]
+		[CustomComboInfo("Mitigative Actions", "", All.JobID)]
+		Eureka_Mitigative = 100540,
+
+		[Eureka]
+		[ParentCombo(Eureka_Mitigative)]
+		[CustomComboInfo("Protect", "", All.JobID)]
+		Eureka_Protect = 100541,
+
+		[Eureka]
+		[ParentCombo(Eureka_Mitigative)]
+		[CustomComboInfo("Shell", "", All.JobID)]
+		Eureka_Shell = 100542,
+
+		[Eureka]
+		[ParentCombo(Eureka_Mitigative)]
+		[CustomComboInfo("Stoneskin", "", All.JobID)]
+		Eureka_Stoneskin = 100543,
+
+		#endregion
+
 		#region Bozja
 
 		[Bozja]
@@ -248,6 +363,11 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(Bozja.FlareStar)]
 		[CustomComboInfo("Lost Flare Star - BLM only at the moment", "", All.JobID)]
 		Bozja_LFS = 100045,
+
+		[Bozja]
+		[ReplaceSkill(Bozja.Slash)]
+		[CustomComboInfo("Lost Slash", "", All.JobID)]
+		Bozja_Slash = 100046,
 
 		#endregion
 
@@ -285,12 +405,12 @@ namespace UltimateCombo.Combos
 		#region Freelancer
 
 		[Occult]
+		[ReplaceSkill(Occult.OccultResuscitation)]
 		[CustomComboInfo("Phantom Freelancer", "", All.JobID)]
 		Occult_Freelancer = 100110,
 
 		[Occult]
 		[ParentCombo(Occult_Freelancer)]
-		[ReplaceSkill(Occult.OccultResuscitation)]
 		[CustomComboInfo("Occult Phantom Resuscitation", "", All.JobID)]
 		Occult_PhantomResuscitation = 100111,
 
@@ -299,18 +419,17 @@ namespace UltimateCombo.Combos
 		#region Knight
 
 		[Occult]
+		[ReplaceSkill(Occult.Pray, Occult.OccultHeal)]
 		[CustomComboInfo("Phantom Knight", "", All.JobID)]
 		Occult_Knight = 100060,
 
 		[Occult]
 		[ParentCombo(Occult_Knight)]
-		[ReplaceSkill(Occult.Pray)]
 		[CustomComboInfo("Pray", "", All.JobID)]
 		Occult_Pray = 100061,
 
 		[Occult]
 		[ParentCombo(Occult_Knight)]
-		[ReplaceSkill(Occult.OccultHeal)]
 		[CustomComboInfo("Occult Heal", "", All.JobID)]
 		Occult_Heal = 100062,
 
@@ -319,30 +438,27 @@ namespace UltimateCombo.Combos
 		#region Monk
 
 		[Occult]
+		[ReplaceSkill(Occult.PhantomKick, Occult.OccultCounter, Occult.Counterstance, Occult.OccultChakra)]
 		[CustomComboInfo("Phantom Monk", "", All.JobID)]
 		Occult_Monk = 100070,
 
 		[Occult]
 		[ParentCombo(Occult_Monk)]
-		[ReplaceSkill(Occult.PhantomKick)]
 		[CustomComboInfo("Phantom Kick", "", All.JobID)]
 		Occult_PhantomKick = 100071,
 
 		[Occult]
 		[ParentCombo(Occult_Monk)]
-		[ReplaceSkill(Occult.OccultCounter)]
 		[CustomComboInfo("Occult Counter", "", All.JobID)]
 		Occult_Counter = 100072,
 
 		[Occult]
 		[ParentCombo(Occult_Monk)]
-		[ReplaceSkill(Occult.Counterstance)]
 		[CustomComboInfo("Counterstance", "", All.JobID)]
 		Occult_Counterstance = 100073,
 
 		[Occult]
 		[ParentCombo(Occult_Monk)]
-		[ReplaceSkill(Occult.OccultChakra)]
 		[CustomComboInfo("Occult Chakra", "", All.JobID)]
 		Occult_Chakra = 100074,
 
@@ -351,36 +467,32 @@ namespace UltimateCombo.Combos
 		#region Time Mage
 
 		[Occult]
+		[ReplaceSkill(Occult.OccultSlowga, Occult.OccultComet, Occult.OccultMageMasher, Occult.OccultDispel, Occult.OccultQuick)]
 		[CustomComboInfo("Phantom Time Mage", "", All.JobID)]
 		Occult_TimeMage = 100080,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[ReplaceSkill(Occult.OccultSlowga)]
 		[CustomComboInfo("Occult Slowga", "", All.JobID)]
 		Occult_Slowga = 100081,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[ReplaceSkill(Occult.OccultComet)]
 		[CustomComboInfo("Occult Comet", "", All.JobID)]
 		Occult_Comet = 100082,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[ReplaceSkill(Occult.OccultMageMasher)]
 		[CustomComboInfo("Occult Mage Masher", "", All.JobID)]
 		Occult_MageMasher = 100083,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[ReplaceSkill(Occult.OccultDispel)]
 		[CustomComboInfo("Occult Dispel - Not working yet", "", All.JobID)]
 		Occult_Dispel = 100084,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[ReplaceSkill(Occult.OccultQuick)]
 		[CustomComboInfo("Occult Quick", "", All.JobID)]
 		Occult_Quick = 100085,
 
@@ -389,6 +501,7 @@ namespace UltimateCombo.Combos
 		#region Bard
 
 		[Occult]
+		[ReplaceSkill(Occult.OffensiveAria, Occult.HerosRime)]
 		[CustomComboInfo("Phantom Bard", "", All.JobID)]
 		Occult_Bard = 100090,
 
@@ -399,13 +512,11 @@ namespace UltimateCombo.Combos
 
 		[Occult]
 		[ParentCombo(Occult_Bard)]
-		[ReplaceSkill(Occult.OffensiveAria)]
 		[CustomComboInfo("Offensive Aria", "", All.JobID)]
 		Occult_OffensiveAria = 100091,
 
 		[Occult]
 		[ParentCombo(Occult_Bard)]
-		[ReplaceSkill(Occult.HerosRime)]
 		[CustomComboInfo("Hero's Rime", "", All.JobID)]
 		Occult_HerosRime = 100092,
 
@@ -414,18 +525,17 @@ namespace UltimateCombo.Combos
 		#region Oracle
 
 		[Occult]
+		[ReplaceSkill(Occult.Predict, Occult.PhantomJudgement, Occult.Cleansing, Occult.Blessing, Occult.Starfall, Occult.PhantomRejuvenation)]
 		[CustomComboInfo("Phantom Oracle", "", All.JobID)]
 		Occult_Oracle = 100100,
 
 		[Occult]
 		[ParentCombo(Occult_Oracle)]
-		[ReplaceSkill(Occult.Predict, Occult.PhantomJudgement, Occult.Cleansing, Occult.Blessing, Occult.Starfall)]
 		[CustomComboInfo("Predict", "", All.JobID)]
 		Occult_Predict = 100101,
 
 		[Occult]
 		[ParentCombo(Occult_Oracle)]
-		[ReplaceSkill(Occult.PhantomRejuvenation)]
 		[CustomComboInfo("Phantom Rejuvination", "", All.JobID)]
 		Occult_PhantomRejuvination = 100102,
 
@@ -434,6 +544,7 @@ namespace UltimateCombo.Combos
 		#region Cannoneer
 
 		[Occult]
+		[ReplaceSkill(Occult.PhantomFire, Occult.HolyCannon, Occult.DarkCannon, Occult.ShockCannon, Occult.SilverCannon)]
 		[CustomComboInfo("Phantom Cannoneer", "", All.JobID)]
 		Occult_Cannoneer = 100120,
 
@@ -444,19 +555,16 @@ namespace UltimateCombo.Combos
 
 		[Occult]
 		[ParentCombo(Occult_Cannoneer)]
-		[ReplaceSkill(Occult.PhantomFire)]
 		[CustomComboInfo("Phantom Fire", "", All.JobID)]
 		Occult_PhantomFire = 100121,
 
 		[Occult]
 		[ParentCombo(Occult_Cannoneer)]
-		[ReplaceSkill(Occult.HolyCannon, Occult.SilverCannon)]
 		[CustomComboInfo("Holy Cannon / Silver Cannon", "", All.JobID)]
 		Occult_HolySilverCannon = 100122,
 
 		[Occult]
 		[ParentCombo(Occult_Cannoneer)]
-		[ReplaceSkill(Occult.DarkCannon, Occult.ShockCannon)]
 		[CustomComboInfo("Dark Cannon / Shock Cannon", "", All.JobID)]
 		Occult_DarkShockCannon = 100123,
 
@@ -465,18 +573,17 @@ namespace UltimateCombo.Combos
 		#region Samurai
 
 		[Occult]
+		[ReplaceSkill(Occult.Mineuchi, Occult.Iainuki)]
 		[CustomComboInfo("Phantom Samurai", "", All.JobID)]
 		Occult_Samurai = 100130,
 
 		[Occult]
 		[ParentCombo(Occult_Samurai)]
-		[ReplaceSkill(Occult.Mineuchi)]
 		[CustomComboInfo("Mineuchi", "", All.JobID)]
 		Occult_Mineuchi = 100131,
 
 		[Occult]
 		[ParentCombo(Occult_Samurai)]
-		[ReplaceSkill(Occult.Iainuki)]
 		[CustomComboInfo("Iainuki", "", All.JobID)]
 		Occult_Iainuki = 100132,
 
@@ -485,24 +592,22 @@ namespace UltimateCombo.Combos
 		#region Geomancer
 
 		[Occult]
+		[ReplaceSkill(Occult.BattleBell, Occult.Weather, Occult.RingingRespite)]
 		[CustomComboInfo("Phantom Geomancer", "", All.JobID)]
 		Occult_Geomancer = 100140,
 
 		[Occult]
 		[ParentCombo(Occult_Geomancer)]
-		[ReplaceSkill(Occult.BattleBell)]
 		[CustomComboInfo("Battle Bell", "", All.JobID)]
 		Occult_BattleBell = 100141,
 
 		[Occult]
 		[ParentCombo(Occult_Geomancer)]
-		[ReplaceSkill(Occult.Weather)]
 		[CustomComboInfo("Weather", "", All.JobID)]
 		Occult_Weather = 100142,
 
 		[Occult]
 		[ParentCombo(Occult_Geomancer)]
-		[ReplaceSkill(Occult.RingingRespite)]
 		[CustomComboInfo("Ringing Respite", "", All.JobID)]
 		Occult_RingingRespite = 100143,
 
@@ -511,24 +616,22 @@ namespace UltimateCombo.Combos
 		#region Thief
 
 		[Occult]
+		[ReplaceSkill(Occult.Steal, Occult.Vigilance, Occult.PilferWeapon)]
 		[CustomComboInfo("Phantom Thief", "", All.JobID)]
 		Occult_Thief = 100150,
 
 		[Occult]
 		[ParentCombo(Occult_Thief)]
-		[ReplaceSkill(Occult.Steal)]
 		[CustomComboInfo("Steal", "", All.JobID)]
 		Occult_Steal = 100151,
 
 		[Occult]
 		[ParentCombo(Occult_Thief)]
-		[ReplaceSkill(Occult.Vigilance)]
 		[CustomComboInfo("Vigilance", "", All.JobID)]
 		Occult_Vigilance = 100152,
 
 		[Occult]
 		[ParentCombo(Occult_Thief)]
-		[ReplaceSkill(Occult.PilferWeapon)]
 		[CustomComboInfo("Pilfer Weapon", "", All.JobID)]
 		Occult_PilferWeapon = 100153,
 

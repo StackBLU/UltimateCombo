@@ -98,6 +98,16 @@ namespace UltimateCombo.ComboHelper.Functions
 			return IsEnabled(id) && IsOffCooldown(id);
 		}
 
+		public static bool DutyActionEquipped(uint actionId)
+		{
+			return (DutyActionManager.GetDutyActionId(0) == actionId) || (DutyActionManager.GetDutyActionId(1) == actionId);
+		}
+
+		public static bool DutyActionNotEquipped(uint actionId)
+		{
+			return (DutyActionManager.GetDutyActionId(0) != actionId) && (DutyActionManager.GetDutyActionId(1) != actionId);
+		}
+
 		public static bool WasLastAction(uint id)
 		{
 			return ActionWatching.LastAction == id;

@@ -8,6 +8,7 @@ namespace UltimateCombo.Combos.PvE.Content
 			Banish3 = 20702,
 			FontOfMagic = 20715,
 			FontOfPower = 20717,
+			Slash = 20718,
 			BannerOfNobleEnds = 20720,
 			BannerOfHonoredSacrifice = 20721,
 			Cure = 20726,
@@ -213,6 +214,37 @@ namespace UltimateCombo.Combos.PvE.Content
 					if (DutyActionReady(Chainspell) && DutyActionEquipped(Chainspell) && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)))
 					{
 						return Chainspell;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Bozja_Slash : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_Slash;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_Slash) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Slash))
+				{
+					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && LocalPlayer.ClassJob.Value.RowId != MCH.JobID)
+					{
+						return Slash;
+					}
+
+					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && LocalPlayer.ClassJob.Value.RowId == MCH.JobID)
+					{
+						if (ActionReady(MCH.Reassemble))
+						{
+							return MCH.Reassemble;
+						}
+
+						if (HasEffect(MCH.Buffs.Reassembled) || WasLastAbility(MCH.Reassemble))
+						{
+							return Slash;
+						}
 					}
 				}
 

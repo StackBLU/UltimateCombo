@@ -94,31 +94,5 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			return ActionManager.Instance()->GetActionStatus(ActionType.Action, actionID) == 0;
 		}
-
-		private static uint DutyAction1
-		{
-			get
-			{
-				return DutyActionManager.GetDutyActionId(0);
-			}
-		}
-
-		private static uint DutyAction2
-		{
-			get
-			{
-				return DutyActionManager.GetDutyActionId(1);
-			}
-		}
-
-		public static bool DutyActionEquipped(uint actionId)
-		{
-			return (DutyAction1 == actionId) || (DutyAction2 == actionId);
-		}
-
-		public static bool DutyActionNotEquipped(uint actionId)
-		{
-			return (DutyAction1 != actionId) && (DutyAction2 != actionId);
-		}
 	}
 }

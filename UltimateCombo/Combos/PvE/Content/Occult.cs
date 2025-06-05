@@ -377,12 +377,12 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Mineuchi) && DutyActionReady(Mineuchi))
+					if (IsEnabled(CustomComboPreset.Occult_Mineuchi) && DutyActionReady(Mineuchi) && InActionRange(Mineuchi))
 					{
 						return Mineuchi;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki))
+					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki))
 					{
 						return Iainuki;
 					}

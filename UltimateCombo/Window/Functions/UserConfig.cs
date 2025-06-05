@@ -1179,6 +1179,7 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.Occult_Predict && enabled)
 			{
+				ImGui.Spacing();
 				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Phantom Judgement", "", 1, 150);
 				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Cleansing", "", 2, 150);
 				UserConfig.DrawRadioButton(Occult.Config.Occult_Prediction, "Blessing", "", 3, 150);
@@ -1187,12 +1188,14 @@ namespace UltimateCombo.Window.Functions
 
 			if (preset is CustomComboPreset.Occult_HolySilverCannon && enabled)
 			{
+				ImGui.Spacing();
 				UserConfig.DrawRadioButton(Occult.Config.Occult_HolySilverCannon, "Holy Cannon", "", 1, 150);
 				UserConfig.DrawRadioButton(Occult.Config.Occult_HolySilverCannon, "Silver Cannon", "", 2, 150);
 			}
 
 			if (preset is CustomComboPreset.Occult_DarkShockCannon && enabled)
 			{
+				ImGui.Spacing();
 				UserConfig.DrawRadioButton(Occult.Config.Occult_DarkShockCannon, "Dark Cannon", "", 1, 150);
 				UserConfig.DrawRadioButton(Occult.Config.Occult_DarkShockCannon, "Shock Cannon", "", 2, 150);
 			}
