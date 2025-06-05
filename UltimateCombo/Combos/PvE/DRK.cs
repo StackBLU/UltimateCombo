@@ -214,12 +214,6 @@ namespace UltimateCombo.Combos.PvE
 						return LivingDead;
 					}
 
-					if (IsEnabled(CustomComboPreset.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
-						&& !InCombat() && LocalPlayer.CurrentMp >= 3000)
-					{
-						return TheBlackestNight;
-					}
-
 					if (IsEnabled(CustomComboPreset.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange()
 						&& !InCombat())
 					{

@@ -482,6 +482,58 @@ namespace UltimateCombo.Combos
 
 		#endregion
 
+		#region Geomancer
+
+		[Occult]
+		[CustomComboInfo("Phantom Geomancer", "", All.JobID)]
+		Occult_Geomancer = 100140,
+
+		[Occult]
+		[ParentCombo(Occult_Geomancer)]
+		[ReplaceSkill(Occult.BattleBell)]
+		[CustomComboInfo("Battle Bell", "", All.JobID)]
+		Occult_BattleBell = 100141,
+
+		[Occult]
+		[ParentCombo(Occult_Geomancer)]
+		[ReplaceSkill(Occult.Weather)]
+		[CustomComboInfo("Weather", "", All.JobID)]
+		Occult_Weather = 100142,
+
+		[Occult]
+		[ParentCombo(Occult_Geomancer)]
+		[ReplaceSkill(Occult.RingingRespite)]
+		[CustomComboInfo("Ringing Respite", "", All.JobID)]
+		Occult_RingingRespite = 100143,
+
+		#endregion
+
+		#region Thief
+
+		[Occult]
+		[CustomComboInfo("Phantom Thief", "", All.JobID)]
+		Occult_Thief = 100150,
+
+		[Occult]
+		[ParentCombo(Occult_Thief)]
+		[ReplaceSkill(Occult.Steal)]
+		[CustomComboInfo("Steal", "", All.JobID)]
+		Occult_Steal = 100151,
+
+		[Occult]
+		[ParentCombo(Occult_Thief)]
+		[ReplaceSkill(Occult.Vigilance)]
+		[CustomComboInfo("Vigilance", "", All.JobID)]
+		Occult_Vigilance = 100152,
+
+		[Occult]
+		[ParentCombo(Occult_Thief)]
+		[ReplaceSkill(Occult.PilferWeapon)]
+		[CustomComboInfo("Pilfer Weapon", "", All.JobID)]
+		Occult_PilferWeapon = 100153,
+
+		#endregion
+
 		#endregion
 
 		#endregion

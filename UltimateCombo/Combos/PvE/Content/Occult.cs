@@ -49,7 +49,18 @@ namespace UltimateCombo.Combos.PvE.Content
 			Mineuchi = 41603,
 			Shirahadori = 41604,
 			Iainuki = 41605,
-			Zeninage = 41606;
+			Zeninage = 41606,
+
+			BattleBell = 41611,
+			Weather = 41612,
+			RingingRespite = 41619,
+			Suspend = 41620,
+
+			Sprint = 41646,
+			Steal = 41645,
+			Vigilance = 41647,
+			TrapDetection = 41648,
+			PilferWeapon = 41649;
 
 		public static class PhantomJobs
 		{
@@ -83,15 +94,21 @@ namespace UltimateCombo.Combos.PvE.Content
 				PredictionOfJudgement = 4265,
 				PredictionOfCleansing = 4266,
 				PredictionOfBlessing = 4267,
-				PredictionOfStarfall = 4268;
+				PredictionOfStarfall = 4268,
+
+				BattleBell = 4251,
+				BattlesClangor = 4252,
+				RingingRespite = 4257,
+
+				Vigilance = 4277;
 		}
 
 		public static class Debuffs
 		{
 			public const ushort
 				Slow = 3493,
-
-				OccultMageMasher = 4259;
+				OccultMageMasher = 4259,
+				WeaponPilfered = 4279;
 		}
 
 		public static class Config
@@ -358,7 +375,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse())
+				if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Occult_Mineuchi) && DutyActionReady(Mineuchi))
 					{
@@ -368,6 +385,67 @@ namespace UltimateCombo.Combos.PvE.Content
 					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki))
 					{
 						return Iainuki;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Occult_Geomancer : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Occult_Geomancer;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && InCombat() && SafeToUse())
+				{
+					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire)
+						&& !HasEffect(Buffs.BattleBell) && !HasEffect(Buffs.BattlesClangor))
+					{
+						return BattleBell;
+					}
+
+					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(Weather))
+					{
+						return Weather;
+					}
+
+					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire) && !HasEffect(Buffs.RingingRespite))
+					{
+						return RingingRespite;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class Occult_Thief : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Occult_Thief;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse())
+				{
+					if (IsEnabled(CustomComboPreset.Occult_Vigilance) && DutyActionReady(Vigilance) && !InCombat() && !HasEffect(Buffs.Vigilance))
+					{
+						return Vigilance;
+					}
+
+					if (InCombat())
+					{
+						if (IsEnabled(CustomComboPreset.Occult_Steal) && DutyActionReady(Steal) && InActionRange(Steal) && HasBattleTarget())
+						{
+							return Steal;
+						}
+
+						if (IsEnabled(CustomComboPreset.Occult_PilferWeapon) && DutyActionReady(PilferWeapon)
+							&& !TargetHasEffectAny(Debuffs.WeaponPilfered) && InActionRange(PilferWeapon))
+						{
+							return PilferWeapon;
+						}
 					}
 				}
 

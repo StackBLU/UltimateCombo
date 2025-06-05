@@ -377,7 +377,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is ThrillOfBattle or ShakeItOff) && IsEnabled(CustomComboPreset.WAR_ThrillShake))
 				{
-					if (ActionReady(ThrillOfBattle))
+					if (ActionReady(ThrillOfBattle) && ActionReady(ShakeItOff))
 					{
 						return ThrillOfBattle;
 					}

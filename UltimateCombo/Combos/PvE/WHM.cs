@@ -239,7 +239,8 @@ namespace UltimateCombo.Combos.PvE
 						return Regen;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
+					if (IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
+						&& !WasLastSpell(AfflatusSolace) && !WasLastSpell(AfflatusMisery) && !WasLastSpell(Regen))
 					{
 						return ThinAir;
 					}
@@ -279,7 +280,8 @@ namespace UltimateCombo.Combos.PvE
 						return AfflatusRapture;
 					}
 
-					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
+					if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
+						&& !WasLastSpell(AfflatusRapture) && !WasLastSpell(AfflatusMisery))
 					{
 						return ThinAir;
 					}
