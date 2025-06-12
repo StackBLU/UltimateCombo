@@ -597,7 +597,7 @@ namespace UltimateCombo.Combos.PvE
 						return PeculiarLight;
 					}
 
-					if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TankWhiteWind) && LocalPlayer.CurrentMp >= 1500)
+					if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && LocalPlayer.CurrentMp >= 1500)
 					{
 						return WhiteWind;
 					}
@@ -719,7 +719,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AngelsSnack)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure) && IsOffCooldown(AngelsSnack)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure) && IsOffCooldown(AngelsSnack)
 							&& IsSpellActive(AngelsSnack))
 						{
 							if (ActionReady(All.Swiftcast))
@@ -790,7 +790,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AngelsSnack)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure)
 							&& ActionReady(AngelsSnack) && IsSpellActive(AngelsSnack))
 						{
 							if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast))
@@ -802,7 +802,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_Pomcure)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasurePomcure)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure)
 							&& IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
 							&& !HasEffect(Buffs.AngelsSnack) && !WasLastSpell(AngelsSnack))
 						{
@@ -941,7 +941,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Rehydration) && IsSpellActive(Rehydration)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureRehydration) && !WasLastSpell(Devour) && !WasLastSpell(WhiteWind))
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureRehydration) && !WasLastSpell(Devour) && !WasLastSpell(WhiteWind))
 						{
 							if (ActionReady(All.Swiftcast))
 							{
@@ -960,7 +960,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureWhiteWind)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
 							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;
@@ -1026,7 +1026,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_Rehydration) && IsSpellActive(Rehydration)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureRehydration)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureRehydration)
 							&& ActionReady(All.Swiftcast) && !WasLastSpell(WhiteWind) && !WasLastSpell(Devour) && !WasLastSpell(WhiteWind))
 						{
 							return All.Swiftcast;
@@ -1043,7 +1043,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.BLU_TreasureWhiteWind)
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
 							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;

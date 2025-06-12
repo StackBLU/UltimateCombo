@@ -136,7 +136,7 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.SCH_ST_DPS_ChainStrat))
 							{
-								if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent))
+								if (ActionReady(BanefulImpaction) && HasEffect(Buffs.ImpactImminent) && GetDebuffRemainingTime(Debuffs.ChainStratagem) < 15)
 								{
 									return BanefulImpaction;
 								}
@@ -299,15 +299,14 @@ namespace UltimateCombo.Combos.PvE
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DissipationDrain;
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if ((actionID is Dissipation or EnergyDrain or Aetherflow) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
+				if ((actionID is Aetherflow or Dissipation or EnergyDrain) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
 				{
 					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0 && ActionReady(Dissipation))
 					{
 						return EnergyDrain;
 					}
 
-					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation)
-						&& !HasEffect(Buffs.Seraphism)))
+					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation) && !HasEffect(Buffs.Seraphism)))
 					{
 						return Dissipation;
 					}

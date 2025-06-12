@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -163,7 +164,7 @@ namespace UltimateCombo.Combos.PvE
 							|| (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
 							|| Gauge.PalleteGauge == 100))
 						{
-							if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast))
+							if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
 							{
 								return All.Swiftcast;
 							}
@@ -171,7 +172,7 @@ namespace UltimateCombo.Combos.PvE
 							return SubtractivePalette;
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving)
+						if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}
@@ -327,7 +328,7 @@ namespace UltimateCombo.Combos.PvE
 							|| (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
 							|| Gauge.PalleteGauge == 100))
 						{
-							if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast))
+							if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
 							{
 								return All.Swiftcast;
 							}
@@ -335,7 +336,7 @@ namespace UltimateCombo.Combos.PvE
 							return SubtractivePalette;
 						}
 
-						if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving)
+						if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}
@@ -399,6 +400,100 @@ namespace UltimateCombo.Combos.PvE
 					if (HasEffect(Buffs.SubtractivePalette))
 					{
 						return OriginalHook(Blizzard);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class PCT_HolyComet : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_HolyComet;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is HolyInWhite or CometInBlack) && IsEnabled(CustomComboPreset.PCT_HolyComet))
+				{
+					if (HasEffect(Buffs.MonochromeTones))
+					{
+						return CometInBlack;
+					}
+					return HolyInWhite;
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class PCT_CreatureMuse : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_CreatureMuse;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is CreatureMotif or LivingMuse) && IsEnabled(CustomComboPreset.PCT_CreatureMuse))
+				{
+					if (LevelChecked(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn)
+					{
+						return OriginalHook(LivingMuse);
+					}
+
+					if (ActionReady(OriginalHook(CreatureMotif)) && !Gauge.CreatureMotifDrawn)
+					{
+						return OriginalHook(CreatureMotif);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class PCT_WeaponMuse : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_WeaponMuse;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is WeaponMotif or SteelMuse) && IsEnabled(CustomComboPreset.PCT_WeaponMuse))
+				{
+					if (HasEffect(Buffs.HammerTime))
+					{
+						return OriginalHook(HammerStamp);
+					}
+
+					if (LevelChecked(OriginalHook(SteelMuse)) && Gauge.WeaponMotifDrawn)
+					{
+						return OriginalHook(SteelMuse);
+					}
+
+					if (ActionReady(OriginalHook(WeaponMotif)) && !Gauge.WeaponMotifDrawn)
+					{
+						return OriginalHook(WeaponMotif);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class PCT_LandscapeMuse : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_LandscapeMuse;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is LandscapeMotif or ScenicMuse) && IsEnabled(CustomComboPreset.PCT_LandscapeMuse))
+				{
+					if (HasEffect(Buffs.RainbowBright))
+					{
+						return RainbowDrip;
+					}
+
+					if (LevelChecked(OriginalHook(ScenicMuse)) && Gauge.LandscapeMotifDrawn)
+					{
+						return OriginalHook(ScenicMuse);
+					}
+
+					if (ActionReady(OriginalHook(LandscapeMotif)) && !Gauge.LandscapeMotifDrawn)
+					{
+						return OriginalHook(LandscapeMotif);
 					}
 				}
 

@@ -191,8 +191,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RDM_ST_Accel) && HasEffect(Buffs.GrandImpactReady)
-						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5)
-						&& SafeToUse())
+						&& (HasEffect(Buffs.Embolden) || GetBuffRemainingTime(Buffs.GrandImpactReady) < 5) && SafeToUse())
 					{
 						return GrandImpact;
 					}

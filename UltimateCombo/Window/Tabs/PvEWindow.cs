@@ -93,7 +93,8 @@ namespace UltimateCombo.Window.Tabs
 				Attributes.CustomComboInfoAttribute info) in groupedPresets[jobName].Where(x => !PresetStorage.IsPvP(x.Preset)
 																							 && !PresetStorage.IsBozja(x.Preset)
 																							 && !PresetStorage.IsEureka(x.Preset)
-																							 && !PresetStorage.IsVariant(x.Preset)))
+																							 && !PresetStorage.IsVariant(x.Preset)
+																							 && !PresetStorage.IsOccult(x.Preset)))
 			{
 				InfoBox presetBox = new()
 				{

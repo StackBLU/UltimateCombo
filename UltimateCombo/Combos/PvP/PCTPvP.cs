@@ -149,7 +149,7 @@ namespace UltimateCombo.Combos.PvP
 					if (IsEnabled(CustomComboPreset.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)))
 					{
 						if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
-							|| PlayerHealthPercentageHp() < GetOptionValue(Config.PCTPvP_AutoPalette)))
+							|| PlayerHealthPercentageHp() <= GetOptionValue(Config.PCTPvP_AutoPalette)))
 						{
 							return OriginalHook(SubtractivePalette);
 						}

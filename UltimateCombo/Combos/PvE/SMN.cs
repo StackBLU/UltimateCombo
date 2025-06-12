@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -179,7 +180,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (ActionReady(All.Swiftcast) && Config.SMN_ST_Astral_Swift)
+						if (ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}
@@ -198,8 +199,7 @@ namespace UltimateCombo.Combos.PvE
 						return Ruin4;
 					}
 
-					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone)
-						&& (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
+					if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone) && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
 					{
 						if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
 						{
@@ -309,7 +309,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (HasEffect(Buffs.GarudasFavor))
 					{
-						if (ActionReady(All.Swiftcast) && Config.SMN_AoE_Astral_Swift)
+						if (ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}

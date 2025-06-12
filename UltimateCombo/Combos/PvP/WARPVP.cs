@@ -74,7 +74,7 @@ namespace UltimateCombo.Combos.PvP
 						if (CanWeave(actionID))
 						{
 							if (IsEnabled(CustomComboPreset.WARPvP_Bloodwhetting) && ActionReady(Bloodwhetting)
-								&& PlayerHealthPercentageHp() < GetOptionValue(Config.WARPvP_Bloodwhetting))
+								&& PlayerHealthPercentageHp() <= GetOptionValue(Config.WARPvP_Bloodwhetting))
 							{
 								return Bloodwhetting;
 							}

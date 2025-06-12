@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -227,7 +228,7 @@ namespace UltimateCombo.Combos.PvE
 							}
 
 							if (IsEnabled(CustomComboPreset.AST_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast)
-								&& IsMoving && !HasEffect(Buffs.Lightspeed))
+								&& IsMoving && !HasEffect(Buffs.Lightspeed) && !HasEffect(Occult.Buffs.OccultQuick))
 							{
 								return All.Swiftcast;
 							}
@@ -341,7 +342,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Swiftcast) && ActionReady(All.Swiftcast)
-							&& IsMoving && !HasEffect(Buffs.Lightspeed))
+							&& IsMoving && !HasEffect(Buffs.Lightspeed) && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}
@@ -397,14 +398,15 @@ namespace UltimateCombo.Combos.PvE
 						return NeutralSect;
 					}
 
-					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched) && CanWeave(actionID))
+					if (IsEnabled(CustomComboPreset.AST_AoE_Heals_SunSign) && HasEffect(Buffs.Suntouched) && HasEffect(Buffs.Suntouched)
+						&& !WasLastAction(NeutralSect))
 					{
 						return SunSign;
 					}
 
 					if (ActionReady(AspectedHelios)
 						&& (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
-						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 5
+						|| GetBuffRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 3
 						|| HasEffect(Buffs.NeutralSect)
 						|| HasEffect(Buffs.Horoscope)
 						|| WasLastAbility(NeutralSect)))

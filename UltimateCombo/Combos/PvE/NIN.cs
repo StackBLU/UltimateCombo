@@ -572,6 +572,11 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (actionID is Chi && IsEnabled(CustomComboPreset.NIN_Doton))
 				{
+					if (HasEffect(Buffs.Kassatsu))
+					{
+						return OriginalHook(11);
+					}
+
 					if ((ActionReady(Jin) || HasEffect(Buffs.Mudra)) && actionID is Chi)
 					{
 						if (OriginalHook(Ninjutsu) is Doton && actionID is Chi)

@@ -494,7 +494,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7 && !ActionQueued()
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.All_ChocoHP))
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.All_ChocoHP))
 						{
 							_ = UseAction(ActionType.BuddyAction, 7);
 						}

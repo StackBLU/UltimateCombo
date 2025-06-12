@@ -168,9 +168,9 @@ namespace UltimateCombo.Combos.PvE
 						return BlastArrow;
 					}
 
-					if (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
+					if (IsEnabled(CustomComboPreset.BRD_ST_DoTs) && (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
 					{
-						if (IsEnabled(CustomComboPreset.BRD_ST_DoTs) && ActionReady(IronJaws)
+						if (ActionReady(IronJaws)
 							&& ((TargetHasEffect(Debuffs.VenomousBite) && GetDebuffRemainingTime(Debuffs.VenomousBite) < 3)
 							|| (TargetHasEffect(Debuffs.CausticBite) && GetDebuffRemainingTime(Debuffs.CausticBite) < 3)
 							|| (TargetHasEffect(Debuffs.Windbite) && GetDebuffRemainingTime(Debuffs.Windbite) < 3)
@@ -321,6 +321,72 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					return OriginalHook(Ladonsbite);
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class BRD_DoTs : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_DoTs;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is VenomousBite or CausticBite or Windbite or Stormbite or IronJaws) && IsEnabled(CustomComboPreset.BRD_DoTs))
+				{
+					if (ActionReady(IronJaws)
+						&& ((TargetHasEffect(Debuffs.VenomousBite) && GetDebuffRemainingTime(Debuffs.VenomousBite) < 3)
+						|| (TargetHasEffect(Debuffs.CausticBite) && GetDebuffRemainingTime(Debuffs.CausticBite) < 3)
+						|| (TargetHasEffect(Debuffs.Windbite) && GetDebuffRemainingTime(Debuffs.Windbite) < 3)
+						|| (TargetHasEffect(Debuffs.Stormbite) && GetDebuffRemainingTime(Debuffs.Stormbite) < 3)
+						|| WasLastWeaponskill(ResonantArrow)))
+					{
+						return IronJaws;
+					}
+
+					if (ActionReady(OriginalHook(Stormbite)) && ((!TargetHasEffect(Debuffs.Windbite) && !TargetHasEffect(Debuffs.Stormbite))
+						|| (TargetHasEffect(Debuffs.Windbite) && GetDebuffRemainingTime(Debuffs.Windbite) < 3)
+						|| (TargetHasEffect(Debuffs.Stormbite) && GetDebuffRemainingTime(Debuffs.Stormbite) < 3)))
+					{
+						return OriginalHook(Stormbite);
+					}
+
+					if (ActionReady(OriginalHook(CausticBite)) && ((!TargetHasEffect(Debuffs.VenomousBite) && !TargetHasEffect(Debuffs.CausticBite))
+						|| (TargetHasEffect(Debuffs.VenomousBite) && GetDebuffRemainingTime(Debuffs.VenomousBite) < 3)
+						|| (TargetHasEffect(Debuffs.CausticBite) && GetDebuffRemainingTime(Debuffs.CausticBite) < 3)))
+					{
+						return OriginalHook(CausticBite);
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class BRD_Songs : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.BRD_Songs;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is MagesBallad or ArmysPaeon or WanderersMinuet) && IsEnabled(CustomComboPreset.BRD_Songs))
+				{
+					if (IsEnabled(CustomComboPreset.BRD_ST_Songs) && InCombat())
+					{
+						if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
+						{
+							return WanderersMinuet;
+						}
+
+						if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+						{
+							return MagesBallad;
+						}
+
+						if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+						{
+							return ArmysPaeon;
+						}
+					}
 				}
 
 				return actionID;

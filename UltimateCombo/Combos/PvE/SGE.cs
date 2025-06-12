@@ -2,6 +2,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -152,13 +153,13 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving
-							&& Gauge.Addersgall == 0)
+							&& Gauge.Addersgall == 0 && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1))
+					if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1)) && HasBattleTarget()
 						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
 						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
 						&& (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3
@@ -236,7 +237,8 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1))
+					if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1)) && HasBattleTarget()
+						&& !WasLastSpell(EukrasianDyskrasia)
 						&& (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || (GetDebuffRemainingTime(Debuffs.EukrasianDyskrasia) <= 3)))
 					{
 						if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))

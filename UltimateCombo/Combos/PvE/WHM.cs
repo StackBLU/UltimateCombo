@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -113,7 +114,7 @@ namespace UltimateCombo.Combos.PvE
 							return Assize;
 						}
 
-						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving)
+						if (IsEnabled(CustomComboPreset.WHM_ST_DPS_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
 						{
 							return All.Swiftcast;
 						}

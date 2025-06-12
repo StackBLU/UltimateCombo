@@ -75,7 +75,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 
 						if (IsEnabled(CustomComboPreset.ASTPvP_AspectedBenefic) && ActionReady(AspectedBenefic)
-							&& PlayerHealthPercentageHp() < GetOptionValue(Config.ASTPvP_AspectedBenefic))
+							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.ASTPvP_AspectedBenefic))
 						{
 							return AspectedBenefic;
 						}

@@ -219,15 +219,15 @@ namespace UltimateCombo.Combos.PvE.Content
 				if (IsEnabled(CustomComboPreset.Eureka_Curative) && SafeToUse())
 				{
 					if (IsEnabled(CustomComboPreset.Eureka_Cure) && DutyActionReady(Cure) && DutyActionEquipped(Cure)
-						&& (PlayerHealthPercentageHp() < GetOptionValue(Config.Eureka_Cure)
-						|| (HasFriendlyTarget() && GetTargetHPPercent() < GetOptionValue(Config.Eureka_Cure))))
+						&& (PlayerHealthPercentageHp() <= GetOptionValue(Config.Eureka_Cure)
+						|| (HasFriendlyTarget() && GetTargetHPPercent() <= GetOptionValue(Config.Eureka_Cure))))
 					{
 						return Cure;
 					}
 
 					if (IsEnabled(CustomComboPreset.Eureka_Cure2) && DutyActionReady(Cure2) && DutyActionEquipped(Cure2)
-						&& (PlayerHealthPercentageHp() < GetOptionValue(Config.Eureka_Cure2)
-						|| (HasFriendlyTarget() && GetTargetHPPercent() < GetOptionValue(Config.Eureka_Cure2))))
+						&& (PlayerHealthPercentageHp() <= GetOptionValue(Config.Eureka_Cure2)
+						|| (HasFriendlyTarget() && GetTargetHPPercent() <= GetOptionValue(Config.Eureka_Cure2))))
 					{
 						return Cure2;
 					}

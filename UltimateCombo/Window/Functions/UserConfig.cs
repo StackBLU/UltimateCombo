@@ -1200,6 +1200,11 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawRadioButton(Occult.Config.Occult_DarkShockCannon, "Shock Cannon", "", 2, 150);
 			}
 
+			if (preset is CustomComboPreset.Occult_Weather && enabled)
+			{
+				UserConfig.DrawSliderInt(0, 100, Occult.Config.Occult_Sunbath, "Sunbath HP % Threshold", 150, SliderIncrements.Fives);
+			}
+
 			#endregion
 
 			#endregion

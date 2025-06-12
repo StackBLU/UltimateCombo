@@ -408,5 +408,87 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		internal class DNC_StandardStep : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_StandardStep;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is StandardStep && IsEnabled(CustomComboPreset.DNC_StandardStep))
+				{
+					if (IsEnabled(CustomComboPreset.DNC_ST_Standard) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalStep))
+					{
+						return OriginalHook(StandardStep);
+					}
+
+					if (HasEffect(Buffs.StandardStep))
+					{
+						if (Gauge.CompletedSteps == 2)
+						{
+							return StandardFinish2;
+						}
+						if (Gauge.NextStep is Steps.Emboite)
+						{
+							return Steps.Emboite;
+						}
+						if (Gauge.NextStep is Steps.Entrechat)
+						{
+							return Steps.Entrechat;
+						}
+						if (Gauge.NextStep is Steps.Jete)
+						{
+							return Steps.Jete;
+						}
+						if (Gauge.NextStep is Steps.Pirouette)
+						{
+							return Steps.Pirouette;
+						}
+					}
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class DNC_TechnicalStep : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.DNC_TechnicalStep;
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is TechnicalStep && IsEnabled(CustomComboPreset.DNC_TechnicalStep))
+				{
+					if (IsEnabled(CustomComboPreset.DNC_ST_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep))
+					{
+						return TechnicalStep;
+					}
+
+					if (HasEffect(Buffs.TechnicalStep))
+					{
+						if (Gauge.CompletedSteps == 4)
+						{
+							return TechnicalFinish4;
+						}
+						if (Gauge.NextStep is Steps.Emboite)
+						{
+							return Steps.Emboite;
+						}
+						if (Gauge.NextStep is Steps.Entrechat)
+						{
+							return Steps.Entrechat;
+						}
+						if (Gauge.NextStep is Steps.Jete)
+						{
+							return Steps.Jete;
+						}
+						if (Gauge.NextStep is Steps.Pirouette)
+						{
+							return Steps.Pirouette;
+						}
+					}
+				}
+
+				return actionID;
+			}
+		}
 	}
 }
