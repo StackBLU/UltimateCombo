@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
+using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;

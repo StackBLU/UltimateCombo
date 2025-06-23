@@ -1,7 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.PvE.Content;
+using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -121,8 +121,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Dia))
-						&& (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
-						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
+						&& (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks) && TargetIsBoss()
 						&& (!TargetHasEffect(DiaList[OriginalHook(Dia)]) || GetDebuffRemainingTime(DiaList[OriginalHook(Dia)]) <= 3
 						|| ActionWatching.NumberOfGcdsUsed == 13))
 					{

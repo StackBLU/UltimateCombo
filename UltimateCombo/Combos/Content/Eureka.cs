@@ -1,7 +1,7 @@
 ﻿using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 
-namespace UltimateCombo.Combos.PvE.Content
+namespace UltimateCombo.Combos.Content
 {
 	public static class Eureka
 	{

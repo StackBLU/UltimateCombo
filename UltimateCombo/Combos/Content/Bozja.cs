@@ -1,6 +1,7 @@
-﻿using UltimateCombo.CustomCombo;
+﻿using UltimateCombo.Combos.PvE;
+using UltimateCombo.CustomCombo;
 
-namespace UltimateCombo.Combos.PvE.Content
+namespace UltimateCombo.Combos.Content
 {
 	public static class Bozja
 	{
@@ -100,7 +101,7 @@ namespace UltimateCombo.Combos.PvE.Content
 
 					if (GetBuffStacks(Buffs.BloodRage) == 1
 						|| (GetBuffStacks(Buffs.BloodRage) == 2 && GetBuffRemainingTime(Buffs.BloodRage) < 3)
-						|| (GetBuffStacks(Buffs.BloodRage) == 3))
+						|| GetBuffStacks(Buffs.BloodRage) == 3)
 					{
 						if (LocalPlayer.ClassJob.Value.RowId == PLD.JobID && ActionReady(PLD.Intervene))
 						{

@@ -120,17 +120,20 @@ namespace UltimateCombo.Combos.PvE
 									return BattleVoice;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale) && (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && ActionReady(RadiantFinale)
+									&& (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
 								{
 									return RadiantFinale;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes) && (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Raging) && ActionReady(RagingStrikes)
+									&& (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
 								{
 									return RagingStrikes;
 								}
 
-								if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage) && (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
+								if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && ActionReady(Barrage)
+									&& (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
 								{
 									return Barrage;
 								}
@@ -144,7 +147,7 @@ namespace UltimateCombo.Combos.PvE
 							if (IsEnabled(CustomComboPreset.BRD_ST_Bloodletter) && ActionReady(OriginalHook(Bloodletter))
 								&& ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
 								|| (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
-								&& GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 7.5f)
+								&& GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 8)
 								|| HasEffect(Buffs.BattleVoice)))
 							{
 								return OriginalHook(Bloodletter);
@@ -168,7 +171,7 @@ namespace UltimateCombo.Combos.PvE
 						return BlastArrow;
 					}
 
-					if (IsEnabled(CustomComboPreset.BRD_ST_DoTs) && (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44))
+					if (IsEnabled(CustomComboPreset.BRD_ST_DoTs) && TargetIsBoss())
 					{
 						if (ActionReady(IronJaws)
 							&& ((TargetHasEffect(Debuffs.VenomousBite) && GetDebuffRemainingTime(Debuffs.VenomousBite) < 3)
@@ -288,7 +291,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.BRD_AoE_Rain) && ActionReady(OriginalHook(RainOfDeath))
 							&& ((GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)))
 							|| (GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)) - 1
-							&& GetCooldownChargeRemainingTime(OriginalHook(RainOfDeath)) <= 7.5f)
+							&& GetCooldownChargeRemainingTime(OriginalHook(RainOfDeath)) <= 8)
 							|| HasEffect(Buffs.BattleVoice)))
 						{
 							return OriginalHook(RainOfDeath);

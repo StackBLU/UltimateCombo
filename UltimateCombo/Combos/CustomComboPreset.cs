@@ -1,6 +1,6 @@
 ﻿using UltimateCombo.Attributes;
+using UltimateCombo.Combos.Content;
 using UltimateCombo.Combos.PvE;
-using UltimateCombo.Combos.PvE.Content;
 using UltimateCombo.Combos.PvP;
 
 namespace UltimateCombo.Combos
@@ -477,19 +477,19 @@ namespace UltimateCombo.Combos
 		#region Samurai
 
 		[Occult]
-		[ReplaceSkill(Occult.Mineuchi, Occult.Iainuki)]
+		[ReplaceSkill(Occult.Mineuchi, Occult.Iainuki, Occult.Zeninage)]
 		[CustomComboInfo("Phantom Samurai", "", All.JobID)]
 		Occult_Samurai = 100130,
 
 		[Occult]
 		[ParentCombo(Occult_Samurai)]
-		[CustomComboInfo("Mineuchi", "", All.JobID)]
-		Occult_Mineuchi = 100131,
+		[CustomComboInfo("Iainuki", "", All.JobID)]
+		Occult_Iainuki = 100131,
 
 		[Occult]
 		[ParentCombo(Occult_Samurai)]
-		[CustomComboInfo("Iainuki", "", All.JobID)]
-		Occult_Iainuki = 100132,
+		[CustomComboInfo("Zeninage", "", All.JobID)]
+		Occult_Zeninage = 100132,
 
 		#endregion
 
@@ -4142,6 +4142,10 @@ namespace UltimateCombo.Combos
 		[ParentCombo(WHMPvP_Combo)]
 		[CustomComboInfo("Cure III", "", WHM.JobID)]
 		WHMPvP_Cure3 = 129005,
+
+		[PvPCustomCombo]
+		[CustomComboInfo("Miracle of Nature guard check", "", WHM.JobID)]
+		WHMPvP_NoWasteMiracleOfNature = 129006,
 
 		#endregion
 

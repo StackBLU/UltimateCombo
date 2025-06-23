@@ -173,8 +173,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
 						&& (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
-						&& (EnemyHealthCurrentHp() >= LocalPlayer.MaxHp || EnemyHealthMaxHp() == 44)
-						&& (!TargetHasEffect(BioList[OriginalHook(Biolysis)])
+						&& TargetIsBoss() && (!TargetHasEffect(BioList[OriginalHook(Biolysis)])
 						|| GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
 						|| ActionWatching.NumberOfGcdsUsed == 11))
 					{

@@ -35,6 +35,11 @@ namespace UltimateCombo.ComboHelper.Functions
 			return ActionWatching.GetActionName(id);
 		}
 
+		public static ActionWatching.ActionAttackType GetActionType(uint id)
+		{
+			return ActionWatching.GetAttackType(id);
+		}
+
 		public static int GetLevel(uint id)
 		{
 			return ActionWatching.GetLevel(id);
@@ -48,20 +53,26 @@ namespace UltimateCombo.ComboHelper.Functions
 		public static bool InActionRange(uint id)
 		{
 			int range = ActionWatching.GetActionRange(id);
-			switch (range)
+
+			if (HasTarget())
 			{
-				case -2:
-					return false;
-				case -1:
-					return InMeleeRange();
-				case 0:
-					{
-						float radius = ActionWatching.GetActionEffectRange(id);
-						return radius <= 0 || (HasTarget() && GetTargetDistance() <= (radius - 0.5f));
-					}
-				default:
-					return GetTargetDistance() <= range;
+				switch (range)
+				{
+					case -2:
+						return false;
+					case -1:
+						return InMeleeRange();
+					case 0:
+						{
+							float radius = ActionWatching.GetActionEffectRange(id);
+							return radius <= 0 || (HasTarget() && GetTargetDistance() <= (radius - 0.5f));
+						}
+					default:
+						return GetTargetDistance() <= range;
+				}
 			}
+
+			return false;
 		}
 
 		public static bool MaxActionRange(uint id)
@@ -90,7 +101,25 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool ActionReady(uint id)
 		{
-			return LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 5);
+			if (LevelChecked(id) && (HasCharges(id) || GetCooldown(id).CooldownTotal <= 5))
+			{
+				if (GetActionType(id) == ActionWatching.ActionAttackType.Weaponskill && !HasPacification())
+				{
+					return true;
+				}
+
+				if (GetActionType(id) == ActionWatching.ActionAttackType.Spell && !HasSilence())
+				{
+					return true;
+				}
+
+				if (GetActionType(id) == ActionWatching.ActionAttackType.Ability && !HasAmnesia() && !HasSilence())
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public static bool DutyActionReady(uint id)

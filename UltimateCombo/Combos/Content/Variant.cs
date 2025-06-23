@@ -1,8 +1,9 @@
 ﻿using ECommons.DalamudServices;
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE;
 using UltimateCombo.CustomCombo;
 
-namespace UltimateCombo.Combos.PvE.Content
+namespace UltimateCombo.Combos.Content
 {
 	internal static class Variant
 	{
@@ -107,8 +108,8 @@ namespace UltimateCombo.Combos.PvE.Content
 				if (IsEnabled(CustomComboPreset.Variant_Raise) && SafeToUse())
 				{
 					if (IsEnabled(VariantCure)
-						&& (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
-							or SGE.Egeiro or SMN.Resurrection or RDM.Verraise))
+						&& actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
+							or SGE.Egeiro or SMN.Resurrection or RDM.Verraise)
 					{
 						if (ActionReady(All.Swiftcast))
 						{

@@ -193,7 +193,7 @@ namespace UltimateCombo.Combos.PvE
 						&& OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
 						&& (Gauge.Sen.HasFlag(Sen.Getsu) || Gauge.Sen.HasFlag(Sen.Ka) || Gauge.Sen.HasFlag(Sen.Setsu))
 						&& (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
-						&& (EnemyHealthCurrentHp() > (LocalPlayer.MaxHp * 2) || EnemyHealthMaxHp() == 44))
+						&& TargetIsBoss())
 					{
 						return OriginalHook(Iaijutsu);
 					}

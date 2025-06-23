@@ -1,7 +1,10 @@
 ﻿using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.PvE;
 using UltimateCombo.CustomCombo;
+using UltimateCombo.Data;
+using UltimateCombo.Services;
 
-namespace UltimateCombo.Combos.PvE.Content
+namespace UltimateCombo.Combos.Content
 {
 	public static class Occult
 	{
@@ -106,6 +109,7 @@ namespace UltimateCombo.Combos.PvE.Content
 				PredictionOfCleansing = 4266,
 				PredictionOfBlessing = 4267,
 				PredictionOfStarfall = 4268,
+				Rejuvination = 44274,
 
 				BattleBell = 4251,
 				BattlesClangor = 4252,
@@ -130,7 +134,7 @@ namespace UltimateCombo.Combos.PvE.Content
 		public static class Config
 		{
 			public static UserInt
-				Occult_PhantomResuscitation = new("Occult_PhantomResuscitation", 65),
+				Occult_PhantomResuscitation = new("Occult_PhantomResuscitation", 70),
 				Occult_Pray = new("Occult_Pray", 75),
 				Occult_Heal = new("Occult_Heal", 25),
 				Occult_Sunbath = new("Occult_Sunbath", 75);
@@ -186,7 +190,8 @@ namespace UltimateCombo.Combos.PvE.Content
 						return PhantomKick;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_Counter) && DutyActionReady(OccultCounter) && InActionRange(OccultCounter))
+					if (IsEnabled(CustomComboPreset.Occult_Counter) && DutyActionReady(OccultCounter) && InActionRange(OccultCounter)
+						&& CanWeave(actionID))
 					{
 						return OccultCounter;
 					}
@@ -210,22 +215,23 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Vigilance) && DutyActionReady(Vigilance) && !InCombat() && !HasEffect(Buffs.Vigilance))
+					if (IsEnabled(CustomComboPreset.Occult_Vigilance) && DutyActionReady(Vigilance)
+						&& !InCombat() && !HasEffect(Buffs.Vigilance) && HasBattleTarget())
 					{
 						return Vigilance;
 					}
 
-					if (InCombat())
+					if (InCombat() && CanWeave(actionID))
 					{
-						if (IsEnabled(CustomComboPreset.Occult_Steal) && DutyActionReady(Steal) && InActionRange(Steal) && HasBattleTarget())
-						{
-							return Steal;
-						}
-
 						if (IsEnabled(CustomComboPreset.Occult_PilferWeapon) && DutyActionReady(PilferWeapon)
 							&& !TargetHasEffectAny(Debuffs.WeaponPilfered) && InActionRange(PilferWeapon))
 						{
 							return PilferWeapon;
+						}
+
+						if (IsEnabled(CustomComboPreset.Occult_Steal) && DutyActionReady(Steal) && InActionRange(Steal) && HasBattleTarget())
+						{
+							return Steal;
 						}
 					}
 				}
@@ -242,12 +248,14 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Mineuchi) && DutyActionReady(Mineuchi) && InActionRange(Mineuchi))
+					if (IsEnabled(CustomComboPreset.Occult_Zeninage) && DutyActionReady(Zeninage) && InActionRange(Zeninage)
+						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
-						return Mineuchi;
+						return Zeninage;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki))
+					if (IsEnabled(CustomComboPreset.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki) && !IsMoving
+						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return Iainuki;
 					}
@@ -282,9 +290,10 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat())
+				if (IsEnabled(CustomComboPreset.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID))
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Aim) && DutyActionReady(PhantomAim))
+					if (IsEnabled(CustomComboPreset.Occult_Aim) && DutyActionReady(PhantomAim)
+						&& (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return PhantomAim;
 					}
@@ -312,7 +321,8 @@ namespace UltimateCombo.Combos.PvE.Content
 						return OccultSlowga;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_Comet) && DutyActionReady(OccultComet))
+					if (IsEnabled(CustomComboPreset.Occult_Comet) && DutyActionReady(OccultComet)
+						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
 						if (HasEffect(All.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.OccultQuick))
 						{
@@ -321,7 +331,7 @@ namespace UltimateCombo.Combos.PvE.Content
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_MageMasher) && DutyActionReady(OccultMageMasher) && !TargetHasEffectAny(Debuffs.OccultMageMasher)
-						&& HasBattleTarget())
+						&& HasBattleTarget() && CanWeave(actionID))
 					{
 						return OccultMageMasher;
 					}
@@ -354,8 +364,8 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && SafeToUse())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_BattleBell) && DutyActionReady(BattleBell)
-						&& ((!HasEffect(Buffs.BattleBell)) || (HasFriendlyTarget() && !TargetHasEffect(Buffs.BattleBell))))
+					if (IsEnabled(CustomComboPreset.Occult_BattleBell) && DutyActionReady(BattleBell) && CanWeave(actionID)
+						&& (!HasEffect(Buffs.BattleBell) || (HasFriendlyTarget() && !TargetHasEffect(Buffs.BattleBell))))
 					{
 						return BattleBell;
 					}
@@ -393,7 +403,7 @@ namespace UltimateCombo.Combos.PvE.Content
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_RingingRespite) && DutyActionReady(RingingRespite)
+					if (IsEnabled(CustomComboPreset.Occult_RingingRespite) && DutyActionReady(RingingRespite) && CanWeave(actionID)
 						&& (!HasEffect(Buffs.RingingRespite) || (HasFriendlyTarget() && !TargetHasEffect(Buffs.RingingRespite))))
 					{
 						return RingingRespite;
@@ -410,17 +420,19 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse()
+				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID)
 					&& ((IsEnabled(CustomComboPreset.Occult_Bard_Utility) && (actionID is OffensiveAria or HerosRime))
-					|| !IsEnabled(CustomComboPreset.Occult_Bard_Utility)))
+					|| (!IsEnabled(CustomComboPreset.Occult_Bard_Utility) && InCombat())))
 				{
-					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime) && InCombat())
+					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime)
+						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || IsEnabled(CustomComboPreset.Occult_Bard_Utility)))
 					{
 						return HerosRime;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_OffensiveAria) && DutyActionReady(OffensiveAria) && !HasEffect(Buffs.HerosRime)
-						&& (!HasEffect(Buffs.OffensiveAria) || GetBuffRemainingTime(Buffs.OffensiveAria) < 3))
+					if (IsEnabled(CustomComboPreset.Occult_OffensiveAria) && DutyActionReady(OffensiveAria)
+						&& (!HasEffect(Buffs.HerosRime) || GetBuffRemainingTime(Buffs.HerosRime) < 2)
+						&& (!HasEffect(Buffs.OffensiveAria) || GetBuffRemainingTime(Buffs.OffensiveAria) < 5))
 					{
 						return OffensiveAria;
 					}
@@ -438,35 +450,40 @@ namespace UltimateCombo.Combos.PvE.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && SafeToUse())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat())
+					if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat()
+						&& (!DutyActionReady(PhantomRejuvenation) || (DutyActionReady(PhantomRejuvenation) && GetBuffRemainingTime(Buffs.Rejuvination) <= 15)))
 					{
 						return Predict;
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_Predict))
 					{
-						if (DutyActionReady(PhantomJudgement) && GetOptionValue(Config.Occult_Prediction) == 1)
+						if (DutyActionReady(PhantomJudgement) && (GetOptionValue(Config.Occult_Prediction) == 1
+							|| (GetOptionValue(Config.Occult_Prediction) == 4 && PlayerHealthPercentageHp() <= 90)))
 						{
 							return PhantomJudgement;
 						}
 
-						if (DutyActionReady(Cleansing) && GetOptionValue(Config.Occult_Prediction) == 2)
+						if (DutyActionReady(Cleansing) && (GetOptionValue(Config.Occult_Prediction) == 2
+							|| (GetOptionValue(Config.Occult_Prediction) == 4 && PlayerHealthPercentageHp() <= 90)))
 						{
 							return Cleansing;
 						}
 
-						if (DutyActionReady(Blessing) && GetOptionValue(Config.Occult_Prediction) == 3)
+						if (DutyActionReady(Blessing) && (GetOptionValue(Config.Occult_Prediction) == 3
+							|| (GetOptionValue(Config.Occult_Prediction) == 4 && PlayerHealthPercentageHp() <= 90)))
 						{
 							return Blessing;
 						}
 
-						if (DutyActionReady(Starfall) && GetOptionValue(Config.Occult_Prediction) == 4)
+						if (DutyActionReady(Starfall) && GetOptionValue(Config.Occult_Prediction) == 4 && PlayerHealthPercentageHp() > 90)
 						{
 							return Starfall;
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && InCombat())
+					if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && InCombat()
+						&& CanWeave(actionID))
 					{
 						return PhantomRejuvenation;
 					}
@@ -482,10 +499,10 @@ namespace UltimateCombo.Combos.PvE.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && InCombat() && SafeToUse()
+				if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
 					&& ((IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility)
 					&& (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
-					|| !IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility)))
+					|| (!IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility) && InCombat())))
 				{
 					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire))
 					{

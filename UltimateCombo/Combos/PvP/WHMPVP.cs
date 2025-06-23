@@ -77,5 +77,25 @@ namespace UltimateCombo.Combos.PvP
 				return actionID;
 			}
 		}
+
+		internal class WHMPvP_NoWasteMiracleOfNature : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.WHMPvP_NoWasteMiracleOfNature;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (actionID is MiracleOfNature && IsEnabled(CustomComboPreset.WHMPvP_NoWasteMiracleOfNature))
+				{
+					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+					{
+						return MiracleOfNature;
+					}
+
+					return OriginalHook(11);
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

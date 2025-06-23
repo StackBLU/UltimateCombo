@@ -63,15 +63,15 @@ namespace UltimateCombo.Data
 				{
 					switch (sheet.ActionCategory.Value.RowId)
 					{
-						case 2: //Spell
+						case 2:
 							LastSpell = header.ActionId;
 							LastGCD = header.ActionId;
 							break;
-						case 3: //Weaponskill
+						case 3:
 							LastWeaponskill = header.ActionId;
 							LastGCD = header.ActionId;
 							break;
-						case 4: //Ability
+						case 4:
 							LastAbility = header.ActionId;
 							break;
 					}
@@ -239,8 +239,7 @@ namespace UltimateCombo.Data
 				_ = CheckWeaponSheathedAsync();
 			}
 
-			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas
-				or ConditionFlag.Jumping61 or ConditionFlag.Mounted)
+			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas or ConditionFlag.Jumping61 or ConditionFlag.Mounted)
 			{
 				CombatActions.Clear();
 				LastAbility = 0;
@@ -252,8 +251,8 @@ namespace UltimateCombo.Data
 
 		public static async Task CheckWeaponSheathedAsync()
 		{
-			await Task.Delay((((int)CustomComboFunctions.AutoSheathTimer() + 1) * 1000) + 500);
-			if (!CustomComboFunctions.IsUnsheathed() && !CustomComboFunctions.InCombat())
+			await Task.Delay(((int)CustomComboFunctions.AutoSheathTimer() * 1000) + 500);
+			if (!CustomComboFunctions.IsUnsheathed() && !CustomComboFunctions.InCombat() && !CustomComboFunctions.HasBattleTarget())
 			{
 				CombatActions.Clear();
 				LastAbility = 0;
