@@ -214,7 +214,7 @@ namespace UltimateCombo.Combos.PvE
 
 					if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder))
 						&& HasEffect(Buffs.Thunderhead) && !HasEffect(Buffs.Triplecast)
-						&& TargetIsBoss() && (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 1.5))
+						&& TargetIsBoss() && GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 1.5)
 					{
 						return OriginalHook(Thunder);
 					}
@@ -226,7 +226,7 @@ namespace UltimateCombo.Combos.PvE
 						|| ActionWatching.NumberOfGcdsUsed == 4 || IsMoving))
 					{
 						if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
-							&& (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 10))
+							&& GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 3)
 						{
 							return OriginalHook(Thunder);
 						}
@@ -369,7 +369,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.BLM_AoE_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
-						&& !HasEffect(Buffs.Triplecast) && TargetIsBoss() && (GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder2)]) <= 1.5))
+						&& !HasEffect(Buffs.Triplecast) && TargetIsBoss() && GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder2)]) <= 1.5)
 					{
 						return OriginalHook(Thunder2);
 					}

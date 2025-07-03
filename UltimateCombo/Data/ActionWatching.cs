@@ -236,10 +236,11 @@ namespace UltimateCombo.Data
 		{
 			if (flag is ConditionFlag.InCombat && value == false)
 			{
-				_ = CheckWeaponSheathedAsync();
+				_ = CheckInCombat();
 			}
 
-			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas or ConditionFlag.Jumping61 or ConditionFlag.Mounted)
+			if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas or ConditionFlag.Mounted
+				or ConditionFlag.OccupiedInCutSceneEvent or ConditionFlag.Unconscious or ConditionFlag.WatchingCutscene)
 			{
 				CombatActions.Clear();
 				LastAbility = 0;
@@ -249,10 +250,10 @@ namespace UltimateCombo.Data
 			}
 		}
 
-		public static async Task CheckWeaponSheathedAsync()
+		public static async Task CheckInCombat()
 		{
-			await Task.Delay(((int)CustomComboFunctions.AutoSheathTimer() * 1000) + 500);
-			if (!CustomComboFunctions.IsUnsheathed() && !CustomComboFunctions.InCombat() && !CustomComboFunctions.HasBattleTarget())
+			await Task.Delay(5000);
+			if (!CustomComboFunctions.InCombat())
 			{
 				CombatActions.Clear();
 				LastAbility = 0;

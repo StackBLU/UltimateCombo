@@ -140,12 +140,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Ninjutsu);
 						}
 
-						if (WasLastAbility(ChiCombo))
+						if (WasLastAction(ChiCombo))
 						{
 							return JinCombo;
 						}
 
-						if (WasLastAbility(Ten))
+						if (WasLastAction(Ten))
 						{
 							return ChiCombo;
 						}
@@ -162,7 +162,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
 						{
-							if (IsEnabled(CustomComboPreset.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)) && TargetIsBoss())
+							if (IsEnabled(CustomComboPreset.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)) && TargetIsBoss() && !HasEffectAny(Debuffs.Dokumori))
 							{
 								return OriginalHook(Mug);
 							}
@@ -252,7 +252,7 @@ namespace UltimateCombo.Combos.PvE
 									return OriginalHook(Ninjutsu);
 								}
 
-								if (WasLastAbility(TenCombo))
+								if (WasLastAction(TenCombo))
 								{
 									return JinCombo;
 								}
@@ -269,7 +269,7 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(JinCombo))
+							if (WasLastAction(JinCombo))
 							{
 								return ChiCombo;
 							}
@@ -283,14 +283,14 @@ namespace UltimateCombo.Combos.PvE
 
 						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
-							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAbility(Jin)))
+							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Jin)))
 						{
 							if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == Jin && MudraCheck[^1] == ChiCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(Jin))
+							if (WasLastAction(Jin))
 							{
 								return ChiCombo;
 							}
@@ -301,19 +301,19 @@ namespace UltimateCombo.Combos.PvE
 							}
 						}
 
-						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAbility(Ten)))
+						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
 						{
 							if (OriginalHook(Ninjutsu) == Suiton && MudraCheck[^3] == Ten && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == JinCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(ChiCombo))
+							if (WasLastAction(ChiCombo))
 							{
 								return JinCombo;
 							}
 
-							if (WasLastAbility(Ten))
+							if (WasLastAction(Ten))
 							{
 								return ChiCombo;
 							}
@@ -388,12 +388,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Ninjutsu);
 						}
 
-						if (WasLastAbility(JinCombo))
+						if (WasLastAction(JinCombo))
 						{
 							return TenCombo;
 						}
 
-						if (WasLastAbility(Chi))
+						if (WasLastAction(Chi))
 						{
 							return JinCombo;
 						}
@@ -408,7 +408,7 @@ namespace UltimateCombo.Combos.PvE
 							return Kassatsu;
 						}
 
-						if (IsEnabled(CustomComboPreset.NIN_AoE_Mug) && ActionReady(OriginalHook(Mug)))
+						if (IsEnabled(CustomComboPreset.NIN_AoE_Mug) && ActionReady(OriginalHook(Mug)) && !HasEffectAny(Debuffs.Dokumori))
 						{
 							return OriginalHook(Mug);
 						}
@@ -489,7 +489,7 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(ChiCombo))
+							if (WasLastAction(ChiCombo))
 							{
 								return TenCombo;
 							}
@@ -503,13 +503,12 @@ namespace UltimateCombo.Combos.PvE
 						if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
 							&& (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
 						{
-							if (OriginalHook(Ninjutsu) == Katon
-								&& MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
+							if (OriginalHook(Ninjutsu) == Katon && MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
 							{
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(Chi))
+							if (WasLastAction(Chi))
 							{
 								return TenCombo;
 							}
@@ -527,12 +526,12 @@ namespace UltimateCombo.Combos.PvE
 								return OriginalHook(Ninjutsu);
 							}
 
-							if (WasLastAbility(JinCombo))
+							if (WasLastAction(JinCombo))
 							{
 								return TenCombo;
 							}
 
-							if (WasLastAbility(Chi))
+							if (WasLastAction(Chi))
 							{
 								return JinCombo;
 							}
@@ -584,12 +583,12 @@ namespace UltimateCombo.Combos.PvE
 							return OriginalHook(Ninjutsu);
 						}
 
-						if (WasLastAbility(JinCombo) && actionID is Chi)
+						if (WasLastAction(JinCombo) && actionID is Chi)
 						{
 							return ChiCombo;
 						}
 
-						if (WasLastAbility(Ten) && actionID is Chi)
+						if (WasLastAction(Ten) && actionID is Chi)
 						{
 							return JinCombo;
 						}

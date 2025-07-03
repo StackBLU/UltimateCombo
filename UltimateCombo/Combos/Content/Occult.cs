@@ -117,6 +117,7 @@ namespace UltimateCombo.Combos.Content
 
 				Vigilance = 4277,
 
+				Rage = 4235,
 				PentUpRage = 4236,
 
 				OccultQuick = 4260,
@@ -133,6 +134,9 @@ namespace UltimateCombo.Combos.Content
 
 		public static class Config
 		{
+			public static UserBool
+				Occult_KickNotice = new("Occult_KickNotice");
+
 			public static UserInt
 				Occult_PhantomResuscitation = new("Occult_PhantomResuscitation", 70),
 				Occult_Pray = new("Occult_Pray", 75),
@@ -184,10 +188,17 @@ namespace UltimateCombo.Combos.Content
 						return OccultChakra;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_PhantomKick) && DutyActionReady(PhantomKick)
-						&& GetBuffRemainingTime(Buffs.PhantomKick) < 3 && InActionRange(PhantomKick))
+					if (IsEnabled(CustomComboPreset.Occult_PhantomKick) && DutyActionReady(PhantomKick))
 					{
-						return PhantomKick;
+						if (GetBuffRemainingTime(Buffs.PhantomKick) < 5 && !InActionRange(PhantomKick) && GetOptionBool(Config.Occult_KickNotice))
+						{
+							return PhantomKick;
+						}
+
+						if (GetBuffRemainingTime(Buffs.PhantomKick) < 1 && InActionRange(PhantomKick))
+						{
+							return PhantomKick;
+						}
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_Counter) && DutyActionReady(OccultCounter) && InActionRange(OccultCounter)
@@ -197,7 +208,8 @@ namespace UltimateCombo.Combos.Content
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_Counterstance) && DutyActionReady(Counterstance)
-						&& CurrentTarget.TargetObject == LocalPlayer && GetBuffRemainingTime(Buffs.Counterstance) < 2)
+						&& CurrentTarget.TargetObject == LocalPlayer && GetBuffRemainingTime(Buffs.Counterstance) < 2
+						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return Counterstance;
 					}
@@ -273,8 +285,8 @@ namespace UltimateCombo.Combos.Content
 			{
 				if (IsEnabled(CustomComboPreset.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat())
 				{
-					if (IsEnabled(CustomComboPreset.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(Iainuki)
-						&& HasEffect(Buffs.PentUpRage) && GetBuffRemainingTime(Buffs.PentUpRage) < 2.5)
+					if (IsEnabled(CustomComboPreset.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(DeadlyBlow)
+						&& !HasEffect(Buffs.Rage) && (HasEffect(Buffs.PentUpRage) || GetCooldownRemainingTime(Rage) > 20))
 					{
 						return DeadlyBlow;
 					}
@@ -316,11 +328,6 @@ namespace UltimateCombo.Combos.Content
 						return OccultQuick;
 					}
 
-					if (IsEnabled(CustomComboPreset.Occult_Slowga) && DutyActionReady(OccultSlowga) && !TargetHasEffectAny(Debuffs.Slow))
-					{
-						return OccultSlowga;
-					}
-
 					if (IsEnabled(CustomComboPreset.Occult_Comet) && DutyActionReady(OccultComet)
 						&& (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
 					{
@@ -335,11 +342,6 @@ namespace UltimateCombo.Combos.Content
 					{
 						return OccultMageMasher;
 					}
-
-					/*if (IsEnabled(CustomComboPreset.Occult_Dispel) && DutyActionReady(OccultDispel))
-					{
-						return OccultDispel;
-					}*/
 				}
 
 				return actionID;
@@ -420,12 +422,10 @@ namespace UltimateCombo.Combos.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID)
-					&& ((IsEnabled(CustomComboPreset.Occult_Bard_Utility) && (actionID is OffensiveAria or HerosRime))
-					|| (!IsEnabled(CustomComboPreset.Occult_Bard_Utility) && InCombat())))
+				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID))
 				{
 					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime)
-						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || IsEnabled(CustomComboPreset.Occult_Bard_Utility)))
+						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return HerosRime;
 					}
@@ -504,11 +504,6 @@ namespace UltimateCombo.Combos.Content
 					&& (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
 					|| (!IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility) && InCombat())))
 				{
-					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire))
-					{
-						return PhantomFire;
-					}
-
 					if (IsEnabled(CustomComboPreset.Occult_HolySilverCannon))
 					{
 						if (DutyActionReady(HolyCannon) && (GetOptionValue(Config.Occult_HolySilverCannon) == 1 || !DutyActionReady(SilverCannon)))
@@ -520,6 +515,11 @@ namespace UltimateCombo.Combos.Content
 						{
 							return SilverCannon;
 						}
+					}
+
+					if (IsEnabled(CustomComboPreset.Occult_PhantomFire) && DutyActionReady(PhantomFire))
+					{
+						return PhantomFire;
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_DarkShockCannon))

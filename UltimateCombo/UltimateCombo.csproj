@@ -40,7 +40,7 @@
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageIcon>logo.png</PackageIcon>
-    <AssemblyVersion>1.0.0.74</AssemblyVersion>
+    <AssemblyVersion>1.0.0.75</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -48,7 +48,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>1701;1702;8604</NoWarn>
+    <NoWarn>1701;1702;8604;4014</NoWarn>
     <WarningsAsErrors />
   </PropertyGroup>
 

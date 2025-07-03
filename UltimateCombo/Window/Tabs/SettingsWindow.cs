@@ -11,6 +11,23 @@ namespace UltimateCombo.Window.Tabs
 			PvEWindow.HasToOpenJob = true;
 			_ = ImGui.BeginChild("main", new Vector2(0, 0), true);
 
+			ImGui.Text("-- Quick Guide --" +
+				"\nIf an option is toggled on, it will appear in the rotation at some point.\nThere are unique conditions (buffs, timings, hp checks, etc.)\ntied to certain skills appearing, so if it's not happening,\nit probably isn't supposed to at that moment." +
+				"\n\nEach combo's trigger skills are shown underneath the toggle.\nOnly those skills will trigger the combo.");
+
+			ImGui.Text("\n-- Controller Controls (PS / XBox) --" +
+				"\nL1 + L3 - Dalamud interface" +
+				"\nD-pad - Navigate window" +
+				"\nX / A - Select" +
+				"\nCircle / B - Back" +
+				"\nSquare / X (Hold) - Select window" +
+				"\n\t- L1 / R1 - Up/Down" +
+				"\n\t- D-pad - Window size" +
+				"\n\t- Left stick - Move window" +
+				"\n\n");
+
+			ImGui.Text("-- Settings --");
+
 			bool openOnLaunch = Service.Configuration.OpenOnLaunch;
 			if (ImGui.Checkbox("Open on launch", ref openOnLaunch))
 			{
@@ -25,7 +42,6 @@ namespace UltimateCombo.Window.Tabs
 				Service.Configuration.Save();
 			}
 
-			ImGui.NextColumn();
 			bool hideConflicting = Service.Configuration.HideConflictedCombos;
 			if (ImGui.Checkbox("Hide conflicting combos", ref hideConflicting))
 			{
@@ -33,7 +49,6 @@ namespace UltimateCombo.Window.Tabs
 				Service.Configuration.Save();
 			}
 
-			ImGui.NextColumn();
 			bool ignoreGCDChecks = Service.Configuration.IgnoreGCDChecks;
 			if (ImGui.Checkbox("Ignore GCD Checks - Combos will start using abilities immediately", ref ignoreGCDChecks))
 			{
@@ -41,7 +56,6 @@ namespace UltimateCombo.Window.Tabs
 				Service.Configuration.Save();
 			}
 
-			ImGui.NextColumn();
 			bool disableTripleWeaving = Service.Configuration.DisableTripleWeaving;
 			if (ImGui.Checkbox("Disable Triple Weaving", ref disableTripleWeaving))
 			{
@@ -49,10 +63,9 @@ namespace UltimateCombo.Window.Tabs
 				Service.Configuration.Save();
 			}
 
-			ImGui.NextColumn();
 			double rangedAttackRange = Service.Configuration.RangedAttackRange;
 			ImGui.SetNextItemWidth(150);
-			if (ImGui.InputDouble("Minimum range away from target before using ranged attacks on melee classes", ref rangedAttackRange, 1))
+			if (ImGui.InputDouble("Minimum range away from target before\nusing ranged attacks on melee classes", ref rangedAttackRange, 1))
 			{
 				Service.Configuration.RangedAttackRange = rangedAttackRange;
 				Service.Configuration.Save();

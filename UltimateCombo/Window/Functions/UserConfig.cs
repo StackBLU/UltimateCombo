@@ -1205,6 +1205,12 @@ namespace UltimateCombo.Window.Functions
 				UserConfig.DrawSliderInt(0, 100, Occult.Config.Occult_Sunbath, "Sunbath HP % Threshold", 150, SliderIncrements.Fives);
 			}
 
+			if (preset is CustomComboPreset.Occult_PhantomKick && enabled)
+			{
+				UserConfig.DrawAdditionalBoolChoice(Occult.Config.Occult_KickNotice, "Show Phantom Kick if out of range and buff" +
+					"\nhas fewer than 5 seconds left", "");
+			}
+
 			#endregion
 
 			#endregion

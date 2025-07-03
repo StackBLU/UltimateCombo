@@ -165,7 +165,7 @@ namespace UltimateCombo.Window
 				}
 				ImGui.Spacing();
 
-				if (ImGui.Selectable("Settings", OpenWindow == OpenWindow.Settings))
+				if (ImGui.Selectable("Settings & Help", OpenWindow == OpenWindow.Settings))
 				{
 					OpenWindow = OpenWindow.Settings;
 				}

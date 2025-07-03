@@ -530,28 +530,18 @@ namespace UltimateCombo.Combos
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
-		[CustomComboInfo("Occult Slowga", "", All.JobID)]
-		Occult_Slowga = 100081,
-
-		[Occult]
-		[ParentCombo(Occult_TimeMage)]
 		[CustomComboInfo("Occult Comet", "", All.JobID)]
-		Occult_Comet = 100082,
+		Occult_Comet = 100081,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
 		[CustomComboInfo("Occult Mage Masher", "", All.JobID)]
-		Occult_MageMasher = 100083,
-
-		[Occult]
-		[ParentCombo(Occult_TimeMage)]
-		[CustomComboInfo("Occult Dispel - Not working yet", "", All.JobID)]
-		Occult_Dispel = 100084,
+		Occult_MageMasher = 100082,
 
 		[Occult]
 		[ParentCombo(Occult_TimeMage)]
 		[CustomComboInfo("Occult Quick", "", All.JobID)]
-		Occult_Quick = 100085,
+		Occult_Quick = 100083,
 
 		#endregion
 
@@ -591,11 +581,6 @@ namespace UltimateCombo.Combos
 		[ReplaceSkill(Occult.OffensiveAria, Occult.HerosRime)]
 		[CustomComboInfo("Phantom Bard", "", All.JobID)]
 		Occult_Bard = 100090,
-
-		[Occult]
-		[ParentCombo(Occult_Bard)]
-		[CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Execute Phantom Action\", instead of your main GCD", "", All.JobID)]
-		Occult_Bard_Utility = 100095,
 
 		[Occult]
 		[ParentCombo(Occult_Bard)]

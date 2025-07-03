@@ -1,6 +1,5 @@
 ﻿using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using System;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Data;
@@ -22,7 +21,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool LevelChecked(uint actionid)
 		{
-			return LocalPlayer.Level >= GetLevel(actionid) && NoBlockingStatuses(actionid) && IsActionUnlocked(actionid);
+			return LocalPlayer.Level >= GetLevel(actionid) && IsActionUnlocked(actionid);
 		}
 
 		public static bool TraitActionReady(uint traitid)
@@ -176,12 +175,10 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (Service.Configuration.DisableTripleWeaving)
 			{
-				return (GetCooldown(actionID).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved())
-				|| HasSilence() || HasPacification();
+				return (GetCooldown(actionID).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved()) || HasSilence() || HasPacification();
 			}
 
-			return GetCooldown(actionID).CooldownRemaining >= weaveTime
-				|| HasSilence() || HasPacification();
+			return GetCooldown(actionID).CooldownRemaining >= weaveTime || HasSilence() || HasPacification();
 		}
 
 		public static bool CanDelayedWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)
@@ -204,31 +201,6 @@ namespace UltimateCombo.ComboHelper.Functions
 			{
 				return ActionManager.Instance()->Combo.Action;
 			}
-		}
-
-		public static unsafe bool AutoSheatheState()
-		{
-			return UIState.Instance()->WeaponState.AutoSheatheState;
-		}
-
-		public static unsafe float AutoSheathTimer()
-		{
-			return UIState.Instance()->WeaponState.AutoSheathTimer;
-		}
-
-		public static unsafe bool IsAutoAttacking()
-		{
-			return UIState.Instance()->WeaponState.AutoAttackState.IsAutoAttacking;
-		}
-
-		public static unsafe bool IsUnsheathed()
-		{
-			return UIState.Instance()->WeaponState.IsUnsheathed;
-		}
-
-		public static unsafe float SheatheCooldown()
-		{
-			return UIState.Instance()->WeaponState.SheatheCooldown;
 		}
 
 		public static unsafe int FindHolsterItem(uint itemID)

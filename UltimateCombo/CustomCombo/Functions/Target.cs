@@ -1,17 +1,13 @@
-﻿using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState.Objects.Enums;
+﻿using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
 using ECommons;
 using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.System.Framework;
 using Lumina.Excel.Sheets;
 using System;
-using System.Linq;
 using System.Numerics;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
-using StructsObject = FFXIVClientStructs.FFXIV.Client.Game.Object;
 
 namespace UltimateCombo.ComboHelper.Functions
 {
@@ -127,66 +123,22 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool HasBattleTarget()
 		{
-			return CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy or (BattleNpcSubKind)1 };
+			if (CurrentTarget is null)
+			{
+				return false;
+			}
+
+			return CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
 		}
 
-		public static bool HasFriendlyTarget(IGameObject? OurTarget = null)
+		public static bool HasFriendlyTarget()
 		{
-			if (OurTarget is null)
+			if (CurrentTarget is null)
 			{
-				OurTarget = CurrentTarget;
-				if (OurTarget is null)
-				{
-					return false;
-				}
+				return false;
 			}
 
-			if (OurTarget.ObjectKind is ObjectKind.Player)
-			{
-				return true;
-			}
-			return OurTarget is IBattleNpc
-				   && (OurTarget as IBattleNpc).BattleNpcKind is not BattleNpcSubKind.Enemy and not (BattleNpcSubKind)1;
-		}
-
-		public static unsafe IGameObject? GetHealTarget(bool checkMOPartyUI = false, bool restrictToMouseover = false)
-		{
-			IGameObject? healTarget = null;
-			ITargetManager tm = Service.TargetManager;
-
-			if (HasFriendlyTarget(tm.SoftTarget))
-			{
-				healTarget = tm.SoftTarget;
-			}
-
-			if (healTarget is null && HasFriendlyTarget(CurrentTarget) && !restrictToMouseover)
-			{
-				healTarget = CurrentTarget;
-			}
-			if (checkMOPartyUI)
-			{
-				StructsObject.GameObject* t = Framework.Instance()->GetUIModule()->GetPronounModule()->UiMouseOverTarget;
-				if (t != null && t->GetGameObjectId().ObjectId != 0)
-				{
-					IGameObject? uiTarget = Service.ObjectTable.Where(x => x.GameObjectId == t->GetGameObjectId().ObjectId).FirstOrDefault();
-					if (uiTarget != null && HasFriendlyTarget(uiTarget))
-					{
-						healTarget = uiTarget;
-					}
-
-					if (restrictToMouseover)
-					{
-						return healTarget;
-					}
-				}
-
-				if (restrictToMouseover)
-				{
-					return healTarget;
-				}
-			}
-			healTarget ??= LocalPlayer;
-			return healTarget;
+			return CurrentTarget.ObjectKind is ObjectKind.Player;
 		}
 
 		public static bool CanInterruptEnemy()
