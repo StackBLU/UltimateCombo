@@ -252,5 +252,24 @@ namespace UltimateCombo.Combos.Content
 				return actionID;
 			}
 		}
+
+		internal class Bozja_CureIV : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Bozja_CureIV;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if (IsEnabled(CustomComboPreset.Bozja_CureIV) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Cure4))
+				{
+					if (DutyActionReady(Cure4) && DutyActionEquipped(Cure4)
+						&& (PlayerHealthPercentageHp() <= 50 || (HasEffect(Buffs.PureElder) && GetBuffRemainingTime(Buffs.Bravery2) < 3)))
+					{
+						return Cure4;
+					}
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

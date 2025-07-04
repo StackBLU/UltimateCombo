@@ -395,5 +395,28 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		internal class MNK_PerfectBlitz : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.MNK_PerfectBlitz;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is PerfectBalance or MasterfulBlitz) && IsEnabled(CustomComboPreset.MNK_PerfectBlitz))
+				{
+					if (ActionReady(PerfectBalance) && !HasEffect(Buffs.PerfectBalance) && Gauge.BeastChakra.Contains(BeastChakra.None))
+					{
+						return PerfectBalance;
+					}
+
+					if (ActionReady(OriginalHook(MasterfulBlitz)) && (!Gauge.BeastChakra.Contains(BeastChakra.None) || HasEffect(Buffs.PerfectBalance)))
+					{
+						return OriginalHook(MasterfulBlitz);
+					}
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

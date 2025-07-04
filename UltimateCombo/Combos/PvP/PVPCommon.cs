@@ -207,7 +207,7 @@ namespace UltimateCombo.Combos.PvP
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten))
+				if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten) && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu))
 				{
 					return OriginalHook(11);
 				}

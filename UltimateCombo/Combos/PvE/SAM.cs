@@ -386,5 +386,26 @@ namespace UltimateCombo.Combos.PvE
 				return actionID;
 			}
 		}
+
+		internal class SAM_Iaijutsu : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SAM_Iaijutsu;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is Iaijutsu or TsubameGaeshi) && IsEnabled(CustomComboPreset.SAM_Iaijutsu))
+				{
+					if (HasEffect(Buffs.TsubameReady) || HasEffect(Buffs.EnhancedTsubameReady)
+						|| HasEffect(Buffs.AoETsubameReady) || HasEffect(Buffs.EnhancedAoETsubameReady))
+					{
+						return OriginalHook(TsubameGaeshi);
+					}
+
+					return OriginalHook(Iaijutsu);
+				}
+
+				return actionID;
+			}
+		}
 	}
 }

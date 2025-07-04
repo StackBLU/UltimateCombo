@@ -147,7 +147,7 @@ namespace UltimateCombo.Combos.PvE
 						if (IsEnabled(CustomComboPreset.RPR_ST_BloodStalk) && ActionReady(BloodStalk) && Gauge.Soul >= 50
 							&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.Enshrouded))
 						{
-							return BloodStalk;
+							return OriginalHook(BloodStalk);
 						}
 					}
 
@@ -178,6 +178,7 @@ namespace UltimateCombo.Combos.PvE
 						{
 							return OriginalHook(CrossReaping);
 						}
+
 						return OriginalHook(VoidReaping);
 					}
 
@@ -353,6 +354,56 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
+		internal class RPR_BloodGluttony : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_BloodGluttony;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Gluttony or BloodStalk) && IsEnabled(CustomComboPreset.RPR_BloodGluttony))
+				{
+					if (Gauge.Soul >= 50 && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.Enshrouded))
+					{
+						if (ActionReady(Gluttony))
+						{
+							return Gluttony;
+						}
+
+						return OriginalHook(BloodStalk);
+					}
+
+					return Gluttony;
+				}
+
+				return actionID;
+			}
+		}
+
+		internal class RPR_GibbetGallows : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_GibbetGallows;
+
+			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
+			{
+				if ((actionID is Gibbet or Gallows) && IsEnabled(CustomComboPreset.RPR_GibbetGallows))
+				{
+					if (HasEffect(Buffs.EnhancedGibbet))
+					{
+						return OriginalHook(Gibbet);
+					}
+
+					if (HasEffect(Buffs.EnhancedGallows))
+					{
+						return OriginalHook(Gallows);
+					}
+
+					return OriginalHook(Gallows);
+				}
+
+				return actionID;
+			}
+		}
+
 		internal class RPR_Regress : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.RPR_Regress;
@@ -366,6 +417,7 @@ namespace UltimateCombo.Combos.PvE
 						return Regress;
 					}
 				}
+
 				return actionID;
 			}
 		}

@@ -563,6 +563,29 @@ namespace UltimateCombo.Combos.PvE
 			}
 		}
 
+		internal class NIN_Raijus : CustomComboClass
+		{
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_Raijus;
+
+			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
+			{
+				if ((actionID is FleetingRaiju or ForkedRaiju) && IsEnabled(CustomComboPreset.NIN_Raijus))
+				{
+					if (HasEffect(Buffs.RaijuReady))
+					{
+						if (InActionRange(FleetingRaiju))
+						{
+							return FleetingRaiju;
+						}
+
+						return ForkedRaiju;
+					}
+				}
+
+				return actionID;
+			}
+		}
+
 		internal class NIN_Doton : CustomComboClass
 		{
 			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.NIN_Doton;

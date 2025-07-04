@@ -425,7 +425,7 @@ namespace UltimateCombo.Combos.Content
 				if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID))
 				{
 					if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime)
-						&& (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
+						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return HerosRime;
 					}

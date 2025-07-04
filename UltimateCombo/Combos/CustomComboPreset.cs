@@ -369,6 +369,11 @@ namespace UltimateCombo.Combos
 		[CustomComboInfo("Lost Slash", "", All.JobID)]
 		Bozja_Slash = 100046,
 
+		[Bozja]
+		[ReplaceSkill(Bozja.Cure4)]
+		[CustomComboInfo("Cure IV", "", All.JobID)]
+		Bozja_CureIV = 100047,
+
 		#endregion
 
 		#region Variant
@@ -1131,7 +1136,7 @@ namespace UltimateCombo.Combos
 		GNB_BurstCont = 7040,
 
 		[ReplaceSkill(GNB.GnashingFang)]
-		[CustomComboInfo("Gnashing Fang > Jugular Rip > Savagae Claw > Abdomen Tear > Wicked Talon > Eye Gouge", "", GNB.JobID)]
+		[CustomComboInfo("Gnashing Fang > Jugular Rip > Savage Claw > Abdomen Tear > Wicked Talon > Eye Gouge", "", GNB.JobID)]
 		GNB_GnashCont = 7041,
 
 		[ReplaceSkill(GNB.FatedCircle)]
@@ -1726,7 +1731,9 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-
+		[ReplaceSkill(MNK.PerfectBalance, MNK.MasterfulBlitz)]
+		[CustomComboInfo("Perfect Balance > Masterful Blitz", "", MNK.JobID)]
+		MNK_PerfectBlitz = 9030,
 
 		#endregion
 
@@ -1927,13 +1934,17 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ReplaceSkill(NIN.FleetingRaiju, NIN.ForkedRaiju)]
+		[CustomComboInfo("Fleeting Raiju / Forked Raiju", "", NIN.JobID)]
+		NIN_Raijus = 10040,
+
 		[ReplaceSkill(NIN.Chi, NIN.Doton)]
 		[CustomComboInfo("Doton", "", NIN.JobID)]
-		NIN_Doton = 10040,
+		NIN_Doton = 10041,
 
 		[ReplaceSkill(NIN.Ten, NIN.Chi, NIN.Jin)]
 		[CustomComboInfo("Mudra Protection", "", NIN.JobID)]
-		NIN_MudraProtection = 10041,
+		NIN_MudraProtection = 10042,
 
 		#endregion
 
@@ -2047,7 +2058,9 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
-
+		[ReplaceSkill(SAM.Iaijutsu, SAM.TsubameGaeshi)]
+		[CustomComboInfo("Iaijutsu > Tsubame-Gaeshi", "", SAM.JobID)]
+		SAM_Iaijutsu = 15040,
 
 		#endregion
 
@@ -2157,9 +2170,17 @@ namespace UltimateCombo.Combos
 
 		#region Utility
 
+		[ReplaceSkill(RPR.BloodStalk, RPR.Gluttony)]
+		[CustomComboInfo("Blood Stalk / Gluttony", "", RPR.JobID)]
+		RPR_BloodGluttony = 12040,
+
+		[ReplaceSkill(RPR.Gibbet, RPR.Gallows)]
+		[CustomComboInfo("Gibbet / Gallows", "", RPR.JobID)]
+		RPR_GibbetGallows = 12041,
+
 		[ReplaceSkill(RPR.HellsIngress, RPR.HellsEgress)]
 		[CustomComboInfo("Regress on Ingress and Egress", "", RPR.JobID)]
-		RPR_Regress = 12040,
+		RPR_Regress = 12042,
 
 		#endregion
 
