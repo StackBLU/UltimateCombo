@@ -1,331 +1,308 @@
-﻿using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.Types;
-using ECommons;
-using ECommons.DalamudServices;
-using Lumina.Excel.Sheets;
 using System;
 using System.Numerics;
+
+using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.Types;
+
+using ECommons;
+using ECommons.DalamudServices;
+
+using Lumina.Excel.Sheets;
+
 using UltimateCombo.Data;
 using UltimateCombo.Services;
+
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace UltimateCombo.ComboHelper.Functions
 {
-	internal abstract partial class CustomComboFunctions
-	{
-		public static IGameObject? CurrentTarget
-		{
-			get
-			{
-				return Service.TargetManager.Target;
-			}
-		}
+    internal abstract partial class CustomComboFunctions
+    {
+        public static IGameObject? CurrentTarget => Service.TargetManager.Target;
 
-		public static bool HasTarget()
-		{
-			return CurrentTarget is not null;
-		}
+        public static IGameObject SafeCurrentTarget => CurrentTarget ?? throw new InvalidOperationException("CurrentTarget is not available");
 
-		public static float GetTargetDistance()
-		{
-			if (CurrentTarget is null || LocalPlayer is null)
-			{
-				return 0;
-			}
+        public static bool HasTarget()
+        {
+            return CurrentTarget is not null;
+        }
 
-			if (CurrentTarget is not IBattleChara chara)
-			{
-				return 0;
-			}
+        public static float GetTargetDistance()
+        {
+            if (CurrentTarget is null || LocalPlayer is null)
+            {
+                return 0;
+            }
 
-			if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
-			{
-				return 0;
-			}
+            if (CurrentTarget is not IBattleChara chara)
+            {
+                return 0;
+            }
 
-			Vector2 position = new(chara.Position.X, chara.Position.Z);
-			Vector2 selfPosition = new(LocalPlayer.Position.X, LocalPlayer.Position.Z);
+            if (CurrentTarget.GameObjectId == LocalPlayer?.GameObjectId)
+            {
+                return 0;
+            }
 
-			return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
-		}
+            Vector2 position = new(chara.Position.X, chara.Position.Z);
+            Vector2 selfPosition = new(SafeLocalPlayer.Position.X, SafeLocalPlayer.Position.Z);
 
-		public static bool InMeleeRange()
-		{
-			if (LocalPlayer.TargetObject == null)
-			{
-				return false;
-			}
+            return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - SafeLocalPlayer.HitboxRadius);
+        }
 
-			float distance = GetTargetDistance();
+        public static bool InMeleeRange()
+        {
+            if (SafeLocalPlayer.TargetObject == null)
+            {
+                return false;
+            }
 
-			return distance <= 3;
-		}
+            var distance = GetTargetDistance();
 
-		public static bool OutOfMeleeRange()
-		{
-			if (LocalPlayer.TargetObject == null)
-			{
-				return false;
-			}
+            return distance <= 3;
+        }
 
-			float distance = GetTargetDistance();
+        public static bool OutOfMeleeRange()
+        {
+            if (LocalPlayer?.TargetObject == null)
+            {
+                return false;
+            }
 
-			return distance > Service.Configuration.RangedAttackRange;
-		}
+            var distance = GetTargetDistance();
 
-		public static bool InMeleeRangeNoMovement()
-		{
-			if (LocalPlayer.TargetObject == null)
-			{
-				return false;
-			}
+            return distance > Service.Configuration.RangedAttackRange;
+        }
 
-			float distance = GetTargetDistance();
+        public static bool InMeleeRangeNoMovement()
+        {
+            if (LocalPlayer?.TargetObject == null)
+            {
+                return false;
+            }
 
-			return distance <= 0;
-		}
+            var distance = GetTargetDistance();
 
-		public static float GetTargetHPPercent(IGameObject? OurTarget = null)
-		{
-			if (OurTarget is null)
-			{
-				OurTarget = CurrentTarget;
-				if (OurTarget is null)
-				{
-					return 0;
-				}
-			}
+            return distance <= 0;
+        }
 
-			return OurTarget is not IBattleChara chara
-				? 0
-				: (float)chara.CurrentHp / chara.MaxHp * 100;
-		}
+        public static float GetTargetHPPercent(IGameObject? OurTarget = null)
+        {
+            if (OurTarget is null)
+            {
+                OurTarget = CurrentTarget;
+                if (OurTarget is null)
+                {
+                    return 0;
+                }
+            }
 
-		public static float EnemyHealthMaxHp()
-		{
-			return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float)chara.MaxHp;
-		}
+            return OurTarget is not IBattleChara chara
+                ? 0
+                : (float) chara.CurrentHp / chara.MaxHp * 100;
+        }
 
-		public static float EnemyHealthCurrentHp()
-		{
-			return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float)chara.CurrentHp;
-		}
+        public static float EnemyHealthMaxHp()
+        {
+            return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float) chara.MaxHp;
+        }
 
-		public static float PlayerHealthPercentageHp()
-		{
-			return (float)LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100;
-		}
+        public static float EnemyHealthCurrentHp()
+        {
+            return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float) chara.CurrentHp;
+        }
 
-		public static float PlayerHealthPercentageHpPvP()
-		{
-			return (float)LocalPlayer.CurrentHp / (LocalPlayer.MaxHp - 15000) * 100;
-		}
+        public static float PlayerHealthPercentageHp()
+        {
+            return (float) ((float) SafeLocalPlayer.CurrentHp / SafeLocalPlayer.MaxHp * 100);
+        }
 
-		public static bool HasBattleTarget()
-		{
-			if (CurrentTarget is null)
-			{
-				return false;
-			}
+        public static float PlayerHealthPercentageHpPvP()
+        {
+            return (float) ((float) SafeLocalPlayer.CurrentHp / (SafeLocalPlayer.MaxHp - 15000) * 100);
+        }
 
-			return CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
-		}
+        public static bool HasBattleTarget()
+        {
+            return CurrentTarget is not null and IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
+        }
 
-		public static bool HasFriendlyTarget()
-		{
-			if (CurrentTarget is null)
-			{
-				return false;
-			}
+        public static bool HasFriendlyTarget()
+        {
+            return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Player;
+        }
 
-			return CurrentTarget.ObjectKind is ObjectKind.Player;
-		}
+        public static bool CanInterruptEnemy()
+        {
+            return CurrentTarget is not null && CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
+        }
 
-		public static bool CanInterruptEnemy()
-		{
-			return CurrentTarget is not null && CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
-		}
+        public static void SetTarget(IGameObject? target)
+        {
+            Service.TargetManager.Target = target;
+        }
 
-		public static void SetTarget(IGameObject? target)
-		{
-			Service.TargetManager.Target = target;
-		}
+        public static bool IsInRange(IGameObject? target)
+        {
+            return target != null && target.YalmDistanceX < 30;
+        }
 
-		public static bool IsInRange(IGameObject? target)
-		{
-			return target != null && target.YalmDistanceX < 30;
-		}
+        public static bool TargetNeedsPositionals()
+        {
+            if (!HasBattleTarget())
+            {
+                return false;
+            }
 
-		public static bool TargetNeedsPositionals()
-		{
-			if (!HasBattleTarget())
-			{
-				return false;
-			}
+            if (TargetHasEffectAny(3808))
+            {
+                return false; // Directional Disregard Effect (Patch 7.01)
+            }
 
-			if (TargetHasEffectAny(3808))
-			{
-				return false; // Directional Disregard Effect (Patch 7.01)
-			}
+            return Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == SafeCurrentTarget.DataId, out BNpcBase bnpc) && !bnpc.IsOmnidirectional;
+        }
 
-			if (Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == CurrentTarget.DataId, out BNpcBase bnpc) && !bnpc.IsOmnidirectional)
-			{
-				return true;
-			}
+        public static void TargetObject(IGameObject? target)
+        {
+            if (IsInRange(target))
+            {
+                SetTarget(target);
+            }
+        }
 
-			return false;
-		}
+        public enum TargetType
+        {
+            Target,
+            SoftTarget,
+            FocusTarget,
+            UITarget,
+            FieldTarget,
+            TargetsTarget,
+            Self,
+            LastTarget,
+            LastEnemy,
+            LastAttacker,
+            P2,
+            P3,
+            P4,
+            P5,
+            P6,
+            P7,
+            P8
+        }
 
-		public static void TargetObject(IGameObject? target)
-		{
-			if (IsInRange(target))
-			{
-				SetTarget(target);
-			}
-		}
+        public static float AngleToTarget()
+        {
+            if (CurrentTarget is null || LocalPlayer is null)
+            {
+                return 0;
+            }
 
-		public enum TargetType
-		{
-			Target,
-			SoftTarget,
-			FocusTarget,
-			UITarget,
-			FieldTarget,
-			TargetsTarget,
-			Self,
-			LastTarget,
-			LastEnemy,
-			LastAttacker,
-			P2,
-			P3,
-			P4,
-			P5,
-			P6,
-			P7,
-			P8
-		}
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            {
+                return 0;
+            }
 
-		public static float AngleToTarget()
-		{
-			if (CurrentTarget is null || LocalPlayer is null)
-			{
-				return 0;
-			}
+            var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
-			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
-			{
-				return 0;
-			}
+            var regionDegrees = PositionalMath.Degrees(angle);
+            if (regionDegrees < 0)
+            {
+                regionDegrees = 360 + regionDegrees;
+            }
 
-			float angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
+            return regionDegrees is >= 45 and <= 135
+                ? 1
+                : regionDegrees is >= 135 and <= 225 ? 2 : regionDegrees is >= 225 and <= 315 ? 3 : regionDegrees is >= 315 or <= 45 ? 4 : 0;
+        }
 
-			double regionDegrees = PositionalMath.Degrees(angle);
-			if (regionDegrees < 0)
-			{
-				regionDegrees = 360 + regionDegrees;
-			}
+        public static bool OnTargetsRear()
+        {
+            if (CurrentTarget is null || LocalPlayer is null)
+            {
+                return false;
+            }
 
-			return regionDegrees is >= 45 and <= 135
-				? 1
-				: regionDegrees is >= 135 and <= 225 ? 2 : regionDegrees is >= 225 and <= 315 ? 3 : regionDegrees is >= 315 or <= 45 ? 4 : 0;
-		}
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            {
+                return false;
+            }
 
-		public static bool OnTargetsRear()
-		{
-			if (CurrentTarget is null || LocalPlayer is null)
-			{
-				return false;
-			}
+            var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
-			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
-			{
-				return false;
-			}
+            var regionDegrees = PositionalMath.Degrees(angle);
+            if (regionDegrees < 0)
+            {
+                regionDegrees = 360 + regionDegrees;
+            }
 
-			float angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
+            return regionDegrees is >= 135 and <= 225;
+        }
 
-			double regionDegrees = PositionalMath.Degrees(angle);
-			if (regionDegrees < 0)
-			{
-				regionDegrees = 360 + regionDegrees;
-			}
+        public static bool OnTargetsFlank()
+        {
+            if (CurrentTarget is null || LocalPlayer is null)
+            {
+                return false;
+            }
 
-			return regionDegrees is >= 135 and <= 225;
-		}
+            if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+            {
+                return false;
+            }
 
-		public static bool OnTargetsFlank()
-		{
-			if (CurrentTarget is null || LocalPlayer is null)
-			{
-				return false;
-			}
+            var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
-			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
-			{
-				return false;
-			}
+            var regionDegrees = PositionalMath.Degrees(angle);
+            if (regionDegrees < 0)
+            {
+                regionDegrees = 360 + regionDegrees;
+            }
 
-			float angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
+            return regionDegrees is (>= 45 and <= 135) or (>= 225 and <= 315);
+        }
 
-			double regionDegrees = PositionalMath.Degrees(angle);
-			if (regionDegrees < 0)
-			{
-				regionDegrees = 360 + regionDegrees;
-			}
+        internal static class PositionalMath
+        {
+            internal static float Radians(float degrees)
+            {
+                return (float) Math.PI * degrees / 180.0f;
+            }
 
-			if (regionDegrees is >= 45 and <= 135)
-			{
-				return true;
-			}
-			return regionDegrees is >= 225 and <= 315;
-		}
+            internal static double Degrees(float radians)
+            {
+                return 180 / Math.PI * radians;
+            }
 
-		internal static class PositionalMath
-		{
-			internal static float Radians(float degrees)
-			{
-				return (float)Math.PI * degrees / 180.0f;
-			}
+            internal static float AngleXZ(Vector3 a, Vector3 b)
+            {
+                return (float) Math.Atan2(b.X - a.X, b.Z - a.Z);
+            }
+        }
 
-			internal static double Degrees(float radians)
-			{
-				return 180 / Math.PI * radians;
-			}
+        internal static unsafe bool OutOfRange(uint actionID, IGameObject target)
+        {
+            return ActionWatching.OutOfRange(actionID, Service.ClientState.LocalPlayer!, target);
+        }
 
-			internal static float AngleXZ(Vector3 a, Vector3 b)
-			{
-				return (float)Math.Atan2(b.X - a.X, b.Z - a.Z);
-			}
-		}
+        internal static unsafe byte? GetMobType(IGameObject target)
+        {
+            return HasBattleTarget() ? (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank) : (byte?) 0;
+        }
 
-		internal unsafe bool OutOfRange(uint actionID, IGameObject target)
-		{
-			return ActionWatching.OutOfRange(actionID, Service.ClientState.LocalPlayer!, target);
-		}
+        internal static unsafe bool TargetIsBoss()
+        {
+            if (HasBattleTarget())
+            {
+                if ((Svc.Data.GetExcelSheet<BNpcBase>().GetRow(SafeCurrentTarget.DataId).Rank is 2
+                    || EnemyHealthMaxHp() == 44
+                    || EnemyHealthMaxHp() > LocalPlayer?.MaxHp * 10) && EnemyHealthCurrentHp() > 1)
+                {
+                    return true;
+                }
+            }
 
-		internal static unsafe byte? GetMobType(IGameObject target)
-		{
-			if (HasBattleTarget())
-			{
-				return Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank;
-			}
-
-			return 0;
-		}
-
-		internal static unsafe bool TargetIsBoss()
-		{
-			if (HasBattleTarget())
-			{
-				if ((Svc.Data.GetExcelSheet<BNpcBase>().GetRow(CurrentTarget.DataId).Rank is 2
-					|| EnemyHealthMaxHp() == 44
-					|| EnemyHealthMaxHp() > LocalPlayer.MaxHp * 10) && EnemyHealthCurrentHp() > 1)
-				{
-					return true;
-				}
-			}
-
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 }

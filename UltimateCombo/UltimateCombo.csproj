@@ -48,7 +48,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>1701;1702;8604;4014</NoWarn>
+    <NoWarn>1591</NoWarn>
     <WarningsAsErrors />
   </PropertyGroup>
 

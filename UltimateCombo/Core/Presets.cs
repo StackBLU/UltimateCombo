@@ -1,105 +1,97 @@
-﻿using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using Dalamud.Utility;
+
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Services;
 
 namespace UltimateCombo.Core
 {
-	internal static class PresetStorage
-	{
-		private static HashSet<CustomComboPreset>? PvPCombos;
-		private static HashSet<CustomComboPreset>? BozjaCombos;
-		private static HashSet<CustomComboPreset>? OccultCombos;
-		private static HashSet<CustomComboPreset>? EurekaCombos;
-		private static HashSet<CustomComboPreset>? VariantCombos;
-		private static Dictionary<CustomComboPreset, CustomComboPreset[]>? ConflictingCombos;
-		private static Dictionary<CustomComboPreset, CustomComboPreset?>? ParentCombos;
+    internal static class PresetStorage
+    {
+        private static HashSet<CustomComboPreset>? _pvpCombos;
+        private static HashSet<CustomComboPreset>? _bozjaCombos;
+        private static HashSet<CustomComboPreset>? _occultCombos;
+        private static HashSet<CustomComboPreset>? _eurekaCombos;
+        private static HashSet<CustomComboPreset>? _variantCombos;
+        private static Dictionary<CustomComboPreset, CustomComboPreset[]>? _conflictingCombos;
+        private static Dictionary<CustomComboPreset, CustomComboPreset?>? _parentCombos;
 
-		public static void Init()
-		{
-			PvPCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<PvPCustomComboAttribute>() != default)
-				.ToHashSet();
+        public static void Init()
+        {
+            _pvpCombos = [.. Enum.GetValues<CustomComboPreset>().Where(preset => preset.GetAttribute<PvPCustomComboAttribute>() != default)];
 
-			BozjaCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<BozjaAttribute>() != default)
-				.ToHashSet();
+            _bozjaCombos = [.. Enum.GetValues<CustomComboPreset>().Where(preset => preset.GetAttribute<BozjaAttribute>() != default)];
 
-			OccultCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<OccultAttribute>() != default)
-				.ToHashSet();
+            _occultCombos = [.. Enum.GetValues<CustomComboPreset>().Where(preset => preset.GetAttribute<OccultAttribute>() != default)];
 
-			EurekaCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<EurekaAttribute>() != default)
-				.ToHashSet();
+            _eurekaCombos = [.. Enum.GetValues<CustomComboPreset>().Where(preset => preset.GetAttribute<EurekaAttribute>() != default)];
 
-			VariantCombos = Enum.GetValues<CustomComboPreset>()
-				.Where(preset => preset.GetAttribute<VariantAttribute>() != default)
-				.ToHashSet();
+            _variantCombos = [.. Enum.GetValues<CustomComboPreset>().Where(preset => preset.GetAttribute<VariantAttribute>() != default)];
 
-			ConflictingCombos = Enum.GetValues<CustomComboPreset>()
-				.ToDictionary(
-					preset => preset,
-					preset => preset.GetAttribute<ConflictingCombosAttribute>()?.ConflictingPresets ?? Array.Empty<CustomComboPreset>());
+            _conflictingCombos = Enum.GetValues<CustomComboPreset>()
+                .ToDictionary(
+                    preset => preset,
+                    preset => preset.GetAttribute<ConflictingCombosAttribute>()?.ConflictingPresets ?? []);
 
-			ParentCombos = Enum.GetValues<CustomComboPreset>()
-				.ToDictionary(
-					preset => preset,
-					preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
-		}
+            _parentCombos = Enum.GetValues<CustomComboPreset>()
+                .ToDictionary(
+                    preset => preset,
+                    preset => preset.GetAttribute<ParentComboAttribute>()?.ParentPreset);
+        }
 
 
-		public static bool IsEnabled(CustomComboPreset preset)
-		{
-			return Service.Configuration.EnabledActions.Contains(preset);
-		}
+        public static bool IsEnabled(CustomComboPreset preset)
+        {
+            return Service.Configuration.EnabledActions.Contains(preset);
+        }
 
-		public static bool IsPvP(CustomComboPreset preset)
-		{
-			return PvPCombos.Contains(preset);
-		}
+        public static bool IsPvP(CustomComboPreset preset)
+        {
+            return _pvpCombos?.Contains(preset) ?? false;
+        }
 
-		public static bool IsBozja(CustomComboPreset preset)
-		{
-			return BozjaCombos.Contains(preset);
-		}
+        public static bool IsBozja(CustomComboPreset preset)
+        {
+            return _bozjaCombos?.Contains(preset) ?? false;
+        }
 
-		public static bool IsOccult(CustomComboPreset preset)
-		{
-			return OccultCombos.Contains(preset);
-		}
+        public static bool IsOccult(CustomComboPreset preset)
+        {
+            return _occultCombos?.Contains(preset) ?? false;
+        }
 
-		public static bool IsEureka(CustomComboPreset preset)
-		{
-			return EurekaCombos.Contains(preset);
-		}
+        public static bool IsEureka(CustomComboPreset preset)
+        {
+            return _eurekaCombos?.Contains(preset) ?? false;
+        }
 
-		public static bool IsVariant(CustomComboPreset preset)
-		{
-			return VariantCombos.Contains(preset);
-		}
+        public static bool IsVariant(CustomComboPreset preset)
+        {
+            return _variantCombos?.Contains(preset) ?? false;
+        }
 
-		public static CustomComboPreset? GetParent(CustomComboPreset preset)
-		{
-			return ParentCombos[preset];
-		}
+        public static CustomComboPreset? GetParent(CustomComboPreset preset)
+        {
+            return _parentCombos?[preset];
+        }
 
-		public static CustomComboPreset[] GetConflicts(CustomComboPreset preset)
-		{
-			return ConflictingCombos[preset];
-		}
+        public static CustomComboPreset[] GetConflicts(CustomComboPreset preset)
+        {
+            return _conflictingCombos?[preset] ?? [];
+        }
 
-		public static List<CustomComboPreset> GetAllConflicts()
-		{
-			return ConflictingCombos.Keys.ToList();
-		}
+        public static List<CustomComboPreset> GetAllConflicts()
+        {
+            return _conflictingCombos?.Keys.ToList() ?? [];
+        }
 
-		public static List<CustomComboPreset[]> GetAllConflictOriginals()
-		{
-			return ConflictingCombos.Values.ToList();
-		}
-	}
+        public static List<CustomComboPreset[]> GetAllConflictOriginals()
+        {
+            return _conflictingCombos?.Values.ToList() ?? [];
+        }
+    }
 }

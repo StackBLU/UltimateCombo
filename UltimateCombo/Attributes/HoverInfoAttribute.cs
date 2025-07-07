@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 
 namespace UltimateCombo.Attributes
 {
-	[AttributeUsage(AttributeTargets.Field)]
-	public class HoverInfoAttribute : Attribute
-	{
-		internal HoverInfoAttribute(string hoverText)
-		{
-			HoverText = hoverText;
-		}
+    [AttributeUsage(AttributeTargets.Field)]
+    public class HoverInfoAttribute : Attribute
+    {
+        internal HoverInfoAttribute(string hoverText)
+        {
+            HoverText = hoverText;
+        }
 
-		public string HoverText { get; set; }
-	}
+        public string HoverText { get; set; }
+    }
 }

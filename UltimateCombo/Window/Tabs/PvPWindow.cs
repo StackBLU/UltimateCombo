@@ -1,10 +1,14 @@
-﻿using Dalamud.Interface.Textures.TextureWraps;
-using Dalamud.Interface.Utility;
-using Dalamud.Interface.Utility.Raii;
-using ECommons.ImGuiMethods;
-using ImGuiNET;
 using System.Linq;
 using System.Numerics;
+
+using Dalamud.Interface.Textures.TextureWraps;
+using Dalamud.Interface.Utility;
+using Dalamud.Interface.Utility.Raii;
+
+using ECommons.ImGuiMethods;
+
+using ImGuiNET;
+
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
@@ -12,119 +16,119 @@ using UltimateCombo.Window.Functions;
 
 namespace UltimateCombo.Window.Tabs
 {
-	internal class PvPWindow : ConfigWindow
-	{
-		internal static bool HasToOpenJob = true;
-		internal static string OpenJob = string.Empty;
+    internal class PvPWindow : ConfigWindow
+    {
+        internal static bool HasToOpenJob = true;
+        internal static string OpenJob = string.Empty;
 
-		internal static new void Draw()
-		{
-			int i = 1;
-			float indentwidth = 12f.Scale();
-			float indentwidth2 = indentwidth + 42f.Scale();
+        internal static new void Draw()
+        {
+            var i = 1;
+            var indentwidth = 12f.Scale();
+            var indentwidth2 = indentwidth + 42f.Scale();
 
-			if (OpenJob == string.Empty)
-			{
-				foreach (string? jobName in groupedPresets.Where(x => x.Value.Any(y => PresetStorage.IsPvP(y.Preset))).Select(x => x.Key))
-				{
-					string abbreviation = groupedPresets[jobName].First().Info.JobShorthand;
-					string header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
-					byte id = groupedPresets[jobName].First().Info.JobID;
-					IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
+            if (OpenJob == string.Empty)
+            {
+                foreach (var jobName in GroupedPresets.Where(x => x.Value.Any(y => PresetStorage.IsPvP(y.Preset))).Select(x => x.Key))
+                {
+                    var abbreviation = GroupedPresets[jobName].First().Info.JobShorthand;
+                    var header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
+                    var id = GroupedPresets[jobName].First().Info.JobID;
+                    IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-					if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
-						icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
-					{
-						OpenJob = jobName;
-					}
+                    if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
+                        icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
+                    {
+                        OpenJob = jobName;
+                    }
 
-					ImGui.SameLine(indentwidth);
+                    ImGui.SameLine(indentwidth);
 
-					if (icon != null)
-					{
-						ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
-						ImGui.SameLine(indentwidth2);
-						ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
-						ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
-						_ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
-						ImGui.PopStyleColor();
-						ImGui.PopStyleVar();
-					}
-				}
-			}
-			else
-			{
-				byte id = groupedPresets[OpenJob].First().Info.JobID;
-				IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
+                    if (icon != null)
+                    {
+                        ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
+                        ImGui.SameLine(indentwidth2);
+                        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
+                        ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
+                        _ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
+                        ImGui.PopStyleColor();
+                        ImGui.PopStyleVar();
+                    }
+                }
+            }
+            else
+            {
+                var id = GroupedPresets[OpenJob].First().Info.JobID;
+                IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-				using (ImRaii.IEndObject headingTab = ImRaii.Child("HeadingTab",
-					new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
-				{
-					if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
-					{
-						OpenJob = "";
-						return;
-					}
-					ImGui.SameLine();
-					ImGuiEx.LineCentered(() =>
-					{
-						if (icon != null)
-						{
-							ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
-							ImGui.SameLine();
-						}
-						ImGuiEx.Text($"{OpenJob}");
-					});
+                using (ImRaii.IEndObject headingTab = ImRaii.Child("HeadingTab",
+                    new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
+                {
+                    if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
+                    {
+                        OpenJob = "";
+                        return;
+                    }
+                    ImGui.SameLine();
+                    ImGuiEx.LineCentered(() =>
+                    {
+                        if (icon != null)
+                        {
+                            ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
+                            ImGui.SameLine();
+                        }
+                        ImGuiEx.Text($"{OpenJob}");
+                    });
 
-				}
+                }
 
-				using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);
-				try
-				{
-					DrawHeadingContents(OpenJob, i);
-				}
-				catch { }
-			}
-		}
+                using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);
+                try
+                {
+                    DrawHeadingContents(OpenJob, i);
+                }
+                catch { }
+            }
+        }
 
-		private static void DrawHeadingContents(string jobName, int i)
-		{
-			foreach ((CustomComboPreset preset, Attributes.CustomComboInfoAttribute info) in groupedPresets[jobName].Where(x => PresetStorage.IsPvP(x.Preset)))
-			{
-				InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
+        private static void DrawHeadingContents(string jobName, int i)
+        {
+            foreach ((CustomComboPreset preset, Attributes.CustomComboInfoAttribute info) in GroupedPresets[jobName].Where(x => PresetStorage.IsPvP(x.Preset)))
+            {
+                InfoBox presetBox = new() { Color = Colors.Grey, BorderThickness = 1f, CurveRadius = 8f, ContentsAction = () => { Presets.DrawPreset(preset, info, ref i); } };
 
-				if (Service.Configuration.HideConflictedCombos)
-				{
-					CustomComboPreset[] conflictOriginals = PresetStorage.GetConflicts(preset); // Presets that are contained within a ConflictedAttribute
-					System.Collections.Generic.List<CustomComboPreset> conflictsSource = PresetStorage.GetAllConflicts();      // Presets with the ConflictedAttribute
+                if (Service.Configuration.HideConflictedCombos)
+                {
+                    CustomComboPreset[] conflictOriginals = PresetStorage.GetConflicts(preset); // Presets that are contained within a ConflictedAttribute
+                    System.Collections.Generic.List<CustomComboPreset> conflictsSource = PresetStorage.GetAllConflicts();      // Presets with the ConflictedAttribute
 
-					if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
-					{
-						presetBox.Draw();
-						ImGuiHelpers.ScaledDummy(12.0f);
-						continue;
-					}
+                    if (!conflictsSource.Where(x => x == preset).Any() || conflictOriginals.Length == 0)
+                    {
+                        presetBox.Draw();
+                        ImGuiHelpers.ScaledDummy(12.0f);
+                        continue;
+                    }
 
-					if (conflictOriginals.Any(PresetStorage.IsEnabled))
-					{
-						_ = Service.Configuration.EnabledActions.Remove(preset);
-						Service.Configuration.Save();
-					}
+                    if (conflictOriginals.Any(PresetStorage.IsEnabled))
+                    {
+                        _ = Service.Configuration.EnabledActions.Remove(preset);
+                        Service.Configuration.Save();
+                    }
 
-					else
-					{
-						presetBox.Draw();
-						ImGuiHelpers.ScaledDummy(12.0f);
-						continue;
-					}
-				}
+                    else
+                    {
+                        presetBox.Draw();
+                        ImGuiHelpers.ScaledDummy(12.0f);
+                        continue;
+                    }
+                }
 
-				else
-				{
-					presetBox.Draw();
-					ImGuiHelpers.ScaledDummy(12.0f);
-				}
-			}
-		}
-	}
+                else
+                {
+                    presetBox.Draw();
+                    ImGuiHelpers.ScaledDummy(12.0f);
+                }
+            }
+        }
+    }
 }
