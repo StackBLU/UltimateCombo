@@ -1,12 +1,9 @@
+using Dalamud.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-
-using Dalamud.Configuration;
-
-using Newtonsoft.Json;
-
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Extensions;

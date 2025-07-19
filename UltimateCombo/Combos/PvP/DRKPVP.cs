@@ -66,7 +66,12 @@ namespace UltimateCombo.Combos.PvP
                 {
                     if (IsEnabled(CustomComboPreset.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
                     {
-                        return PlayerHealthPercentageHp() < 50 && LocalPlayer?.CurrentMp >= 2500 ? PvPCommon.Recuperate : Eventide;
+                        if (PlayerHealthPercentageHp() < 50 && LocalPlayer?.CurrentMp >= 2500)
+                        {
+                            return PvPCommon.Recuperate;
+                        }
+
+                        return Eventide;
                     }
 
                     if (IsEnabled(CustomComboPreset.DRKPvP_SaltAndDarkness) && (IsEnabled(SaltAndDarkness) || WasLastAbility(SaltedEarth)))

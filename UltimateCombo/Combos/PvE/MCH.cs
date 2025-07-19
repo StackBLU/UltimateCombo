@@ -287,20 +287,40 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.MCH_AoE_Crossbow) && ActionReady(AutoCrossbow) && HasEffect(Buffs.Overheated)
-                        ? AutoCrossbow
-                        : IsEnabled(CustomComboPreset.MCH_AoE_Bioblaster) && ActionReady(Bioblaster)
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Crossbow) && ActionReady(AutoCrossbow) && HasEffect(Buffs.Overheated))
+                    {
+                        return AutoCrossbow;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Bioblaster) && ActionReady(Bioblaster)
                         && !HasEffect(Buffs.Overheated) && !HasEffect(Buffs.Reassembled)
-                        && (!TargetHasEffect(Debuffs.Bioblaster) || GetDebuffRemainingTime(Debuffs.Bioblaster) < 3)
-                        ? Bioblaster
-                        : IsEnabled(CustomComboPreset.MCH_AoE_Chainsaw) && ActionReady(Chainsaw)
-                        && GetCooldownRemainingTime(Chainsaw) < 1 && !HasEffect(Buffs.Overheated)
-                        ? Chainsaw
-                        : IsEnabled(CustomComboPreset.MCH_AoE_Chainsaw) && HasEffect(Buffs.ExcavatorReady)
-                        ? Excavator
-                        : IsEnabled(CustomComboPreset.MCH_AoE_Barrel) && HasEffect(Buffs.FullMetalMachinist)
-                        ? FullMetalField
-                        : ActionReady(OriginalHook(Scattergun)) ? OriginalHook(Scattergun) : OriginalHook(SpreadShot);
+                        && (!TargetHasEffect(Debuffs.Bioblaster) || GetDebuffRemainingTime(Debuffs.Bioblaster) < 3))
+                    {
+                        return Bioblaster;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Chainsaw) && ActionReady(Chainsaw)
+                        && GetCooldownRemainingTime(Chainsaw) < 1 && !HasEffect(Buffs.Overheated))
+                    {
+                        return Chainsaw;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Chainsaw) && HasEffect(Buffs.ExcavatorReady))
+                    {
+                        return Excavator;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.MCH_AoE_Barrel) && HasEffect(Buffs.FullMetalMachinist))
+                    {
+                        return FullMetalField;
+                    }
+
+                    if (ActionReady(OriginalHook(Scattergun)))
+                    {
+                        return OriginalHook(Scattergun);
+                    }
+
+                    return OriginalHook(SpreadShot);
                 }
 
                 return actionID;

@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Concurrent;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Plugin.Services;
-
 using FFXIVClientStructs.FFXIV.Client.Game;
-
+using System;
+using System.Collections.Concurrent;
 using UltimateCombo.Services;
-
 using DalamudStatus = Dalamud.Game.ClientState.Statuses; // conflicts with structs if not defined
 
 namespace UltimateCombo.Data

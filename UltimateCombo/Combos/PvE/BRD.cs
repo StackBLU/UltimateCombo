@@ -193,13 +193,27 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.BRD_ST_Radiant) && HasEffect(Buffs.RadiantEncoreReady) && HasEffect(Buffs.RagingStrikes)
-                        ? RadiantEncore
-                        : IsEnabled(CustomComboPreset.BRD_ST_Barrage) && HasEffect(Buffs.ResonantArrowReady)
-                        ? ResonantArrow
-                        : IsEnabled(CustomComboPreset.BRD_ST_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100
-                        ? ApexArrow
-                        : HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage) ? OriginalHook(RefulgentArrow) : OriginalHook(BurstShot);
+                    if (IsEnabled(CustomComboPreset.BRD_ST_Radiant) && HasEffect(Buffs.RadiantEncoreReady) && HasEffect(Buffs.RagingStrikes))
+                    {
+                        return RadiantEncore;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_ST_Barrage) && HasEffect(Buffs.ResonantArrowReady))
+                    {
+                        return ResonantArrow;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_ST_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100)
+                    {
+                        return ApexArrow;
+                    }
+
+                    if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
+                    {
+                        return OriginalHook(RefulgentArrow);
+                    }
+
+                    return OriginalHook(BurstShot);
                 }
 
                 return actionID;
@@ -279,15 +293,32 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.BRD_AoE_Apex) && HasEffect(Buffs.BlastArrowReady)
-                        ? BlastArrow
-                        : IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantEncore) && HasEffect(Buffs.RadiantEncoreReady)
-                        ? RadiantEncore
-                        : IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(ResonantArrow) && HasEffect(Buffs.ResonantArrowReady)
-                        ? ResonantArrow
-                        : IsEnabled(CustomComboPreset.BRD_AoE_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100
-                        ? ApexArrow
-                        : HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage) ? OriginalHook(Shadowbite) : OriginalHook(Ladonsbite);
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Apex) && HasEffect(Buffs.BlastArrowReady))
+                    {
+                        return BlastArrow;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Radiant) && ActionReady(RadiantEncore) && HasEffect(Buffs.RadiantEncoreReady))
+                    {
+                        return RadiantEncore;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Barrage) && ActionReady(ResonantArrow) && HasEffect(Buffs.ResonantArrowReady))
+                    {
+                        return ResonantArrow;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.BRD_AoE_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100)
+                    {
+                        return ApexArrow;
+                    }
+
+                    if (HasEffect(Buffs.HawksEye) || HasEffect(Buffs.Barrage))
+                    {
+                        return OriginalHook(Shadowbite);
+                    }
+
+                    return OriginalHook(Ladonsbite);
                 }
 
                 return actionID;

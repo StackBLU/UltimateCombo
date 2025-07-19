@@ -1,20 +1,15 @@
+using Dalamud.Game.ClientState.Conditions;
+using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Hooking;
+using ECommons.DalamudServices;
+using ECommons.GameFunctions;
+using FFXIVClientStructs.FFXIV.Client.Game;
+using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Hooking;
-
-using ECommons.DalamudServices;
-using ECommons.GameFunctions;
-
-using FFXIVClientStructs.FFXIV.Client.Game;
-
-using Lumina.Excel.Sheets;
-
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Services;
 
@@ -258,32 +253,62 @@ namespace UltimateCombo.Data
 
         public static int GetLevel(uint id)
         {
-            return ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) && action.ClassJobCategory.IsValid ? action.ClassJobLevel : 255;
+            if (ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) && action.ClassJobCategory.IsValid)
+            {
+                return action.ClassJobLevel;
+            }
+
+            return 255;
         }
 
         public static float GetActionCastTime(uint id)
         {
-            return ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) ? action.Cast100ms / (float) 10 : 0;
+            if (ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
+            {
+                return action.Cast100ms / 10f;
+            }
+
+            return 0;
         }
 
         public static int GetActionRange(uint id)
         {
-            return ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) ? action.Range : -2; // 0 & -1 are valid numbers. -2 is our failure code for InActionRange
+            if (ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
+            {
+                return action.Range;
+            }
+
+            return -2;
         }
 
         public static int GetActionEffectRange(uint id)
         {
-            return ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) ? action.EffectRange : -1;
+            if (ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
+            {
+                return action.EffectRange;
+            }
+
+            return -1;
         }
 
         public static int GetTraitLevel(uint id)
         {
-            return TraitSheet.TryGetValue(id, out Trait trait) ? trait.Level : 255;
+            if (TraitSheet.TryGetValue(id, out Trait trait))
+            {
+                return trait.Level;
+            }
+
+            return 255;
         }
 
         public static string GetActionName(uint id)
         {
-            return ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action) ? action.Name.ToString() : "UNKNOWN ABILITY";
+            if (ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
+            {
+                return action.Name.ToString();
+            }
+
+            return "Unknown Ability";
         }
 
         public static string GetBLUIndex(uint id)
@@ -296,30 +321,47 @@ namespace UltimateCombo.Data
 
         public static string GetStatusName(uint id)
         {
-            return StatusSheet.TryGetValue(id, out Lumina.Excel.Sheets.Status status) ? status.Name.ToString() : "Unknown Status";
+            if (StatusSheet.TryGetValue(id, out Lumina.Excel.Sheets.Status status))
+            {
+                return status.Name.ToString();
+            }
+
+            return "Unknown Status";
         }
 
         public static List<uint>? GetStatusesByName(string status)
         {
-            return StatusCache.TryGetValue(status, out List<uint>? list)
-                ? list
-                : StatusCache.TryAdd(status, [.. StatusSheet.Where(x => x.Value.Name.ToString().Equals(status,
-                StringComparison.CurrentCultureIgnoreCase)).Select(x => x.Key)])
-                ? StatusCache[status]
-                : null;
+            if (StatusCache.TryGetValue(status, out List<uint>? list))
+            {
+                return list;
+            }
+
+            var added = StatusCache.TryAdd(
+                status,
+                [.. StatusSheet.Where(x => x.Value.Name.ToString().Equals(status, StringComparison.CurrentCultureIgnoreCase)).Select(x => x.Key)]);
+
+            if (added)
+            {
+                return StatusCache[status];
+            }
+
+            return null;
         }
 
         public static ActionAttackType GetAttackType(uint id)
         {
-            return !ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action)
-                ? ActionAttackType.Unknown
-                : action.ActionCategory.Value.RowId switch
-                {
-                    2 => ActionAttackType.Spell,
-                    3 => ActionAttackType.Weaponskill,
-                    4 => ActionAttackType.Ability,
-                    _ => ActionAttackType.Unknown
-                };
+            if (!ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
+            {
+                return ActionAttackType.Unknown;
+            }
+
+            return action.ActionCategory.Value.RowId switch
+            {
+                2 => ActionAttackType.Spell,
+                3 => ActionAttackType.Weaponskill,
+                4 => ActionAttackType.Ability,
+                _ => ActionAttackType.Unknown,
+            };
         }
 
         public enum ActionAttackType
@@ -340,15 +382,70 @@ namespace UltimateCombo.Data
 
         internal static IntPtr CheckActionResources => ActionManager.Addresses.CheckActionResources.Value;
 
-        public static ushort CurrentSeq => ActionMgrPtr != IntPtr.Zero ? (ushort) Marshal.ReadInt16(ActionMgrPtr + 0x110) : (ushort) 0;
+        public static ushort CurrentSeq
+        {
+            get
+            {
+                if (ActionMgrPtr != IntPtr.Zero)
+                {
+                    return (ushort) Marshal.ReadInt16(ActionMgrPtr + 0x110);
+                }
 
-        public static ushort LastRecievedSeq => ActionMgrPtr != IntPtr.Zero ? (ushort) Marshal.ReadInt16(ActionMgrPtr + 0x112) : (ushort) 0;
+                return 0;
+            }
+        }
 
-        public static bool IsCasting => ActionMgrPtr != IntPtr.Zero && Marshal.ReadByte(ActionMgrPtr + 0x28) != 0;
+        public static ushort LastRecievedSeq
+        {
+            get
+            {
+                if (ActionMgrPtr != IntPtr.Zero)
+                {
+                    return (ushort) Marshal.ReadInt16(ActionMgrPtr + 0x112);
+                }
 
-        public static uint CastingActionId => ActionMgrPtr != IntPtr.Zero ? (uint) Marshal.ReadInt32(ActionMgrPtr + 0x24) : 0u;
+                return 0;
+            }
+        }
 
-        public static uint CastTargetObjectId => ActionMgrPtr != IntPtr.Zero ? (uint) Marshal.ReadInt32(ActionMgrPtr + 0x38) : 0u;
+        public static bool IsCasting
+        {
+            get
+            {
+                if (ActionMgrPtr != IntPtr.Zero && Marshal.ReadByte(ActionMgrPtr + 0x28) != 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public static uint CastingActionId
+        {
+            get
+            {
+                if (ActionMgrPtr != IntPtr.Zero)
+                {
+                    return (uint) Marshal.ReadInt32(ActionMgrPtr + 0x24);
+                }
+
+                return 0u;
+            }
+        }
+
+        public static uint CastTargetObjectId
+        {
+            get
+            {
+                if (ActionMgrPtr != IntPtr.Zero)
+                {
+                    return (uint) Marshal.ReadInt32(ActionMgrPtr + 0x38);
+                }
+
+                return 0u;
+            }
+        }
 
         static ActionManagerHelper()
         {

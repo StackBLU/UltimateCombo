@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
@@ -162,17 +160,25 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.SCH_ST_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation)
-                        ? SummonEos
-                        : IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
-                        && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
-                        && TargetIsBoss() && (!TargetHasEffect(BioList[OriginalHook(Biolysis)])
-                        || GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
-                        || ActionWatching.NumberOfGcdsUsed == 11)
-                        ? OriginalHook(Biolysis)
-                        : IsEnabled(CustomComboPreset.SCH_ST_DPS_Ruin2Movement) && ActionReady(Ruin2) && IsMoving
-                        ? OriginalHook(Ruin2)
-                        : OriginalHook(Ruin);
+                    if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation))
+                    {
+                        return SummonEos;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
+                        && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks) && TargetIsBoss()
+                        && (!TargetHasEffect(BioList[OriginalHook(Biolysis)]) || GetDebuffRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
+                            || ActionWatching.NumberOfGcdsUsed == 11))
+                    {
+                        return OriginalHook(Biolysis);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Ruin2Movement) && ActionReady(Ruin2) && IsMoving)
+                    {
+                        return OriginalHook(Ruin2);
+                    }
+
+                    return OriginalHook(Ruin);
                 }
 
                 return actionID;
@@ -227,9 +233,12 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.SCH_AoE_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation)
-                        ? SummonEos
-                        : OriginalHook(ArtOfWar);
+                    if (IsEnabled(CustomComboPreset.SCH_AoE_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation))
+                    {
+                        return SummonEos;
+                    }
+
+                    return OriginalHook(ArtOfWar);
                 }
 
                 return actionID;
@@ -241,9 +250,17 @@ namespace UltimateCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_ST_Heals;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Physick or Adloquium) && IsEnabled(CustomComboPreset.SCH_ST_Heals)
-                    ? ActionReady(Adloquium) ? Adloquium : Physick
-                    : actionID;
+                if ((actionID is Physick or Adloquium) && IsEnabled(CustomComboPreset.SCH_ST_Heals))
+                {
+                    if (ActionReady(Adloquium))
+                    {
+                        return Adloquium;
+                    }
+
+                    return Physick;
+                }
+
+                return actionID;
             }
         }
 
@@ -274,13 +291,27 @@ namespace UltimateCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_DissipationDrain;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Aetherflow or Dissipation or EnergyDrain) && IsEnabled(CustomComboPreset.SCH_DissipationDrain)
-                    ? ActionReady(EnergyDrain) && Gauge.Aetherflow > 0 && ActionReady(Dissipation)
-                        ? EnergyDrain
-                        : ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation) && !HasEffect(Buffs.Seraphism))
-                        ? Dissipation
-                        : LevelChecked(Dissipation) ? Aetherflow : OriginalHook(11)
-                    : actionID;
+                if ((actionID is Aetherflow or Dissipation or EnergyDrain) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
+                {
+                    if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0 && ActionReady(Dissipation))
+                    {
+                        return EnergyDrain;
+                    }
+
+                    if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation) && !HasEffect(Buffs.Seraphism)))
+                    {
+                        return Dissipation;
+                    }
+
+                    if (LevelChecked(Dissipation))
+                    {
+                        return Aetherflow;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                return actionID;
             }
         }
 

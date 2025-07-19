@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-
 using Dalamud.Interface.Textures;
 using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Utility;
-
 using ECommons.DalamudServices;
-
 using Lumina.Data.Files;
+using System.Collections.Generic;
 
 namespace UltimateCombo.Window
 {
@@ -26,6 +23,7 @@ namespace UltimateCombo.Window
             {
                 iconNum = 62118;
             }
+
             else
             {
                 iconNum += jobId;

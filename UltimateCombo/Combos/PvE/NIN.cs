@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
@@ -131,9 +129,22 @@ namespace UltimateCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.NIN_ST_Mudras) && ActionReady(Ten)
                         && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                     {
-                        return OriginalHook(Ninjutsu) == Suiton
-                            ? OriginalHook(Ninjutsu)
-                            : WasLastAction(ChiCombo) ? JinCombo : WasLastAction(Ten) ? ChiCombo : Ten;
+                        if (OriginalHook(Ninjutsu) == Suiton)
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(ChiCombo))
+                        {
+                            return JinCombo;
+                        }
+
+                        if (WasLastAction(Ten))
+                        {
+                            return ChiCombo;
+                        }
+
+                        return Ten;
                     }
 
                     if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
@@ -366,9 +377,22 @@ namespace UltimateCombo.Combos.PvE
                     if (IsEnabled(CustomComboPreset.NIN_AoE_Mudras) && ActionReady(Ten)
                         && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                     {
-                        return OriginalHook(Ninjutsu) is Huton
-                            ? OriginalHook(Ninjutsu)
-                            : WasLastAction(JinCombo) ? TenCombo : WasLastAction(Chi) ? JinCombo : Chi;
+                        if (OriginalHook(Ninjutsu) is Huton)
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(JinCombo))
+                        {
+                            return TenCombo;
+                        }
+
+                        if (WasLastAction(Chi))
+                        {
+                            return JinCombo;
+                        }
+
+                        return Chi;
                     }
 
                     if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
@@ -543,7 +567,12 @@ namespace UltimateCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.RaijuReady))
                     {
-                        return InActionRange(FleetingRaiju) ? FleetingRaiju : ForkedRaiju;
+                        if (InActionRange(FleetingRaiju))
+                        {
+                            return FleetingRaiju;
+                        }
+
+                        return ForkedRaiju;
                     }
                 }
 
@@ -598,11 +627,19 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return (actionID is not SpinningEdge and not GustSlash and not AeolianEdge and not ArmorCrush
-                    and not DeathBlossom and not HakkeMujinsatsu and not Ten and not Chi and not Jin)
-                    && IsEnabled(CustomComboPreset.NIN_MudraProtection)
-                    ? HasEffect(Buffs.Mudra) ? OriginalHook(11) : actionID
-                    : actionID;
+                if (actionID is not SpinningEdge && actionID is not GustSlash && actionID is not AeolianEdge && actionID is not ArmorCrush
+                    && actionID is not DeathBlossom && actionID is not HakkeMujinsatsu && actionID is not Ten && actionID is not Chi && actionID is not Jin
+                    && IsEnabled(CustomComboPreset.NIN_MudraProtection))
+                {
+                    if (HasEffect(Buffs.Mudra))
+                    {
+                        return OriginalHook(11);
+                    }
+
+                    return actionID;
+                }
+
+                return actionID;
             }
         }
     }

@@ -1,7 +1,5 @@
-using System.Linq;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -129,12 +127,17 @@ namespace UltimateCombo.Combos.PvE
                             && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)
                             && ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
                         {
-                            return ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
-                                && !WasLastAbility(OriginalHook(Sentinel))
-                                ? All.Rampart
-                                : ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart)
-                                ? OriginalHook(Sentinel)
-                                : Intervention;
+                            if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
+                            {
+                                return All.Rampart;
+                            }
+
+                            if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
+                            {
+                                return OriginalHook(Sentinel);
+                            }
+
+                            return Intervention;
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_ST_Sheltron) && ActionReady(Sheltron)
@@ -252,12 +255,17 @@ namespace UltimateCombo.Combos.PvE
                             && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)
                             && ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Intervention))
                         {
-                            return ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian)
-                                && !WasLastAbility(OriginalHook(Sentinel))
-                                ? All.Rampart
-                                : ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart)
-                                ? OriginalHook(Sentinel)
-                                : Intervention;
+                            if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
+                            {
+                                return All.Rampart;
+                            }
+
+                            if (ActionReady(OriginalHook(Sentinel)) && !HasEffect(All.Buffs.Rampart) && !WasLastAbility(All.Rampart))
+                            {
+                                return OriginalHook(Sentinel);
+                            }
+
+                            return Intervention;
                         }
 
                         if (IsEnabled(CustomComboPreset.PLD_AoE_Sheltron) && ActionReady(Sheltron)

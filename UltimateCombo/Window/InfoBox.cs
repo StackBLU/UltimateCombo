@@ -1,10 +1,8 @@
-using System;
-using System.Numerics;
-
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
-
 using ImGuiNET;
+using System;
+using System.Numerics;
 
 namespace UltimateCombo.Window
 {
@@ -127,7 +125,17 @@ namespace UltimateCombo.Window
 
         private void DrawBorders()
         {
-            var color = Debug ? ImGui.GetColorU32(Colors.Red) : ColorU32;
+            uint color;
+
+            if (Debug)
+            {
+                color = ImGui.GetColorU32(Colors.Red);
+            }
+
+            else
+            {
+                color = ColorU32;
+            }
 
             DrawList.AddLine(new Vector2(StartPosition.X - 0.5f, StartPosition.Y + CurveRadius - 0.5f), new Vector2(StartPosition.X - 0.5f, StartPosition.Y + Size.Y - CurveRadius + 0.5f), color, BorderThickness);
             DrawList.AddLine(new Vector2(StartPosition.X + Size.X - 0.5f, StartPosition.Y + CurveRadius - 0.5f), new Vector2(StartPosition.X + Size.X - 0.5f, StartPosition.Y + Size.Y - CurveRadius + 0.5f), color, BorderThickness);

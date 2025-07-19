@@ -1,18 +1,14 @@
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
+using ImGuiNET;
 using System;
 using System.Linq;
 using System.Numerics;
-
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Objects.Types;
-
-using ImGuiNET;
-
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
-
 using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace UltimateCombo.Window.Tabs

@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -85,7 +83,22 @@ namespace UltimateCombo.Combos.PvE
 
         public static int MaxPolyglot(byte level)
         {
-            return level >= 98 ? 3 : level >= 80 ? 2 : level >= 70 ? 1 : 0;
+            if (level >= 98)
+            {
+                return 3;
+            }
+
+            if (level >= 80)
+            {
+                return 2;
+            }
+
+            if (level >= 70)
+            {
+                return 1;
+            }
+
+            return 0;
         }
 
         private static BLMGauge Gauge => CustomComboFunctions.GetJobGauge<BLMGauge>();
@@ -127,13 +140,32 @@ namespace UltimateCombo.Combos.PvE
 
                             if (GetDebuffRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !TargetHasEffect(Bozja.Debuffs.FlareStar) || DutyActionReady(Bozja.FontOfMagic))
                             {
-                                return WasLastAction(Blizzard4) && (HasEffect(Bozja.Buffs.FontOfMagic) || DutyActionNotEquipped(Bozja.FontOfMagic))
-                                    ? Bozja.FlareStar
-                                    : WasLastAction(Bozja.FontOfMagic)
-                                    ? Blizzard4
-                                    : WasLastAction(All.LucidDreaming) && DutyActionReady(Bozja.FontOfMagic)
-                                    ? Bozja.FontOfMagic
-                                    : ActionReady(All.LucidDreaming) && WasLastAction(Blizzard4) ? All.LucidDreaming : !Gauge.InUmbralIce ? Blizzard3 : Blizzard4;
+                                if (WasLastAction(Blizzard4) && (HasEffect(Bozja.Buffs.FontOfMagic) || DutyActionNotEquipped(Bozja.FontOfMagic)))
+                                {
+                                    return Bozja.FlareStar;
+                                }
+
+                                if (WasLastAction(Bozja.FontOfMagic))
+                                {
+                                    return Blizzard4;
+                                }
+
+                                if (WasLastAction(All.LucidDreaming) && DutyActionReady(Bozja.FontOfMagic))
+                                {
+                                    return Bozja.FontOfMagic;
+                                }
+
+                                if (ActionReady(All.LucidDreaming) && WasLastAction(Blizzard4))
+                                {
+                                    return All.LucidDreaming;
+                                }
+
+                                if (!Gauge.InUmbralIce)
+                                {
+                                    return Blizzard3;
+                                }
+
+                                return Blizzard4;
                             }
                         }
                     }
@@ -187,14 +219,23 @@ namespace UltimateCombo.Combos.PvE
                         || (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(SafeLocalPlayer.Level))
                         || ActionWatching.NumberOfGcdsUsed == 4 || IsMoving))
                     {
-                        return IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
-                            && GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 3
-                            ? OriginalHook(Thunder)
-                            : ActionReady(Paradox) && Gauge.IsParadoxActive
-                            ? Paradox
-                            : ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer?.CurrentMp <= 1600 && LocalPlayer?.CurrentMp >= 800
-                            ? Despair
-                            : Xenoglossy;
+                        if (IsEnabled(CustomComboPreset.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
+                            && GetDebuffRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 3)
+                        {
+                            return OriginalHook(Thunder);
+                        }
+
+                        if (ActionReady(Paradox) && Gauge.IsParadoxActive)
+                        {
+                            return Paradox;
+                        }
+
+                        if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer?.CurrentMp <= 1600 && LocalPlayer?.CurrentMp >= 800)
+                        {
+                            return Despair;
+                        }
+
+                        return Xenoglossy;
                     }
 
                     if (IsEnabled(CustomComboPreset.BLM_ST_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire
@@ -235,7 +276,12 @@ namespace UltimateCombo.Combos.PvE
                     {
                         if (!LevelChecked(Blizzard3) && LocalPlayer?.CurrentMp < 1600)
                         {
-                            return ActionReady(All.LucidDreaming) ? All.LucidDreaming : Blizzard;
+                            if (ActionReady(All.LucidDreaming))
+                            {
+                                return All.LucidDreaming;
+                            }
+
+                            return Blizzard;
                         }
 
                         if (!LevelChecked(Blizzard4) && LevelChecked(Blizzard3) && Gauge.InUmbralIce && LocalPlayer?.CurrentMp < 10000 && !WasLastAction(UmbralSoul))
@@ -258,11 +304,15 @@ namespace UltimateCombo.Combos.PvE
                     }
 
                     if (ActionReady(Fire3)
-                        && ((!Gauge.InAstralFire && !Gauge.InUmbralIce)
-                        || (Gauge.InUmbralIce && LocalPlayer?.CurrentMp == 10000) || WasLastSpell(Blizzard4)
+                        && ((!Gauge.InAstralFire && !Gauge.InUmbralIce) || (Gauge.InUmbralIce && LocalPlayer?.CurrentMp == 10000) || WasLastSpell(Blizzard4)
                         || HasEffect(Buffs.Firestarter)))
                     {
-                        return ActionReady(Transpose) && Gauge.InUmbralIce && HasEffect(Buffs.Firestarter) ? Transpose : Fire3;
+                        if (ActionReady(Transpose) && Gauge.InUmbralIce && HasEffect(Buffs.Firestarter))
+                        {
+                            return Transpose;
+                        }
+
+                        return Fire3;
                     }
                 }
 
@@ -400,11 +450,22 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Xenoglossy or Paradox or Despair) && IsEnabled(CustomComboPreset.BLM_XenoParadox)
-                    ? ActionReady(Paradox) && Gauge.IsParadoxActive && ((Gauge.InAstralFire && LocalPlayer?.CurrentMp >= 1600) || Gauge.InUmbralIce)
-                        ? Paradox
-                        : ActionReady(Despair) && Gauge.InAstralFire && (LocalPlayer?.CurrentMp <= 1600) ? Despair : Xenoglossy
-                    : actionID;
+                if ((actionID is Xenoglossy or Paradox or Despair) && IsEnabled(CustomComboPreset.BLM_XenoParadox))
+                {
+                    if (ActionReady(Paradox) && Gauge.IsParadoxActive && ((Gauge.InAstralFire && LocalPlayer?.CurrentMp >= 1600) || Gauge.InUmbralIce))
+                    {
+                        return Paradox;
+                    }
+
+                    if (ActionReady(Despair) && Gauge.InAstralFire && (LocalPlayer?.CurrentMp <= 1600))
+                    {
+                        return Despair;
+                    }
+
+                    return Xenoglossy;
+                }
+
+                return actionID;
             }
         }
 
@@ -455,9 +516,17 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is LeyLines or BetweenTheLines) && IsEnabled(CustomComboPreset.BLM_LeyLines)
-                    ? HasEffect(Buffs.LeyLines) ? BetweenTheLines : LeyLines
-                    : actionID;
+                if ((actionID is LeyLines or BetweenTheLines) && IsEnabled(CustomComboPreset.BLM_LeyLines))
+                {
+                    if (HasEffect(Buffs.LeyLines))
+                    {
+                        return BetweenTheLines;
+                    }
+
+                    return LeyLines;
+                }
+
+                return actionID;
             }
         }
     }

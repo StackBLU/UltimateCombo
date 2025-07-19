@@ -206,21 +206,45 @@ namespace UltimateCombo.Combos.PvE
                         return Tillana;
                     }
 
-                    return IsEnabled(CustomComboPreset.DNC_ST_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50
-                        ? DanceOfTheDawn
-                        : IsEnabled(CustomComboPreset.DNC_ST_Starfall) && HasEffect(Buffs.FlourishingStarfall)
-                        ? StarfallDance
-                        : IsEnabled(CustomComboPreset.DNC_ST_LastDance) && HasEffect(Buffs.LastDanceReady)
-                        ? LastDance
-                        : IsEnabled(CustomComboPreset.DNC_ST_Saber) && ActionReady(SaberDance)
-                        && (Gauge.Esprit == 100 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)
-                        || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3)))
-                        ? SaberDance
-                        : HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry)
-                        ? ReverseCascade
-                        : HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow)
-                        ? Fountainfall
-                        : comboTime > 0 && lastComboMove is Cascade && ActionReady(Fountain) ? Fountain : Cascade;
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50)
+                    {
+                        return DanceOfTheDawn;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Starfall) && HasEffect(Buffs.FlourishingStarfall))
+                    {
+                        return StarfallDance;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_ST_LastDance) && HasEffect(Buffs.LastDanceReady))
+                    {
+                        return LastDance;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_ST_Saber) && ActionReady(SaberDance)
+                        && (Gauge.Esprit == 100
+                            || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)
+                            || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3))))
+                    {
+                        return SaberDance;
+                    }
+
+                    if (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry))
+                    {
+                        return ReverseCascade;
+                    }
+
+                    if (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow))
+                    {
+                        return Fountainfall;
+                    }
+
+                    if (comboTime > 0 && lastComboMove is Cascade && ActionReady(Fountain))
+                    {
+                        return Fountain;
+                    }
+
+                    return Cascade;
                 }
 
                 return actionID;
@@ -337,21 +361,44 @@ namespace UltimateCombo.Combos.PvE
                         return Tillana;
                     }
 
-                    return IsEnabled(CustomComboPreset.DNC_AoE_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50
-                        ? DanceOfTheDawn
-                        : IsEnabled(CustomComboPreset.DNC_AoE_Starfall) && HasEffect(Buffs.FlourishingStarfall)
-                        ? StarfallDance
-                        : IsEnabled(CustomComboPreset.DNC_AoE_LastDance) && HasEffect(Buffs.LastDanceReady)
-                        ? LastDance
-                        : IsEnabled(CustomComboPreset.DNC_AoE_Saber) && ActionReady(SaberDance)
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Technical) && HasEffect(Buffs.DanceOfTheDawnReady) && Gauge.Esprit >= 50)
+                    {
+                        return DanceOfTheDawn;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Starfall) && HasEffect(Buffs.FlourishingStarfall))
+                    {
+                        return StarfallDance;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_LastDance) && HasEffect(Buffs.LastDanceReady))
+                    {
+                        return LastDance;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.DNC_AoE_Saber) && ActionReady(SaberDance)
                         && (Gauge.Esprit == 100 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)
-                        || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3)))
-                        ? SaberDance
-                        : HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry)
-                        ? RisingWindmill
-                        : HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow)
-                        ? Bloodshower
-                        : comboTime > 0 && lastComboMove is Windmill ? Bladeshower : Windmill;
+                        || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3))))
+                    {
+                        return SaberDance;
+                    }
+
+                    if (HasEffect(Buffs.SilkenSymmetry) || HasEffect(Buffs.FlourishingSymmetry))
+                    {
+                        return RisingWindmill;
+                    }
+
+                    if (HasEffect(Buffs.SilkenFlow) || HasEffect(Buffs.FlourishingFlow))
+                    {
+                        return Bloodshower;
+                    }
+
+                    if (comboTime > 0 && lastComboMove is Windmill)
+                    {
+                        return Bladeshower;
+                    }
+
+                    return Windmill;
                 }
 
                 return actionID;

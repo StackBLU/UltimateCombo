@@ -1,14 +1,9 @@
-using System;
-
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
-
 using ECommons.DalamudServices;
-
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-
+using System;
 using UltimateCombo.Services;
-
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
 namespace UltimateCombo.ComboHelper.Functions

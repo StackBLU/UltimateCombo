@@ -1,7 +1,5 @@
-using System.Numerics;
-
 using ImGuiNET;
-
+using System.Numerics;
 using UltimateCombo.Services;
 
 namespace UltimateCombo.Window.Tabs

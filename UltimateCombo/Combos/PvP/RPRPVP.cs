@@ -101,7 +101,12 @@ namespace UltimateCombo.Combos.PvP
 
                         if (IsEnabled(CustomComboPreset.RPRPvP_Enshrouded) && HasEffect(Buffs.Enshrouded) && InActionRange(VoidReaping))
                         {
-                            return HasEffect(Buffs.RipeForReaping) ? CrossReaping : VoidReaping;
+                            if (HasEffect(Buffs.RipeForReaping))
+                            {
+                                return CrossReaping;
+                            }
+
+                            return VoidReaping;
                         }
 
                         if (IsEnabled(CustomComboPreset.RPRPvP_PlentifulHarvest) && ActionReady(PlentifulHarvest) && GetBuffStacks(Buffs.ImmortalSacrifice) == 8)

@@ -1,8 +1,6 @@
-using System;
-
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-
+using System;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
@@ -175,9 +173,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
         public static bool CanWeave(uint actionID, double weaveTime = 0.6)
         {
-            return Service.Configuration.DisableTripleWeaving
-                ? (GetCooldown(actionID).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved()) || HasSilence() || HasPacification()
-                : GetCooldown(actionID).CooldownRemaining >= weaveTime || HasSilence() || HasPacification();
+            if (Service.Configuration.DisableTripleWeaving)
+            {
+                return (GetCooldown(actionID).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved()) || HasSilence() || HasPacification();
+            }
+
+            return GetCooldown(actionID).CooldownRemaining >= weaveTime || HasSilence() || HasPacification();
         }
 
         public static bool CanDelayedWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)

@@ -172,12 +172,15 @@ namespace UltimateCombo.Combos.PvE
                     {
                         if (lastComboMove is TrueThrust or RaidenThrust)
                         {
-                            return ActionReady(OriginalHook(Disembowel))
+                            if (ActionReady(OriginalHook(Disembowel))
                                 && ((ActionReady(ChaosThrust) && GetDebuffRemainingTime(Debuffs.ChaosThrust) < 7 && !LevelChecked(ChaoticSpring))
-                                || (ActionReady(ChaoticSpring) && GetDebuffRemainingTime(Debuffs.ChaoticSpring) < 7)
-                                || !HasEffect(Buffs.PowerSurge))
-                                ? OriginalHook(Disembowel)
-                                : OriginalHook(VorpalThrust);
+                                    || (ActionReady(ChaoticSpring) && GetDebuffRemainingTime(Debuffs.ChaoticSpring) < 7)
+                                    || !HasEffect(Buffs.PowerSurge)))
+                            {
+                                return OriginalHook(Disembowel);
+                            }
+
+                            return OriginalHook(VorpalThrust);
                         }
 
                         if ((lastComboMove is Disembowel or SpiralBlow) && ActionReady(OriginalHook(ChaosThrust)))

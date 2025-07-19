@@ -84,9 +84,17 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is MiracleOfNature && IsEnabled(CustomComboPreset.WHMPvP_NoWasteMiracleOfNature)
-                    ? !TargetHasEffectAny(PvPCommon.Buffs.Guard) ? MiracleOfNature : OriginalHook(11)
-                    : actionID;
+                if (actionID is MiracleOfNature && IsEnabled(CustomComboPreset.WHMPvP_NoWasteMiracleOfNature))
+                {
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+                    {
+                        return MiracleOfNature;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                return actionID;
             }
         }
     }

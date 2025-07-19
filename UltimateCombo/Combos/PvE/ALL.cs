@@ -202,7 +202,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (LocalPlayer?.ClassJob.Value.RowId == AST.JobID)
                     {
-                        return ActionReady(AST.Lightspeed) && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast) ? AST.Lightspeed : AST.Ascend;
+                        if (ActionReady(AST.Lightspeed) && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast))
+                        {
+                            return AST.Lightspeed;
+                        }
+
+                        return AST.Ascend;
                     }
 
                     if (LocalPlayer?.ClassJob.Value.RowId == BLU.JobID)
@@ -212,7 +217,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (LocalPlayer?.ClassJob.Value.RowId == RDM.JobID)
                     {
-                        return !HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast) ? RDM.Vercure : RDM.Verraise;
+                        if (!HasEffect(Buffs.Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
+                        {
+                            return RDM.Vercure;
+                        }
+
+                        return RDM.Verraise;
                     }
 
                     if (LocalPlayer?.ClassJob.Value.RowId == SCH.JobID)
@@ -232,7 +242,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (LocalPlayer?.ClassJob.Value.RowId == WHM.JobID)
                     {
-                        return ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir) ? WHM.ThinAir : WHM.Raise;
+                        if (ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
+                        {
+                            return WHM.ThinAir;
+                        }
+
+                        return WHM.Raise;
                     }
                 }
 

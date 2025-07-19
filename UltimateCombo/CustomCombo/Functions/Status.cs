@@ -1,9 +1,7 @@
-using System;
-using System.Linq;
-
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
-
+using System;
+using System.Linq;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
 
@@ -63,7 +61,13 @@ namespace UltimateCombo.ComboHelper.Functions
         public static ushort FindTargetEffectStacks(ushort effectID)
         {
             Status? effect = FindEffect(effectID, CurrentTarget, LocalPlayer?.GameObjectId);
-            return effect == null ? (ushort) 0 : effect.Param;
+
+            if (effect == null)
+            {
+                return 0;
+            }
+
+            return effect.Param;
         }
 
         public static Status? FindTargetsTargetEffect(ushort effectID)

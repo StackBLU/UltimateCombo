@@ -1,7 +1,5 @@
-using System.Linq;
-
 using Dalamud.Interface.Utility;
-
+using System.Linq;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Window.Functions;

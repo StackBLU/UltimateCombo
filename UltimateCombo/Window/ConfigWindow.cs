@@ -1,17 +1,13 @@
+using Dalamud.Interface.ManagedFontAtlas;
+using Dalamud.Interface.Utility.Raii;
+using Dalamud.Utility;
+using ECommons.DalamudServices;
+using ECommons.ImGuiMethods;
+using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-
-using Dalamud.Interface.ManagedFontAtlas;
-using Dalamud.Interface.Utility.Raii;
-using Dalamud.Utility;
-
-using ECommons.DalamudServices;
-using ECommons.ImGuiMethods;
-
-using ImGuiNET;
-
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;

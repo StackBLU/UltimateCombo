@@ -388,12 +388,18 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return (actionID is Iaijutsu or TsubameGaeshi) && IsEnabled(CustomComboPreset.SAM_Iaijutsu)
-                    ? HasEffect(Buffs.TsubameReady) || HasEffect(Buffs.EnhancedTsubameReady)
-                        || HasEffect(Buffs.AoETsubameReady) || HasEffect(Buffs.EnhancedAoETsubameReady)
-                        ? OriginalHook(TsubameGaeshi)
-                        : OriginalHook(Iaijutsu)
-                    : actionID;
+                if ((actionID is Iaijutsu or TsubameGaeshi) && IsEnabled(CustomComboPreset.SAM_Iaijutsu))
+                {
+                    if (HasEffect(Buffs.TsubameReady) || HasEffect(Buffs.EnhancedTsubameReady)
+                        || HasEffect(Buffs.AoETsubameReady) || HasEffect(Buffs.EnhancedAoETsubameReady))
+                    {
+                        return OriginalHook(TsubameGaeshi);
+                    }
+
+                    return OriginalHook(Iaijutsu);
+                }
+
+                return actionID;
             }
         }
     }

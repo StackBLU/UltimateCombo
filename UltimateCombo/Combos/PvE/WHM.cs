@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -211,22 +209,43 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Cure1 or Cure2) && IsEnabled(CustomComboPreset.WHM_ST_Heals)
-                    ? IsEnabled(CustomComboPreset.WHM_ST_Heals_Tetragrammaton) && ActionReady(Tetragrammaton)
-                        ? Tetragrammaton
-                        : IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-                        ? AfflatusMisery
-                        : IsEnabled(CustomComboPreset.WHM_ST_Heals_Solace) && ActionReady(AfflatusSolace) && Gauge.Lily > 0
-                        ? AfflatusSolace
-                        : ActionReady(Regen)
-                        && ((HasFriendlyTarget() && !TargetHasEffect(Buffs.Regen))
-                        || (!HasFriendlyTarget() && !HasEffect(Buffs.Regen)))
-                        ? Regen
-                        : IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
-                        && !WasLastSpell(AfflatusSolace) && !WasLastSpell(AfflatusMisery) && !WasLastSpell(Regen)
-                        ? ThinAir
-                        : ActionReady(Cure2) ? Cure2 : Cure1
-                    : actionID;
+                if ((actionID is Cure1 or Cure2) && IsEnabled(CustomComboPreset.WHM_ST_Heals))
+                {
+                    if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Tetragrammaton) && ActionReady(Tetragrammaton))
+                    {
+                        return Tetragrammaton;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                    {
+                        return AfflatusMisery;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_ST_Heals_Solace) && ActionReady(AfflatusSolace) && Gauge.Lily > 0)
+                    {
+                        return AfflatusSolace;
+                    }
+
+                    if (ActionReady(Regen) && ((HasFriendlyTarget() && !TargetHasEffect(Buffs.Regen)) || (!HasFriendlyTarget() && !HasEffect(Buffs.Regen))))
+                    {
+                        return Regen;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir) && !WasLastSpell(AfflatusSolace)
+                        && !WasLastSpell(AfflatusMisery) && !WasLastSpell(Regen))
+                    {
+                        return ThinAir;
+                    }
+
+                    if (ActionReady(Cure2))
+                    {
+                        return Cure2;
+                    }
+
+                    return Cure1;
+                }
+
+                return actionID;
             }
         }
 
@@ -236,21 +255,44 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Medica1 or Medica2 or Medica3) && IsEnabled(CustomComboPreset.WHM_AoE_Heals)
-                    ? IsEnabled(CustomComboPreset.WHM_AoE_Heals_Plenary) & ActionReady(PlenaryIndulgence)
-                        ? PlenaryIndulgence
-                        : IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-                        ? AfflatusMisery
-                        : IsEnabled(CustomComboPreset.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily > 0
-                        ? AfflatusRapture
-                        : IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
-                        && !WasLastSpell(AfflatusRapture) && !WasLastSpell(AfflatusMisery)
-                        ? ThinAir
-                        : IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2) && !HasEffect(Buffs.Medica2) && !HasEffect(Buffs.Medica3)
-                        && !WasLastSpell(Medica2) && !WasLastSpell(Medica3) && (ActionReady(Medica2) || ActionReady(Medica3))
-                        ? OriginalHook(Medica3)
-                        : IsEnabled(CustomComboPreset.WHM_AoE_Heals_Cure3) && ActionReady(Cure3) ? Cure3 : Medica1
-                    : actionID;
+                if ((actionID is Medica1 or Medica2 or Medica3) && IsEnabled(CustomComboPreset.WHM_AoE_Heals))
+                {
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Plenary) && ActionReady(PlenaryIndulgence))
+                    {
+                        return PlenaryIndulgence;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                    {
+                        return AfflatusMisery;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily > 0)
+                    {
+                        return AfflatusRapture;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
+                        && !WasLastSpell(AfflatusRapture) && !WasLastSpell(AfflatusMisery))
+                    {
+                        return ThinAir;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoEHeals_Medica2) && !HasEffect(Buffs.Medica2) && !HasEffect(Buffs.Medica3)
+                        && !WasLastSpell(Medica2) && !WasLastSpell(Medica3) && (ActionReady(Medica2) || ActionReady(Medica3)))
+                    {
+                        return OriginalHook(Medica3);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.WHM_AoE_Heals_Cure3) && ActionReady(Cure3))
+                    {
+                        return Cure3;
+                    }
+
+                    return Medica1;
+                }
+
+                return actionID;
             }
         }
     }

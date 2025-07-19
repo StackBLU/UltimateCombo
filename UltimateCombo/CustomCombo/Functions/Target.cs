@@ -1,17 +1,12 @@
-using System;
-using System.Numerics;
-
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
-
 using ECommons;
 using ECommons.DalamudServices;
-
 using Lumina.Excel.Sheets;
-
+using System;
+using System.Numerics;
 using UltimateCombo.Data;
 using UltimateCombo.Services;
-
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace UltimateCombo.ComboHelper.Functions
@@ -97,19 +92,42 @@ namespace UltimateCombo.ComboHelper.Functions
                 }
             }
 
-            return OurTarget is not IBattleChara chara
-                ? 0
-                : (float) chara.CurrentHp / chara.MaxHp * 100;
+            if (OurTarget is not IBattleChara chara)
+            {
+                return 0;
+            }
+
+            return (float) chara.CurrentHp / chara.MaxHp * 100;
         }
 
         public static float EnemyHealthMaxHp()
         {
-            return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float) chara.MaxHp;
+            if (CurrentTarget is null)
+            {
+                return 0;
+            }
+
+            if (CurrentTarget is not IBattleChara chara)
+            {
+                return 0;
+            }
+
+            return chara.MaxHp;
         }
 
         public static float EnemyHealthCurrentHp()
         {
-            return CurrentTarget is null ? 0 : CurrentTarget is not IBattleChara chara ? 0 : (float) chara.CurrentHp;
+            if (CurrentTarget is null)
+            {
+                return 0;
+            }
+
+            if (CurrentTarget is not IBattleChara chara)
+            {
+                return 0;
+            }
+
+            return chara.CurrentHp;
         }
 
         public static float PlayerHealthPercentageHp()
@@ -206,14 +224,33 @@ namespace UltimateCombo.ComboHelper.Functions
             var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
             var regionDegrees = PositionalMath.Degrees(angle);
+
             if (regionDegrees < 0)
             {
                 regionDegrees = 360 + regionDegrees;
             }
 
-            return regionDegrees is >= 45 and <= 135
-                ? 1
-                : regionDegrees is >= 135 and <= 225 ? 2 : regionDegrees is >= 225 and <= 315 ? 3 : regionDegrees is >= 315 or <= 45 ? 4 : 0;
+            if (regionDegrees is >= 45 and <= 135)
+            {
+                return 1;
+            }
+
+            if (regionDegrees is >= 135 and <= 225)
+            {
+                return 2;
+            }
+
+            if (regionDegrees is >= 225 and <= 315)
+            {
+                return 3;
+            }
+
+            if (regionDegrees is >= 315 or <= 45)
+            {
+                return 4;
+            }
+
+            return 0;
         }
 
         public static bool OnTargetsRear()
@@ -287,7 +324,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
         internal static unsafe byte? GetMobType(IGameObject target)
         {
-            return HasBattleTarget() ? (Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank) : (byte?) 0;
+            if (HasBattleTarget())
+            {
+                return Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank;
+            }
+
+            return (byte?) 0;
         }
 
         internal static unsafe bool TargetIsBoss()

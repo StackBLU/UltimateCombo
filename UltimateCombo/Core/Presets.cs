@@ -1,9 +1,7 @@
+using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Dalamud.Utility;
-
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Services;

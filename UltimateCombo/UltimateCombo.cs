@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility;
-
 using ECommons;
-
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.PvE;
@@ -287,6 +284,7 @@ namespace UltimateCombo
                                 _ = Service.Configuration.EnabledActions.Add(preset);
                                 Service.ChatGui.Print($"{preset} enabled!");
                             }
+
                             else
                             {
                                 Service.ChatGui.Print($"{preset} disabled!");
@@ -340,7 +338,17 @@ namespace UltimateCombo
                     {
                         try
                         {
-                            var specificJob = argumentsParts.Length == 2 ? argumentsParts[1].ToLower() : "";
+                            string specificJob;
+
+                            if (argumentsParts.Length == 2)
+                            {
+                                specificJob = argumentsParts[1].ToLower();
+                            }
+
+                            else
+                            {
+                                specificJob = "";
+                            }
 
                             var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
@@ -362,6 +370,7 @@ namespace UltimateCombo
                             file.WriteLine($"Enabled Features:");
 
                             var i = 0;
+
                             if (string.IsNullOrEmpty(specificJob))
                             {
                                 foreach (CustomComboPreset preset in Service.Configuration.EnabledActions.OrderBy(x => x))
@@ -415,6 +424,7 @@ namespace UltimateCombo
                                     file.WriteLine($"{item.Key.Trim()} - {string.Join(", ", item.Value)}");
                                 }
                             }
+
                             else
                             {
                                 var jobname = ConfigWindow.GroupedPresets.Where(x => x.Value.Any(y => y.Info.JobShorthand.Equals(specificJob.ToLower(), StringComparison.CurrentCultureIgnoreCase))).FirstOrDefault().Key;

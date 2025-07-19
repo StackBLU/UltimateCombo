@@ -1,7 +1,5 @@
-using System.Linq;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -16,7 +14,12 @@ namespace UltimateCombo.Combos.PvE
 
         public static int MaxCartridges(byte level)
         {
-            return level >= 88 ? 3 : 2;
+            if (level >= 88)
+            {
+                return 3;
+            }
+
+            return 2;
         }
 
         public const uint

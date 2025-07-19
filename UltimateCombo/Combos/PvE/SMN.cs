@@ -175,9 +175,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (HasEffect(Buffs.GarudasFavor))
                     {
-                        return ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick)
-                            ? All.Swiftcast
-                            : OriginalHook(AstralFlow);
+                        if (ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
+                        {
+                            return All.Swiftcast;
+                        }
+
+                        return OriginalHook(AstralFlow);
                     }
 
                     if (lastComboMove is CrimsonCyclone)
@@ -193,7 +196,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone) && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
                     {
-                        return IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin) ? Ruin4 : OriginalHook(AstralFlow);
+                        if (IsEnabled(CustomComboPreset.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
+                        {
+                            return Ruin4;
+                        }
+
+                        return OriginalHook(AstralFlow);
                     }
 
                     if (Gauge.AttunementTimerRemaining > 0 && Gauge.Attunement > 0)
@@ -296,9 +304,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (HasEffect(Buffs.GarudasFavor))
                     {
-                        return ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick)
-                            ? All.Swiftcast
-                            : OriginalHook(AstralFlow);
+                        if (ActionReady(All.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
+                        {
+                            return All.Swiftcast;
+                        }
+
+                        return OriginalHook(AstralFlow);
                     }
 
                     if (lastComboMove is CrimsonCyclone)
@@ -314,7 +325,12 @@ namespace UltimateCombo.Combos.PvE
                     if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone)
                         && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
                     {
-                        return IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin) ? Ruin4 : OriginalHook(AstralFlow);
+                        if (IsEnabled(CustomComboPreset.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
+                        {
+                            return Ruin4;
+                        }
+
+                        return OriginalHook(AstralFlow);
                     }
 
                     if (Gauge.AttunementTimerRemaining > 0 && Gauge.Attunement > 0)
@@ -362,9 +378,17 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is EnergyDrain or Fester or Necrotize) && IsEnabled(CustomComboPreset.SMN_EnergyDrain)
-                    ? Gauge.AetherflowStacks > 0 ? OriginalHook(Necrotize) : EnergyDrain
-                    : actionID;
+                if ((actionID is EnergyDrain or Fester or Necrotize) && IsEnabled(CustomComboPreset.SMN_EnergyDrain))
+                {
+                    if (Gauge.AetherflowStacks > 0)
+                    {
+                        return OriginalHook(Necrotize);
+                    }
+
+                    return EnergyDrain;
+                }
+
+                return actionID;
             }
         }
 
@@ -374,9 +398,17 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is EnergySiphon or Painflare) && IsEnabled(CustomComboPreset.SMN_EnergySiphon)
-                    ? Gauge.AetherflowStacks > 0 ? Painflare : EnergySiphon
-                    : actionID;
+                if ((actionID is EnergySiphon or Painflare) && IsEnabled(CustomComboPreset.SMN_EnergySiphon))
+                {
+                    if (Gauge.AetherflowStacks > 0)
+                    {
+                        return Painflare;
+                    }
+
+                    return EnergySiphon;
+                }
+
+                return actionID;
             }
         }
 
@@ -386,9 +418,17 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is SummonBahamut or SummonPhoenix or SummonSolarBahamut) && IsEnabled(CustomComboPreset.SMN_Enkindle)
-                    ? CanWeave(actionID) && ActionReady(OriginalHook(EnkindleBahamut)) ? OriginalHook(EnkindleBahamut) : SummonBahamut
-                    : actionID;
+                if ((actionID is SummonBahamut or SummonPhoenix or SummonSolarBahamut) && IsEnabled(CustomComboPreset.SMN_Enkindle))
+                {
+                    if (CanWeave(actionID) && ActionReady(OriginalHook(EnkindleBahamut)))
+                    {
+                        return OriginalHook(EnkindleBahamut);
+                    }
+
+                    return SummonBahamut;
+                }
+
+                return actionID;
             }
         }
     }

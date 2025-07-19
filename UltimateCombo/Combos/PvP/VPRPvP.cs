@@ -108,7 +108,12 @@ namespace UltimateCombo.Combos.PvP
 
                         if (HasEffect(Buffs.Reawakened))
                         {
-                            return WasLastWeaponskill(FourthGeneration) ? OriginalHook(Ouroboros) : actionID;
+                            if (WasLastWeaponskill(FourthGeneration))
+                            {
+                                return OriginalHook(Ouroboros);
+                            }
+
+                            return actionID;
                         }
 
                         if (IsEnabled(CustomComboPreset.VPRPvP_UncoiledFury) && ActionReady(UncoiledFury))
@@ -123,11 +128,22 @@ namespace UltimateCombo.Combos.PvP
                     }
                 }
 
-                return (actionID is SnakeScales or Backlash) && IsEnabled(CustomComboPreset.VPRPvP_Backlash)
-                    ? HasEffect(Buffs.SnakesBane)
-                        ? OriginalHook(SnakeScales)
-                        : IsOffCooldown(SnakeScales) || !HasEffect(Buffs.HardnenedScales) ? SnakeScales : OriginalHook(11)
-                    : actionID;
+                if ((actionID is SnakeScales or Backlash) && IsEnabled(CustomComboPreset.VPRPvP_Backlash))
+                {
+                    if (HasEffect(Buffs.SnakesBane))
+                    {
+                        return OriginalHook(SnakeScales);
+                    }
+
+                    if (IsOffCooldown(SnakeScales) || !HasEffect(Buffs.HardnenedScales))
+                    {
+                        return SnakeScales;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                return actionID;
             }
         }
     }

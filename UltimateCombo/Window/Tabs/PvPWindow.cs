@@ -1,14 +1,10 @@
-using System.Linq;
-using System.Numerics;
-
 using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
-
 using ECommons.ImGuiMethods;
-
 using ImGuiNET;
-
+using System.Linq;
+using System.Numerics;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Services;
@@ -32,12 +28,35 @@ namespace UltimateCombo.Window.Tabs
                 foreach (var jobName in GroupedPresets.Where(x => x.Value.Any(y => PresetStorage.IsPvP(y.Preset))).Select(x => x.Key))
                 {
                     var abbreviation = GroupedPresets[jobName].First().Info.JobShorthand;
-                    var header = string.IsNullOrEmpty(abbreviation) ? jobName : $"{jobName} - {abbreviation}";
+                    string header;
+
+                    if (string.IsNullOrEmpty(abbreviation))
+                    {
+                        header = jobName;
+                    }
+
+                    else
+                    {
+                        header = $"{jobName} - {abbreviation}";
+                    }
+
                     var id = GroupedPresets[jobName].First().Info.JobID;
+
                     IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
-                    if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None,
-                        icon == null ? new Vector2(0) : new Vector2(0, (icon.Size.Y / 2f).Scale())))
+                    Vector2 selectableSize;
+
+                    if (icon == null)
+                    {
+                        selectableSize = new Vector2(0);
+                    }
+
+                    else
+                    {
+                        selectableSize = new Vector2(0, (icon.Size.Y / 2f).Scale());
+                    }
+
+                    if (ImGui.Selectable($"###{header}", OpenJob == jobName, ImGuiSelectableFlags.None, selectableSize))
                     {
                         OpenJob = jobName;
                     }
@@ -56,13 +75,26 @@ namespace UltimateCombo.Window.Tabs
                     }
                 }
             }
+
             else
             {
                 var id = GroupedPresets[OpenJob].First().Info.JobID;
                 IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
 
+                float childHeight;
+
+                if (icon is null)
+                {
+                    childHeight = 24f.Scale();
+                }
+
+                else
+                {
+                    childHeight = (icon.Size.Y / 2f.Scale()) + 4f;
+                }
+
                 using (ImRaii.IEndObject headingTab = ImRaii.Child("HeadingTab",
-                    new Vector2(ImGui.GetContentRegionAvail().X, icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f)))
+                    new Vector2(ImGui.GetContentRegionAvail().X, childHeight)))
                 {
                     if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
                     {
@@ -79,7 +111,6 @@ namespace UltimateCombo.Window.Tabs
                         }
                         ImGuiEx.Text($"{OpenJob}");
                     });
-
                 }
 
                 using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);

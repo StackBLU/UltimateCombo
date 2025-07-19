@@ -1,7 +1,5 @@
-using System;
-
 using Dalamud.Game;
-
+using System;
 using UltimateCombo.Services;
 
 namespace UltimateCombo.Core

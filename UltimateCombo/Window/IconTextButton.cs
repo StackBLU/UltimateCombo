@@ -1,11 +1,8 @@
-using System.Numerics;
-
 using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
-
 using ECommons.ImGuiMethods;
-
 using ImGuiNET;
+using System.Numerics;
 
 namespace UltimateCombo.Window
 {
@@ -34,9 +31,32 @@ namespace UltimateCombo.Window
             Vector2 spacing = ImGui.GetStyle().ItemSpacing;
 
             var buttonSizeX = imageSize.X + textSize.X + (padding.X * 2) + spacing.X;
-            var buttonSizeY = (imageSize.Y > textSize.Y ? imageSize.Y : textSize.Y) + (padding.Y * 2);
 
-            Vector2 buttonSize = size == Vector2.Zero ? new Vector2(buttonSizeX, buttonSizeY) : size;
+            float maxHeight;
+
+            if (imageSize.Y > textSize.Y)
+            {
+                maxHeight = imageSize.Y;
+            }
+
+            else
+            {
+                maxHeight = textSize.Y;
+            }
+
+            var buttonSizeY = maxHeight + (padding.Y * 2);
+
+            Vector2 buttonSize;
+
+            if (size == Vector2.Zero)
+            {
+                buttonSize = new Vector2(buttonSizeX, buttonSizeY);
+            }
+
+            else
+            {
+                buttonSize = size;
+            }
 
             if (ImGui.Button("###" + text, buttonSize))
             {
@@ -48,11 +68,13 @@ namespace UltimateCombo.Window
             {
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
             }
+
             else
             {
                 ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - size.X) * 0.5f);
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
             }
+
             if (imageOnRight)
             {
                 ImGui.Text(text);
@@ -63,11 +85,10 @@ namespace UltimateCombo.Window
                 }
 
                 ImGui.Image(texture.ImGuiHandle, imageSize);
-
             }
+
             else
             {
-
                 ImGui.Image(texture.ImGuiHandle, imageSize);
 
                 ImGui.SameLine();
@@ -77,7 +98,6 @@ namespace UltimateCombo.Window
                 }
                 ImGui.Text(text);
             }
-
 
             return buttonClicked;
         }
@@ -102,8 +122,32 @@ namespace UltimateCombo.Window
             Vector2 spacing = ImGui.GetStyle().ItemSpacing;
 
             var buttonSizeX = iconSize.X + textSize.X + (padding.X * 2) + spacing.X;
-            var buttonSizeY = (iconSize.Y > textSize.Y ? iconSize.Y : textSize.Y) + (padding.Y * 2);
-            Vector2 buttonSize = size == Vector2.Zero ? new Vector2(buttonSizeX, buttonSizeY) : size;
+
+            float maxHeight;
+
+            if (iconSize.Y > textSize.Y)
+            {
+                maxHeight = iconSize.Y;
+            }
+
+            else
+            {
+                maxHeight = textSize.Y;
+            }
+
+            var buttonSizeY = maxHeight + (padding.Y * 2);
+
+            Vector2 buttonSize;
+
+            if (size == Vector2.Zero)
+            {
+                buttonSize = new Vector2(buttonSizeX, buttonSizeY);
+            }
+
+            else
+            {
+                buttonSize = size;
+            }
 
             if (ImGui.Button("###" + icon.ToIconString() + text, buttonSize))
             {
@@ -115,11 +159,13 @@ namespace UltimateCombo.Window
             {
                 ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
             }
+
             else
             {
                 ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - iconSize.X) * 0.5f);
                 ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
             }
+
             if (iconOnRight)
             {
                 ImGui.Text(text);
@@ -132,6 +178,7 @@ namespace UltimateCombo.Window
                 ImGui.Text(icon.ToIconString());
                 ImGui.PopFont();
             }
+
             else
             {
                 ImGui.PushFont(UiBuilder.IconFont);
@@ -142,9 +189,9 @@ namespace UltimateCombo.Window
                 {
                     ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
                 }
+
                 ImGui.Text(text);
             }
-
 
             return buttonClicked;
         }

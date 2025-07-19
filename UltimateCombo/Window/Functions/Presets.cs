@@ -1,14 +1,11 @@
-using System.Linq;
-using System.Text;
-
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
-
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
-
 using ImGuiNET;
-
+using System.Linq;
+using System.Numerics;
+using System.Text;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
@@ -39,6 +36,7 @@ namespace UltimateCombo.Window.Functions
                         _ = Service.Configuration.EnabledActions.Remove(conflict);
                     }
                 }
+
                 else
                 {
                     _ = Service.Configuration.EnabledActions.Remove(preset);
@@ -73,7 +71,18 @@ namespace UltimateCombo.Window.Functions
                         _ = conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
                     }
 
-                    ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, ComboHelper.Functions.CustomComboFunctions.IsEnabled(conflict) ? ImGuiColors.HealerGreen : ImGuiColors.DalamudRed, 1500), $"- {conflictBuilder}");
+                    Vector4 color;
+
+                    if (ComboHelper.Functions.CustomComboFunctions.IsEnabled(conflict))
+                    {
+                        color = GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.HealerGreen, 1500);
+                    }
+                    else
+                    {
+                        color = GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudRed, 1500);
+                    }
+
+                    ImGuiEx.Text(color, $"- {conflictBuilder}");
                     _ = conflictBuilder.Clear();
                 }
                 ImGui.Unindent();
@@ -84,8 +93,31 @@ namespace UltimateCombo.Window.Functions
             {
                 if (blueAttr.Actions.Count > 0)
                 {
-                    ImGui.PushStyleColor(ImGuiCol.Text, blueAttr.NoneSet ? ImGuiColors.DPSRed : ImGuiColors.DalamudOrange);
-                    ImGui.Text($"{(blueAttr.NoneSet ? "No Required Spells Active:" : "Missing active spells:")} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetBLUIndex(x) + ActionWatching.GetActionName(x)))}");
+                    Vector4 textColor;
+                    if (blueAttr.NoneSet)
+                    {
+                        textColor = ImGuiColors.DPSRed;
+                    }
+
+                    else
+                    {
+                        textColor = ImGuiColors.DalamudOrange;
+                    }
+                    ImGui.PushStyleColor(ImGuiCol.Text, textColor);
+
+                    string displayText;
+
+                    if (blueAttr.NoneSet)
+                    {
+                        displayText = "No Required Spells Active:";
+                    }
+
+                    else
+                    {
+                        displayText = "Missing active spells:";
+                    }
+
+                    ImGui.Text($"{displayText} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetBLUIndex(x) + ActionWatching.GetActionName(x)))}");
                     ImGui.PopStyleColor();
                 }
 
@@ -136,14 +168,17 @@ namespace UltimateCombo.Window.Functions
                                 continue;
                             }
                         }
+
                         else
                         {
                             DrawPreset(childPreset, childInfo, ref i);
                         }
                     }
+
                     ImGui.Unindent();
                     ImGui.Unindent();
                 }
+
                 else
                 {
                     i += AllChildren(PresetChildren[preset]);

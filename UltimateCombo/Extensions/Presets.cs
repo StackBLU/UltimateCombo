@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-
 using Dalamud.Utility;
-
+using System.Collections.Generic;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 
@@ -22,7 +20,12 @@ namespace UltimateCombo.Extensions
             }
 
             ReplaceSkillAttribute? att = preset.GetAttribute<ReplaceSkillAttribute>();
-            return att != null && replaceSkillCache.TryAdd(preset, att) ? replaceSkillCache[preset] : null;
+            if (att != null && replaceSkillCache.TryAdd(preset, att))
+            {
+                return replaceSkillCache[preset];
+            }
+
+            return null;
         }
 
         ///<summary> Retrieves the <see cref="CustomComboInfoAttribute"/> for the preset if it exists.</summary>
@@ -34,8 +37,12 @@ namespace UltimateCombo.Extensions
             }
 
             CustomComboInfoAttribute? att = preset.GetAttribute<CustomComboInfoAttribute>();
-            return att != null && comboInfoCache.TryAdd(preset, att) ? comboInfoCache[preset] : null;
+            if (att != null && comboInfoCache.TryAdd(preset, att))
+            {
+                return comboInfoCache[preset];
+            }
 
+            return null;
         }
 
         ///<summary> Retrieves the <see cref="HoverInfoAttribute"/> for the preset if it exists.</summary>
@@ -47,8 +54,12 @@ namespace UltimateCombo.Extensions
             }
 
             HoverInfoAttribute? att = preset.GetAttribute<HoverInfoAttribute>();
-            return att != null && hoverInfoCache.TryAdd(preset, att) ? hoverInfoCache[preset] : null;
+            if (att != null && hoverInfoCache.TryAdd(preset, att))
+            {
+                return hoverInfoCache[preset];
+            }
 
+            return null;
         }
     }
 }

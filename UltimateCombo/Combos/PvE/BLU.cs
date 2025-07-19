@@ -497,12 +497,19 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is PeripheralSynthesis or MustardBomb) && IsEnabled(CustomComboPreset.BLU_Periph)
-                    ? IsSpellActive(MustardBomb) && (WasLastSpell(PeripheralSynthesis) || HasEffect(Buffs.Bristle)
-                        || TargetHasEffectAny(Debuffs.MustardBomb) || TargetHasEffectAny(Debuffs.Lightheaded))
-                        ? MustardBomb
-                        : PeripheralSynthesis
-                    : actionID;
+                if ((actionID is PeripheralSynthesis or MustardBomb) && IsEnabled(CustomComboPreset.BLU_Periph))
+                {
+                    if (IsSpellActive(MustardBomb)
+                        && (WasLastSpell(PeripheralSynthesis) || HasEffect(Buffs.Bristle) || TargetHasEffectAny(Debuffs.MustardBomb)
+                        || TargetHasEffectAny(Debuffs.Lightheaded)))
+                    {
+                        return MustardBomb;
+                    }
+
+                    return PeripheralSynthesis;
+                }
+
+                return actionID;
             }
         }
 
@@ -628,7 +635,12 @@ namespace UltimateCombo.Combos.PvE
                 {
                     if (HasEffect(Buffs.PhantomFlurry))
                     {
-                        return GetBuffRemainingTime(Buffs.PhantomFlurry) <= 0.75f ? OriginalHook(PhantomFlurry) : OriginalHook(11);
+                        if (GetBuffRemainingTime(Buffs.PhantomFlurry) <= 0.75f)
+                        {
+                            return OriginalHook(PhantomFlurry);
+                        }
+
+                        return OriginalHook(11);
                     }
                 }
 
@@ -712,7 +724,12 @@ namespace UltimateCombo.Combos.PvE
                             && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure) && IsOffCooldown(AngelsSnack)
                             && IsSpellActive(AngelsSnack))
                         {
-                            return ActionReady(All.Swiftcast) ? All.Swiftcast : AngelsSnack;
+                            if (ActionReady(All.Swiftcast))
+                            {
+                                return All.Swiftcast;
+                            }
+
+                            return AngelsSnack;
                         }
                     }
 
@@ -778,7 +795,12 @@ namespace UltimateCombo.Combos.PvE
                             && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure)
                             && ActionReady(AngelsSnack) && IsSpellActive(AngelsSnack))
                         {
-                            return PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast) ? All.Swiftcast : AngelsSnack;
+                            if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast))
+                            {
+                                return All.Swiftcast;
+                            }
+
+                            return AngelsSnack;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_Pomcure)
@@ -786,7 +808,12 @@ namespace UltimateCombo.Combos.PvE
                             && IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
                             && !HasEffect(Buffs.AngelsSnack) && !WasLastSpell(AngelsSnack))
                         {
-                            return PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast) && !WasLastSpell(Pomcure) ? All.Swiftcast : Pomcure;
+                            if (PlayerHealthPercentageHp() < 50 && ActionReady(All.Swiftcast) && !WasLastSpell(Pomcure))
+                            {
+                                return All.Swiftcast;
+                            }
+
+                            return Pomcure;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_Gobskin)
@@ -799,14 +826,24 @@ namespace UltimateCombo.Combos.PvE
                             && !TargetHasEffect(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Bristle) ? Bristle : BreathOfMagic;
+                            if (!HasEffect(Buffs.Bristle))
+                            {
+                                return Bristle;
+                            }
+
+                            return BreathOfMagic;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_MortalFlame) && EnemyHealthMaxHp() >= LocalPlayer?.MaxHp * 10
                             && !TargetHasEffect(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Bristle) ? Bristle : MortalFlame;
+                            if (!HasEffect(Buffs.Bristle))
+                            {
+                                return Bristle;
+                            }
+
+                            return MortalFlame;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_TripleTrident) && IsSpellActive(TripleTrident)
@@ -814,7 +851,17 @@ namespace UltimateCombo.Combos.PvE
                             && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Whistle) ? Whistle : !HasEffect(Buffs.Tingle) ? Tingle : TripleTrident;
+                            if (!HasEffect(Buffs.Whistle))
+                            {
+                                return Whistle;
+                            }
+
+                            if (!HasEffect(Buffs.Tingle))
+                            {
+                                return Tingle;
+                            }
+
+                            return TripleTrident;
                         }
                     }
                 }
@@ -1008,14 +1055,24 @@ namespace UltimateCombo.Combos.PvE
                             && !TargetHasEffect(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Bristle) ? Bristle : BreathOfMagic;
+                            if (!HasEffect(Buffs.Bristle))
+                            {
+                                return Bristle;
+                            }
+
+                            return BreathOfMagic;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_MortalFlame) && EnemyHealthMaxHp() >= LocalPlayer?.MaxHp * 10
                             && !TargetHasEffect(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Bristle) ? Bristle : MortalFlame;
+                            if (!HasEffect(Buffs.Bristle))
+                            {
+                                return Bristle;
+                            }
+
+                            return MortalFlame;
                         }
 
                         if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_TripleTrident) && IsSpellActive(TripleTrident)
@@ -1023,7 +1080,17 @@ namespace UltimateCombo.Combos.PvE
                             && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
                             && (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
                         {
-                            return !HasEffect(Buffs.Whistle) ? Whistle : !HasEffect(Buffs.Tingle) ? Tingle : TripleTrident;
+                            if (!HasEffect(Buffs.Whistle))
+                            {
+                                return Whistle;
+                            }
+
+                            if (!HasEffect(Buffs.Tingle))
+                            {
+                                return Tingle;
+                            }
+
+                            return TripleTrident;
                         }
                     }
                 }

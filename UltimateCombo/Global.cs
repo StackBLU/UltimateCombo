@@ -1,1 +1,1 @@
-﻿global using static UltimateCombo.UltimateComboClass;
+global using static UltimateCombo.UltimateComboClass;

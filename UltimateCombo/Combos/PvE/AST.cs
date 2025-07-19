@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Collections.Generic;
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -160,7 +158,12 @@ namespace UltimateCombo.Combos.PvE
                             if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && LevelChecked(Divination) &&
                                 (IsOffCooldown(Divination) || GetCooldownRemainingTime(Divination) < 2) && TargetIsBoss())
                             {
-                                return ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed) ? Lightspeed : Divination;
+                                if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
+                                {
+                                    return Lightspeed;
+                                }
+
+                                return Divination;
                             }
 
                             if (IsEnabled(CustomComboPreset.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
@@ -194,10 +197,13 @@ namespace UltimateCombo.Combos.PvE
                                 && (Gauge.DrawnCards.All(x => x is CardType.None) || (!Gauge.DrawnCards.Any(x => x is CardType.Balance)
                                 && !Gauge.DrawnCards.Any(x => x is CardType.Spear) && !Config.AST_ST_DPS_UseDefenseCards)))
                             {
-                                return ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord)
-                                    || Gauge.DrawnCrownCard.HasFlag(CardType.Lady))
-                                    ? OriginalHook(MinorArcana)
-                                    : OriginalHook(AstralDraw);
+                                if (ActionReady(OriginalHook(MinorArcana))
+                                    && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord) || Gauge.DrawnCrownCard.HasFlag(CardType.Lady)))
+                                {
+                                    return OriginalHook(MinorArcana);
+                                }
+
+                                return OriginalHook(AstralDraw);
                             }
 
                             if (IsEnabled(CustomComboPreset.AST_ST_DPS_Divination) && HasEffect(Buffs.Divining))
@@ -223,13 +229,15 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Combust3))
-                        && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
-                        && TargetIsBoss() && (!TargetHasEffect(CombustList[OriginalHook(Combust3)])
-                        || GetDebuffRemainingTime(CombustList[OriginalHook(Combust3)]) <= 3
-                        || ActionWatching.NumberOfGcdsUsed == 11)
-                        ? OriginalHook(Combust3)
-                        : OriginalHook(Malefic);
+                    if (IsEnabled(CustomComboPreset.AST_ST_DPS_CombustUptime) && ActionReady(OriginalHook(Combust3))
+                        && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks) && TargetIsBoss()
+                        && (!TargetHasEffect(CombustList[OriginalHook(Combust3)]) || GetDebuffRemainingTime(CombustList[OriginalHook(Combust3)]) <= 3
+                            || ActionWatching.NumberOfGcdsUsed == 11))
+                    {
+                        return OriginalHook(Combust3);
+                    }
+
+                    return OriginalHook(Malefic);
                 }
 
                 return actionID;
@@ -262,7 +270,12 @@ namespace UltimateCombo.Combos.PvE
 
                         if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && (ActionReady(Divination) || GetCooldownRemainingTime(Divination) < 3))
                         {
-                            return ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed) ? Lightspeed : Divination;
+                            if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
+                            {
+                                return Lightspeed;
+                            }
+
+                            return Divination;
                         }
 
                         if (IsEnabled(CustomComboPreset.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
@@ -296,10 +309,13 @@ namespace UltimateCombo.Combos.PvE
                             && (Gauge.DrawnCards.All(x => x is CardType.None) || (!Gauge.DrawnCards.Any(x => x is CardType.Balance)
                             && !Gauge.DrawnCards.Any(x => x is CardType.Spear) && !Config.AST_AoE_DPS_UseDefenseCards)))
                         {
-                            return ActionReady(OriginalHook(MinorArcana)) && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord)
-                                || Gauge.DrawnCrownCard.HasFlag(CardType.Lady))
-                                ? OriginalHook(MinorArcana)
-                                : OriginalHook(AstralDraw);
+                            if (ActionReady(OriginalHook(MinorArcana))
+                                && (Gauge.DrawnCrownCard.HasFlag(CardType.Lord) || Gauge.DrawnCrownCard.HasFlag(CardType.Lady)))
+                            {
+                                return OriginalHook(MinorArcana);
+                            }
+
+                            return OriginalHook(AstralDraw);
                         }
 
                         if (IsEnabled(CustomComboPreset.AST_AoE_DPS_Divination) && HasEffect(Buffs.Divining))
@@ -336,13 +352,24 @@ namespace UltimateCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.AST_ST_Heals;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Benefic1 or Benefic2) && IsEnabled(CustomComboPreset.AST_ST_Heals)
-                    ? ActionReady(AspectedBenefic)
+                if ((actionID is Benefic1 or Benefic2) && IsEnabled(CustomComboPreset.AST_ST_Heals))
+                {
+                    if (ActionReady(AspectedBenefic)
                         && ((HasFriendlyTarget() && !TargetHasEffect(Buffs.AspectedBenefic))
-                        || (!HasFriendlyTarget() && !HasEffect(Buffs.AspectedBenefic)))
-                        ? AspectedBenefic
-                        : ActionReady(Benefic2) ? Benefic2 : Benefic1
-                    : actionID;
+                        || (!HasFriendlyTarget() && !HasEffect(Buffs.AspectedBenefic))))
+                    {
+                        return AspectedBenefic;
+                    }
+
+                    if (ActionReady(Benefic2))
+                    {
+                        return Benefic2;
+                    }
+
+                    return Benefic1;
+                }
+
+                return actionID;
             }
         }
 
@@ -413,19 +440,37 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return actionID is Play1
-                    ? !Gauge.DrawnCards.Any(x => x is CardType.Balance) && !Gauge.DrawnCards.Any(x => x is CardType.Spear)
-                        ? OriginalHook(AstralDraw)
-                        : actionID
-                    : actionID is Play2
-                    ? !Gauge.DrawnCards.Any(x => x is CardType.Arrow) && !Gauge.DrawnCards.Any(x => x is CardType.Bole)
-                        ? OriginalHook(AstralDraw)
-                        : actionID
-                    : actionID is Play3
-                    ? !Gauge.DrawnCards.Any(x => x is CardType.Spire) && !Gauge.DrawnCards.Any(x => x is CardType.Ewer)
-                        ? OriginalHook(AstralDraw)
-                        : actionID
-                    : actionID;
+                if (actionID is Play1)
+                {
+                    if (!Gauge.DrawnCards.Any(x => x is CardType.Balance) && !Gauge.DrawnCards.Any(x => x is CardType.Spear))
+                    {
+                        return OriginalHook(AstralDraw);
+                    }
+
+                    return actionID;
+                }
+
+                if (actionID is Play2)
+                {
+                    if (!Gauge.DrawnCards.Any(x => x is CardType.Arrow) && !Gauge.DrawnCards.Any(x => x is CardType.Bole))
+                    {
+                        return OriginalHook(AstralDraw);
+                    }
+
+                    return actionID;
+                }
+
+                if (actionID is Play3)
+                {
+                    if (!Gauge.DrawnCards.Any(x => x is CardType.Spire) && !Gauge.DrawnCards.Any(x => x is CardType.Ewer))
+                    {
+                        return OriginalHook(AstralDraw);
+                    }
+
+                    return actionID;
+                }
+
+                return actionID;
             }
         }
     }

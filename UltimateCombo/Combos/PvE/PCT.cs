@@ -159,9 +159,12 @@ namespace UltimateCombo.Combos.PvE
                             || (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
                             || Gauge.PalleteGauge == 100))
                         {
-                            return IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick)
-                                ? All.Swiftcast
-                                : SubtractivePalette;
+                            if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
+                            {
+                                return All.Swiftcast;
+                            }
+
+                            return SubtractivePalette;
                         }
 
                         if (IsEnabled(CustomComboPreset.PCT_ST_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
@@ -320,9 +323,12 @@ namespace UltimateCombo.Combos.PvE
                             || (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
                             || Gauge.PalleteGauge == 100))
                         {
-                            return IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick)
-                                ? All.Swiftcast
-                                : SubtractivePalette;
+                            if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
+                            {
+                                return All.Swiftcast;
+                            }
+
+                            return SubtractivePalette;
                         }
 
                         if (IsEnabled(CustomComboPreset.PCT_AoE_Swiftcast) && ActionReady(All.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
@@ -401,9 +407,17 @@ namespace UltimateCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PCT_HolyComet;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is HolyInWhite or CometInBlack) && IsEnabled(CustomComboPreset.PCT_HolyComet)
-                    ? HasEffect(Buffs.MonochromeTones) ? CometInBlack : HolyInWhite
-                    : actionID;
+                if ((actionID is HolyInWhite or CometInBlack) && IsEnabled(CustomComboPreset.PCT_HolyComet))
+                {
+                    if (HasEffect(Buffs.MonochromeTones))
+                    {
+                        return CometInBlack;
+                    }
+
+                    return HolyInWhite;
+                }
+
+                return actionID;
             }
         }
 

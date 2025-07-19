@@ -218,7 +218,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.VPR_ST_UncoiledSnap) && ActionReady(WrithingSnap) && OutOfMeleeRange())
                     {
-                        return ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0 ? UncoiledFury : WrithingSnap;
+                        if (ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0)
+                        {
+                            return UncoiledFury;
+                        }
+
+                        return WrithingSnap;
                     }
 
                     if (comboTime > 0)

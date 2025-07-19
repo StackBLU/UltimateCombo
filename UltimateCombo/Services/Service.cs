@@ -1,15 +1,12 @@
-using System;
-using System.IO;
-using System.Reflection;
-
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-
 using FFXIVClientStructs.FFXIV.Client.Game.InstanceContent;
-
+using System;
+using System.IO;
+using System.Reflection;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 

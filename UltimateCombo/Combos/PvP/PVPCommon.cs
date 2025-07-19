@@ -107,17 +107,31 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return HasEffect(Buffs.Guard)
-                    ? actionID is Guard ? Guard : OriginalHook(11)
-                    : InPvP() && !GlobalSkills.Contains(actionID)
+                if (HasEffect(Buffs.Guard))
+                {
+                    if (actionID is Guard)
+                    {
+                        return Guard;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                if (InPvP() && !GlobalSkills.Contains(actionID)
                     && LocalPlayer?.CurrentMp >= 2500 && PlayerHealthPercentageHpPvP() <= GetOptionValue(Config.Recuperate)
                     && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
-                    && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales
-                    ? (LocalPlayer?.ClassJob.Value.RowId == DRK.JobID && IsOffCooldown(DRKPvP.Impalement))
-                        || (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2)
-                        ? actionID
-                        : OriginalHook(Recuperate)
-                    : actionID;
+                    && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales)
+                {
+                    if ((LocalPlayer?.ClassJob.Value.RowId == DRK.JobID && IsOffCooldown(DRKPvP.Impalement))
+                        || (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2))
+                    {
+                        return actionID;
+                    }
+
+                    return OriginalHook(Recuperate);
+                }
+
+                return actionID;
             }
         }
 
@@ -127,17 +141,31 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return HasEffect(Buffs.Guard) && actionID == Guard
-                    ? actionID is Guard ? Guard : OriginalHook(11)
-                    : InPvP() && !GlobalSkills.Contains(actionID)
+                if (HasEffect(Buffs.Guard) && actionID == Guard)
+                {
+                    if (actionID is Guard)
+                    {
+                        return Guard;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                if (InPvP() && !GlobalSkills.Contains(actionID)
                     && IsOffCooldown(Guard) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Guard)
                     && !HasEffect(DRKPvP.Buffs.UndeadRedemption) && !HasEffectAny(Debuffs.Unguarded) && !HasEffect(WARPvP.Buffs.InnerRelease)
                     && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && !HasEffect(NINPvP.Buffs.Hidden)
-                    && actionID != VPRPvP.SnakeScales
-                    ? LocalPlayer?.ClassJob.Value.RowId == DRK.JobID && IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(DRKPvP.Impalement)
-                        ? DRKPvP.Impalement
-                        : OriginalHook(Guard)
-                    : actionID;
+                    && actionID != VPRPvP.SnakeScales)
+                {
+                    if (LocalPlayer?.ClassJob.Value.RowId == DRK.JobID && IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(DRKPvP.Impalement))
+                    {
+                        return DRKPvP.Impalement;
+                    }
+
+                    return OriginalHook(Guard);
+                }
+
+                return actionID;
             }
         }
 
@@ -147,9 +175,17 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return HasEffect(Buffs.Guard)
-                    ? actionID is Guard ? Guard : OriginalHook(11)
-                    : InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
+                if (HasEffect(Buffs.Guard))
+                {
+                    if (actionID is Guard)
+                    {
+                        return Guard;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
                     && IsOffCooldown(Purify) && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales
                     && ((HasEffectAny(Debuffs.Stun) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Stun))
                     || (HasEffectAny(Debuffs.DeepFreeze) && PluginConfiguration.GetCustomBoolValue(Config.Purify_DeepFreeze))
@@ -157,9 +193,12 @@ namespace UltimateCombo.Combos.PvP
                     || (HasEffectAny(Debuffs.Sleep) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Sleep))
                     || (HasEffectAny(Debuffs.Bind) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Bind))
                     || (HasEffectAny(Debuffs.Heavy) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Heavy))
-                    || (HasEffectAny(Debuffs.Silence) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Silence)))
-                    ? OriginalHook(Purify)
-                    : actionID;
+                    || (HasEffectAny(Debuffs.Silence) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Silence))))
+                {
+                    return OriginalHook(Purify);
+                }
+
+                return actionID;
             }
         }
 
@@ -169,9 +208,12 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                return IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten) && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu)
-                    ? OriginalHook(11)
-                    : actionID;
+                if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten) && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu))
+                {
+                    return OriginalHook(11);
+                }
+
+                return actionID;
             }
         }
 

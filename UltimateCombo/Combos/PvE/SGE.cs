@@ -1,8 +1,6 @@
+using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
-
-using Dalamud.Game.ClientState.JobGauge.Types;
-
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -155,21 +153,34 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1)) && HasBattleTarget()
+                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1)) && HasBattleTarget()
                         && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks) && TargetIsBoss()
-                        && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3
-                        || ActionWatching.NumberOfGcdsUsed == 11)
-                        ? !HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia) ? Eukrasia : OriginalHook(Dosis1)
-                        : IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma)
-                        && InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
-                        && (ActionReady(Psyche) || !LevelChecked(Psyche)
-                        || WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50)
-                        && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
-                        ? OriginalHook(Phlegma)
-                        : IsEnabled(CustomComboPreset.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon) && Gauge.Addersting > 0
-                        && !HasEffect(All.Buffs.Swiftcast)
-                        ? OriginalHook(Toxikon)
-                        : OriginalHook(Dosis1);
+                        && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)])
+                        || GetDebuffRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3 || ActionWatching.NumberOfGcdsUsed == 11))
+                    {
+                        if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))
+                        {
+                            return Eukrasia;
+                        }
+
+                        return OriginalHook(Dosis1);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
+                        && (ActionReady(Psyche) || !LevelChecked(Psyche) || WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50)
+                        && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    {
+                        return OriginalHook(Phlegma);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon)
+                        && Gauge.Addersting > 0 && !HasEffect(All.Buffs.Swiftcast))
+                    {
+                        return OriginalHook(Toxikon);
+                    }
+
+                    return OriginalHook(Dosis1);
+
                 }
 
                 return actionID;
@@ -218,16 +229,26 @@ namespace UltimateCombo.Combos.PvE
                         }
                     }
 
-                    return IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1)) && HasBattleTarget()
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1)) && HasBattleTarget()
                         && !WasLastSpell(EukrasianDyskrasia)
-                        && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || (GetDebuffRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
-                        ? !HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia) ? Eukrasia : OriginalHook(Dyskrasia1)
-                        : IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma)
-                        && InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
-                        && (ActionReady(Psyche) || !LevelChecked(Psyche)
-                        || WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50)
-                        ? OriginalHook(Phlegma)
-                        : OriginalHook(Dyskrasia1);
+                        && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || GetDebuffRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
+                    {
+                        if (!HasEffect(Buffs.Eukrasia) && ActionReady(Eukrasia))
+                        {
+                            return Eukrasia;
+                        }
+
+                        return OriginalHook(Dyskrasia1);
+                    }
+
+                    if (IsEnabled(CustomComboPreset.SGE_AoE_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
+                        && (ActionReady(Psyche) || !LevelChecked(Psyche) || WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50))
+                    {
+                        return OriginalHook(Phlegma);
+                    }
+
+                    return OriginalHook(Dyskrasia1);
+
                 }
 
                 return actionID;

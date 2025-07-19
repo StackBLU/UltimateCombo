@@ -64,9 +64,17 @@ namespace UltimateCombo.Combos.PvP
                     }
                 }
 
-                return actionID is Biolysis && IsEnabled(CustomComboPreset.SCHPvP_Biolysis)
-                    ? !TargetHasEffectAny(PvPCommon.Buffs.Guard) ? actionID : OriginalHook(11)
-                    : actionID;
+                if (actionID is Biolysis && IsEnabled(CustomComboPreset.SCHPvP_Biolysis))
+                {
+                    if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
+                    {
+                        return actionID;
+                    }
+
+                    return OriginalHook(11);
+                }
+
+                return actionID;
             }
         }
     }

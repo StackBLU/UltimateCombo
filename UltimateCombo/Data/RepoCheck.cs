@@ -1,7 +1,5 @@
-using System.IO;
-
 using Newtonsoft.Json;
-
+using System.IO;
 using UltimateCombo.Services;
 
 namespace UltimateCombo.Data
@@ -23,11 +21,8 @@ namespace UltimateCombo.Data
                 RepoCheck? repo = JsonConvert.DeserializeObject<RepoCheck>(File.ReadAllText(manifest));
                 return repo;
             }
-            else
-            {
-                return null;
-            }
 
+            return null;
         }
 
         public static bool IsFromUltimateRepo()

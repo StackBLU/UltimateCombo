@@ -1,7 +1,5 @@
-using System.Linq;
-
 using Dalamud.Game.ClientState.JobGauge.Types;
-
+using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.CustomCombo;
@@ -380,9 +378,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (ActionReady(ShakeItOff))
                     {
-                        return HasEffect(Buffs.ThrillOfBattle) || GetCooldownRemainingTime(ThrillOfBattle) < (GetCooldown(ThrillOfBattle).CooldownTotal - 10)
-                            ? ShakeItOff
-                            : OriginalHook(11);
+                        if (HasEffect(Buffs.ThrillOfBattle) || GetCooldownRemainingTime(ThrillOfBattle) < (GetCooldown(ThrillOfBattle).CooldownTotal - 10))
+                        {
+                            return ShakeItOff;
+                        }
+
+                        return OriginalHook(11);
                     }
                 }
 

@@ -1,12 +1,9 @@
+using Dalamud.Hooking;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-using Dalamud.Hooking;
-
-using FFXIVClientStructs.FFXIV.Client.Game;
-
 using UltimateCombo.CustomCombo;
 using UltimateCombo.Services;
 

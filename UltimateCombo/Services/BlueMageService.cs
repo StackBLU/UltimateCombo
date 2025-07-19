@@ -1,6 +1,5 @@
-using System.Linq;
-
 using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Linq;
 
 namespace UltimateCombo.Services
 {

@@ -1,12 +1,9 @@
-using System;
-using System.Numerics;
-
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
-
 using ImGuiNET;
-
+using System;
+using System.Numerics;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.Content;
@@ -60,11 +57,11 @@ namespace UltimateCombo.Window.Functions
                         {
                             newLines += "\n";
                         }
+
                         else
                         {
                             newLines += "\n\n";
                         }
-
                     }
 
                     if (hasAdditionalChoice)
@@ -81,7 +78,14 @@ namespace UltimateCombo.Window.Functions
                         if (ImGui.IsItemHovered())
                         {
                             ImGui.BeginTooltip();
-                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            var message = "This setting has additional options depending on its value.";
+
+                            if (!string.IsNullOrEmpty(additonalChoiceCondition))
+                            {
+                                message += $"\nCondition: {additonalChoiceCondition}";
+                            }
+
+                            ImGui.TextUnformatted(message);
                             ImGui.EndTooltip();
                         }
                     }
@@ -165,7 +169,6 @@ namespace UltimateCombo.Window.Functions
                         {
                             newLines += "\n\n";
                         }
-
                     }
 
                     if (hasAdditionalChoice)
@@ -182,7 +185,17 @@ namespace UltimateCombo.Window.Functions
                         if (ImGui.IsItemHovered())
                         {
                             ImGui.BeginTooltip();
-                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+
+                            if (string.IsNullOrEmpty(additonalChoiceCondition))
+                            {
+                                ImGui.TextUnformatted("This setting has additional options depending on its value.");
+                            }
+
+                            else
+                            {
+                                ImGui.TextUnformatted($"This setting has additional options depending on its value.\nCondition: {additonalChoiceCondition}");
+                            }
+
                             ImGui.EndTooltip();
                         }
                     }
@@ -251,7 +264,6 @@ namespace UltimateCombo.Window.Functions
                         {
                             newLines += "\n\n";
                         }
-
                     }
 
                     if (hasAdditionalChoice)
@@ -268,7 +280,14 @@ namespace UltimateCombo.Window.Functions
                         if (ImGui.IsItemHovered())
                         {
                             ImGui.BeginTooltip();
-                            ImGui.TextUnformatted($"This setting has additional options depending on its value.{(string.IsNullOrEmpty(additonalChoiceCondition) ? "" : $"\nCondition: {additonalChoiceCondition}")}");
+                            var message = "This setting has additional options depending on its value.";
+
+                            if (!string.IsNullOrEmpty(additonalChoiceCondition))
+                            {
+                                message += $"\nCondition: {additonalChoiceCondition}";
+                            }
+
+                            ImGui.TextUnformatted(message);
                             ImGui.EndTooltip();
                         }
                     }
@@ -363,6 +382,7 @@ namespace UltimateCombo.Window.Functions
             {
                 ImGui.Indent();
             }
+
             else
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
@@ -379,6 +399,7 @@ namespace UltimateCombo.Window.Functions
                     ImGui.Indent();
                 }
             }
+
             if (ImGui.Checkbox($"{checkBoxName}###{config}", ref output))
             {
                 PluginConfiguration.SetCustomBoolValue(config, output);
@@ -1037,6 +1058,7 @@ namespace UltimateCombo.Window.Functions
                     {
                         ImGui.TextUnformatted($"Priority: ");
                     }
+
                     else
                     {
                         ImGui.TextUnformatted(customLabel);

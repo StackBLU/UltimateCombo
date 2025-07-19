@@ -62,7 +62,12 @@ namespace UltimateCombo.Combos.PvP
                         && OriginalHook(Drill) == Drill && !WasLastWeaponskill(Drill)
                         && (ActionReady(Analysis) || HasEffect(Buffs.Analysis)))
                     {
-                        return !HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis) ? Analysis : Drill;
+                        if (!HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis))
+                        {
+                            return Analysis;
+                        }
+
+                        return Drill;
                     }
 
                     if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
@@ -106,7 +111,12 @@ namespace UltimateCombo.Combos.PvP
                                 && !TargetHasEffectAny(PvPCommon.Buffs.Resilience)
                                 && (ActionReady(Analysis) || HasEffect(Buffs.Analysis)))
                             {
-                                return !HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis) ? Analysis : AirAnchor;
+                                if (!HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis))
+                                {
+                                    return Analysis;
+                                }
+
+                                return AirAnchor;
                             }
 
                             if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill))

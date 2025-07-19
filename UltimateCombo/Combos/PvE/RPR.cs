@@ -169,7 +169,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && Gauge.LemureShroud > 1)
                     {
-                        return WasLastWeaponskill(OriginalHook(VoidReaping)) ? OriginalHook(CrossReaping) : OriginalHook(VoidReaping);
+                        if (WasLastWeaponskill(OriginalHook(VoidReaping)))
+                        {
+                            return OriginalHook(CrossReaping);
+                        }
+
+                        return OriginalHook(VoidReaping);
                     }
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_Enshroud) && ActionReady(Communio) && Gauge.LemureShroud == 1)
@@ -184,9 +189,12 @@ namespace UltimateCombo.Combos.PvE
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_GibbetGallows) && (HasEffect(Buffs.SoulReaver) || HasEffect(Buffs.Executioner)))
                     {
-                        return HasEffect(Buffs.EnhancedGibbet)
-                            ? OriginalHook(Gibbet)
-                            : HasEffect(Buffs.EnhancedGallows) ? OriginalHook(Gallows) : OriginalHook(Gallows);
+                        if (HasEffect(Buffs.EnhancedGibbet))
+                        {
+                            return OriginalHook(Gibbet);
+                        }
+
+                        return OriginalHook(Gallows);
                     }
 
                     if (IsEnabled(CustomComboPreset.RPR_ST_SoulSlice) && ActionReady(SoulSlice) && Gauge.Soul <= 40)
@@ -342,11 +350,22 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Gluttony or BloodStalk) && IsEnabled(CustomComboPreset.RPR_BloodGluttony)
-                    ? Gauge.Soul >= 50 && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.Enshrouded)
-                        ? ActionReady(Gluttony) ? Gluttony : OriginalHook(BloodStalk)
-                        : Gluttony
-                    : actionID;
+                if ((actionID is Gluttony or BloodStalk) && IsEnabled(CustomComboPreset.RPR_BloodGluttony))
+                {
+                    if (Gauge.Soul >= 50 && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && !HasEffect(Buffs.Enshrouded))
+                    {
+                        if (ActionReady(Gluttony))
+                        {
+                            return Gluttony;
+                        }
+
+                        return OriginalHook(BloodStalk);
+                    }
+
+                    return Gluttony;
+                }
+
+                return actionID;
             }
         }
 
@@ -356,11 +375,17 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                return (actionID is Gibbet or Gallows) && IsEnabled(CustomComboPreset.RPR_GibbetGallows)
-                    ? HasEffect(Buffs.EnhancedGibbet)
-                        ? OriginalHook(Gibbet)
-                        : HasEffect(Buffs.EnhancedGallows) ? OriginalHook(Gallows) : OriginalHook(Gallows)
-                    : actionID;
+                if ((actionID is Gibbet or Gallows) && IsEnabled(CustomComboPreset.RPR_GibbetGallows))
+                {
+                    if (HasEffect(Buffs.EnhancedGibbet))
+                    {
+                        return OriginalHook(Gibbet);
+                    }
+
+                    return OriginalHook(Gallows);
+                }
+
+                return actionID;
             }
         }
 
