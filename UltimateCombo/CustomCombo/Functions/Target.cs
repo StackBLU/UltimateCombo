@@ -14,7 +14,6 @@ namespace UltimateCombo.ComboHelper.Functions
     internal abstract partial class CustomComboFunctions
     {
         public static IGameObject? CurrentTarget => Service.TargetManager.Target;
-
         public static IGameObject SafeCurrentTarget => CurrentTarget ?? throw new InvalidOperationException("CurrentTarget is not available");
 
         public static bool HasTarget()

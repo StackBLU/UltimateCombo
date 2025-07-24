@@ -227,7 +227,10 @@ namespace UltimateCombo.Combos.PvE
 
                         if (ActionReady(Paradox) && Gauge.IsParadoxActive)
                         {
-                            return Paradox;
+                            if ((Gauge.InAstralFire && LocalPlayer?.CurrentMp >= 1600) || Gauge.InUmbralIce)
+                            {
+                                return Paradox;
+                            }
                         }
 
                         if (ActionReady(Despair) && Gauge.InAstralFire && LocalPlayer?.CurrentMp <= 1600 && LocalPlayer?.CurrentMp >= 800)
@@ -303,9 +306,8 @@ namespace UltimateCombo.Combos.PvE
                         return Fire4;
                     }
 
-                    if (ActionReady(Fire3)
-                        && ((!Gauge.InAstralFire && !Gauge.InUmbralIce) || (Gauge.InUmbralIce && LocalPlayer?.CurrentMp == 10000) || WasLastSpell(Blizzard4)
-                        || HasEffect(Buffs.Firestarter)))
+                    if (ActionReady(Fire3) && ((!Gauge.InAstralFire && !Gauge.InUmbralIce) || (Gauge.InUmbralIce && LocalPlayer?.CurrentMp == 10000)
+                        || WasLastSpell(Blizzard4) || HasEffect(Buffs.Firestarter)))
                     {
                         if (ActionReady(Transpose) && Gauge.InUmbralIce && HasEffect(Buffs.Firestarter))
                         {

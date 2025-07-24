@@ -254,7 +254,8 @@ namespace UltimateCombo.ComboHelper.Functions
                 && !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin) && !HasEffect(VPR.Buffs.Reawakened)
                 && !WasLastSpell(SGE.Eukrasia)
                 && !WasLastSpell(SGE.EukrasianDosis1) && !WasLastSpell(SGE.EukrasianDosis2) && !WasLastSpell(SGE.EukrasianDosis3)
-                && !WasLastSpell(SGE.EukrasianDyskrasia);
+                && !WasLastSpell(SGE.EukrasianDyskrasia)
+                && !HasEffect(DNC.Buffs.StandardStep) && !HasEffect(DNC.Buffs.TechnicalStep);
         }
     }
 }
