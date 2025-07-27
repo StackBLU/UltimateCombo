@@ -261,7 +261,7 @@ namespace UltimateCombo.Combos.PvE
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.All_RoleActions))
+                if (IsEnabled(CustomComboPreset.All_RoleActions) && IsComboAction(actionID))
                 {
                     if (CanDelayedWeave(actionID) && SafeToUse())
                     {

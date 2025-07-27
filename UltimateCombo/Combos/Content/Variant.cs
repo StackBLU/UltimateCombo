@@ -69,7 +69,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Variant_Cure) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (ActionReady(VariantCure) && IsEnabled(VariantCure)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
@@ -88,7 +88,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Variant_Raise) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(VariantCure)
                         && actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
@@ -121,7 +121,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Variant_Ultimatum) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID))
                     {
@@ -139,7 +139,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Variant_SpiritDart))
+                if (IsEnabled(CustomComboPreset.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (ActionReady(VariantSpiritDart) && IsEnabled(VariantSpiritDart)
                         && CanWeave(actionID) && !TargetHasEffectAny(Debuffs.SustainedDamage))
@@ -158,7 +158,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Variant_Rampart) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID))
                     {

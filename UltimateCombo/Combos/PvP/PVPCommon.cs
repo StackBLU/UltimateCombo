@@ -117,7 +117,7 @@ namespace UltimateCombo.Combos.PvP
                     return OriginalHook(11);
                 }
 
-                if (InPvP() && !GlobalSkills.Contains(actionID)
+                if (InPvP() && !GlobalSkills.Contains(actionID) && IsPvPComboAction(actionID)
                     && LocalPlayer?.CurrentMp >= 2500 && PlayerHealthPercentageHpPvP() <= GetOptionValue(Config.Recuperate)
                     && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
                     && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales)
@@ -151,7 +151,7 @@ namespace UltimateCombo.Combos.PvP
                     return OriginalHook(11);
                 }
 
-                if (InPvP() && !GlobalSkills.Contains(actionID)
+                if (InPvP() && !GlobalSkills.Contains(actionID) && IsPvPComboAction(actionID)
                     && IsOffCooldown(Guard) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Guard)
                     && !HasEffect(DRKPvP.Buffs.UndeadRedemption) && !HasEffectAny(Debuffs.Unguarded) && !HasEffect(WARPvP.Buffs.InnerRelease)
                     && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && !HasEffect(NINPvP.Buffs.Hidden)
@@ -185,7 +185,7 @@ namespace UltimateCombo.Combos.PvP
                     return OriginalHook(11);
                 }
 
-                if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
+                if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && IsPvPComboAction(actionID)
                     && IsOffCooldown(Purify) && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales
                     && ((HasEffectAny(Debuffs.Stun) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Stun))
                     || (HasEffectAny(Debuffs.DeepFreeze) && PluginConfiguration.GetCustomBoolValue(Config.Purify_DeepFreeze))
@@ -208,7 +208,8 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten) && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu))
+                if (IsEnabled(CustomComboPreset.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten) && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu)
+                     && IsPvPComboAction(actionID))
                 {
                     return OriginalHook(11);
                 }
@@ -223,7 +224,7 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.TankPvP_RoleActions) && InCombat())
+                if (IsEnabled(CustomComboPreset.TankPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.TankPvP_Rampage) && IsOffCooldown(Rampage) && HasEffect(Buffs.Rampage))
                     {
@@ -253,7 +254,7 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.HealerPvP_RoleActions) && InCombat())
+                if (IsEnabled(CustomComboPreset.HealerPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.HealerPvP_Stoneskin2) && IsOffCooldown(Stoneskin2) && HasEffect(Buffs.Stoneskin2))
                     {
@@ -277,7 +278,7 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.MeleePvP_RoleActions) && InCombat())
+                if (IsEnabled(CustomComboPreset.MeleePvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.MeleePvP_Bloodbath) && IsOffCooldown(Bloodbath) && HasEffect(Buffs.Bloodbath)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.MeleePvP_Bloodbath))
@@ -309,7 +310,7 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.RangedPvP_RoleActions) && InCombat())
+                if (IsEnabled(CustomComboPreset.RangedPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.RangedPvP_Dervish) && IsOffCooldown(Dervish) && HasEffect(Buffs.Dervish))
                     {
@@ -338,7 +339,7 @@ namespace UltimateCombo.Combos.PvP
 
             protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.MagePvP_RoleActions) && InCombat())
+                if (IsEnabled(CustomComboPreset.MagePvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.MagePvP_PhantomDart) && IsOffCooldown(PhantomDart) && HasEffect(Buffs.PhantomDart))
                     {

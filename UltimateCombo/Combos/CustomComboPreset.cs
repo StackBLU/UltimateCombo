@@ -1337,7 +1337,7 @@ namespace UltimateCombo.Combos
 
         #region AoE DPS
 
-        [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWarII)]
+        [ReplaceSkill(SCH.ArtOfWar, SCH.ArtOfWar2)]
         [CustomComboInfo("AoE DPS", "", SCH.JobID)]
         SCH_AoE_DPS = 16020,
 

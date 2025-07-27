@@ -35,7 +35,7 @@ namespace UltimateCombo.Combos.PvE
             Broil4 = 25865,
             EnergyDrain = 167,
             ArtOfWar = 16539,
-            ArtOfWarII = 25866,
+            ArtOfWar2 = 25866,
             BanefulImpaction = 37012,
 
             SummonSeraph = 16545,
@@ -190,7 +190,7 @@ namespace UltimateCombo.Combos.PvE
             protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.SCH_AoE_DPS;
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if ((actionID is ArtOfWar or ArtOfWarII) && IsEnabled(CustomComboPreset.SCH_AoE_DPS))
+                if ((actionID is ArtOfWar or ArtOfWar2) && IsEnabled(CustomComboPreset.SCH_AoE_DPS))
                 {
                     if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0
                         && LocalPlayer?.CurrentMp < 1000)

@@ -155,7 +155,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Pray) && DutyActionReady(Pray) && !HasEffect(Buffs.Pray)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_Pray))
@@ -181,7 +181,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Chakra) && DutyActionReady(OccultChakra) && PlayerHealthPercentageHp() < 30)
                     {
@@ -225,7 +225,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Vigilance) && DutyActionReady(Vigilance)
                         && !InCombat() && !HasEffect(Buffs.Vigilance) && HasBattleTarget())
@@ -258,7 +258,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse()
+                     && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Zeninage) && DutyActionReady(Zeninage) && InActionRange(Zeninage)
                         && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
@@ -283,7 +284,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat())
+                if (IsEnabled(CustomComboPreset.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(DeadlyBlow)
                         && !HasEffect(Buffs.Rage) && (HasEffect(Buffs.PentUpRage) || GetCooldownRemainingTime(Rage) > 20))
@@ -302,7 +303,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID))
+                if (IsEnabled(CustomComboPreset.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID)
+                     && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Aim) && DutyActionReady(PhantomAim)
                         && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
@@ -321,7 +323,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_Quick) && DutyActionReady(OccultQuick))
                     {
@@ -364,7 +366,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_BattleBell) && DutyActionReady(BattleBell) && CanWeave(actionID)
                         && (!HasEffect(Buffs.BattleBell) || (HasFriendlyTarget() && !TargetHasEffect(Buffs.BattleBell))))
@@ -422,7 +424,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID))
+                if (IsEnabled(CustomComboPreset.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID) && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_HerosRime) && DutyActionReady(HerosRime)
                         && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
@@ -448,14 +450,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && SafeToUse() && IsComboAction(actionID))
                 {
-                    if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat()
-                        && (!DutyActionReady(PhantomRejuvenation) || (DutyActionReady(PhantomRejuvenation) && GetBuffRemainingTime(Buffs.Rejuvination) <= 15)))
-                    {
-                        return Predict;
-                    }
-
                     if (IsEnabled(CustomComboPreset.Occult_Predict))
                     {
                         if (DutyActionReady(PhantomJudgement) && (GetOptionValue(Config.Occult_Prediction) == 1
@@ -482,8 +478,14 @@ namespace UltimateCombo.Combos.Content
                         }
                     }
 
-                    if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && InCombat()
-                        && CanWeave(actionID))
+                    if (IsEnabled(CustomComboPreset.Occult_Predict) && DutyActionReady(Predict) && InCombat()
+                        && (!DutyActionReady(PhantomRejuvenation) || (DutyActionReady(PhantomRejuvenation) && GetBuffRemainingTime(Buffs.Rejuvination) <= 15)))
+                    {
+                        return Predict;
+                    }
+
+                    if (IsEnabled(CustomComboPreset.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && CanWeave(actionID)
+                        && (GetCooldownRemainingTime(Predict) <= 8 || ActionReady(Predict)))
                     {
                         return PhantomRejuvenation;
                     }
@@ -499,7 +501,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
+                if (IsEnabled(CustomComboPreset.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse() && IsComboAction(actionID)
                     && ((IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility)
                     && (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
                     || (!IsEnabled(CustomComboPreset.Occult_Cannoneer_Utility) && InCombat())))
@@ -546,7 +548,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse()
+                     && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Occult_PhantomResuscitation) && DutyActionReady(OccultResuscitation)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_PhantomResuscitation))

@@ -92,7 +92,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat())
+                if (IsEnabled(CustomComboPreset.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat() && IsComboAction(actionID))
                 {
                     if (DutyActionReady(BloodRage) && DutyActionEquipped(BloodRage))
                     {
@@ -135,7 +135,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && LocalPlayer?.ClassJob.Value.RowId == WHM.JobID)
+                if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && LocalPlayer?.ClassJob.Value.RowId == WHM.JobID
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
                     {
@@ -159,7 +160,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse()
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(FontOfPower) && DutyActionEquipped(FontOfPower) && (!HasEffect(Buffs.BloodRage) || HasEffect(Buffs.BloodRush)))
                     {
@@ -187,7 +189,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse()
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(Assassination) && DutyActionEquipped(Assassination) && InActionRange(Assassination))
                     {
@@ -205,7 +208,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionNotEquipped(FlareStar))
+                if (IsEnabled(CustomComboPreset.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionNotEquipped(FlareStar)
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(FontOfMagic) && DutyActionEquipped(FontOfMagic))
                     {
@@ -228,7 +232,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_Slash) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Slash))
+                if (IsEnabled(CustomComboPreset.Bozja_Slash) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Slash)
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && LocalPlayer?.ClassJob.Value.RowId != MCH.JobID)
                     {
@@ -259,7 +264,8 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Bozja_CureIV) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Cure4))
+                if (IsEnabled(CustomComboPreset.Bozja_CureIV) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Cure4)
+                     && IsComboAction(actionID))
                 {
                     if (DutyActionReady(Cure4) && DutyActionEquipped(Cure4)
                         && (PlayerHealthPercentageHp() <= 50 || (HasEffect(Buffs.PureElder) && GetBuffRemainingTime(Buffs.Bravery2) < 3)))

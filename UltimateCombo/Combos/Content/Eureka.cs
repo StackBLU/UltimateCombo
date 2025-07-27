@@ -95,7 +95,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Wisdoms))
+                if (IsEnabled(CustomComboPreset.Eureka_Wisdoms) && IsComboAction(actionID))
                 {
                     if (DutyActionReady(Aetherweaver) && DutyActionEquipped(Aetherweaver) && !HasEffect(Buffs.Aetherweaver))
                     {
@@ -183,7 +183,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Offensive) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Eureka_Offensive) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Eureka_Bloodbath) && DutyActionReady(Bloodbath) && DutyActionEquipped(Bloodbath))
                     {
@@ -216,7 +216,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Curative) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Eureka_Curative) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Eureka_Cure) && DutyActionReady(Cure) && DutyActionEquipped(Cure)
                         && (PlayerHealthPercentageHp() <= GetOptionValue(Config.Eureka_Cure)
@@ -243,7 +243,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Tactical) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Eureka_Tactical) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Eureka_Swift) && DutyActionReady(Swift) && DutyActionEquipped(Swift))
                     {
@@ -271,7 +271,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Inimical) && InCombat() && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Eureka_Inimical) && InCombat() && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Eureka_Paralyze) && DutyActionReady(Paralyze) && DutyActionEquipped(Paralyze))
                     {
@@ -299,7 +299,7 @@ namespace UltimateCombo.Combos.Content
 
             protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
             {
-                if (IsEnabled(CustomComboPreset.Eureka_Mitigative) && SafeToUse())
+                if (IsEnabled(CustomComboPreset.Eureka_Mitigative) && SafeToUse() && IsComboAction(actionID))
                 {
                     if (IsEnabled(CustomComboPreset.Eureka_Protect) && DutyActionReady(Protect) && DutyActionEquipped(Protect))
                     {
