@@ -264,8 +264,6 @@ namespace UltimateCombo.ComboHelper.Functions
             return actionID
                 is AST.Malefic or AST.Malefic2 or AST.Malefic3 or AST.Malefic4 or AST.FallMalefic
                 or AST.Gravity or AST.Gravity2
-                or AST.Benefic1 or AST.Benefic2
-                or AST.Helios or AST.AspectedHelios or AST.HeliosConjuction
 
                 or BLM.Fire or BLM.Fire3 or BLM.Fire4 or BLM.Blizzard or BLM.Blizzard3 or BLM.Blizzard4
                 or BLM.Fire2 or BLM.HighFire2 or BLM.Blizzard2 or BLM.HighBlizzard2
