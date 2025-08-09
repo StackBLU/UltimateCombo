@@ -1,8 +1,8 @@
+using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
 using ECommons.DalamudServices;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -195,7 +195,7 @@ namespace UltimateCombo.Window.Functions
                 for (var i = 0; i < att.ActionIcons.Count; i++)
                 {
                     Dalamud.Interface.Textures.TextureWraps.IDalamudTextureWrap img = Svc.Texture.GetFromGameIcon(new(att.ActionIcons[i])).GetWrapOrEmpty();
-                    ImGui.Image(img.ImGuiHandle, img.Size / 2f * ImGui.GetIO().FontGlobalScale);
+                    ImGui.Image(img.Handle, img.Size / 2f * ImGui.GetIO().FontGlobalScale);
                     ImGui.SameLine();
                     if (i == 8)
                     {

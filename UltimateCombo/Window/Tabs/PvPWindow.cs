@@ -2,7 +2,7 @@ using Dalamud.Interface.Textures.TextureWraps;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using System.Linq;
 using System.Numerics;
 using UltimateCombo.Combos;
@@ -65,7 +65,7 @@ namespace UltimateCombo.Window.Tabs
 
                     if (icon != null)
                     {
-                        ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
+                        ImGui.Image(icon.Handle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
                         ImGui.SameLine(indentwidth2);
                         ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
                         ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
@@ -106,7 +106,7 @@ namespace UltimateCombo.Window.Tabs
                     {
                         if (icon != null)
                         {
-                            ImGui.Image(icon.ImGuiHandle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
+                            ImGui.Image(icon.Handle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
                             ImGui.SameLine();
                         }
                         ImGuiEx.Text($"{OpenJob}");

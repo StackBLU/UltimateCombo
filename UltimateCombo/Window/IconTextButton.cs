@@ -1,7 +1,7 @@
+using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
 using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.ImGuiMethods;
-using ImGuiNET;
 using System.Numerics;
 
 namespace UltimateCombo.Window
@@ -84,12 +84,12 @@ namespace UltimateCombo.Window
                     ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
                 }
 
-                ImGui.Image(texture.ImGuiHandle, imageSize);
+                ImGui.Image(texture.Handle, imageSize);
             }
 
             else
             {
-                ImGui.Image(texture.ImGuiHandle, imageSize);
+                ImGui.Image(texture.Handle, imageSize);
 
                 ImGui.SameLine();
                 if (size != Vector2.Zero)

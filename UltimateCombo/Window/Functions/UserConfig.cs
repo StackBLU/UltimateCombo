@@ -1,7 +1,7 @@
+using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
-using ImGuiNET;
 using System;
 using System.Numerics;
 using UltimateCombo.ComboHelper.Functions;
@@ -848,7 +848,7 @@ namespace UltimateCombo.Window.Functions
                 values[i] = value == i;
             }
 
-            ImGui.Columns(5, null, false);
+            ImGui.Columns(5, border: false);
             ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.TankBlue);
 
             if (ImGui.Checkbox($"Paladin###{config}0", ref values[0]))

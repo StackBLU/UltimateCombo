@@ -3,10 +3,7 @@
 
   <PropertyGroup>
     <Authors>Stack</Authors>
-    <Company></Company>
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
-    <Copyright></Copyright>
-    <PackageProjectUrl></PackageProjectUrl>
     <TargetFramework>net9.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
   </PropertyGroup>
@@ -16,9 +13,6 @@
     <DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\UltimateCombo\$(version)</DalamudPluginPath>
     <DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\UltimateCombo\</DalamudDevPlugins>
     <AssemblyName>UltimateCombo</AssemblyName>
-    <RootNamespace>UltimateCombo</RootNamespace>
-    <PackageId>UltimateCombo</PackageId>
-    <Product>UltimateCombo</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -33,8 +27,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Documentation">
-    <DocumentationFile></DocumentationFile>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <LangVersion>preview</LangVersion>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
@@ -43,17 +36,8 @@
     <AssemblyVersion>1.0.0.80</AssemblyVersion>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Optimize>True</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <NoWarn>1591</NoWarn>
-    <WarningsAsErrors />
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="DalamudPackager" Version="12.0.0" />
+    <PackageReference Include="DalamudPackager" Version="13.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,47 +45,49 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Dalamud">
-      <HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+	<Reference Include="Dalamud">
+		<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
 
-    <Reference Include="FFXIVClientStructs">
-      <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
-      <Private>False</Private>
+	<Reference Include="FFXIVClientStructs">
+		<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
 
-    </Reference>
+	<Reference Include="Newtonsoft.Json">
+		<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	
+	<Reference Include="Dalamud.Bindings.ImGui">
+		<HintPath>$(DalamudLibPath)Dalamud.Bindings.ImGui.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	
+	<Reference Include="Dalamud.Bindings.ImPlot">
+		<HintPath>$(DalamudLibPath)Dalamud.Bindings.ImPlot.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
+	
+	<Reference Include="Dalamud.Bindings.ImGuizmo">
+		<HintPath>$(DalamudLibPath)Dalamud.Bindings.ImGuizmo.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
 
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+	<Reference Include="Lumina">
+		<HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
 
-    <Reference Include="ImGui.NET">
-      <HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+	<Reference Include="Lumina.Excel">
+		<HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
+		<Private>False</Private>
+	</Reference>
 
-    <Reference Include="ImGuiScene">
-      <HintPath>$(DalamudLibPath)ImGuiScene.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-
-    <Reference Include="Lumina">
-      <HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-
-    <Reference Include="Lumina.Excel">
-      <HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-
-    <Reference Include="InteropGenerator.Runtime">
-      <HintPath>$(DalamudLibPath)InteropGenerator.Runtime.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-
+	<Reference Include="InteropGenerator.Runtime">
+		<HintPath>$(DalamudLibPath)InteropGenerator.Runtime.dll</HintPath>
+		<Private>false</Private>
+	</Reference>
   </ItemGroup>
-
 </Project>
