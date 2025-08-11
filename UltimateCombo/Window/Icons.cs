@@ -7,73 +7,73 @@ using System.Collections.Generic;
 
 namespace UltimateCombo.Window
 {
-    internal static class Icons
-    {
-        public static Dictionary<uint, IDalamudTextureWrap> CachedModdedIcons = [];
-        public static IDalamudTextureWrap? GetJobIcon(uint jobId)
-        {
-            if ((jobId > 42 & jobId <= 50) || jobId >= 52)
-            {
-                return null;
-            }
+	internal static class Icons
+	{
+		public static Dictionary<uint, IDalamudTextureWrap> CachedModdedIcons = [];
+		public static IDalamudTextureWrap? GetJobIcon(uint jobId)
+		{
+			if ((jobId > 42 & jobId <= 50) || jobId >= 52)
+			{
+				return null;
+			}
 
-            uint iconNum = 62100;
+			uint iconNum = 62100;
 
-            if (jobId is 51)
-            {
-                iconNum = 62118;
-            }
+			if (jobId is 51)
+			{
+				iconNum = 62118;
+			}
 
-            else
-            {
-                iconNum += jobId;
-            }
+			else
+			{
+				iconNum += jobId;
+			}
 
-            if (iconNum == 62100)
-            {
-                iconNum = 62146;
-            }
+			if (iconNum == 62100)
+			{
+				iconNum = 62146;
+			}
 
-            IDalamudTextureWrap? icon = GetTextureFromIconId(iconNum);
+			IDalamudTextureWrap? icon = GetTextureFromIconId(iconNum);
 
-            return icon;
-        }
+			return icon;
+		}
 
-        private static string ResolvePath(string path)
-        {
-            return Svc.TextureSubstitution.GetSubstitutedPath(path);
-        }
+		private static string ResolvePath(string path)
+		{
+			return Svc.TextureSubstitution.GetSubstitutedPath(path);
+		}
 
-        public static IDalamudTextureWrap? GetTextureFromIconId(uint iconId, uint stackCount = 0, bool hdIcon = true)
-        {
-            GameIconLookup lookup = new(iconId + stackCount, false, hdIcon);
-            var path = Svc.Texture.GetIconPath(lookup);
-            var resolvePath = ResolvePath(path);
+		public static IDalamudTextureWrap? GetTextureFromIconId(uint iconId, uint stackCount = 0, bool hdIcon = true)
+		{
+			GameIconLookup lookup = new(iconId + stackCount, false, hdIcon);
+			var path = Svc.Texture.GetIconPath(lookup);
+			var resolvePath = ResolvePath(path);
 
-            ISharedImmediateTexture wrap = Svc.Texture.GetFromFile(resolvePath);
-            if (wrap.TryGetWrap(out IDalamudTextureWrap? icon, out _))
-            {
-                return icon;
-            }
+			ISharedImmediateTexture wrap = Svc.Texture.GetFromFile(resolvePath);
+			if (wrap.TryGetWrap(out IDalamudTextureWrap? icon, out _))
+			{
+				return icon;
+			}
 
-            try
-            {
-                if (CachedModdedIcons.TryGetValue(iconId, out IDalamudTextureWrap? value))
-                {
-                    return value;
-                }
+			try
+			{
+				if (CachedModdedIcons.TryGetValue(iconId, out IDalamudTextureWrap? value))
+				{
+					return value;
+				}
 
-                TexFile tex = Svc.Data.GameData.GetFileFromDisk<TexFile>(resolvePath);
-                IDalamudTextureWrap output = Svc.Texture.CreateFromRaw(RawImageSpecification.Rgba32(tex.Header.Width, tex.Header.Width), tex.GetRgbaImageData());
-                if (output != null)
-                {
-                    CachedModdedIcons[iconId] = output;
-                    return output;
-                }
-            }
-            catch { }
+				TexFile tex = Svc.Data.GameData.GetFileFromDisk<TexFile>(resolvePath);
+				IDalamudTextureWrap output = Svc.Texture.CreateFromRaw(RawImageSpecification.Rgba32(tex.Header.Width, tex.Header.Width), tex.GetRgbaImageData());
+				if (output != null)
+				{
+					CachedModdedIcons[iconId] = output;
+					return output;
+				}
+			}
+			catch { }
 
-            return Svc.Texture.GetFromGame(path).GetWrapOrDefault();
-        }
-    }
+			return Svc.Texture.GetFromGame(path).GetWrapOrDefault();
+		}
+	}
 }
