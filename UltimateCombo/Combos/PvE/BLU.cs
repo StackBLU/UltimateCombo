@@ -560,7 +560,7 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is GoblinPunch or SonicBoom or ChocoMeteor) && IsEnabled(CustomComboPreset.BLU_ManaGain)
 					&& !HasEffect(Buffs.PhantomFlurry))
 				{
-					if (SafeLocalPlayer.CurrentMp <= GetOptionValue(Config.BLU_ManaGain) && IsSpellActive(BloodDrain))
+					if (LocalPlayer.CurrentMp <= GetOptionValue(Config.BLU_ManaGain) && IsSpellActive(BloodDrain))
 					{
 						return BloodDrain;
 					}
@@ -599,7 +599,7 @@ namespace UltimateCombo.Combos.PvE
 						return PeculiarLight;
 					}
 
-					if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && SafeLocalPlayer.CurrentMp >= 1500)
+					if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && LocalPlayer.CurrentMp >= 1500)
 					{
 						return WhiteWind;
 					}
@@ -671,7 +671,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AutoSpell)
-							&& SafeCurrentTarget == null && !InCombat() && !IsCasting()
+							&& CurrentTarget == null && !InCombat() && !IsCasting()
 							&& IsOffCooldown(ShockStrike) && IsOffCooldown(Gobskin) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
@@ -746,7 +746,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_AutoSpell)
-							&& SafeCurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
+							&& CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
 							&& IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
 							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(Gobskin)
 							|| !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
@@ -817,12 +817,12 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_Gobskin)
-							&& SafeLocalPlayer.ShieldPercentage <= GetOptionValue(Config.BLU_TreasureGobskin) && IsSpellActive(Gobskin))
+							&& LocalPlayer.ShieldPercentage <= GetOptionValue(Config.BLU_TreasureGobskin) && IsSpellActive(Gobskin))
 						{
 							return Gobskin;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_BreathOfMagic) && EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_BreathOfMagic) && EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& !TargetHasEffect(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{
@@ -834,7 +834,7 @@ namespace UltimateCombo.Combos.PvE
 							return BreathOfMagic;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_MortalFlame) && EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_MortalFlame) && EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& !TargetHasEffect(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{
@@ -847,7 +847,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Healer_TripleTrident) && IsSpellActive(TripleTrident)
-							&& EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+							&& EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{
@@ -893,7 +893,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_AutoSpell)
-							&& SafeCurrentTarget == null && !InCombat() && !IsCasting()
+							&& CurrentTarget == null && !InCombat() && !IsCasting()
 							&& IsOffCooldown(ShockStrike) && IsOffCooldown(Gobskin) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
 							&& (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
 							|| !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
@@ -963,7 +963,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
 							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
-							&& SafeLocalPlayer.CurrentMp >= 1500)
+							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;
 						}
@@ -982,7 +982,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_AutoSpell)
-							&& SafeCurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
+							&& CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
 							&& IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
 							&& (!IsSpellActive(ShockStrike) || !IsSpellActive(Gobskin)
 							|| !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
@@ -1046,12 +1046,12 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
 							&& PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
-							&& SafeLocalPlayer.CurrentMp >= 1500)
+							&& LocalPlayer.CurrentMp >= 1500)
 						{
 							return WhiteWind;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_BreathOfMagic) && EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_BreathOfMagic) && EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& !TargetHasEffect(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{
@@ -1063,7 +1063,7 @@ namespace UltimateCombo.Combos.PvE
 							return BreathOfMagic;
 						}
 
-						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_MortalFlame) && EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_MortalFlame) && EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& !TargetHasEffect(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{
@@ -1076,7 +1076,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 
 						if (IsEnabled(CustomComboPreset.BLU_Treasure_Tank_TripleTrident) && IsSpellActive(TripleTrident)
-							&& EnemyHealthMaxHp() >= SafeLocalPlayer.MaxHp * 10
+							&& EnemyHealthMaxHp() >= LocalPlayer.MaxHp * 10
 							&& (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
 							&& (EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100) > 10)
 						{

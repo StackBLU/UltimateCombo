@@ -60,9 +60,9 @@ namespace UltimateCombo.Combos.PvP
 				{
 					if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill)) && !HasEffect(Buffs.Overheated)
 						&& OriginalHook(Drill) == Drill && !WasLastWeaponskill(Drill)
-						&& (ActionReady(Analysis) || HasEffect(Buffs.Analysis)))
+						&& (ActionReady(Analysis) || HasEffect(Buffs.Analysis) || WasLastAction(Analysis)))
 					{
-						if (!HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis))
+						if (!HasEffect(Buffs.Analysis) && !WasLastAction(Analysis))
 						{
 							return Analysis;
 						}
@@ -73,7 +73,9 @@ namespace UltimateCombo.Combos.PvP
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (IsEnabled(CustomComboPreset.MCHPvP_MarksmansSpite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-							&& (WasLastWeaponskill(AirAnchor) || (TargetHasEffect(Debuffs.Wildfire) && GetDebuffRemainingTime(Debuffs.Wildfire) <= 4)))
+							&& LocalPlayer.CurrentHp > LocalPlayer.MaxMp / 3
+							&& (WasLastAction(AirAnchor) || WasLastAction(Drill)
+							|| (TargetHasEffect(Debuffs.Wildfire) && GetDebuffRemainingTime(Debuffs.Wildfire) <= 4)))
 						{
 							return MarksmansSpite;
 						}
@@ -109,9 +111,9 @@ namespace UltimateCombo.Combos.PvP
 							if (IsEnabled(CustomComboPreset.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill))
 								&& OriginalHook(Drill) == AirAnchor && !WasLastWeaponskill(AirAnchor)
 								&& !TargetHasEffectAny(PvPCommon.Buffs.Resilience)
-								&& (ActionReady(Analysis) || HasEffect(Buffs.Analysis)))
+								&& (ActionReady(Analysis) || HasEffect(Buffs.Analysis) || WasLastAction(Analysis)))
 							{
-								if (!HasEffect(Buffs.Analysis) && !WasLastAbility(Analysis))
+								if (!HasEffect(Buffs.Analysis) && !WasLastAction(Analysis))
 								{
 									return Analysis;
 								}

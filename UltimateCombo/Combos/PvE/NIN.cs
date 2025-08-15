@@ -341,7 +341,7 @@ namespace UltimateCombo.Combos.PvE
 							if (ActionReady(AeolianEdge)
 								&& ((Gauge.Kazematoi >= 1
 								&& (TargetHasEffect(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffect(MugList[OriginalHook(Mug)])
-								|| (EnemyHealthCurrentHp() <= SafeLocalPlayer.MaxHp * 15 && EnemyHealthMaxHp() != 44)))
+								|| (EnemyHealthCurrentHp() <= LocalPlayer.MaxHp * 15 && EnemyHealthMaxHp() != 44)))
 								|| Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
 							{
 								return AeolianEdge;

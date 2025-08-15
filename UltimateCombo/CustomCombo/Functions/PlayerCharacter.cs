@@ -2,7 +2,6 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
-using System;
 using UltimateCombo.Services;
 using GameMain = FFXIVClientStructs.FFXIV.Client.Game.GameMain;
 
@@ -11,8 +10,6 @@ namespace UltimateCombo.ComboHelper.Functions
 	internal abstract partial class CustomComboFunctions
 	{
 		public static IPlayerCharacter? LocalPlayer => Service.ClientState.LocalPlayer;
-
-		public static IPlayerCharacter SafeLocalPlayer => LocalPlayer ?? throw new InvalidOperationException("LocalPlayer is not available");
 
 		public static bool HasCondition(ConditionFlag flag)
 		{

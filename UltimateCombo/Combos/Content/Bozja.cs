@@ -103,22 +103,22 @@ namespace UltimateCombo.Combos.Content
 						|| (GetBuffStacks(Buffs.BloodRage) == 2 && GetBuffRemainingTime(Buffs.BloodRage) < 3)
 						|| GetBuffStacks(Buffs.BloodRage) == 3)
 					{
-						if (SafeLocalPlayer.ClassJob.Value.RowId == PLD.JobID && ActionReady(PLD.Intervene))
+						if (LocalPlayer.ClassJob.Value.RowId == PLD.JobID && ActionReady(PLD.Intervene))
 						{
 							return PLD.Intervene;
 						}
 
-						if (SafeLocalPlayer.ClassJob.Value.RowId == WAR.JobID && ActionReady(WAR.Onslaught))
+						if (LocalPlayer.ClassJob.Value.RowId == WAR.JobID && ActionReady(WAR.Onslaught))
 						{
 							return WAR.Onslaught;
 						}
 
-						if (SafeLocalPlayer.ClassJob.Value.RowId == DRK.JobID && ActionReady(DRK.Shadowstride))
+						if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && ActionReady(DRK.Shadowstride))
 						{
 							return DRK.Shadowstride;
 						}
 
-						if (SafeLocalPlayer.ClassJob.Value.RowId == GNB.JobID && ActionReady(GNB.Trajectory))
+						if (LocalPlayer.ClassJob.Value.RowId == GNB.JobID && ActionReady(GNB.Trajectory))
 						{
 							return GNB.Trajectory;
 						}
@@ -135,7 +135,7 @@ namespace UltimateCombo.Combos.Content
 
 			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
 			{
-				if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeLocalPlayer.ClassJob.Value.RowId == WHM.JobID
+				if (IsEnabled(CustomComboPreset.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && LocalPlayer.ClassJob.Value.RowId == WHM.JobID
 					 && IsComboAction(actionID))
 				{
 					if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
@@ -235,12 +235,12 @@ namespace UltimateCombo.Combos.Content
 				if (IsEnabled(CustomComboPreset.Bozja_Slash) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Slash)
 					 && IsComboAction(actionID))
 				{
-					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && SafeLocalPlayer.ClassJob.Value.RowId != MCH.JobID)
+					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && LocalPlayer.ClassJob.Value.RowId != MCH.JobID)
 					{
 						return Slash;
 					}
 
-					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && SafeLocalPlayer.ClassJob.Value.RowId == MCH.JobID)
+					if (DutyActionReady(Slash) && DutyActionEquipped(Slash) && LocalPlayer.ClassJob.Value.RowId == MCH.JobID)
 					{
 						if (ActionReady(MCH.Reassemble))
 						{

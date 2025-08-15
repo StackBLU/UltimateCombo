@@ -118,7 +118,7 @@ namespace UltimateCombo.Combos.PvP
 					if (!TargetHasEffectAny(PvPCommon.Buffs.Guard))
 					{
 						if (IsEnabled(CustomComboPreset.PCTPvP_StarPrism) && ActionReady(OriginalHook(AdventOfChocobastion))
-							&& HasEffect(Buffs.Starstruck) && (SafeLocalPlayer.CurrentHp <= (SafeLocalPlayer.MaxHp - 8000) ||
+							&& HasEffect(Buffs.Starstruck) && (LocalPlayer.CurrentHp <= (LocalPlayer.MaxHp - 8000) ||
 							GetBuffRemainingTime(Buffs.Starstruck) < 5) && !WasLastAction(AdventOfChocobastion))
 						{
 							return OriginalHook(AdventOfChocobastion);

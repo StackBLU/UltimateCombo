@@ -43,12 +43,12 @@ namespace UltimateCombo.Combos.PvP
 		{
 			public static UserBool
 				Purify_Stun = new("Purify_Stun"),
-				Purify_DeepFreeze = new("Purify_DeepFreeze"),
-				Purify_HalfAsleep = new("Purify_HalfAsleep"),
-				Purify_Sleep = new("Purify_Sleep"),
-				Purify_Bind = new("Purify_Bind"),
 				Purify_Heavy = new("Purify_Heavy"),
-				Purify_Silence = new("Purify_Silence");
+				Purify_Bind = new("Purify_Bind"),
+				Purify_Silence = new("Purify_Silence"),
+				Purify_DeepFreeze = new("Purify_DeepFreeze"),
+				Purify_MiracleOfNature = new("Purify_MiracleOfNature");
+
 			public static UserInt
 				Recuperate = new("Recuperate", 90),
 				Guard = new("Guard", 50),
@@ -59,13 +59,16 @@ namespace UltimateCombo.Combos.PvP
 		internal class Debuffs
 		{
 			public const ushort
-				Silence = 1347,
-				Bind = 1345,
 				Stun = 1343,
+				Heavy = 1344,
+				Bind = 1345,
+				Silence = 1347,
+				DeepFreeze = 3219,
+				MiracleOfNature = 3085,
+
 				HalfAsleep = 3022,
 				Sleep = 1348,
-				DeepFreeze = 3219,
-				Heavy = 1344,
+
 				Unguarded = 3021;
 		}
 
@@ -101,13 +104,13 @@ namespace UltimateCombo.Combos.PvP
 		internal static readonly List<uint>
 			GlobalSkills = [Teleport, Guard, Recuperate, Purify, StandardElixir, Sprint];
 
-		internal class PvP_Guard : CustomComboClass
+		internal class PvP_Purify : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_Guard;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_Purify;
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if (HasEffect(Buffs.Guard) && actionID == Guard)
+				if (HasEffect(Buffs.Guard))
 				{
 					if (actionID is Guard)
 					{
@@ -117,18 +120,17 @@ namespace UltimateCombo.Combos.PvP
 					return OriginalHook(11);
 				}
 
-				if (InPvP() && !GlobalSkills.Contains(actionID) && IsPvPComboAction(actionID)
-					&& IsOffCooldown(Guard) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Guard)
-					&& !HasEffect(DRKPvP.Buffs.UndeadRedemption) && !HasEffectAny(Debuffs.Unguarded) && !HasEffect(WARPvP.Buffs.InnerRelease)
-					&& !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && !HasEffect(NINPvP.Buffs.Hidden)
-					&& actionID != VPRPvP.SnakeScales)
+				if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
+					&& IsPvPComboAction(actionID) && IsOffCooldown(Purify) && LocalPlayer.CurrentMp >= 2500
+					&& !HasEffect(NINPvP.Buffs.Hidden)
+					&& ((HasEffectAny(Debuffs.Stun) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Stun))
+					|| (HasEffectAny(Debuffs.Heavy) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Heavy))
+					|| (HasEffectAny(Debuffs.Bind) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Bind))
+					|| (HasEffectAny(Debuffs.Silence) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Silence))
+					|| (HasEffectAny(Debuffs.DeepFreeze) && PluginConfiguration.GetCustomBoolValue(Config.Purify_DeepFreeze))
+					|| (HasEffectAny(Debuffs.MiracleOfNature) && PluginConfiguration.GetCustomBoolValue(Config.Purify_MiracleOfNature))))
 				{
-					if (SafeLocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(DRKPvP.Impalement))
-					{
-						return DRKPvP.Impalement;
-					}
-
-					return OriginalHook(Guard);
+					return OriginalHook(Purify);
 				}
 
 				return actionID;
@@ -152,11 +154,11 @@ namespace UltimateCombo.Combos.PvP
 				}
 
 				if (InPvP() && !GlobalSkills.Contains(actionID) && IsPvPComboAction(actionID)
-					&& SafeLocalPlayer.CurrentMp >= 2500 && PlayerHealthPercentageHpPvP() <= GetOptionValue(Config.Recuperate)
+					&& LocalPlayer.CurrentMp >= 2500 && PlayerHealthPercentageHpPvP() <= GetOptionValue(Config.Recuperate)
 					&& !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
 					&& !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales)
 				{
-					if ((SafeLocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsOffCooldown(DRKPvP.Impalement))
+					if ((LocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsOffCooldown(DRKPvP.Impalement))
 						|| (HasEffect(DRKPvP.Buffs.UndeadRedemption) && GetBuffRemainingTime(DRKPvP.Buffs.UndeadRedemption) > 2))
 					{
 						return actionID;
@@ -169,13 +171,13 @@ namespace UltimateCombo.Combos.PvP
 			}
 		}
 
-		internal class PvP_Purify : CustomComboClass
+		internal class PvP_Guard : CustomComboClass
 		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_Purify;
+			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.PvP_Guard;
 
 			protected override uint Invoke(uint actionID, uint lastComboActionID, float comboTime, byte level)
 			{
-				if (HasEffect(Buffs.Guard))
+				if (HasEffect(Buffs.Guard) && actionID == Guard)
 				{
 					if (actionID is Guard)
 					{
@@ -185,18 +187,18 @@ namespace UltimateCombo.Combos.PvP
 					return OriginalHook(11);
 				}
 
-				if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && IsPvPComboAction(actionID)
-					&& ActionReady(Purify) && SafeLocalPlayer.CurrentMp >= 2500
-					&& !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales
-					&& ((HasEffectAny(Debuffs.Stun) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Stun))
-					|| (HasEffectAny(Debuffs.DeepFreeze) && PluginConfiguration.GetCustomBoolValue(Config.Purify_DeepFreeze))
-					|| (HasEffectAny(Debuffs.HalfAsleep) && PluginConfiguration.GetCustomBoolValue(Config.Purify_HalfAsleep))
-					|| (HasEffectAny(Debuffs.Sleep) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Sleep))
-					|| (HasEffectAny(Debuffs.Bind) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Bind))
-					|| (HasEffectAny(Debuffs.Heavy) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Heavy))
-					|| (HasEffectAny(Debuffs.Silence) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Silence))))
+				if (InPvP() && !GlobalSkills.Contains(actionID) && IsPvPComboAction(actionID)
+					&& IsOffCooldown(Guard) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Guard)
+					&& !HasEffect(DRKPvP.Buffs.UndeadRedemption) && !HasEffectAny(Debuffs.Unguarded) && !HasEffect(WARPvP.Buffs.InnerRelease)
+					&& !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && !HasEffect(NINPvP.Buffs.Hidden)
+					&& actionID != VPRPvP.SnakeScales)
 				{
-					return OriginalHook(Purify);
+					if (LocalPlayer.ClassJob.Value.RowId == DRK.JobID && IsEnabled(CustomComboPreset.DRKPvP_Impalement) && ActionReady(DRKPvP.Impalement))
+					{
+						return DRKPvP.Impalement;
+					}
+
+					return OriginalHook(Guard);
 				}
 
 				return actionID;

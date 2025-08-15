@@ -118,7 +118,7 @@ namespace UltimateCombo.Combos.PvP
 							return Intervene;
 						}
 
-						if (IsEnabled(CustomComboPreset.PLDPvP_HolySpirit) && ActionReady(HolySpirit) && SafeLocalPlayer.CurrentHp <= SafeLocalPlayer.MaxHp - 6000)
+						if (IsEnabled(CustomComboPreset.PLDPvP_HolySpirit) && ActionReady(HolySpirit) && LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 6000)
 						{
 							return HolySpirit;
 						}

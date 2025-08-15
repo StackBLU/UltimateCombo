@@ -149,8 +149,8 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.GNB_ST_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
 							{
-								if (SafeCurrentTarget.TargetObject == LocalPlayer
-									|| (SafeCurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)))
+								if (CurrentTarget.TargetObject == LocalPlayer
+									|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
 								{
 									return OriginalHook(HeartOfStone);
 								}
@@ -277,8 +277,8 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.GNB_AoE_HeartOfStone) && ActionReady(OriginalHook(HeartOfStone)))
 						{
-							if (SafeCurrentTarget.TargetObject == LocalPlayer
-								|| (SafeCurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)))
+							if (CurrentTarget.TargetObject == LocalPlayer
+								|| (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)))
 							{
 								return OriginalHook(HeartOfStone);
 							}

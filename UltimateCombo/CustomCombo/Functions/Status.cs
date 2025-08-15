@@ -34,7 +34,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static Status? FindEffect(ushort effectID)
 		{
-			return FindEffect(effectID, SafeLocalPlayer, SafeLocalPlayer.GameObjectId);
+			return FindEffect(effectID, LocalPlayer, LocalPlayer.GameObjectId);
 		}
 
 		public static Status SafeFindEffect(ushort effectID)
@@ -55,12 +55,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static Status? FindTargetEffect(ushort effectID)
 		{
-			return FindEffect(effectID, SafeCurrentTarget, SafeLocalPlayer.GameObjectId);
+			return FindEffect(effectID, CurrentTarget, LocalPlayer.GameObjectId);
 		}
 
 		public static ushort FindTargetEffectStacks(ushort effectID)
 		{
-			Status? effect = FindEffect(effectID, SafeCurrentTarget, SafeLocalPlayer.GameObjectId);
+			Status? effect = FindEffect(effectID, CurrentTarget, LocalPlayer.GameObjectId);
 
 			if (effect == null)
 			{
@@ -72,7 +72,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static Status? FindTargetsTargetEffect(ushort effectID)
 		{
-			return FindEffect(effectID, SafeCurrentTarget.TargetObject, null);
+			return FindEffect(effectID, CurrentTarget.TargetObject, null);
 		}
 
 		public static float GetDebuffRemainingTime(ushort effectId)

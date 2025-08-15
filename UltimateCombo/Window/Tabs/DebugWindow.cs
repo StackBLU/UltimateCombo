@@ -54,9 +54,9 @@ namespace UltimateCombo.Window.Tabs
 					ImGui.TextUnformatted($"Territory: {Service.ClientState.TerritoryType}");
 					ImGui.TextUnformatted($"Target Object Kind: {Service.ClientState.LocalPlayer?.TargetObject?.ObjectKind}");
 					ImGui.TextUnformatted($"Target is Battle Char: {Service.ClientState.LocalPlayer?.TargetObject is IBattleChara}");
-					if (CustomComboFunctions.SafeCurrentTarget != null)
+					if (CustomComboFunctions.CurrentTarget != null)
 					{
-						ImGui.TextUnformatted($"Mob Type: {CustomComboFunctions.GetMobType(CustomComboFunctions.SafeCurrentTarget)}");
+						ImGui.TextUnformatted($"Mob Type: {CustomComboFunctions.GetMobType(CustomComboFunctions.CurrentTarget)}");
 					}
 
 					else

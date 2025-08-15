@@ -102,7 +102,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0
-						&& SafeLocalPlayer.CurrentMp < 1000)
+						&& LocalPlayer.CurrentMp < 1000)
 					{
 						return Aetherflow;
 					}
@@ -193,7 +193,7 @@ namespace UltimateCombo.Combos.PvE
 				if ((actionID is ArtOfWar or ArtOfWar2) && IsEnabled(CustomComboPreset.SCH_AoE_DPS))
 				{
 					if (IsEnabled(CustomComboPreset.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0
-						&& SafeLocalPlayer.CurrentMp < 1000)
+						&& LocalPlayer.CurrentMp < 1000)
 					{
 						return Aetherflow;
 					}

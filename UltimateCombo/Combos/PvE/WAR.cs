@@ -118,12 +118,12 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
 							{
-								if (SafeCurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject))
+								if (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject))
 								{
 									return OriginalHook(NascentFlash);
 								}
 
-								if (SafeCurrentTarget.TargetObject == LocalPlayer)
+								if (CurrentTarget.TargetObject == LocalPlayer)
 								{
 									return OriginalHook(RawIntuition);
 								}
@@ -235,12 +235,12 @@ namespace UltimateCombo.Combos.PvE
 
 							if (IsEnabled(CustomComboPreset.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
 							{
-								if (SafeCurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject))
+								if (CurrentTarget.TargetObject != LocalPlayer && GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject))
 								{
 									return OriginalHook(NascentFlash);
 								}
 
-								if (SafeCurrentTarget.TargetObject == LocalPlayer)
+								if (CurrentTarget.TargetObject == LocalPlayer)
 								{
 									return OriginalHook(RawIntuition);
 								}

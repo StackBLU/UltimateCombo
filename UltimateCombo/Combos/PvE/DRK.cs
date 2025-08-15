@@ -83,7 +83,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.DRK_ST_BlackestNight) && ActionReady(TheBlackestNight)
-						&& !InCombat() && SafeLocalPlayer.CurrentMp >= 3000)
+						&& !InCombat() && LocalPlayer.CurrentMp >= 3000)
 					{
 						return TheBlackestNight;
 					}
@@ -111,10 +111,10 @@ namespace UltimateCombo.Combos.PvE
 							if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
 							{
 								if (IsEnabled(CustomComboPreset.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
-									&& ((SafeLocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
+									&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver)
 									&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow) || HasEffect(Bozja.Buffs.AutoEther)))
-									|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && SafeLocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
-									|| SafeLocalPlayer.CurrentMp >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && SafeLocalPlayer.CurrentMp >= 3000)))
+									|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
+									|| LocalPlayer.CurrentMp >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && LocalPlayer.CurrentMp >= 3000)))
 								{
 									return OriginalHook(EdgeOfShadow);
 								}
@@ -218,16 +218,16 @@ namespace UltimateCombo.Combos.PvE
 					if (CanWeave(actionID))
 					{
 						if (IsEnabled(CustomComboPreset.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
-							&& SafeLocalPlayer.CurrentMp >= 3000)
+							&& LocalPlayer.CurrentMp >= 3000)
 						{
 							return TheBlackestNight;
 						}
 
 						if (IsEnabled(CustomComboPreset.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
-							&& ((SafeLocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)
+							&& ((LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_AoE_ManaSaver)
 							&& (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
-							|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && SafeLocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
-							|| SafeLocalPlayer.CurrentMp >= 9500))
+							|| Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && LocalPlayer.CurrentMp >= GetOptionValue(Config.DRK_ST_ManaSaver))
+							|| LocalPlayer.CurrentMp >= 9500))
 						{
 							return OriginalHook(FloodOfShadow);
 						}

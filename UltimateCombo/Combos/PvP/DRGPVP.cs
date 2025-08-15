@@ -58,7 +58,7 @@ namespace UltimateCombo.Combos.PvP
 					&& IsEnabled(CustomComboPreset.DRGPvP_Combo))
 				{
 					if (IsEnabled(CustomComboPreset.DRGPvP_ChaoticSpring) && ActionReady(ChaoticSpring)
-						&& SafeLocalPlayer.CurrentHp <= SafeLocalPlayer.MaxHp - 12000 && InActionRange(ChaoticSpring))
+						&& LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 12000 && InActionRange(ChaoticSpring))
 					{
 						return ChaoticSpring;
 					}

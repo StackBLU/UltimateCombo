@@ -1250,12 +1250,11 @@ namespace UltimateCombo.Window.Functions
 			if (preset == CustomComboPreset.PvP_Purify && enabled)
 			{
 				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Stun, "Stun", "");
-				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_DeepFreeze, "Deep Freeze", "");
-				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_HalfAsleep, "Half Asleep", "");
-				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Sleep, "Sleep", "");
-				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Bind, "Bind", "");
 				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Heavy, "Heavy", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Bind, "Bind", "");
 				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_Silence, "Silence", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_DeepFreeze, "Deep Freeze", "");
+				UserConfig.DrawAdditionalBoolChoice(PvPCommon.Config.Purify_MiracleOfNature, "Miracle of Nature", "");
 			}
 
 			if (preset == CustomComboPreset.TankPvP_Rampart && enabled)

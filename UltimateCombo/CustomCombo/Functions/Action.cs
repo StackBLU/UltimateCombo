@@ -22,12 +22,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool LevelChecked(uint actionid)
 		{
-			return SafeLocalPlayer.Level >= GetLevel(actionid) && IsActionUnlocked(actionid);
+			return LocalPlayer.Level >= GetLevel(actionid) && IsActionUnlocked(actionid);
 		}
 
 		public static bool TraitActionReady(uint traitid)
 		{
-			return SafeLocalPlayer.Level >= GetTraitLevel(traitid);
+			return LocalPlayer.Level >= GetTraitLevel(traitid);
 		}
 
 		public static string GetActionName(uint id)

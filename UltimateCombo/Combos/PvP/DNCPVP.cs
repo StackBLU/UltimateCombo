@@ -67,7 +67,7 @@ namespace UltimateCombo.Combos.PvP
 								return FanDance;
 							}
 
-							if (IsEnabled(CustomComboPreset.DNCPvP_CuringWaltz) && ActionReady(CuringWaltz) && SafeLocalPlayer.CurrentHp <= SafeLocalPlayer.MaxHp - 8000)
+							if (IsEnabled(CustomComboPreset.DNCPvP_CuringWaltz) && ActionReady(CuringWaltz) && LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 8000)
 							{
 								return CuringWaltz;
 							}

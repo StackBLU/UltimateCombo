@@ -90,7 +90,7 @@ namespace UltimateCombo.Combos.PvE
 						return HallowedGround;
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && !InCombat() && ActionReady(HolySpirit) && SafeLocalPlayer.CurrentMp >= 1000 && !InMeleeRange())
+					if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && !InCombat() && ActionReady(HolySpirit) && LocalPlayer.CurrentMp >= 1000 && !InMeleeRange())
 					{
 						return HolySpirit;
 					}
@@ -123,8 +123,8 @@ namespace UltimateCombo.Combos.PvE
 							return Intervene;
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && SafeCurrentTarget.TargetObject != LocalPlayer
-							&& GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)
+						if (IsEnabled(CustomComboPreset.PLD_ST_Intervention) && CurrentTarget.TargetObject != LocalPlayer
+							&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
 							&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
 						{
 							if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
@@ -148,7 +148,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && SafeLocalPlayer.CurrentMp >= 1000
+					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && LocalPlayer.CurrentMp >= 1000
 						&& (HasEffect(Buffs.ConfiteorReady) || WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)))
 					{
 						return OriginalHook(Confiteor);
@@ -172,7 +172,7 @@ namespace UltimateCombo.Combos.PvE
 
 						if (IsEnabled(CustomComboPreset.PLD_ST_HolySpirit) && ActionReady(OriginalHook(HolySpirit))
 							&& (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith)))
-							&& SafeLocalPlayer.CurrentMp >= GetResourceCost(HolySpirit))
+							&& LocalPlayer.CurrentMp >= GetResourceCost(HolySpirit))
 						{
 							return HolySpirit;
 						}
@@ -251,8 +251,8 @@ namespace UltimateCombo.Combos.PvE
 							return Intervene;
 						}
 
-						if (IsEnabled(CustomComboPreset.PLD_AoE_Intervention) && SafeCurrentTarget.TargetObject != LocalPlayer
-							&& GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject)
+						if (IsEnabled(CustomComboPreset.PLD_AoE_Intervention) && CurrentTarget.TargetObject != LocalPlayer
+							&& GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject)
 							&& ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Intervention))
 						{
 							if (ActionReady(All.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
@@ -276,14 +276,14 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && SafeLocalPlayer.CurrentMp >= 1000
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && LocalPlayer.CurrentMp >= 1000
 						&& (HasEffect(Buffs.ConfiteorReady) || WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)))
 					{
 						return OriginalHook(Confiteor);
 					}
 
 					if (IsEnabled(CustomComboPreset.PLD_AoE_HolyCircle) && ActionReady(HolyCircle)
-						&& SafeLocalPlayer.CurrentMp >= GetResourceCost(HolyCircle)
+						&& LocalPlayer.CurrentMp >= GetResourceCost(HolyCircle)
 						&& (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith))))
 					{
 						return HolyCircle;

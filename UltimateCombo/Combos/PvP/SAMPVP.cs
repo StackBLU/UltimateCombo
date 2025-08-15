@@ -76,7 +76,7 @@ namespace UltimateCombo.Combos.PvP
 							}
 
 							if (IsEnabled(CustomComboPreset.SAMPvP_Chiten) && HasEffect(Buffs.ZanshinReady)
-								&& (SafeLocalPlayer.CurrentHp <= SafeLocalPlayer.MaxHp - 12000 || GetBuffRemainingTime(Buffs.ZanshinReady) <= 2))
+								&& (LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 12000 || GetBuffRemainingTime(Buffs.ZanshinReady) <= 2))
 							{
 								return Zanshin;
 							}

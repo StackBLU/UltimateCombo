@@ -147,7 +147,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RPR_ST_ShadowOfDeath) && ActionReady(ShadowOfDeath)
-						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && EnemyHealthCurrentHp() > SafeLocalPlayer.MaxHp
+						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && EnemyHealthCurrentHp() > LocalPlayer.MaxHp
 						&& (GetDebuffRemainingTime(Debuffs.DeathsDesign) < 3
 						|| (GetCooldownRemainingTime(ArcaneCircle) < 10 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30)))
 					{
@@ -284,7 +284,7 @@ namespace UltimateCombo.Combos.PvE
 					}
 
 					if (IsEnabled(CustomComboPreset.RPR_AoE_WhorlOfDeath) && ActionReady(WhorlOfDeath)
-						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && EnemyHealthCurrentHp() > SafeLocalPlayer.MaxHp
+						&& !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && EnemyHealthCurrentHp() > LocalPlayer.MaxHp
 						&& (GetDebuffRemainingTime(Debuffs.DeathsDesign) < 15
 						|| (GetCooldownRemainingTime(ArcaneCircle) < 10 && GetDebuffRemainingTime(Debuffs.DeathsDesign) < 30)))
 					{

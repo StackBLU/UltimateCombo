@@ -62,7 +62,7 @@ namespace UltimateCombo.Combos.PvP
 					}
 
 					if (IsEnabled(CustomComboPreset.WHMPvP_Cure3) && HasEffect(Buffs.Cure3Ready) && !WasLastAction(SeraphStrike)
-						&& (SafeLocalPlayer.CurrentHp <= SafeLocalPlayer.MaxHp - 16000 || GetBuffRemainingTime(Buffs.Cure3Ready) < 5
+						&& (LocalPlayer.CurrentHp <= LocalPlayer.MaxHp - 16000 || GetBuffRemainingTime(Buffs.Cure3Ready) < 5
 						|| HasFriendlyTarget()))
 					{
 						return Cure3;

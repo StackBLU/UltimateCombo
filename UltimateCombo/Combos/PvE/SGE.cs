@@ -118,7 +118,7 @@ namespace UltimateCombo.Combos.PvE
 						&& !WasLastSpell(EukrasianDyskrasia))
 					{
 						if (IsEnabled(CustomComboPreset.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && !TargetsTargetHasEffect(Buffs.Kardion)
-							&& (GetPartyMembers().Any(x => x.GameObject == SafeCurrentTarget.TargetObject) || GetPartyMembers().Length == 0)
+							&& (GetPartyMembers().Any(x => x.GameObject == CurrentTarget.TargetObject) || GetPartyMembers().Length == 0)
 							&& ((HasBattleTarget() && TargetIsBoss()) || !HasEffect(Buffs.Kardia)))
 						{
 							return Kardia;

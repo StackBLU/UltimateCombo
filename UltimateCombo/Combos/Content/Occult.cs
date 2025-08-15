@@ -165,7 +165,7 @@ namespace UltimateCombo.Combos.Content
 
 					if (IsEnabled(CustomComboPreset.Occult_Heal) && DutyActionReady(OccultHeal)
 						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_Heal)
-						&& SafeLocalPlayer.CurrentMp >= 5000)
+						&& LocalPlayer.CurrentMp >= 5000)
 					{
 						return OccultHeal;
 					}
@@ -208,7 +208,7 @@ namespace UltimateCombo.Combos.Content
 					}
 
 					if (IsEnabled(CustomComboPreset.Occult_Counterstance) && DutyActionReady(Counterstance)
-						&& SafeCurrentTarget.TargetObject == LocalPlayer && GetBuffRemainingTime(Buffs.Counterstance) < 2
+						&& CurrentTarget.TargetObject == LocalPlayer && GetBuffRemainingTime(Buffs.Counterstance) < 2
 						&& (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
 					{
 						return Counterstance;

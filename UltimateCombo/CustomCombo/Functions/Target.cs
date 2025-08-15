@@ -14,7 +14,6 @@ namespace UltimateCombo.ComboHelper.Functions
 	internal abstract partial class CustomComboFunctions
 	{
 		public static IGameObject? CurrentTarget => Service.TargetManager.Target;
-		public static IGameObject SafeCurrentTarget => CurrentTarget ?? throw new InvalidOperationException("SafeCurrentTarget is not available");
 
 		public static bool HasTarget()
 		{
@@ -33,20 +32,20 @@ namespace UltimateCombo.ComboHelper.Functions
 				return 0;
 			}
 
-			if (CurrentTarget.GameObjectId == SafeLocalPlayer.GameObjectId)
+			if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
 			{
 				return 0;
 			}
 
 			Vector2 position = new(chara.Position.X, chara.Position.Z);
-			Vector2 selfPosition = new(SafeLocalPlayer.Position.X, SafeLocalPlayer.Position.Z);
+			Vector2 selfPosition = new(LocalPlayer.Position.X, LocalPlayer.Position.Z);
 
-			return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - SafeLocalPlayer.HitboxRadius);
+			return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
 		}
 
 		public static bool InMeleeRange()
 		{
-			if (SafeLocalPlayer.TargetObject == null)
+			if (LocalPlayer.TargetObject == null)
 			{
 				return false;
 			}
@@ -58,7 +57,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool OutOfMeleeRange()
 		{
-			if (SafeLocalPlayer.TargetObject == null)
+			if (LocalPlayer.TargetObject == null)
 			{
 				return false;
 			}
@@ -70,7 +69,7 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool InMeleeRangeNoMovement()
 		{
-			if (SafeLocalPlayer.TargetObject == null)
+			if (LocalPlayer.TargetObject == null)
 			{
 				return false;
 			}
@@ -84,7 +83,7 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (OurTarget is null)
 			{
-				OurTarget = SafeCurrentTarget;
+				OurTarget = CurrentTarget;
 				if (OurTarget is null)
 				{
 					return 0;
@@ -101,12 +100,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static float EnemyHealthMaxHp()
 		{
-			if (SafeCurrentTarget is null)
+			if (CurrentTarget is null)
 			{
 				return 0;
 			}
 
-			if (SafeCurrentTarget is not IBattleChara chara)
+			if (CurrentTarget is not IBattleChara chara)
 			{
 				return 0;
 			}
@@ -116,12 +115,12 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static float EnemyHealthCurrentHp()
 		{
-			if (SafeCurrentTarget is null)
+			if (CurrentTarget is null)
 			{
 				return 0;
 			}
 
-			if (SafeCurrentTarget is not IBattleChara chara)
+			if (CurrentTarget is not IBattleChara chara)
 			{
 				return 0;
 			}
@@ -131,27 +130,27 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static float PlayerHealthPercentageHp()
 		{
-			return (float) ((float) SafeLocalPlayer.CurrentHp / SafeLocalPlayer.MaxHp * 100);
+			return (float) ((float) LocalPlayer.CurrentHp / LocalPlayer.MaxHp * 100);
 		}
 
 		public static float PlayerHealthPercentageHpPvP()
 		{
-			return (float) ((float) SafeLocalPlayer.CurrentHp / (SafeLocalPlayer.MaxHp - 15000) * 100);
+			return (float) ((float) LocalPlayer.CurrentHp / (LocalPlayer.MaxHp - 15000) * 100);
 		}
 
 		public static bool HasBattleTarget()
 		{
-			return SafeCurrentTarget is not null and IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
+			return CurrentTarget is not null and IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
 		}
 
 		public static bool HasFriendlyTarget()
 		{
-			return SafeCurrentTarget is not null && SafeCurrentTarget.ObjectKind is ObjectKind.Player;
+			return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Player;
 		}
 
 		public static bool CanInterruptEnemy()
 		{
-			return SafeCurrentTarget is not null && SafeCurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
+			return CurrentTarget is not null && CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
 		}
 
 		public static void SetTarget(IGameObject? target)
@@ -176,7 +175,7 @@ namespace UltimateCombo.ComboHelper.Functions
 				return false; // Directional Disregard Effect (Patch 7.01)
 			}
 
-			return Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == SafeCurrentTarget.DataId, out BNpcBase bnpc) && !bnpc.IsOmnidirectional;
+			return Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == CurrentTarget.DataId, out BNpcBase bnpc) && !bnpc.IsOmnidirectional;
 		}
 
 		public static void TargetObject(IGameObject? target)
@@ -210,17 +209,17 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static float AngleToTarget()
 		{
-			if (SafeCurrentTarget is null || LocalPlayer is null)
+			if (CurrentTarget is null || LocalPlayer is null)
 			{
 				return 0;
 			}
 
-			if (SafeCurrentTarget is not IBattleChara || SafeCurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
 			{
 				return 0;
 			}
 
-			var angle = PositionalMath.AngleXZ(SafeCurrentTarget.Position, LocalPlayer.Position) - SafeCurrentTarget.Rotation;
+			var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
 			var regionDegrees = PositionalMath.Degrees(angle);
 
@@ -254,17 +253,17 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool OnTargetsRear()
 		{
-			if (SafeCurrentTarget is null || LocalPlayer is null)
+			if (CurrentTarget is null || LocalPlayer is null)
 			{
 				return false;
 			}
 
-			if (SafeCurrentTarget is not IBattleChara || SafeCurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
 			{
 				return false;
 			}
 
-			var angle = PositionalMath.AngleXZ(SafeCurrentTarget.Position, LocalPlayer.Position) - SafeCurrentTarget.Rotation;
+			var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
 			var regionDegrees = PositionalMath.Degrees(angle);
 			if (regionDegrees < 0)
@@ -277,17 +276,17 @@ namespace UltimateCombo.ComboHelper.Functions
 
 		public static bool OnTargetsFlank()
 		{
-			if (SafeCurrentTarget is null || LocalPlayer is null)
+			if (CurrentTarget is null || LocalPlayer is null)
 			{
 				return false;
 			}
 
-			if (SafeCurrentTarget is not IBattleChara || SafeCurrentTarget.ObjectKind != ObjectKind.BattleNpc)
+			if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
 			{
 				return false;
 			}
 
-			var angle = PositionalMath.AngleXZ(SafeCurrentTarget.Position, LocalPlayer.Position) - SafeCurrentTarget.Rotation;
+			var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
 
 			var regionDegrees = PositionalMath.Degrees(angle);
 			if (regionDegrees < 0)
@@ -335,9 +334,9 @@ namespace UltimateCombo.ComboHelper.Functions
 		{
 			if (HasBattleTarget())
 			{
-				if ((Svc.Data.GetExcelSheet<BNpcBase>().GetRow(SafeCurrentTarget.DataId).Rank is 2
+				if ((Svc.Data.GetExcelSheet<BNpcBase>().GetRow(CurrentTarget.DataId).Rank is 2
 					|| EnemyHealthMaxHp() == 44
-					|| EnemyHealthMaxHp() > SafeLocalPlayer.MaxHp * 10) && EnemyHealthCurrentHp() > 1)
+					|| EnemyHealthMaxHp() > LocalPlayer.MaxHp * 10) && EnemyHealthCurrentHp() > 1)
 				{
 					return true;
 				}

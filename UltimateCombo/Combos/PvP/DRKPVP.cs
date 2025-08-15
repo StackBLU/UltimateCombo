@@ -66,7 +66,7 @@ namespace UltimateCombo.Combos.PvP
 				{
 					if (IsEnabled(CustomComboPreset.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
 					{
-						if (PlayerHealthPercentageHp() < 50 && SafeLocalPlayer.CurrentMp >= 2500)
+						if (PlayerHealthPercentageHp() < 50 && LocalPlayer.CurrentMp >= 2500)
 						{
 							return PvPCommon.Recuperate;
 						}
