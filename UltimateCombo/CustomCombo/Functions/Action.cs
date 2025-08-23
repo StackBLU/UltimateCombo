@@ -182,7 +182,7 @@ namespace UltimateCombo.ComboHelper.Functions
 			return GetCooldown(actionID).CooldownRemaining >= weaveTime || HasSilence() || HasPacification();
 		}
 
-		public static bool CanDelayedWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)
+		public static bool CanLateWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)
 		{
 			return (GetCooldown(actionID).CooldownRemaining <= weaveStart && GetCooldown(actionID).CooldownRemaining >= weaveTime)
 				|| HasSilence() || HasPacification();

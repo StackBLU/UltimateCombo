@@ -33,7 +33,7 @@
     <RepositoryUrl>https://github.com/StackBLU/UltimateCombo</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageIcon>logo.png</PackageIcon>
-    <AssemblyVersion>1.0.0.83</AssemblyVersion>
+    <AssemblyVersion>1.0.0.84</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup>

@@ -263,7 +263,7 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if (IsEnabled(CustomComboPreset.All_RoleActions) && IsComboAction(actionID))
 				{
-					if (CanDelayedWeave(actionID) && SafeToUse())
+					if (CanLateWeave(actionID) && SafeToUse())
 					{
 						if (IsEnabled(CustomComboPreset.All_TrueNorth) && ActionReady(TrueNorth) && IsEnabled(TrueNorth)
 							&& TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || GetBuffRemainingTime(Buffs.TrueNorth) < 1))

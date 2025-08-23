@@ -146,7 +146,7 @@ namespace UltimateCombo.Combos.PvP
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)))
+					if (IsEnabled(CustomComboPreset.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)) && CanLateWeave(actionID))
 					{
 						if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
 							|| PlayerHealthPercentageHp() <= GetOptionValue(Config.PCTPvP_AutoPalette)))

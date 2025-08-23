@@ -293,22 +293,23 @@ namespace UltimateCombo.Combos.PvE
 			{
 				if ((actionID is Aetherflow or Dissipation or EnergyDrain) && IsEnabled(CustomComboPreset.SCH_DissipationDrain))
 				{
-					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0 && ActionReady(Dissipation))
+					if (ActionReady(EnergyDrain) && Gauge.Aetherflow > 0)
 					{
 						return EnergyDrain;
 					}
 
-					if (ActionReady(Dissipation) || (GetCooldownRemainingTime(Dissipation) < 30 && LevelChecked(Dissipation) && !HasEffect(Buffs.Seraphism)))
-					{
-						return Dissipation;
-					}
-
-					if (LevelChecked(Dissipation))
+					if (ActionReady(Aetherflow))
 					{
 						return Aetherflow;
 					}
 
-					return OriginalHook(11);
+					if ((ActionReady(Dissipation) && !HasEffect(Buffs.Seraphism))
+						|| (LevelChecked(Dissipation) && GetCooldownRemainingTime(Dissipation) < GetCooldownRemainingTime(Aetherflow)))
+					{
+						return Dissipation;
+					}
+
+					return Aetherflow;
 				}
 
 				return actionID;
