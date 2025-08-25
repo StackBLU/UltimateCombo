@@ -71,6 +71,6 @@ Steps:
 <p align="center"><br>
 	Developed by:<br>
 	<a href="https://github.com/StackBLU">
-	<img align="center" src="/images/stack.gif" width="250px"</img>
+	<img align="center" src="/images/stack.png" width="250px"</img>
 	</a>
 </p>

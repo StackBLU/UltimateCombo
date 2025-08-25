@@ -148,7 +148,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && LocalPlayer.CurrentMp >= 1000
+					if (IsEnabled(CustomComboPreset.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor)) && LocalPlayer.CurrentMp >= 1000
 						&& (HasEffect(Buffs.ConfiteorReady)
 						|| ((WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)) && LevelChecked(BladeOfFaith))))
 					{
@@ -277,7 +277,7 @@ namespace UltimateCombo.Combos.PvE
 						}
 					}
 
-					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && LocalPlayer.CurrentMp >= 1000
+					if (IsEnabled(CustomComboPreset.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && LocalPlayer.CurrentMp >= 1000
 						&& (HasEffect(Buffs.ConfiteorReady)
 						|| ((WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)) && LevelChecked(BladeOfFaith))))
 					{
