@@ -1,173 +1,172 @@
 using ECommons.DalamudServices;
-
 using UltimateCombo.ComboHelper.Functions;
+using UltimateCombo.Combos.General;
 using UltimateCombo.Combos.PvE;
-using UltimateCombo.CustomCombo;
+using UltimateCombo.Core;
 
-namespace UltimateCombo.Combos.Content
+namespace UltimateCombo.Combos.Content;
+
+internal static class Variant
 {
-	internal static class Variant
-	{
-		public const uint
-			VariantUltimatum = 29730,
-			VariantRaise = 29731,
-			VariantRaise2 = 29734,
+    internal const uint
+        VariantUltimatum = 29730,
+        VariantRaise = 29731,
+        VariantRaise2 = 29734,
 
-			//Don't use these for logic - they are just for the ReplaceSkill icon
-			VariantCure_Image = 29729,
-			VariantSpiritDart_Image = 29732,
-			VariantRampart_Image = 29733;
+        //Don't use these for logic - they are just for the ReplaceSkill icon
+        VariantCure_Image = 29729,
+        VariantSpiritDart_Image = 29732,
+        VariantRampart_Image = 29733;
 
-		//1069 = The Sil'dihn Subterrane
-		//1137 = Mount Rokkon
-		//1176 = Aloalo Island
+    //1069 = The Sil'dihn Subterrane
+    //1137 = Mount Rokkon
+    //1176 = Aloalo Island
 
-		public static uint VariantCure => Svc.ClientState.TerritoryType switch
-		{
-			1069 => 29729,
-			1137 or 1176 => 33862,
-			_ => 0
-		};
+    internal static uint VariantCure => Svc.ClientState.TerritoryType switch
+    {
+        1069 => 29729,
+        1137 or 1176 => 33862,
+        _ => 0
+    };
 
-		public static uint VariantSpiritDart => Svc.ClientState.TerritoryType switch
-		{
-			1069 => 29732,
-			1137 or 1176 => 33863,
-			_ => 0
-		};
+    internal static uint VariantSpiritDart => Svc.ClientState.TerritoryType switch
+    {
+        1069 => 29732,
+        1137 or 1176 => 33863,
+        _ => 0
+    };
 
-		public static uint VariantRampart => Svc.ClientState.TerritoryType switch
-		{
-			1069 => 29733,
-			1137 or 1176 => 33864,
-			_ => 0
-		};
+    internal static uint VariantRampart => Svc.ClientState.TerritoryType switch
+    {
+        1069 => 29733,
+        1137 or 1176 => 33864,
+        _ => 0
+    };
 
-		public static class Buffs
-		{
-			public const ushort
-				EmnityUp = 3358,
-				VulnDown = 3360,
-				Rehabilitation = 3367,
-				DamageBarrier = 3405;
-		}
+    internal static class Buffs
+    {
+        internal const ushort
+            EmnityUp = 3358,
+            VulnDown = 3360,
+            Rehabilitation = 3367,
+            DamageBarrier = 3405;
+    }
 
-		public static class Debuffs
-		{
-			public const ushort
-				SustainedDamage = 3359;
-		}
-		public static class Config
-		{
-			public static UserInt
-				Variant_Cure = new("All_Variant_Cure", 50);
-		}
+    internal static class Debuffs
+    {
+        internal const ushort
+            SustainedDamage = 3359;
+    }
+    internal static class Config
+    {
+        internal static UserInt
+            Variant_Cure = new("All_Variant_Cure", 50);
+    }
 
-		internal class Variant_Cure : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Variant_Cure;
+    internal class Variant_Cure : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_Cure;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
-				{
-					if (ActionReady(VariantCure) && IsEnabled(VariantCure)
-						&& PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
-					{
-						return VariantCure;
-					}
-				}
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (ActionReady(VariantCure) && IsActionEnabled(VariantCure)
+                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
+                {
+                    return VariantCure;
+                }
+            }
 
-				return actionID;
-			}
-		}
+            return actionID;
+        }
+    }
 
-		internal class Variant_Raise : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Variant_Raise;
+    internal class Variant_Raise : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_Raise;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
-				{
-					if (IsEnabled(VariantCure)
-						&& actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
-							or SGE.Egeiro or SMN.Resurrection or RDM.Verraise)
-					{
-						if (ActionReady(All.Swiftcast))
-						{
-							return All.Swiftcast;
-						}
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsActionEnabled(VariantCure)
+                    && actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
+                        or SGE.Egeiro or SMN.Resurrection or RDM.Verraise)
+                {
+                    if (ActionReady(Common.Swiftcast))
+                    {
+                        return Common.Swiftcast;
+                    }
 
-						if (ActionReady(VariantRaise2) && IsEnabled(VariantRaise2))
-						{
-							return VariantRaise2;
-						}
+                    if (ActionReady(VariantRaise2) && IsActionEnabled(VariantRaise2))
+                    {
+                        return VariantRaise2;
+                    }
 
-						if (ActionReady(VariantRaise) && IsEnabled(VariantRaise))
-						{
-							return VariantRaise;
-						}
-					}
-				}
+                    if (ActionReady(VariantRaise) && IsActionEnabled(VariantRaise))
+                    {
+                        return VariantRaise;
+                    }
+                }
+            }
 
-				return actionID;
-			}
-		}
+            return actionID;
+        }
+    }
 
-		internal class Variant_Ultimatum : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Variant_Ultimatum;
+    internal class Variant_Ultimatum : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_Ultimatum;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
-				{
-					if (ActionReady(VariantUltimatum) && IsEnabled(VariantUltimatum) && CanWeave(actionID))
-					{
-						return VariantUltimatum;
-					}
-				}
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (ActionReady(VariantUltimatum) && IsActionEnabled(VariantUltimatum) && CanWeave(actionID))
+                {
+                    return VariantUltimatum;
+                }
+            }
 
-				return actionID;
-			}
-		}
+            return actionID;
+        }
+    }
 
-		internal class Variant_SpiritDart : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Variant_SpiritDart;
+    internal class Variant_SpiritDart : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_SpiritDart;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
-				{
-					if (ActionReady(VariantSpiritDart) && IsEnabled(VariantSpiritDart)
-						&& CanWeave(actionID) && !TargetHasEffectAny(Debuffs.SustainedDamage))
-					{
-						return VariantSpiritDart;
-					}
-				}
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (ActionReady(VariantSpiritDart) && IsActionEnabled(VariantSpiritDart)
+                    && CanWeave(actionID) && !TargetHasEffectAny(Debuffs.SustainedDamage))
+                {
+                    return VariantSpiritDart;
+                }
+            }
 
-				return actionID;
-			}
-		}
+            return actionID;
+        }
+    }
 
-		internal class Variant_Rampart : CustomComboClass
-		{
-			protected internal override CustomComboPreset Preset { get; } = CustomComboPreset.Variant_Rampart;
+    internal class Variant_Rampart : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_Rampart;
 
-			protected override uint Invoke(uint actionID, uint lastComboMove, float comboTime, byte level)
-			{
-				if (IsEnabled(CustomComboPreset.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
-				{
-					if (ActionReady(VariantRampart) && IsEnabled(VariantRampart) && CanWeave(actionID))
-					{
-						return VariantRampart;
-					}
-				}
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (ActionReady(VariantRampart) && IsActionEnabled(VariantRampart) && CanWeave(actionID))
+                {
+                    return VariantRampart;
+                }
+            }
 
-				return actionID;
-			}
-		}
-	}
+            return actionID;
+        }
+    }
 }

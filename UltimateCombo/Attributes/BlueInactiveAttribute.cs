@@ -1,37 +1,31 @@
 using System;
 using System.Collections.Generic;
+using UltimateCombo.Core;
 
-using UltimateCombo.Services;
+namespace UltimateCombo.Attributes;
 
-namespace UltimateCombo.Attributes
+[AttributeUsage(AttributeTargets.Field)]
+internal sealed class BlueInactiveAttribute : Attribute
 {
-	/// <summary> Attribute documenting which skill the feature uses the user does not have active currently. </summary>
-	[AttributeUsage(AttributeTargets.Field)]
-	public class BlueInactiveAttribute : Attribute
-	{
-		/// <summary> List of each action the feature uses the user does not have active. Initializes a new instance of the <see cref="BlueInactiveAttribute"/> class. </summary>
-		/// <param name="actionIDs"> List of actions the preset replaces. </param>
-		internal BlueInactiveAttribute(params uint[] actionIDs)
-		{
-			if (Service.Configuration is null)
-			{
-				return;
-			}
+    internal BlueInactiveAttribute(params uint[] actionIDs)
+    {
+        if (Service.Configuration is null)
+        {
+            return;
+        }
 
-			NoneSet = true;
-			foreach (var id in actionIDs)
-			{
-				if (Service.Configuration.ActiveBLUSpells.Contains(id))
-				{
-					NoneSet = false;
-					continue;
-				}
+        NoneSet = true;
+        foreach (var id in actionIDs)
+        {
+            if (Service.Configuration.ActiveBLUSpells.Contains(id))
+            {
+                NoneSet = false;
+                continue;
+            }
+            Actions.Add(id);
+        }
+    }
 
-				Actions.Add(id);
-			}
-		}
-
-		internal List<uint> Actions { get; set; } = [];
-		internal bool NoneSet { get; set; } = false;
-	}
+    internal List<uint> Actions { get; set; } = [];
+    internal bool NoneSet { get; set; } = false;
 }

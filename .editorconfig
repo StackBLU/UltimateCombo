@@ -12,6 +12,12 @@ trim_trailing_whitespace = true
 indent_style = tab
 indent_size = 4
 
+[**/obj/**]
+generated_code = true
+
+[**/bin/**]
+generated_code = true
+
 #########################
 # C# Code Style Rules   #
 #########################
@@ -28,6 +34,11 @@ csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_method_call_parameter_list_parentheses = false
 csharp_space_before_open_square_brackets = false
 csharp_space_around_binary_operators = before_and_after
+csharp_style_namespace_declarations = file_scoped:suggestion
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+indent_style = space
+indent_size = 4
 
 # --- Organizing usings ---
 dotnet_sort_system_directives_first = false
@@ -110,6 +121,10 @@ dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.style = pascal_c
 dotnet_naming_symbols.static_readonly_fields.applicable_kinds = field
 dotnet_naming_symbols.static_readonly_fields.applicable_accessibilities = *
 dotnet_naming_symbols.static_readonly_fields.required_modifiers = static,readonly
+
+# Code analysis
+dotnet_analyzer_diagnostic.category-style.severity = warning
+dotnet_analyzer_diagnostic.category-maintainability.severity = warning
 
 ##################################
 # JSON, XML, HTML, CSS, etc.     #

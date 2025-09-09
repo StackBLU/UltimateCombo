@@ -4,196 +4,151 @@ using Dalamud.Interface.Textures.TextureWraps;
 using ECommons.ImGuiMethods;
 using System.Numerics;
 
-namespace UltimateCombo.Window
+namespace UltimateCombo.Window;
+
+internal static class IconButtons
 {
-	public static class IconButtons
-	{
-		private static Vector2 GetIconSize(FontAwesomeIcon icon)
-		{
-			ImGui.PushFont(UiBuilder.IconFont);
-			Vector2 iconSize = ImGui.CalcTextSize(icon.ToIconString());
-			ImGui.PopFont();
-			return iconSize;
-		}
+    private static Vector2 GetIconSize(FontAwesomeIcon icon)
+    {
+        ImGui.PushFont(UiBuilder.IconFont);
+        Vector2 iconSize = ImGui.CalcTextSize(icon.ToIconString());
+        ImGui.PopFont();
+        return iconSize;
+    }
 
-		public static bool IconImageButton(IDalamudTextureWrap texture, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
-		{
-			var buttonClicked = false;
-			_ = Vector2.Zero;
-			Vector2 imageSize = new(texture.Width, texture.Height);
-			if (imageScale > 0)
-			{
-				imageSize.X *= imageScale;
-				imageSize.Y *= imageScale;
-			}
-			Vector2 textSize = ImGui.CalcTextSize(text);
-			Vector2 padding = ImGui.GetStyle().FramePadding;
-			Vector2 spacing = ImGui.GetStyle().ItemSpacing;
+    internal static bool IconImageButton(IDalamudTextureWrap texture, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
+    {
+        var buttonClicked = false;
+        var imageSize = new Vector2(texture.Width, texture.Height);
+        if (imageScale > 0)
+        {
+            imageSize.X *= imageScale;
+            imageSize.Y *= imageScale;
+        }
 
-			var buttonSizeX = imageSize.X + textSize.X + (padding.X * 2) + spacing.X;
+        Vector2 textSize = ImGui.CalcTextSize(text);
+        Vector2 padding = ImGui.GetStyle().FramePadding;
+        Vector2 spacing = ImGui.GetStyle().ItemSpacing;
 
-			float maxHeight;
+        var buttonSizeX = imageSize.X + textSize.X + (padding.X * 2) + spacing.X;
 
-			if (imageSize.Y > textSize.Y)
-			{
-				maxHeight = imageSize.Y;
-			}
+        var maxHeight = imageSize.Y > textSize.Y ? imageSize.Y : textSize.Y;
+        var buttonSizeY = maxHeight + (padding.Y * 2);
 
-			else
-			{
-				maxHeight = textSize.Y;
-			}
+        Vector2 buttonSize = size == Vector2.Zero ? new Vector2(buttonSizeX, buttonSizeY) : size;
 
-			var buttonSizeY = maxHeight + (padding.Y * 2);
+        if (ImGui.Button("###" + text, buttonSize))
+        {
+            buttonClicked = true;
+        }
 
-			Vector2 buttonSize;
+        ImGui.SameLine();
+        if (size == Vector2.Zero)
+        {
+            ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
+        }
+        else
+        {
+            ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - size.X) * 0.5f);
+            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+        }
 
-			if (size == Vector2.Zero)
-			{
-				buttonSize = new Vector2(buttonSizeX, buttonSizeY);
-			}
+        if (imageOnRight)
+        {
+            ImGui.Text(text);
+            ImGui.SameLine();
+            if (size != Vector2.Zero)
+            {
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+            }
 
-			else
-			{
-				buttonSize = size;
-			}
+            ImGui.Image(texture.Handle, imageSize);
+        }
+        else
+        {
+            ImGui.Image(texture.Handle, imageSize);
+            ImGui.SameLine();
+            if (size != Vector2.Zero)
+            {
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+            }
 
-			if (ImGui.Button("###" + text, buttonSize))
-			{
-				buttonClicked = true;
-			}
+            ImGui.Text(text);
+        }
 
-			ImGui.SameLine();
-			if (size == Vector2.Zero)
-			{
-				ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
-			}
+        return buttonClicked;
+    }
 
-			else
-			{
-				ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - size.X) * 0.5f);
-				ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-			}
+    internal static bool IconImageButton(string imageUrl, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
+    {
+        var buttonClicked = false;
 
-			if (imageOnRight)
-			{
-				ImGui.Text(text);
-				ImGui.SameLine();
-				if (size != Vector2.Zero)
-				{
-					ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-				}
+        if (ThreadLoadImageHandler.TryGetTextureWrap(imageUrl, out IDalamudTextureWrap? texture))
+        {
+            buttonClicked = IconImageButton(texture, text, size, imageOnRight, imageScale);
+        }
 
-				ImGui.Image(texture.Handle, imageSize);
-			}
+        return buttonClicked;
+    }
 
-			else
-			{
-				ImGui.Image(texture.Handle, imageSize);
+    internal static bool IconTextButton(FontAwesomeIcon icon, string text, Vector2 size = new(), bool iconOnRight = false)
+    {
+        var buttonClicked = false;
+        Vector2 iconSize = GetIconSize(icon);
+        Vector2 textSize = ImGui.CalcTextSize(text);
+        Vector2 padding = ImGui.GetStyle().FramePadding;
+        Vector2 spacing = ImGui.GetStyle().ItemSpacing;
 
-				ImGui.SameLine();
-				if (size != Vector2.Zero)
-				{
-					ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-				}
-				ImGui.Text(text);
-			}
+        var buttonSizeX = iconSize.X + textSize.X + (padding.X * 2) + spacing.X;
 
-			return buttonClicked;
-		}
-		public static bool IconImageButton(string imageUrl, string text, Vector2 size = new(), bool imageOnRight = false, float imageScale = 0)
-		{
-			var buttonClicked = false;
+        var maxHeight = iconSize.Y > textSize.Y ? iconSize.Y : textSize.Y;
+        var buttonSizeY = maxHeight + (padding.Y * 2);
 
-			if (ThreadLoadImageHandler.TryGetTextureWrap(imageUrl, out IDalamudTextureWrap? texture))
-			{
-				buttonClicked = IconImageButton(texture, text, size, imageOnRight, imageScale);
-			}
+        Vector2 buttonSize = size == Vector2.Zero ? new Vector2(buttonSizeX, buttonSizeY) : size;
 
-			return buttonClicked;
-		}
-		public static bool IconTextButton(FontAwesomeIcon icon, string text, Vector2 size = new(), bool iconOnRight = false)
-		{
-			var buttonClicked = false;
-			_ = Vector2.Zero;
-			Vector2 iconSize = GetIconSize(icon);
-			Vector2 textSize = ImGui.CalcTextSize(text);
-			Vector2 padding = ImGui.GetStyle().FramePadding;
-			Vector2 spacing = ImGui.GetStyle().ItemSpacing;
+        if (ImGui.Button("###" + icon.ToIconString() + text, buttonSize))
+        {
+            buttonClicked = true;
+        }
 
-			var buttonSizeX = iconSize.X + textSize.X + (padding.X * 2) + spacing.X;
+        ImGui.SameLine();
+        if (size == Vector2.Zero)
+        {
+            ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
+        }
+        else
+        {
+            ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - iconSize.X) * 0.5f);
+            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+        }
 
-			float maxHeight;
+        if (iconOnRight)
+        {
+            ImGui.Text(text);
+            ImGui.SameLine();
+            if (size != Vector2.Zero)
+            {
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+            }
 
-			if (iconSize.Y > textSize.Y)
-			{
-				maxHeight = iconSize.Y;
-			}
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text(icon.ToIconString());
+            ImGui.PopFont();
+        }
+        else
+        {
+            ImGui.PushFont(UiBuilder.IconFont);
+            ImGui.Text(icon.ToIconString());
+            ImGui.PopFont();
+            ImGui.SameLine();
+            if (size != Vector2.Zero)
+            {
+                ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
+            }
 
-			else
-			{
-				maxHeight = textSize.Y;
-			}
+            ImGui.Text(text);
+        }
 
-			var buttonSizeY = maxHeight + (padding.Y * 2);
-
-			Vector2 buttonSize;
-
-			if (size == Vector2.Zero)
-			{
-				buttonSize = new Vector2(buttonSizeX, buttonSizeY);
-			}
-
-			else
-			{
-				buttonSize = size;
-			}
-
-			if (ImGui.Button("###" + icon.ToIconString() + text, buttonSize))
-			{
-				buttonClicked = true;
-			}
-
-			ImGui.SameLine();
-			if (size == Vector2.Zero)
-			{
-				ImGui.SetCursorPosX(ImGui.GetCursorPosX() - buttonSize.X - padding.X);
-			}
-
-			else
-			{
-				ImGui.SetCursorPosX((ImGui.GetContentRegionMax().X - textSize.X - iconSize.X) * 0.5f);
-				ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-			}
-
-			if (iconOnRight)
-			{
-				ImGui.Text(text);
-				ImGui.SameLine();
-				if (size != Vector2.Zero)
-				{
-					ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-				}
-				ImGui.PushFont(UiBuilder.IconFont);
-				ImGui.Text(icon.ToIconString());
-				ImGui.PopFont();
-			}
-
-			else
-			{
-				ImGui.PushFont(UiBuilder.IconFont);
-				ImGui.Text(icon.ToIconString());
-				ImGui.PopFont();
-				ImGui.SameLine();
-				if (size != Vector2.Zero)
-				{
-					ImGui.SetCursorPosY(ImGui.GetCursorPosY() + padding.Y);
-				}
-
-				ImGui.Text(text);
-			}
-
-			return buttonClicked;
-		}
-	}
+        return buttonClicked;
+    }
 }

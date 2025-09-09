@@ -2,208 +2,127 @@ using Dalamud.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using UltimateCombo.Combos;
-using UltimateCombo.Combos.PvE;
-using UltimateCombo.Extensions;
-using UltimateCombo.Services;
 
-namespace UltimateCombo.Core
+namespace UltimateCombo.Core;
+
+[Serializable]
+public class PluginConfiguration : IPluginConfiguration
 {
-	[Serializable]
-	public class PluginConfiguration : IPluginConfiguration
-	{
-		public int Version { get; set; } = 5;
+    public int Version { get; set; } = 5;
 
-		[JsonProperty("EnabledActionsV6")]
-		public HashSet<CustomComboPreset> EnabledActions { get; set; } = [];
+    [JsonProperty("EnabledActionsV6")]
+    public HashSet<Presets> EnabledActions { get; set; } = [];
 
-		public bool EnabledOutputLog { get; set; } = false;
+    public bool EnabledOutputLog { get; set; } = false;
+    public bool OpenOnLaunch { get; set; } = false;
+    public bool HideChildren { get; set; } = false;
+    public bool HideConflictedCombos { get; set; } = false;
+    public bool IgnoreGCDChecks { get; set; } = false;
+    public bool DisableTripleWeaving { get; set; } = false;
+    public double RangedAttackRange { get; set; } = 7;
 
-		public bool OpenOnLaunch { get; set; } = false;
+    [JsonProperty("CustomFloatValuesV6")]
+    public static Dictionary<string, float> CustomFloatValues { get; set; } = [];
 
-		public bool HideChildren { get; set; } = false;
+    public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
+    {
+        if (!CustomFloatValues.TryGetValue(config, out var configValue))
+        {
+            SetCustomFloatValue(config, defaultMinValue);
+            return defaultMinValue;
+        }
 
-		public bool HideConflictedCombos { get; set; } = false;
+        return configValue;
+    }
 
-		public bool IgnoreGCDChecks { get; set; } = false;
+    public static void SetCustomFloatValue(string config, float value)
+    {
+        CustomFloatValues[config] = value;
+    }
 
-		public bool DisableTripleWeaving { get; set; } = false;
+    [JsonProperty("CustomIntValuesV6")]
+    public static Dictionary<string, int> CustomIntValues { get; set; } = [];
 
-		public double RangedAttackRange { get; set; } = 7;
+    public static int GetCustomIntValue(string config, int defaultMinVal = 0)
+    {
+        if (!CustomIntValues.TryGetValue(config, out var configValue))
+        {
+            SetCustomIntValue(config, defaultMinVal);
+            return defaultMinVal;
+        }
 
-		public Vector4 TargetHighlightColor { get; set; } = new() { W = 1, X = 0.5f, Y = 0.5f, Z = 0.5f };
+        return configValue;
+    }
 
-		[JsonProperty("CustomFloatValuesV6")]
-		internal static Dictionary<string, float> CustomFloatValues { get; set; } = [];
+    public static void SetCustomIntValue(string config, int value)
+    {
+        CustomIntValues[config] = value;
+    }
 
-		public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
-		{
-			if (!CustomFloatValues.TryGetValue(config, out var configValue))
-			{
-				SetCustomFloatValue(config, defaultMinValue);
-				return defaultMinValue;
-			}
+    [JsonProperty("CustomIntArrayValuesV6")]
+    public static Dictionary<string, int[]> CustomIntArrayValues { get; set; } = [];
 
-			return configValue;
-		}
+    public static int[] GetCustomIntArrayValue(string config)
+    {
+        if (!CustomIntArrayValues.TryGetValue(config, out var configValue))
+        {
+            SetCustomIntArrayValue(config, []);
+            return [];
+        }
 
-		public static void SetCustomFloatValue(string config, float value)
-		{
-			CustomFloatValues[config] = value;
-		}
+        return configValue;
+    }
 
-		[JsonProperty("CustomIntValuesV6")]
-		internal static Dictionary<string, int> CustomIntValues { get; set; } = [];
+    public static void SetCustomIntArrayValue(string config, int[] value)
+    {
+        CustomIntArrayValues[config] = value;
+    }
 
-		public static int GetCustomIntValue(string config, int defaultMinVal = 0)
-		{
-			if (!CustomIntValues.TryGetValue(config, out var configValue))
-			{
-				SetCustomIntValue(config, defaultMinVal);
-				return defaultMinVal;
-			}
+    [JsonProperty("CustomBoolValuesV6")]
+    public static Dictionary<string, bool> CustomBoolValues { get; set; } = [];
 
-			return configValue;
-		}
+    public static bool GetCustomBoolValue(string config)
+    {
+        if (!CustomBoolValues.TryGetValue(config, out var configValue))
+        {
+            SetCustomBoolValue(config, false);
+            return false;
+        }
 
-		public static void SetCustomIntValue(string config, int value)
-		{
-			CustomIntValues[config] = value;
-		}
+        return configValue;
+    }
 
-		[JsonProperty("CustomIntArrayValuesV6")]
-		internal static Dictionary<string, int[]> CustomIntArrayValues { get; set; } = [];
+    public static void SetCustomBoolValue(string config, bool value)
+    {
+        CustomBoolValues[config] = value;
+    }
 
-		public static int[] GetCustomIntArrayValue(string config)
-		{
-			if (!CustomIntArrayValues.TryGetValue(config, out var configValue))
-			{
-				SetCustomIntArrayValue(config, []);
-				return [];
-			}
+    [JsonProperty("CustomBoolArrayValuesV6")]
+    public static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = [];
 
-			return configValue;
-		}
+    public static bool[] GetCustomBoolArrayValue(string config)
+    {
+        if (!CustomBoolArrayValues.TryGetValue(config, out var configValue))
+        {
+            SetCustomBoolArrayValue(config, []);
+            return [];
+        }
 
-		public static void SetCustomIntArrayValue(string config, int[] value)
-		{
-			CustomIntArrayValues[config] = value;
-		}
+        return configValue;
+    }
 
-		[JsonProperty("CustomBoolValuesV6")]
-		internal static Dictionary<string, bool> CustomBoolValues { get; set; } = [];
+    public static void SetCustomBoolArrayValue(string config, bool[] value)
+    {
+        CustomBoolArrayValues[config] = value;
+    }
 
-		public static bool GetCustomBoolValue(string config)
-		{
-			if (!CustomBoolValues.TryGetValue(config, out var configValue))
-			{
-				SetCustomBoolValue(config, false);
-				return false;
-			}
+    public List<uint> ActiveBLUSpells { get; set; } = [];
 
-			return configValue;
-		}
+    int IPluginConfiguration.Version { get => Version; set => Version = value; }
 
-		public static void SetCustomBoolValue(string config, bool value)
-		{
-			CustomBoolValues[config] = value;
-		}
-
-		[JsonProperty("CustomBoolArrayValuesV6")]
-		internal static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = [];
-
-		public static bool[] GetCustomBoolArrayValue(string config)
-		{
-			if (!CustomBoolArrayValues.TryGetValue(config, out var configValue))
-			{
-				SetCustomBoolArrayValue(config, []);
-				return [];
-			}
-
-			return configValue;
-		}
-
-		public static void SetCustomBoolArrayValue(string config, bool[] value)
-		{
-			CustomBoolArrayValues[config] = value;
-		}
-
-		public List<uint> ActiveBLUSpells { get; set; } = [];
-
-		public uint[] DancerDanceCompatActionIDs { get; set; } =
-		[
-			DNC.Cascade,
-			DNC.Flourish,
-			DNC.FanDance1,
-			DNC.FanDance2,
-		];
-
-		[JsonProperty]
-		private static Dictionary<string, bool> ResetFeatureCatalog { get; set; } = [];
-
-		private static bool GetResetValues(string config)
-		{
-			return ResetFeatureCatalog.TryGetValue(config, out var value) && value;
-		}
-
-		private static void SetResetValues(string config, bool value)
-		{
-			ResetFeatureCatalog[config] = value;
-		}
-
-		public void ResetFeatures(string config, int[] values)
-		{
-			Service.PluginLog.Debug($"{config} {GetResetValues(config)}");
-			if (!GetResetValues(config))
-			{
-				var needToResetMessagePrinted = false;
-
-				IEnumerable<int> presets = Enum.GetValues<CustomComboPreset>().Cast<int>();
-
-				foreach (var value in values)
-				{
-					Service.PluginLog.Debug(value.ToString());
-					if (presets.Contains(value))
-					{
-						CustomComboPreset preset = Enum.GetValues<CustomComboPreset>()
-							.Where(preset => (int) preset == value)
-							.First();
-
-						if (!PresetStorage.IsEnabled(preset))
-						{
-							continue;
-						}
-
-						if (!needToResetMessagePrinted)
-						{
-							Service.ChatGui.PrintError($"[UltimateCombo] Some features have been disabled due to an internal configuration update:");
-							needToResetMessagePrinted = !needToResetMessagePrinted;
-						}
-
-						Attributes.CustomComboInfoAttribute? info = preset.GetComboAttribute();
-						Service.ChatGui.PrintError($"[UltimateCombo] - {info?.JobName ?? "Unknown"}: {info?.FancyName ?? "Unknown"}");
-						_ = EnabledActions.Remove(preset);
-					}
-				}
-
-				if (needToResetMessagePrinted)
-				{
-					Service.ChatGui.PrintError($"[UltimateCombo] Please re-enable these features to use them again. We apologise for the inconvenience");
-				}
-			}
-
-			SetResetValues(config, true);
-			Save();
-		}
-
-		public bool RecommendedSettingsViewed { get; set; } = false;
-
-		public void Save()
-		{
-			Service.Interface.SavePluginConfig(this);
-		}
-
-	}
+    public void Save()
+    {
+        Service.Interface.SavePluginConfig(this);
+    }
 }

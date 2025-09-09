@@ -4,132 +4,107 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using UltimateCombo.Combos.PvE;
-using UltimateCombo.Services;
+using UltimateCombo.Combos.General;
+using UltimateCombo.Core;
 
-namespace UltimateCombo.Attributes
+namespace UltimateCombo.Attributes;
+
+[AttributeUsage(AttributeTargets.Field)]
+internal class CustomComboInfoAttribute : Attribute
 {
-	[AttributeUsage(AttributeTargets.Field)]
-	internal class CustomComboInfoAttribute : Attribute
-	{
-		internal CustomComboInfoAttribute(string fancyName, string description, byte jobID, [CallerLineNumber] int order = 0, string memeName = "", string memeDescription = "")
-		{
-			FancyName = fancyName;
-			Description = description;
-			JobID = jobID;
-			Order = order;
-			MemeName = memeName;
-			MemeDescription = memeDescription;
-		}
+    internal static Dictionary<uint, ClassJob> ClassSheet = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
+    private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
 
-		internal static Dictionary<uint, ClassJob> ClassSheet = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
+    internal CustomComboInfoAttribute(string fancyName, string description, byte jobID)
+    {
+        FancyName = fancyName;
+        Description = description;
+        JobID = jobID;
+    }
 
-		public string FancyName { get; }
+    internal string FancyName { get; }
+    internal string Description { get; }
+    internal byte JobID { get; }
+    internal int Role => JobIDToRole(JobID);
+    internal uint ClassJobCategory => JobIDToClassJobCategory(JobID);
+    internal int Order { get; }
+    internal string JobName => JobIDToName(JobID);
+    internal string JobShorthand => JobIDToShorthand(JobID);
 
-		public string MemeName { get; }
+    private static int JobIDToRole(byte jobID)
+    {
+        if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
+        {
+            return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
+        }
 
-		public string Description { get; }
+        return 0;
+    }
 
-		public string MemeDescription { get; }
+    private static uint JobIDToClassJobCategory(byte jobID)
+    {
+        if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
+        {
+            return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Value.RowId;
+        }
 
-		public byte JobID { get; }
+        return 0;
+    }
 
-		public int Role => JobIDToRole(JobID);
+    private static string JobIDToShorthand(byte key)
+    {
+        if (key == 0)
+        {
+            return "";
+        }
 
-		public uint ClassJobCategory => JobIDToClassJobCategory(JobID);
+        if (ClassSheet.TryGetValue(key, out ClassJob job))
+        {
+            return job.Abbreviation.ToString();
+        }
 
-		private static int JobIDToRole(byte jobID)
-		{
-			if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
-			{
-				return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).Role;
-			}
+        return "";
+    }
 
-			return 0;
-		}
+    internal static string JobIDToName(byte key)
+    {
+        if (key is 0)
+        {
+            return "General";
+        }
 
-		private static uint JobIDToClassJobCategory(byte jobID)
-		{
-			if (Svc.Data.GetExcelSheet<ClassJob>().HasRow(jobID))
-			{
-				return Svc.Data.GetExcelSheet<ClassJob>().GetRow(jobID).ClassJobCategory.Value.RowId;
-			}
+        if (key is FSH.JobID)
+        {
+            return "Fisher";
+        }
 
-			return 0;
-		}
+        if (ClassJobs.TryGetValue(key, out ClassJob job))
+        {
+            var jobname = key is 08 or 16
+                ? job.ClassJobCategory.Value.Name.ToString()
+                : job.Name.ToString();
 
-		public int Order { get; }
+            var cultureID = Service.ClientState.ClientLanguage switch
+            {
+                Dalamud.Game.ClientLanguage.French => "fr-FR",
+                Dalamud.Game.ClientLanguage.Japanese => "ja-JP",
+                Dalamud.Game.ClientLanguage.German => "de-DE",
+                Dalamud.Game.ClientLanguage.English => "en-us",
+                _ => "en-us",
+            };
 
-		public string JobName => JobIDToName(JobID);
+            TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
+            jobname = textInfo.ToTitleCase(jobname);
+            return jobname;
+        }
+        else
+        {
+            if (key == 99)
+            {
+                return "Global";
+            }
 
-		public string JobShorthand => JobIDToShorthand(JobID);
-
-		private static string JobIDToShorthand(byte key)
-		{
-			if (key == 0)
-			{
-				return "";
-			}
-
-			if (ClassSheet.TryGetValue(key, out ClassJob job))
-			{
-				return job.Abbreviation.ToString();
-			}
-
-			return "";
-		}
-
-		private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
-
-		public static string JobIDToName(byte key)
-		{
-			if (key is 0)
-			{
-				return "General";
-			}
-
-			if (key is FSH.JobID)
-			{
-				return "Fisher";
-			}
-
-			if (ClassJobs.TryGetValue(key, out ClassJob job))
-			{
-				string jobname;
-
-				if (key is 08 or 16)
-				{
-					jobname = job.ClassJobCategory.Value.Name.ToString();
-				}
-
-				else
-				{
-					jobname = job.Name.ToString();
-				}
-
-				var cultureID = Service.ClientState.ClientLanguage switch
-				{
-					Dalamud.Game.ClientLanguage.French => "fr-FR",
-					Dalamud.Game.ClientLanguage.Japanese => "ja-JP",
-					Dalamud.Game.ClientLanguage.German => "de-DE",
-					_ => "en-us",
-				};
-
-				TextInfo textInfo = new CultureInfo(cultureID, false).TextInfo;
-				jobname = textInfo.ToTitleCase(jobname);
-				return jobname;
-			}
-
-			else
-			{
-				if (key == 99)
-				{
-					return "Global";
-				}
-
-				return "Unknown";
-			}
-		}
-	}
+            return "Unknown";
+        }
+    }
 }

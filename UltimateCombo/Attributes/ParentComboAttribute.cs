@@ -1,21 +1,15 @@
 using System;
-
 using UltimateCombo.Combos;
 
-namespace UltimateCombo.Attributes
-{
-	/// <summary> Attribute documenting required combo relationships. </summary>
-	[AttributeUsage(AttributeTargets.Field)]
-	internal class ParentComboAttribute : Attribute
-	{
-		/// <summary> Initializes a new instance of the <see cref="ParentComboAttribute"/> class. </summary>
-		/// <param name="parentPreset"> Presets that conflict with the given combo. </param>
-		internal ParentComboAttribute(CustomComboPreset parentPreset)
-		{
-			ParentPreset = parentPreset;
-		}
+namespace UltimateCombo.Attributes;
 
-		/// <summary> Gets the display name. </summary>
-		public CustomComboPreset ParentPreset { get; }
-	}
+[AttributeUsage(AttributeTargets.Field)]
+internal class ParentComboAttribute : Attribute
+{
+    internal ParentComboAttribute(Presets parentPreset)
+    {
+        ParentPreset = parentPreset;
+    }
+
+    internal Presets ParentPreset { get; }
 }

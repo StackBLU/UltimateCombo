@@ -1,55 +1,48 @@
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
 
-namespace UltimateCombo.Data
+namespace UltimateCombo.Data;
+
+internal class CooldownData
 {
-	internal class CooldownData
-	{
-		public bool IsCooldown => CooldownRemaining > 0;
+    internal bool IsCooldown => CooldownRemaining > 0;
+    internal uint ActionID;
+    internal unsafe float CooldownElapsed => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, ActionID);
+    internal unsafe float CooldownTotal => ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f * MaxCharges;
+    internal unsafe float AdjustedCastTime => ActionManager.GetAdjustedCastTime(ActionType.Action, ActionID) / 1000f;
 
-		public uint ActionID;
+    internal unsafe float CooldownRemaining
+    {
+        get
+        {
+            if (CooldownElapsed == 0)
+            {
+                return 0;
+            }
 
-		public unsafe float CooldownElapsed => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, ActionID);
+            return Math.Max(0, CooldownTotal - CooldownElapsed);
+        }
+    }
 
-		public unsafe float CooldownTotal => ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f * MaxCharges;
+    internal ushort MaxCharges => ActionManager.GetMaxCharges(ActionID, 0);
+    internal bool HasCharges => MaxCharges > 1;
 
-		public unsafe float AdjustedCastTime => ActionManager.GetAdjustedCastTime(ActionType.Action, ActionID) / 1000f;
+    internal unsafe uint RemainingCharges
+    {
+        get
+        {
+            if (MaxCharges == 1)
+            {
+                if (CooldownRemaining == 0)
+                {
+                    return 1;
+                }
 
-		public unsafe float CooldownRemaining
-		{
-			get
-			{
-				if (CooldownElapsed == 0)
-				{
-					return 0;
-				}
+                return 0u;
+            }
+            return ActionManager.Instance()->GetCurrentCharges(ActionID);
+        }
+    }
 
-				return Math.Max(0, CooldownTotal - CooldownElapsed);
-			}
-		}
-
-		public ushort MaxCharges => ActionManager.GetMaxCharges(ActionID, 0);
-
-		public bool HasCharges => MaxCharges > 1;
-
-		public unsafe uint RemainingCharges
-		{
-			get
-			{
-				if (MaxCharges == 1)
-				{
-					if (CooldownRemaining == 0)
-					{
-						return 1;
-					}
-
-					return 0u;
-				}
-
-				return ActionManager.Instance()->GetCurrentCharges(ActionID);
-			}
-		}
-
-		public float ChargeCooldownRemaining => CooldownRemaining % (CooldownTotal / MaxCharges);
-	}
+    internal float ChargeCooldownRemaining => CooldownRemaining % (CooldownTotal / MaxCharges);
 }
