@@ -1,4 +1,4 @@
-{
+[{
     "Author":  "Stack",
     "Name":  "Ultimate Combo",
     "InternalName":  "UltimateCombo",
@@ -29,4 +29,4 @@
     "IconUrl":  "https://raw.githubusercontent.com/StackBLU/UltimateCombo/main/images/logo.png",
     "Punchline":  "The only combo plugin you\u0027ll ever need!",
     "AcceptsFeedback":  false
-}
+}]
