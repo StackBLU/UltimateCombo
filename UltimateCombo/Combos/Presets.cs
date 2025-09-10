@@ -1142,10 +1142,6 @@ public enum Presets
     [CustomComboInfo("Save Misery", "", WHM.JobID)]
     WHM_AoE_DPS_Misery_Save = 19025,
 
-    [ParentCombo(WHM_AoE_DPS)]
-    [CustomComboInfo("Swiftcast Movement", "", WHM.JobID)]
-    WHM_AoE_DPS_Swiftcast = 19027,
-
     #endregion
 
     #region Single Target Heals
@@ -3440,8 +3436,8 @@ public enum Presets
 
     [PvP]
     [ParentCombo(DRGPvP_Combo)]
-    [CustomComboInfo("Nastrond", "", DRG.JobID)]
-    DRGPvP_Nastrond = 116001,
+    [CustomComboInfo("Geirskogul > Nastrond & Starcross", "", DRG.JobID)]
+    DRGPvP_Geirskogul = 116001,
 
     [PvP]
     [ParentCombo(DRGPvP_Combo)]

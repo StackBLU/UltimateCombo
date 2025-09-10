@@ -62,7 +62,7 @@ internal class SettingsWindow : ConfigWindow
 
         var rangedAttackRange = Service.Configuration.RangedAttackRange;
         ImGui.SetNextItemWidth(150);
-        if (ImGui.InputDouble("Minimum range away from target before\nusing ranged attacks on melee classes", ref rangedAttackRange, 1))
+        if (ImGui.InputDouble("Minimum range away from target before\nusing ranged attacks on melee classes (default is 7)", ref rangedAttackRange, 1))
         {
             Service.Configuration.RangedAttackRange = rangedAttackRange;
             Service.Configuration.Save();

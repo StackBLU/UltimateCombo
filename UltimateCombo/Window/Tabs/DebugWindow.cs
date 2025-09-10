@@ -62,6 +62,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Distance from Target: {CustomComboFunctions.GetTargetDistance()}");
                 ImGui.TextUnformatted($"Mob Type: {(CustomComboFunctions.CurrentTarget != null ? CustomComboFunctions.GetMobType(CustomComboFunctions.CurrentTarget)?.ToString() : "None")}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
+                ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
 
                 ImGui.TextUnformatted("\n");
                 ImGui.TextUnformatted($"Last Action: {ActionWatching.GetActionName(ActionWatching.LastAction)} (ID:{ActionWatching.LastAction})");

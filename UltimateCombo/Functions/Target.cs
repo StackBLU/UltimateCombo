@@ -5,6 +5,7 @@ using ECommons.DalamudServices;
 using Lumina.Excel.Sheets;
 using System;
 using System.Numerics;
+using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
@@ -182,7 +183,7 @@ internal abstract partial class CustomComboFunctions
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
             //Striking Dummy
-            if (EnemyHealthMaxHp() == 44)
+            if (EnemyHealthMaxHp() == 44 || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
             {
                 return true;
             }
@@ -203,7 +204,7 @@ internal abstract partial class CustomComboFunctions
                 }
 
                 //Side content
-                if (EnemyHealthCurrentHp() > MaxHP * 5)
+                if (GetPartyMembers().Length is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 5)
                 {
                     return true;
                 }
@@ -255,7 +256,7 @@ internal abstract partial class CustomComboFunctions
                 }
 
                 //Side content
-                if (EnemyHealthCurrentHp() > MaxHP * 5)
+                if (GetPartyMembers().Length is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
                 {
                     return true;
                 }

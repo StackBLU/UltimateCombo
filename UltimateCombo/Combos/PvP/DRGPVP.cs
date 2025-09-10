@@ -58,29 +58,29 @@ internal static class DRGPvP
             if ((actionID is RaidenThrust or FangAndClaw or WheelingThrust or Drakesbane or HeavensThrust)
                 && IsEnabled(Presets.DRGPvP_Combo))
             {
-                if (IsEnabled(Presets.DRGPvP_ChaoticSpring) && ActionReady(ChaoticSpring)
-                    && CurrentHP <= MaxHP - 12000 && InActionRange(ChaoticSpring))
+                if (IsEnabled(Presets.DRGPvP_ChaoticSpring) && ActionReady(ChaoticSpring) && CurrentHP <= MaxHP - 12000 && InActionRange(ChaoticSpring))
                 {
                     return ChaoticSpring;
                 }
 
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
+                    if (IsEnabled(Presets.DRGPvP_HorridRoar) && ActionReady(HorridRoar) && WasLastAbility(HighJump))
                     {
-                        if (IsEnabled(Presets.DRGPvP_HorridRoar) && ActionReady(HorridRoar) && WasLastAbility(HighJump))
-                        {
-                            return HorridRoar;
-                        }
+                        return HorridRoar;
                     }
 
-                    if (IsEnabled(Presets.DRGPvP_Nastrond) && HasEffect(Buffs.NastrondReady) && EffectRemainingTime(Buffs.NastrondReady) <= 1)
+                    if (IsEnabled(Presets.DRGPvP_Geirskogul) && ActionReady(Geirskogul) && InActionRange(Geirskogul))
+                    {
+                        return Geirskogul;
+                    }
+
+                    if (IsEnabled(Presets.DRGPvP_Geirskogul) && HasEffect(Buffs.NastrondReady) && EffectRemainingTime(Buffs.NastrondReady) <= 1)
                     {
                         return Nastrond;
                     }
 
-                    if (IsEnabled(Presets.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus)
-                        && HasTarget() && GetTargetDistance() > 15)
+                    if (IsEnabled(Presets.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && HasTarget() && GetTargetDistance() > 15)
                     {
                         return WyrmwindThrust;
                     }

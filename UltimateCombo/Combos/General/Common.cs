@@ -57,7 +57,8 @@ internal class Common
             LucidDreaming = 1204,
             TrueNorth = 1250,
             Sprint = 50,
-            Raise = 148;
+            Raise = 148,
+            EpicEcho = 2734;
     }
 
     internal static class Debuffs
@@ -199,7 +200,9 @@ internal class Common
 
                 if (CurrentJobId is AST.JobID)
                 {
-                    if (ActionReady(AST.Lightspeed) && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast) && !WasLastAction(Swiftcast))
+                    if (ActionReady(AST.Lightspeed)
+                        && !HasEffect(AST.Buffs.Lightspeed) && !HasEffect(Buffs.Swiftcast)
+                        && !WasLastAction(AST.Lightspeed) && !WasLastAction(Swiftcast) && !WasLastAction(AST.Ascend))
                     {
                         return AST.Lightspeed;
                     }

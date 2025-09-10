@@ -48,23 +48,19 @@ internal static class WHMPvP
             {
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
-                    {
-                        if (IsEnabled(Presets.WHMPvP_Aquaveil) && ActionReady(Aquaveil))
-                        {
-                            return Aquaveil;
-                        }
-                    }
-
                     if (IsEnabled(Presets.WHMPvP_AfflatusMisery) && ActionReady(AfflatusMisery))
                     {
                         return AfflatusMisery;
                     }
                 }
 
+                if (IsEnabled(Presets.WHMPvP_Aquaveil) && ActionReady(Aquaveil) && CanWeave(actionID))
+                {
+                    return Aquaveil;
+                }
+
                 if (IsEnabled(Presets.WHMPvP_Cure3) && HasEffect(Buffs.Cure3Ready) && !WasLastAction(SeraphStrike)
-                    && (CurrentHP <= MaxHP - 16000 || EffectRemainingTime(Buffs.Cure3Ready) < 5
-                    || HasFriendlyTarget()))
+                    && (CurrentHP <= MaxHP - 16000 || EffectRemainingTime(Buffs.Cure3Ready) < 5 || HasFriendlyTarget()))
                 {
                     return Cure3;
                 }

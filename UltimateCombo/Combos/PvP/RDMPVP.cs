@@ -99,19 +99,19 @@ internal static class RDMPvP
                     {
                         return Resolution;
                     }
+                }
 
-                    if (IsEnabled(Presets.RDMPvP_Melee) && ActionReady(OriginalHook(EnchantedRiposte)))
+                if (IsEnabled(Presets.RDMPvP_Melee) && ActionReady(OriginalHook(EnchantedRiposte)))
+                {
+                    if (IsEnabled(Presets.RDMPvP_CorpsACorps) && ActionReady(CorpsACorps)
+                        && (!TargetHasEffect(Debuffs.Monomachy) || !InActionRange(OriginalHook(EnchantedRiposte))))
                     {
-                        if (IsEnabled(Presets.RDMPvP_CorpsACorps) && ActionReady(CorpsACorps)
-                            && (!TargetHasEffect(Debuffs.Monomachy) || !InActionRange(OriginalHook(EnchantedRiposte))))
-                        {
-                            return CorpsACorps;
-                        }
+                        return CorpsACorps;
+                    }
 
-                        if (InActionRange(OriginalHook(EnchantedRiposte)))
-                        {
-                            return OriginalHook(EnchantedRiposte);
-                        }
+                    if (InActionRange(OriginalHook(EnchantedRiposte)))
+                    {
+                        return OriginalHook(EnchantedRiposte);
                     }
                 }
             }
