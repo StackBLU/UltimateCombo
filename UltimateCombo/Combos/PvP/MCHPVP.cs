@@ -74,7 +74,6 @@ internal static class MCHPvP
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
                     if (IsEnabled(Presets.MCHPvP_MarksmansSpite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-                        && CurrentHP > MaxMP / 3
                         && (WasLastAction(AirAnchor) || WasLastAction(Drill)
                         || (HasEffect(Debuffs.Wildfire) && EffectRemainingTime(Debuffs.Wildfire) <= 4)))
                     {

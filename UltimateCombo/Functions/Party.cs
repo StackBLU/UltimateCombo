@@ -10,6 +10,11 @@ internal abstract partial class CustomComboFunctions
         return Service.PartyList.PartyId > 0;
     }
 
+    internal static int PartyMemberLength()
+    {
+        return Service.PartyList.Length;
+    }
+
     internal static IPartyList GetPartyMembers()
     {
         return Service.PartyList;

@@ -172,7 +172,7 @@ internal class VPR
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.Dreadwinder)
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.SwiftskinsCoil) && !Gauge.DreadCombo.HasFlag(DreadCombo.HuntersCoil))
                 {
-                    if (IsEnabled(Presets.VPR_ST_Reawaken) && ActionReady(Reawaken)
+                    if (IsEnabled(Presets.VPR_ST_Reawaken) && ActionReady(Reawaken) && TargetWorthDoT()
                         && (GetCooldownRemainingTime(SerpentsIre) > 30 || Gauge.SerpentOffering == 100)
                         && (Gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)))
                     {
@@ -371,7 +371,7 @@ internal class VPR
                     }
                 }
 
-                if (EffectRemainingTime(Buffs.Swiftscaled) > 10 && EffectRemainingTime(Buffs.HuntersInstinct) > 10
+                if (EffectRemainingTime(Buffs.Swiftscaled) > 10 && EffectRemainingTime(Buffs.HuntersInstinct) > 10 && TargetWorthDoT()
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.PitOfDread)
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.SwiftskinsDen) && !Gauge.DreadCombo.HasFlag(DreadCombo.HuntersDen))
                 {

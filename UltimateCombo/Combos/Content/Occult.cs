@@ -165,7 +165,7 @@ internal static class Occult
 
                 if (IsEnabled(Presets.Occult_Heal) && DutyActionReady(OccultHeal)
                     && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_Heal)
-                    && CurrentMP >= 5000)
+                    && CurrentMP >= GetResourceCost(OccultHeal))
                 {
                     return OccultHeal;
                 }

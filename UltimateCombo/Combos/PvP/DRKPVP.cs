@@ -67,7 +67,7 @@ internal static class DRKPvP
             {
                 if (IsEnabled(Presets.DRKPvP_Eventide) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue())
                 {
-                    if (PlayerHealthPercentageHp() < 50 && CurrentMP >= 2500)
+                    if (PlayerHealthPercentageHp() < 50 && CurrentMP >= GetResourceCost(AllPvP.Recuperate))
                     {
                         return AllPvP.Recuperate;
                     }

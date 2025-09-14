@@ -321,7 +321,7 @@ internal class Common
                                     && ((NIN.Gauge.Kazematoi >= 1
                                     && (TargetHasEffect(NIN.TrickList[OriginalHook(NIN.TrickAttack)])
                                     || TargetHasEffect(NIN.MugList[OriginalHook(NIN.Mug)])
-                                    || (EnemyHealthCurrentHp() <= MaxHP * 5 && EnemyHealthMaxHp() != 44)))
+                                    || TargetIsBoss()))
                                     || NIN.Gauge.Kazematoi > 3 || !LevelChecked(NIN.ArmorCrush)))
                                 {
                                     return TrueNorth;
@@ -457,6 +457,7 @@ internal class Common
                 {
                     return LucidDreaming;
                 }
+
                 if (IsEnabled(Presets.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsActionEnabled(LucidDreaming)
                     && ((CurrentMP <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID))
                     || CurrentMP <= 4000

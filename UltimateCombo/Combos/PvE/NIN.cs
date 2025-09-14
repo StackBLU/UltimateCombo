@@ -125,8 +125,7 @@ internal class NIN
             if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush)
                 && IsEnabled(Presets.NIN_ST_DPS))
             {
-                if (IsEnabled(Presets.NIN_ST_Mudras) && ActionReady(Ten)
-                    && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+                if (IsEnabled(Presets.NIN_ST_Mudras) && ActionReady(Ten) && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
                     if (OriginalHook(Ninjutsu) == Suiton)
                     {
@@ -168,8 +167,7 @@ internal class NIN
 
                     if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
                     {
-                        if (IsEnabled(Presets.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack))
-                            && HasEffect(Buffs.ShadowWalker)
+                        if (IsEnabled(Presets.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack)) && HasEffect(Buffs.ShadowWalker)
                             && (GetCooldownRemainingTime(OriginalHook(Mug)) > 30 || TargetHasEffectAny(MugList[OriginalHook(Mug)])))
                         {
                             return OriginalHook(TrickAttack);
@@ -336,11 +334,9 @@ internal class NIN
                 {
                     if (lastComboActionID is GustSlash)
                     {
-                        if (ActionReady(AeolianEdge)
-                            && ((Gauge.Kazematoi >= 1
+                        if (ActionReady(AeolianEdge) && ((Gauge.Kazematoi >= 1
                             && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)])
-                            || (EnemyHealthCurrentHp() <= MaxHP * 15 && EnemyHealthMaxHp() != 44)))
-                            || Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
+                            || !TargetWorthDoT())) || Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
                         {
                             return AeolianEdge;
                         }
@@ -372,8 +368,7 @@ internal class NIN
         {
             if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(Presets.NIN_AoE_DPS))
             {
-                if (IsEnabled(Presets.NIN_AoE_Mudras) && ActionReady(Ten)
-                    && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+                if (IsEnabled(Presets.NIN_AoE_Mudras) && ActionReady(Ten) && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
                     if (OriginalHook(Ninjutsu) is Huton)
                     {

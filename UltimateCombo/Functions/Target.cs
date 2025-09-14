@@ -192,19 +192,19 @@ internal abstract partial class CustomComboFunctions
             if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is 2)
             {
                 //Raiding
-                if (GetPartyMembers().Length == 8 && EnemyHealthMaxHp() > MaxHP * 10)
+                if (PartyMemberLength() == 8 && EnemyHealthMaxHp() > MaxHP * 10)
                 {
                     return true;
                 }
 
                 //Dungeoning
-                if (GetPartyMembers().Length == 4 && EnemyHealthMaxHp() > MaxHP * 5)
+                if (PartyMemberLength() == 4 && EnemyHealthMaxHp() > MaxHP * 5)
                 {
                     return true;
                 }
 
                 //Side content
-                if (GetPartyMembers().Length is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 5)
+                if (PartyMemberLength() is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 5)
                 {
                     return true;
                 }
@@ -214,13 +214,13 @@ internal abstract partial class CustomComboFunctions
             if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is not 2)
             {
                 //Raiding - Ads
-                if (GetPartyMembers().Length == 8 && EnemyHealthMaxHp() > MaxHP * 20)
+                if (PartyMemberLength() == 8 && EnemyHealthMaxHp() > MaxHP * 20)
                 {
                     return true;
                 }
 
                 //Dungeoning - Ads - Checks current hp instead of max
-                if (GetPartyMembers().Length is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
                 {
                     return true;
                 }
@@ -244,19 +244,19 @@ internal abstract partial class CustomComboFunctions
             if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is 2)
             {
                 //Raiding
-                if (GetPartyMembers().Length == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
+                if (PartyMemberLength() == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
                 {
                     return true;
                 }
 
                 //Dungeoning
-                if (GetPartyMembers().Length == 4 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() == 4 && EnemyHealthCurrentHp() > MaxHP * 10)
                 {
                     return true;
                 }
 
                 //Side content
-                if (GetPartyMembers().Length is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
                 {
                     return true;
                 }
@@ -266,13 +266,13 @@ internal abstract partial class CustomComboFunctions
             if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is not 2)
             {
                 //Raiding - Ads
-                if (GetPartyMembers().Length == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
+                if (PartyMemberLength() == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
                 {
                     return true;
                 }
 
                 //Dungeoning - Ads - Checks current hp instead of max
-                if (GetPartyMembers().Length is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
                 {
                     return true;
                 }

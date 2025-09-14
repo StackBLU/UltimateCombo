@@ -597,7 +597,7 @@ internal static class BLU
                     return PeculiarLight;
                 }
 
-                if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && CurrentMP >= 1500)
+                if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && CurrentMP >= GetResourceCost(WhiteWind))
                 {
                     return WhiteWind;
                 }
@@ -820,9 +820,9 @@ internal static class BLU
                         return Gobskin;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_BreathOfMagic) && EnemyHealthMaxHp() >= MaxHP * 10
+                    if (IsEnabled(Presets.BLU_Treasure_Healer_BreathOfMagic) && TargetIsBoss()
                         && !TargetHasEffectAny(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -832,9 +832,9 @@ internal static class BLU
                         return BreathOfMagic;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_MortalFlame) && EnemyHealthMaxHp() >= MaxHP * 10
+                    if (IsEnabled(Presets.BLU_Treasure_Healer_MortalFlame) && TargetIsBoss()
                         && !TargetHasEffectAny(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -845,9 +845,9 @@ internal static class BLU
                     }
 
                     if (IsEnabled(Presets.BLU_Treasure_Healer_TripleTrident) && IsSpellActive(TripleTrident)
-                        && EnemyHealthMaxHp() >= MaxHP * 10
+                        && TargetIsBoss()
                         && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Whistle))
                         {
@@ -961,7 +961,7 @@ internal static class BLU
 
                     if (IsEnabled(Presets.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
-                        && CurrentMP >= 1500)
+                        && CurrentMP >= GetResourceCost(WhiteWind))
                     {
                         return WhiteWind;
                     }
@@ -1044,14 +1044,14 @@ internal static class BLU
 
                     if (IsEnabled(Presets.BLU_Treasure_Tank_WhiteWind) && IsSpellActive(WhiteWind)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasureWhiteWind)
-                        && CurrentMP >= 1500)
+                        && CurrentMP >= GetResourceCost(WhiteWind))
                     {
                         return WhiteWind;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Tank_BreathOfMagic) && EnemyHealthMaxHp() >= MaxHP * 10
+                    if (IsEnabled(Presets.BLU_Treasure_Tank_BreathOfMagic) && TargetIsBoss()
                         && !TargetHasEffectAny(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -1061,9 +1061,9 @@ internal static class BLU
                         return BreathOfMagic;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Tank_MortalFlame) && EnemyHealthMaxHp() >= MaxHP * 10
+                    if (IsEnabled(Presets.BLU_Treasure_Tank_MortalFlame) && TargetIsBoss()
                         && !TargetHasEffectAny(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -1074,9 +1074,9 @@ internal static class BLU
                     }
 
                     if (IsEnabled(Presets.BLU_Treasure_Tank_TripleTrident) && IsSpellActive(TripleTrident)
-                        && EnemyHealthMaxHp() >= MaxHP * 10
+                        && TargetIsBoss()
                         && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
-                        && EnemyHealthCurrentHp() / EnemyHealthMaxHp() * 100 > 10)
+                        && TargetWorthDoT())
                     {
                         if (!HasEffect(Buffs.Whistle))
                         {

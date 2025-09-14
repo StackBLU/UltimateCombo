@@ -82,7 +82,7 @@ internal static class DRK
                 }
 
                 if (IsEnabled(Presets.DRK_ST_BlackestNight) && ActionReady(TheBlackestNight)
-                    && !InCombat() && CurrentMP >= 3000)
+                    && !InCombat() && CurrentMP >= GetResourceCost(TheBlackestNight))
                 {
                     return TheBlackestNight;
                 }
@@ -113,7 +113,7 @@ internal static class DRK
                                 && ((CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver)
                                 && (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow) || HasEffect(Bozja.Buffs.AutoEther)))
                                 || Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver))
-                                || CurrentMP >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && CurrentMP >= 3000)))
+                                || CurrentMP >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && CurrentMP >= GetResourceCost(TheBlackestNight))))
                             {
                                 return OriginalHook(EdgeOfShadow);
                             }
@@ -217,7 +217,7 @@ internal static class DRK
                 if (CanWeave(actionID))
                 {
                     if (IsEnabled(Presets.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
-                        && CurrentMP >= 3000)
+                        && CurrentMP >= GetResourceCost(TheBlackestNight))
                     {
                         return TheBlackestNight;
                     }

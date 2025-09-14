@@ -119,7 +119,7 @@ internal static class SGE
                 {
                     if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat()
                        && (!HasEffect(Buffs.Kardia)
-                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget())
+                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
                     {
                         return Kardia;
@@ -175,7 +175,7 @@ internal static class SGE
                 }
 
                 if (IsEnabled(Presets.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon)
-                    && Gauge.Addersting > 0 && !HasEffect(Common.Buffs.Swiftcast))
+                     && !HasEffect(Buffs.Eukrasia) && Gauge.Addersting > 0 && !HasEffect(Common.Buffs.Swiftcast))
                 {
                     return OriginalHook(Toxikon);
                 }
@@ -202,7 +202,7 @@ internal static class SGE
                 {
                     if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
                        && (!HasEffect(Buffs.Kardia)
-                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget())
+                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
                     {
                         return Kardia;
@@ -231,7 +231,8 @@ internal static class SGE
                     }
                 }
 
-                if (IsEnabled(Presets.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1)) && HasBattleTarget() && LevelChecked(EukrasianDyskrasia)
+                if (IsEnabled(Presets.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1))
+                    && HasBattleTarget() && LevelChecked(EukrasianDyskrasia) && TargetWorthDoT()
                    && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3)
                    && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || TargetEffectRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
                 {

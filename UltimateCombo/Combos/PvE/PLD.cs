@@ -90,7 +90,7 @@ internal static class PLD
                     return HallowedGround;
                 }
 
-                if (IsEnabled(Presets.PLD_ST_HolySpirit) && !InCombat() && ActionReady(HolySpirit) && CurrentMP >= 1000 && !InMeleeRange())
+                if (IsEnabled(Presets.PLD_ST_HolySpirit) && !InCombat() && ActionReady(HolySpirit) && CurrentMP >= GetResourceCost(HolySpirit) && !InMeleeRange())
                 {
                     return HolySpirit;
                 }
@@ -148,7 +148,7 @@ internal static class PLD
                     }
                 }
 
-                if (IsEnabled(Presets.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor)) && CurrentMP >= 1000
+                if (IsEnabled(Presets.PLD_ST_Confiteor) && ActionReady(OriginalHook(Confiteor)) && CurrentMP >= GetResourceCost(OriginalHook(Confiteor))
                     && (HasEffect(Buffs.ConfiteorReady)
                     || ((WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)) && LevelChecked(BladeOfFaith))))
                 {
@@ -277,7 +277,7 @@ internal static class PLD
                     }
                 }
 
-                if (IsEnabled(Presets.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && CurrentMP >= 1000
+                if (IsEnabled(Presets.PLD_AoE_Confiteor) && ActionReady(OriginalHook(Confiteor)) && CurrentMP >= GetResourceCost(OriginalHook(Confiteor))
                     && (HasEffect(Buffs.ConfiteorReady)
                     || ((WasLastSpell(Confiteor) || WasLastSpell(BladeOfFaith) || WasLastSpell(BladeOfTruth)) && LevelChecked(BladeOfFaith))))
                 {
