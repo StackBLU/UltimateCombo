@@ -85,7 +85,7 @@ internal static class BLMPvP
                         }
                     }
 
-                    if (IsEnabled(Presets.BLMPvP_Burst) && ActionReady(Burst) && WasLastAbility(AetherialManipulation))
+                    if (IsEnabled(Presets.BLMPvP_Burst) && ActionReady(Burst) && (InActionRange(Burst) || WasLastAbility(AetherialManipulation)))
                     {
                         return Burst;
                     }

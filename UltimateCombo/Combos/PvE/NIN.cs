@@ -334,9 +334,9 @@ internal class NIN
                 {
                     if (lastComboActionID is GustSlash)
                     {
-                        if (ActionReady(AeolianEdge) && ((Gauge.Kazematoi >= 1
-                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)])
-                            || !TargetWorthDoT())) || Gauge.Kazematoi > 3 || !LevelChecked(ArmorCrush)))
+                        if (ActionReady(AeolianEdge) && (Gauge.Kazematoi >= 4 || !LevelChecked(ArmorCrush)
+                            || (Gauge.Kazematoi >= 1
+                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || !TargetWorthDoT()))))
                         {
                             return AeolianEdge;
                         }

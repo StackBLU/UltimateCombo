@@ -2,7 +2,6 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.Content;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
@@ -117,7 +116,7 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat()
+                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss()
                        && (!HasEffect(Buffs.Kardia)
                        || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
@@ -142,15 +141,10 @@ internal static class SGE
                     }
 
                     if (IsEnabled(Presets.SGE_ST_DPS_AddersgallProtect) && ActionReady(Druochole)
-                        && Gauge.Addersgall >= GetOptionValue(Config.SGE_ST_DPS_AddersgallProtect))
+                        && (Gauge.Addersgall >= GetOptionValue(Config.SGE_ST_DPS_AddersgallProtect)
+                        || (Gauge.Addersgall == GetOptionValue(Config.SGE_ST_DPS_AddersgallProtect) - 1 && Gauge.AddersgallTimer >= 17500)))
                     {
                         return Druochole;
-                    }
-
-                    if (IsEnabled(Presets.SGE_ST_DPS_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && CanLateWeave(actionID)
-                        && Gauge.Addersgall == 0 && !HasEffect(Occult.Buffs.OccultQuick) && !HasEffect(Buffs.Eukrasia))
-                    {
-                        return Common.Swiftcast;
                     }
                 }
 
@@ -200,7 +194,7 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat()
+                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss()
                        && (!HasEffect(Buffs.Kardia)
                        || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
@@ -225,16 +219,17 @@ internal static class SGE
                     }
 
                     if (IsEnabled(Presets.SGE_AoE_DPS_AddersgallProtect) && ActionReady(Druochole)
-                        && Gauge.Addersgall >= GetOptionValue(Config.SGE_AoE_DPS_AddersgallProtect))
+                        && (Gauge.Addersgall >= GetOptionValue(Config.SGE_AoE_DPS_AddersgallProtect)
+                        || (Gauge.Addersgall == GetOptionValue(Config.SGE_AoE_DPS_AddersgallProtect) - 1 && Gauge.AddersgallTimer >= 17500)))
                     {
                         return Druochole;
                     }
                 }
 
                 if (IsEnabled(Presets.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1))
-                    && HasBattleTarget() && LevelChecked(EukrasianDyskrasia) && TargetWorthDoT()
-                   && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3)
-                   && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || TargetEffectRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
+                    && HasBattleTarget() && LevelChecked(EukrasianDyskrasia) && TargetWorthDoT() && !WasLastSpell(EukrasianDyskrasia)
+                    && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3)
+                    && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || TargetEffectRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
                 {
                     if (ActionReady(Eukrasia) && !HasEffect(Buffs.Eukrasia))
                     {

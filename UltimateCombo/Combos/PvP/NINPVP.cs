@@ -79,7 +79,7 @@ internal static class NINPvP
             {
                 if (IsEnabled(Presets.NINPvP_SeitonTenchu) && HasTarget()
                     && (GetLimitBreakCurrentValue() == GetLimitBreakMaxValue() || HasEffect(Buffs.UnsealedSeitonTenchu))
-                    && (GetTargetHPPercent() <= 49
+                    && (EnemyPercentHP() < 50
                     || (HasEffect(Buffs.UnsealedSeitonTenchu) && EffectRemainingTime(Buffs.UnsealedSeitonTenchu) <= 1)))
                 {
                     return OriginalHook(SeitonTenchu);
@@ -115,7 +115,7 @@ internal static class NINPvP
                         }
 
                         if (IsEnabled(Presets.NINPvP_HyoshoRanryu) && !HasEffect(Debuffs.SealedHyoshoRanryu)
-                            && GetTargetHPPercent() >= 60 && HasTarget())
+                            && EnemyPercentHP() >= 60 && HasTarget())
                         {
                             return HyoshoRanryu;
                         }

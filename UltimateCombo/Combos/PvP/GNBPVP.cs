@@ -95,7 +95,7 @@ internal static class GNBPvP
                         }
 
                         if (IsEnabled(Presets.GNBPvP_BlastingZone) && ActionReady(BlastingZone)
-                            && GetTargetHPPercent() <= 50 && HasTarget())
+                            && EnemyPercentHP() <= 50 && HasTarget())
                         {
                             return BlastingZone;
                         }

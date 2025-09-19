@@ -13,15 +13,11 @@ namespace UltimateCombo.ComboHelper.Functions;
 
 internal abstract partial class CustomComboFunctions
 {
-    // Core target references
     internal static IGameObject? CurrentTarget => Service.TargetManager.Target;
     internal static IGameObject? PlayerTargetObject => LocalPlayer?.TargetObject;
-
-    // Target data helpers
     internal static uint? TargetDataId => CurrentTarget?.DataId;
     internal static IGameObject? TargetOfTarget => CurrentTarget?.TargetObject;
 
-    // Target existence checks
     internal static bool HasTarget()
     {
         return CurrentTarget is not null;
@@ -37,33 +33,26 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Player;
     }
 
-    // Target health helpers
-    internal static float TargetMaxHp => CurrentTarget is IBattleChara chara ? chara.MaxHp : 0;
-    internal static float TargetCurrentHp => CurrentTarget is IBattleChara chara ? chara.CurrentHp : 0;
-    internal static float TargetHpPercent => TargetMaxHp > 0 ? TargetCurrentHp / TargetMaxHp * 100 : 0;
-
-    internal static float EnemyHealthMaxHp()
+    internal static float EnemyMaxHP()
     {
-        return TargetMaxHp;
+        return CurrentTarget is IBattleChara chara ? chara.MaxHp : 0;
     }
 
-    internal static float EnemyHealthCurrentHp()
+    internal static float EnemyCurrentHP()
     {
-        return TargetCurrentHp;
+        return CurrentTarget is IBattleChara chara ? chara.CurrentHp : 0;
     }
 
-    internal static float GetTargetHPPercent(IGameObject? OurTarget = null)
+    internal static float EnemyPercentHP()
     {
-        if (OurTarget != null)
-        {
-            return OurTarget is IBattleChara chara ? chara.CurrentHp / chara.MaxHp * 100 : 0;
-        }
-
-        return TargetHpPercent;
+        return EnemyCurrentHP() / EnemyMaxHP() * 100;
     }
 
-    // Target state checks
-    internal static bool TargetIsCasting => CurrentTarget is IBattleChara chara && chara.IsCasting;
+    internal static bool TargetIsCasting()
+    {
+        return CurrentTarget is IBattleChara chara && chara.IsCasting;
+    }
+
     internal static bool CanInterruptEnemy()
     {
         return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
@@ -74,7 +63,6 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget?.TargetObject == LocalPlayer;
     }
 
-    // Distance calculations
     internal static float GetTargetDistance()
     {
         if (CurrentTarget is null || LocalPlayer is null)
@@ -98,7 +86,6 @@ internal abstract partial class CustomComboFunctions
         return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
     }
 
-    // Range helpers
     internal static bool InRange(float range)
     {
         return GetTargetDistance() <= range;
@@ -124,7 +111,6 @@ internal abstract partial class CustomComboFunctions
         return PlayerTargetObject != null && InRange(0);
     }
 
-    // Positional checks
     internal static bool OnTargetsRear()
     {
         if (CurrentTarget is null || LocalPlayer is null)
@@ -169,58 +155,53 @@ internal abstract partial class CustomComboFunctions
         return regionDegrees is (>= 45 and <= 135) or (>= 225 and <= 315);
     }
 
-    internal static unsafe byte? GetMobType(IGameObject target)
+    internal static byte EnemyRank()
     {
-        if (HasBattleTarget())
-        {
-            return Svc.Data.GetExcelSheet<BNpcBase>()?.GetRow(target.DataId).Rank;
-        }
-        return (byte?) 0;
+        return TargetDataId.HasValue ? Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank : (byte) 0;
     }
 
-    internal static unsafe bool TargetIsBoss()
+    internal static bool TargetIsBoss()
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            //Striking Dummy
-            if (EnemyHealthMaxHp() == 44 || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
+            if (EnemyMaxHP() == 44 || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
             {
                 return true;
             }
 
-            //Is Boss ID
-            if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is 2)
+            if (EnemyCurrentHP() == 1)
             {
-                //Raiding
-                if (PartyMemberLength() == 8 && EnemyHealthMaxHp() > MaxHP * 10)
-                {
-                    return true;
-                }
-
-                //Dungeoning
-                if (PartyMemberLength() == 4 && EnemyHealthMaxHp() > MaxHP * 5)
-                {
-                    return true;
-                }
-
-                //Side content
-                if (PartyMemberLength() is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 5)
-                {
-                    return true;
-                }
+                return false;
             }
 
-            //Is NOT Boss ID
-            if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is not 2)
+            if (EnemyRank() == 2)
             {
-                //Raiding - Ads
-                if (PartyMemberLength() == 8 && EnemyHealthMaxHp() > MaxHP * 20)
+                return true;
+            }
+
+            if (EnemyRank() != 2)
+            {
+                if (PartyMemberLength() == 1 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 15)
                 {
                     return true;
                 }
 
-                //Dungeoning - Ads - Checks current hp instead of max
-                if (PartyMemberLength() is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() is 2 or 3 && EnemyMaxHP() > MaxHP * 10)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() == 4 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 10)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 25 && EnemyPercentHP() > 50)
                 {
                     return true;
                 }
@@ -230,49 +211,56 @@ internal abstract partial class CustomComboFunctions
         return false;
     }
 
-    internal static unsafe bool TargetWorthDoT()
+    internal static bool TargetWorthDoT()
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            //Striking Dummy
-            if (EnemyHealthMaxHp() == 44)
+            if (EnemyMaxHP() == 44)
             {
                 return true;
             }
 
-            //Is Boss ID
-            if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is 2)
+            if (EnemyCurrentHP() == 1)
             {
-                //Raiding
-                if (PartyMemberLength() == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
+                return false;
+            }
+
+            if (EnemyRank() == 2)
+            {
+                if (PartyMemberLength() == 4 && EnemyPercentHP() > 10)
                 {
                     return true;
                 }
 
-                //Dungeoning
-                if (PartyMemberLength() == 4 && EnemyHealthCurrentHp() > MaxHP * 10)
-                {
-                    return true;
-                }
-
-                //Side content
-                if (PartyMemberLength() is not 4 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() != 4 && EnemyPercentHP() > 5)
                 {
                     return true;
                 }
             }
 
-            //Is NOT Boss ID
-            if (Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank is not 2)
+            if (EnemyRank() != 2)
             {
-                //Raiding - Ads
-                if (PartyMemberLength() == 8 && EnemyHealthCurrentHp() > MaxHP * 20)
+                if (PartyMemberLength() == 1 && EnemyMaxHP() > MaxHP * 5 && EnemyPercentHP() > 75)
                 {
                     return true;
                 }
 
-                //Dungeoning - Ads - Checks current hp instead of max
-                if (PartyMemberLength() is > 1 and < 8 && EnemyHealthCurrentHp() > MaxHP * 10)
+                if (PartyMemberLength() is 2 or 3 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() == 4 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 15 && EnemyPercentHP() > 25)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 20 && EnemyPercentHP() > 25)
                 {
                     return true;
                 }

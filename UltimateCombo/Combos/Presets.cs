@@ -1102,18 +1102,6 @@ public enum Presets
     [CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
     WHM_ST_DPS_Misery = 19004,
 
-    [ParentCombo(WHM_ST_DPS_Misery)]
-    [CustomComboInfo("Lily Overcap Protection", "", WHM.JobID)]
-    WHM_ST_DPS_LilyOvercap = 19005,
-
-    [ParentCombo(WHM_ST_DPS_Misery)]
-    [CustomComboInfo("Save Misery", "", WHM.JobID)]
-    WHM_ST_DPS_Misery_Save = 19006,
-
-    [ParentCombo(WHM_ST_DPS)]
-    [CustomComboInfo("Swiftcast Movement", "", WHM.JobID)]
-    WHM_ST_DPS_Swiftcast = 19008,
-
     #endregion
 
     #region AoE DPS
@@ -1133,14 +1121,6 @@ public enum Presets
     [ParentCombo(WHM_AoE_DPS)]
     [CustomComboInfo("Afflatus Misery", "", WHM.JobID)]
     WHM_AoE_DPS_Misery = 19023,
-
-    [ParentCombo(WHM_AoE_DPS_Misery)]
-    [CustomComboInfo("Lily Overcap Protection", "", WHM.JobID)]
-    WHM_AoE_DPS_LilyOvercap = 19024,
-
-    [ParentCombo(WHM_AoE_DPS_Misery)]
-    [CustomComboInfo("Save Misery", "", WHM.JobID)]
-    WHM_AoE_DPS_Misery_Save = 19025,
 
     #endregion
 
@@ -1360,10 +1340,6 @@ public enum Presets
     [CustomComboInfo("Sun Sign", "", AST.JobID)]
     AST_ST_DPS_SunSign = 1008,
 
-    [ParentCombo(AST_ST_DPS)]
-    [CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-    AST_ST_DPS_Swiftcast = 1010,
-
     #endregion
 
     #region AoE DPS
@@ -1399,10 +1375,6 @@ public enum Presets
     [ParentCombo(AST_AoE_DPS)]
     [CustomComboInfo("Sun Sign", "", AST.JobID)]
     AST_AoE_DPS_SunSign = 1027,
-
-    [ParentCombo(AST_AoE_DPS)]
-    [CustomComboInfo("Swiftcast Movement", "", AST.JobID)]
-    AST_AoE_DPS_Swiftcast = 1029,
 
     #endregion
 
@@ -1495,10 +1467,6 @@ public enum Presets
     [ParentCombo(SGE_ST_DPS)]
     [CustomComboInfo("Kardia", "", SGE.JobID)]
     SGE_ST_DPS_Kardia = 14008,
-
-    [ParentCombo(SGE_ST_DPS)]
-    [CustomComboInfo("Swiftcast Movement", "", SGE.JobID)]
-    SGE_ST_DPS_Swiftcast = 14010,
 
     #endregion
 

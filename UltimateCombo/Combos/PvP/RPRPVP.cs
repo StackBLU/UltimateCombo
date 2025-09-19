@@ -116,7 +116,7 @@ internal static class RPRPvP
                     }
 
                     if (IsEnabled(Presets.RPRPvP_HarvestMoon) && ActionReady(HarvestMoon)
-                        && (GetTargetHPPercent() <= 50 || GetRemainingCharges(HarvestMoon) == GetMaxCharges(HarvestMoon)))
+                        && (EnemyPercentHP() <= 50 || GetRemainingCharges(HarvestMoon) == GetMaxCharges(HarvestMoon)))
                     {
                         return HarvestMoon;
                     }

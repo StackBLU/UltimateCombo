@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using System.Linq;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.Content;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
@@ -223,12 +222,6 @@ internal static class AST
                         {
                             return SunSign;
                         }
-
-                        if (IsEnabled(Presets.AST_ST_DPS_Swiftcast) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID)
-                            && IsMoving && !HasEffect(Buffs.Lightspeed) && !HasEffect(Occult.Buffs.OccultQuick))
-                        {
-                            return Common.Swiftcast;
-                        }
                     }
                 }
 
@@ -339,12 +332,6 @@ internal static class AST
                     if (IsEnabled(Presets.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))
                     {
                         return SunSign;
-                    }
-
-                    if (IsEnabled(Presets.AST_AoE_DPS_Swiftcast) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID)
-                        && IsMoving && !HasEffect(Buffs.Lightspeed) && !HasEffect(Occult.Buffs.OccultQuick))
-                    {
-                        return Common.Swiftcast;
                     }
                 }
 

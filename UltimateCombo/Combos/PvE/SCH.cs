@@ -94,13 +94,13 @@ internal static class SCH
         {
             if ((actionID is Ruin or Broil or Broil2 or Broil3 or Broil4) && IsEnabled(Presets.SCH_ST_DPS))
             {
-                if ((WasLastSpell(Succor) || WasLastSpell(Concitation) || WasLastSpell(Adloquium)
-                    || WasLastSpell(SummonEos)) && !InCombat())
+                if ((WasLastSpell(Succor) || WasLastSpell(Concitation) || WasLastSpell(Adloquium) || WasLastSpell(SummonEos)) && !InCombat())
                 {
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (IsEnabled(Presets.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0 && CurrentMP < 2000)
+                if (IsEnabled(Presets.SCH_ST_DPS_Aetherflow) && ActionReady(Aetherflow)
+                    && ((Gauge.Aetherflow == 0 && CurrentMP < 2000) || (!HasTarget() && InCombat() && Gauge.Aetherflow == 0)))
                 {
                     return Aetherflow;
                 }
@@ -132,7 +132,7 @@ internal static class SCH
 
                         if (IsEnabled(Presets.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                             && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                            || TargetHasEffectAny(Debuffs.ChainStratagem)))
+                            || TargetHasEffectAny(Debuffs.ChainStratagem) || !TargetWorthDoT()))
                         {
                             return EnergyDrain;
                         }
@@ -212,7 +212,7 @@ internal static class SCH
 
                     if (IsEnabled(Presets.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                         && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                        || TargetHasEffectAny(Debuffs.ChainStratagem)))
+                        || TargetHasEffectAny(Debuffs.ChainStratagem) || !TargetWorthDoT()))
                     {
                         return EnergyDrain;
                     }

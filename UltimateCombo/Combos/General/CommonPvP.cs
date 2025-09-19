@@ -295,8 +295,7 @@ internal static class AllPvP
                     return Swift;
                 }
 
-                if (IsEnabled(Presets.MeleePvP_Smite) && IsOffCooldown(Smite) && HasEffect(Buffs.Smite)
-                    && GetTargetHPPercent() <= 25)
+                if (IsEnabled(Presets.MeleePvP_Smite) && IsOffCooldown(Smite) && HasEffect(Buffs.Smite) && EnemyPercentHP() <= 25)
                 {
                     return Smite;
                 }
@@ -325,7 +324,7 @@ internal static class AllPvP
                 }
 
                 if (IsEnabled(Presets.RangedPvP_EagleEyeShot) && IsOffCooldown(EagleEyeShot) && HasEffect(Buffs.EagleEyeShot)
-                    && (TargetHasEffectAny(Buffs.Guard) || EnemyHealthCurrentHp() <= 12000))
+                    && (TargetHasEffectAny(Buffs.Guard) || EnemyCurrentHP() <= 12000))
                 {
                     return EagleEyeShot;
                 }

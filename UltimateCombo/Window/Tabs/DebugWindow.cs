@@ -58,9 +58,11 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"In Melee Range: {CustomComboFunctions.InMeleeRange()}");
 
                 ImGui.TextUnformatted("\n");
-                ImGui.TextUnformatted($"Target HP: {CustomComboFunctions.EnemyHealthCurrentHp()}");
+                ImGui.TextUnformatted($"Target Current HP: {CustomComboFunctions.EnemyCurrentHP()}");
+                ImGui.TextUnformatted($"Target Max HP: {CustomComboFunctions.EnemyMaxHP()}");
+                ImGui.TextUnformatted($"Target Percent HP: {CustomComboFunctions.EnemyPercentHP()}");
                 ImGui.TextUnformatted($"Distance from Target: {CustomComboFunctions.GetTargetDistance()}");
-                ImGui.TextUnformatted($"Mob Type: {(CustomComboFunctions.CurrentTarget != null ? CustomComboFunctions.GetMobType(CustomComboFunctions.CurrentTarget)?.ToString() : "None")}");
+                ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
 

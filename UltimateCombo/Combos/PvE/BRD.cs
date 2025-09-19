@@ -85,9 +85,9 @@ internal static class BRD
         {
             if ((actionID is HeavyShot or BurstShot or StraightShot or RefulgentArrow) && IsEnabled(Presets.BRD_ST_DPS))
             {
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks))
+                if (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
                 {
-                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat())
+                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && (CanWeave(actionID) || !HasTarget()))
                     {
                         if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                         {
@@ -105,46 +105,49 @@ internal static class BRD
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                    if (CanWeave(actionID))
                     {
-                        if (TargetIsBoss())
+                        if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
                         {
-                            if (IsEnabled(Presets.BRD_ST_BattleVoice) && ActionReady(BattleVoice) && !HasEffectAny(Buffs.BattleVoice))
+                            if (TargetIsBoss())
                             {
-                                return BattleVoice;
+                                if (IsEnabled(Presets.BRD_ST_BattleVoice) && ActionReady(BattleVoice) && !HasEffectAny(Buffs.BattleVoice))
+                                {
+                                    return BattleVoice;
+                                }
+
+                                if (IsEnabled(Presets.BRD_ST_Radiant) && ActionReady(RadiantFinale)
+                                    && (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
+                                {
+                                    return RadiantFinale;
+                                }
+
+                                if (IsEnabled(Presets.BRD_ST_Raging) && ActionReady(RagingStrikes)
+                                    && (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
+                                {
+                                    return RagingStrikes;
+                                }
+
+                                if (IsEnabled(Presets.BRD_ST_Barrage) && ActionReady(Barrage)
+                                    && (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
+                                {
+                                    return Barrage;
+                                }
                             }
 
-                            if (IsEnabled(Presets.BRD_ST_Radiant) && ActionReady(RadiantFinale)
-                                && (HasEffect(Buffs.BattleVoice) || WasLastAbility(BattleVoice)))
+                            if (IsEnabled(Presets.BRD_ST_Sidewinder) && ActionReady(Sidewinder))
                             {
-                                return RadiantFinale;
+                                return Sidewinder;
                             }
 
-                            if (IsEnabled(Presets.BRD_ST_Raging) && ActionReady(RagingStrikes)
-                                && (HasEffect(Buffs.RadiantFinale) || WasLastAbility(RadiantFinale) || !LevelChecked(RadiantFinale)))
+                            if (IsEnabled(Presets.BRD_ST_Bloodletter) && ActionReady(OriginalHook(Bloodletter))
+                                && ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
+                                || (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
+                                && GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 8)
+                                || HasEffect(Buffs.BattleVoice)))
                             {
-                                return RagingStrikes;
+                                return OriginalHook(Bloodletter);
                             }
-
-                            if (IsEnabled(Presets.BRD_ST_Barrage) && ActionReady(Barrage)
-                                && (HasEffect(Buffs.RagingStrikes) || WasLastAbility(RagingStrikes)))
-                            {
-                                return Barrage;
-                            }
-                        }
-
-                        if (IsEnabled(Presets.BRD_ST_Sidewinder) && ActionReady(Sidewinder))
-                        {
-                            return Sidewinder;
-                        }
-
-                        if (IsEnabled(Presets.BRD_ST_Bloodletter) && ActionReady(OriginalHook(Bloodletter))
-                            && ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
-                            || (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
-                            && GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 8)
-                            || HasEffect(Buffs.BattleVoice)))
-                        {
-                            return OriginalHook(Bloodletter);
                         }
                     }
 
@@ -227,26 +230,26 @@ internal static class BRD
         {
             if ((actionID is QuickNock or Ladonsbite or WideVolley or Shadowbite) && IsEnabled(Presets.BRD_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && (CanWeave(actionID) || !HasTarget()))
                 {
-                    if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat())
+                    if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                     {
-                        if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
-                        {
-                            return WanderersMinuet;
-                        }
-
-                        if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
-                        {
-                            return MagesBallad;
-                        }
-
-                        if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
-                        {
-                            return ArmysPaeon;
-                        }
+                        return WanderersMinuet;
                     }
 
+                    if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    {
+                        return MagesBallad;
+                    }
+
+                    if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    {
+                        return ArmysPaeon;
+                    }
+                }
+
+                if (CanWeave(actionID))
+                {
                     if (TargetIsBoss())
                     {
                         if (IsEnabled(Presets.BRD_AoE_BattleVoice) && ActionReady(BattleVoice) && !HasEffectAny(Buffs.BattleVoice))

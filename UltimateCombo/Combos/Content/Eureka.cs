@@ -220,14 +220,14 @@ internal static class Eureka
             {
                 if (IsEnabled(Presets.Eureka_Cure) && DutyActionReady(Cure) && DutyActionEquipped(Cure)
                     && (PlayerHealthPercentageHp() <= GetOptionValue(Config.Eureka_Cure)
-                    || (HasFriendlyTarget() && GetTargetHPPercent() <= GetOptionValue(Config.Eureka_Cure))))
+                    || (HasFriendlyTarget() && EnemyPercentHP() <= GetOptionValue(Config.Eureka_Cure))))
                 {
                     return Cure;
                 }
 
                 if (IsEnabled(Presets.Eureka_Cure2) && DutyActionReady(Cure2) && DutyActionEquipped(Cure2)
                     && (PlayerHealthPercentageHp() <= GetOptionValue(Config.Eureka_Cure2)
-                    || (HasFriendlyTarget() && GetTargetHPPercent() <= GetOptionValue(Config.Eureka_Cure2))))
+                    || (HasFriendlyTarget() && EnemyPercentHP() <= GetOptionValue(Config.Eureka_Cure2))))
                 {
                     return Cure2;
                 }

@@ -1,8 +1,6 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
 using System.Collections.Generic;
 using UltimateCombo.ComboHelper.Functions;
-using UltimateCombo.Combos.Content;
-using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 
@@ -107,12 +105,6 @@ internal static class WHM
                     {
                         return Assize;
                     }
-
-                    if (IsEnabled(Presets.WHM_ST_DPS_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick)
-                        && CanLateWeave(actionID) && !HasEffect(Buffs.SacredSight))
-                    {
-                        return Common.Swiftcast;
-                    }
                 }
 
                 if (IsEnabled(Presets.WHM_ST_DPS_Dia) && ActionReady(OriginalHook(Dia))
@@ -123,22 +115,15 @@ internal static class WHM
                     return OriginalHook(Dia);
                 }
 
-                if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
+                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000)))
                 {
-                    if (IsEnabled(Presets.WHM_ST_DPS_Misery_Save)
-                        && ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
-                    {
-                        return AfflatusMisery;
-                    }
-
-                    if (!IsEnabled(Presets.WHM_ST_DPS_Misery_Save))
-                    {
-                        return AfflatusMisery;
-                    }
+                    return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_DPS_LilyOvercap) && ActionReady(AfflatusRapture)
-                    && ((Gauge.Lily == 2 && Gauge.LilyTimer >= 17000) || Gauge.Lily == 3))
+                if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusRapture)
+                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17000)
+                    || (HasEffect(Buffs.PresenceOfMind) && Gauge.BloodLily + Gauge.Lily >= 3)))
                 {
                     return AfflatusRapture;
                 }
@@ -174,22 +159,15 @@ internal static class WHM
                     }
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
+                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000)))
                 {
-                    if (IsEnabled(Presets.WHM_AoE_DPS_Misery_Save)
-                        && ((Gauge.Lily == 2 && Gauge.LilyTimer >= 14500) || Gauge.Lily == 3))
-                    {
-                        return AfflatusMisery;
-                    }
-
-                    if (!IsEnabled(Presets.WHM_AoE_DPS_Misery_Save))
-                    {
-                        return AfflatusMisery;
-                    }
+                    return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_DPS_LilyOvercap) && ActionReady(AfflatusRapture)
-                    && ((Gauge.Lily == 2 && Gauge.LilyTimer >= 17000) || Gauge.Lily == 3))
+                if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusRapture)
+                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17000)
+                    || (HasEffect(Buffs.PresenceOfMind) && Gauge.BloodLily + Gauge.Lily >= 3)))
                 {
                     return AfflatusRapture;
                 }
@@ -217,7 +195,7 @@ internal static class WHM
                     return Tetragrammaton;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                if (IsEnabled(Presets.WHM_ST_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3 && HasBattleTarget())
                 {
                     return AfflatusMisery;
                 }
@@ -263,12 +241,12 @@ internal static class WHM
                     return PlenaryIndulgence;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3)
+                if (IsEnabled(Presets.WHM_AoE_Heals_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3 && HasBattleTarget())
                 {
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily > 0)
+                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily > 0 && HasBattleTarget())
                 {
                     return AfflatusRapture;
                 }
