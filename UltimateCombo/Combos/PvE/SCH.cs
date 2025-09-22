@@ -132,7 +132,7 @@ internal static class SCH
 
                         if (IsEnabled(Presets.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                             && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                            || TargetHasEffectAny(Debuffs.ChainStratagem) || !TargetWorthDoT()))
+                            || TargetHasEffectAny(Debuffs.ChainStratagem) || TargetCloseToDeath()))
                         {
                             return EnergyDrain;
                         }
@@ -153,7 +153,7 @@ internal static class SCH
                     }
                 }
 
-                if (IsEnabled(Presets.SCH_ST_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation))
+                if (IsEnabled(Presets.SCH_ST_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation) && ActionWatching.NumberOfGcdsUsed == 0)
                 {
                     return SummonEos;
                 }
@@ -212,7 +212,7 @@ internal static class SCH
 
                     if (IsEnabled(Presets.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                         && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                        || TargetHasEffectAny(Debuffs.ChainStratagem) || !TargetWorthDoT()))
+                        || TargetHasEffectAny(Debuffs.ChainStratagem) || TargetCloseToDeath()))
                     {
                         return EnergyDrain;
                     }
@@ -225,7 +225,7 @@ internal static class SCH
                     }
                 }
 
-                if (IsEnabled(Presets.SCH_AoE_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation))
+                if (IsEnabled(Presets.SCH_AoE_DPS_Fairy) && !HasPetPresent() && !HasEffect(Buffs.Dissipation) && ActionWatching.NumberOfGcdsUsed == 0)
                 {
                     return SummonEos;
                 }

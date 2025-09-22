@@ -33,6 +33,11 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Player;
     }
 
+    internal static string EnemyName()
+    {
+        return CurrentTarget is IBattleChara chara ? chara.Name.ToString() : "none";
+    }
+
     internal static float EnemyMaxHP()
     {
         return CurrentTarget is IBattleChara chara ? chara.MaxHp : 0;
@@ -164,7 +169,7 @@ internal abstract partial class CustomComboFunctions
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            if (EnemyMaxHP() == 44 || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
+            if (EnemyName() == "Striking Dummy" || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
             {
                 return true;
             }
@@ -215,7 +220,7 @@ internal abstract partial class CustomComboFunctions
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            if (EnemyMaxHP() == 44)
+            if (EnemyName() == "Striking Dummy")
             {
                 return true;
             }
@@ -255,12 +260,43 @@ internal abstract partial class CustomComboFunctions
                     return true;
                 }
 
-                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 15 && EnemyPercentHP() > 25)
+                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 75)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 20 && EnemyPercentHP() > 25)
+                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 8 && EnemyPercentHP() > 75)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    internal static bool TargetCloseToDeath()
+    {
+        if (HasBattleTarget() && TargetDataId.HasValue)
+        {
+            if (EnemyName() == "Striking Dummy")
+            {
+                return true;
+            }
+
+            if (EnemyCurrentHP() == 1)
+            {
+                return false;
+            }
+
+            if (EnemyRank() == 2)
+            {
+                if (PartyMemberLength() == 4 && EnemyPercentHP() < 10)
+                {
+                    return true;
+                }
+
+                if (PartyMemberLength() != 4 && EnemyPercentHP() < 3)
                 {
                     return true;
                 }

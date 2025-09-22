@@ -28,6 +28,7 @@ internal static class SAM
         Kyuten = 7491,
         Hagakure = 7495,
         Guren = 7496,
+        Meditate = 7497,
         Senei = 16481,
         MeikyoShisui = 7499,
         Seigan = 7501,
@@ -103,6 +104,11 @@ internal static class SAM
                     return Common.TrueNorth;
                 }
 
+                if (IsEnabled(Presets.SAM_ST_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget())
+                {
+                    return Meditate;
+                }
+
                 if (CanWeave(actionID))
                 {
                     if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
@@ -138,8 +144,8 @@ internal static class SAM
                         if (IsEnabled(Presets.SAM_ST_Meikyo) && ActionReady(MeikyoShisui) && !HasEffect(Buffs.MeikyoShisui)
                             && !HasEffect(Buffs.Tendo) && !WasLastWeaponskill(Hakaze) && !WasLastWeaponskill(Gyofu)
                             && !WasLastWeaponskill(Jinpu) && !WasLastWeaponskill(Shifu)
-                            && (HasEffect(Buffs.OgiNamikiriReady) || !LevelChecked(OgiNamikiri)
-                            || (GetRemainingCharges(MeikyoShisui) == 1 && GetCooldownChargeRemainingTime(MeikyoShisui) < 5 && GetCooldownRemainingTime(Ikishoten) < 5)))
+                            && (HasEffect(Buffs.OgiNamikiriReady) || !LevelChecked(OgiNamikiri) || !TargetWorthDoT()
+                            || GetCooldownRemainingTime(Ikishoten) < 5))
                         {
                             return MeikyoShisui;
                         }
@@ -158,7 +164,7 @@ internal static class SAM
                             && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || Gauge.Kenki == 100
-                            || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
+                            || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || TargetCloseToDeath()))
                         {
                             return Shinten;
                         }
@@ -186,6 +192,7 @@ internal static class SAM
                 }
 
                 if (IsEnabled(Presets.SAM_ST_Higanbana) && TargetEffectRemainingTime(Debuffs.Higanbana) < 5
+                    && (!IsMoving || WasLastWeaponskill(OriginalHook(Gyofu)))
                     && OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
                     && (Gauge.HasGetsu || Gauge.HasKa || Gauge.HasSetsu)
                     && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
@@ -195,6 +202,7 @@ internal static class SAM
                 }
 
                 if (Gauge.HasGetsu && Gauge.HasKa && Gauge.HasSetsu
+                    && (!IsMoving || WasLastWeaponskill(Jinpu) || WasLastWeaponskill(Shifu))
                     && IsEnabled(Presets.SAM_ST_Iaijutsu)
                     && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
                 {
@@ -276,6 +284,11 @@ internal static class SAM
                     return MeikyoShisui;
                 }
 
+                if (IsEnabled(Presets.SAM_AoE_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget())
+                {
+                    return Meditate;
+                }
+
                 if (CanWeave(actionID))
                 {
                     if (IsEnabled(Presets.SAM_AoE_Hagakure) && ActionReady(Hagakure)
@@ -319,7 +332,7 @@ internal static class SAM
                         && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || Gauge.Kenki == 100
-                        || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50)))
+                        || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || TargetCloseToDeath()))
                     {
                         return Kyuten;
                     }

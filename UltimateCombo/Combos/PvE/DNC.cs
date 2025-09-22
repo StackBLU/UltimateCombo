@@ -130,8 +130,8 @@ internal static class DNC
                         return FanDance3;
                     }
 
-                    if (IsEnabled(Presets.DNC_ST_FanDance) && ActionReady(FanDance1)
-                        && ((HasEffect(Buffs.TechnicalFinish) && Gauge.Feathers >= 1) || Gauge.Feathers == 4))
+                    if (IsEnabled(Presets.DNC_ST_FanDance) && ActionReady(FanDance1) && Gauge.Feathers > 0
+                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || TargetCloseToDeath()))
                     {
                         return FanDance1;
                     }
@@ -142,16 +142,17 @@ internal static class DNC
                     return OriginalHook(Improvisation);
                 }
 
-                if (IsEnabled(Presets.DNC_ST_Standard) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalStep))
+                if (IsEnabled(Presets.DNC_ST_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) && TargetIsBoss()
+                    && !HasEffectAny(Buffs.TechnicalFinish))
                 {
-                    return OriginalHook(StandardStep);
+                    return TechnicalStep;
                 }
 
-                if (HasEffect(Buffs.StandardStep))
+                if (HasEffect(Buffs.TechnicalStep))
                 {
-                    if (Gauge.CompletedSteps == 2)
+                    if (Gauge.CompletedSteps == 4)
                     {
-                        return StandardFinish2;
+                        return TechnicalFinish4;
                     }
                     if (Gauge.NextStep is Steps.Emboite)
                     {
@@ -171,17 +172,16 @@ internal static class DNC
                     }
                 }
 
-                if (IsEnabled(Presets.DNC_ST_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) && TargetIsBoss()
-                    && !HasEffectAny(Buffs.TechnicalFinish))
+                if (IsEnabled(Presets.DNC_ST_Standard) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalStep))
                 {
-                    return TechnicalStep;
+                    return OriginalHook(StandardStep);
                 }
 
-                if (HasEffect(Buffs.TechnicalStep))
+                if (HasEffect(Buffs.StandardStep))
                 {
-                    if (Gauge.CompletedSteps == 4)
+                    if (Gauge.CompletedSteps == 2)
                     {
-                        return TechnicalFinish4;
+                        return StandardFinish2;
                     }
                     if (Gauge.NextStep is Steps.Emboite)
                     {
@@ -286,8 +286,8 @@ internal static class DNC
                         return FanDance3;
                     }
 
-                    if (IsEnabled(Presets.DNC_AoE_FanDance2) && ActionReady(FanDance2)
-                        && ((HasEffect(Buffs.TechnicalFinish) && Gauge.Feathers >= 1) || Gauge.Feathers == 4))
+                    if (IsEnabled(Presets.DNC_AoE_FanDance2) && ActionReady(FanDance1) && Gauge.Feathers > 0
+                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || TargetCloseToDeath()))
                     {
                         return FanDance2;
                     }
@@ -298,16 +298,17 @@ internal static class DNC
                     return OriginalHook(Improvisation);
                 }
 
-                if (IsEnabled(Presets.DNC_AoE_Standard) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalStep))
+                if (IsEnabled(Presets.DNC_AoE_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) && TargetIsBoss()
+                    && !HasEffectAny(Buffs.TechnicalFinish))
                 {
-                    return OriginalHook(StandardStep);
+                    return TechnicalStep;
                 }
 
-                if (HasEffect(Buffs.StandardStep))
+                if (HasEffect(Buffs.TechnicalStep))
                 {
-                    if (Gauge.CompletedSteps == 2)
+                    if (Gauge.CompletedSteps == 4)
                     {
-                        return StandardFinish2;
+                        return TechnicalFinish4;
                     }
                     if (Gauge.NextStep is Steps.Emboite)
                     {
@@ -327,17 +328,16 @@ internal static class DNC
                     }
                 }
 
-                if (IsEnabled(Presets.DNC_AoE_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) && TargetIsBoss()
-                    && !HasEffectAny(Buffs.TechnicalFinish))
+                if (IsEnabled(Presets.DNC_AoE_Standard) && ActionReady(StandardStep) && !HasEffect(Buffs.TechnicalStep))
                 {
-                    return TechnicalStep;
+                    return OriginalHook(StandardStep);
                 }
 
-                if (HasEffect(Buffs.TechnicalStep))
+                if (HasEffect(Buffs.StandardStep))
                 {
-                    if (Gauge.CompletedSteps == 4)
+                    if (Gauge.CompletedSteps == 2)
                     {
-                        return TechnicalFinish4;
+                        return StandardFinish2;
                     }
                     if (Gauge.NextStep is Steps.Emboite)
                     {

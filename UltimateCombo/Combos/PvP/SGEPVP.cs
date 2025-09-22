@@ -72,15 +72,10 @@ internal static class SGEPvP
                     }
 
                     if (IsEnabled(Presets.SGEPvP_Eukrasia) && ActionReady(Eukrasia) && !HasEffect(Buffs.Eukrasia)
-                        && !HasEffect(Buffs.EukrasianDiagnosis) && !HasEffect(Debuffs.EukrasianDosis)
-                        && (TargetHasEffect(Debuffs.Toxikon) || (GetRemainingCharges(Toxikon) == 0 && GetCooldownChargeRemainingTime(Toxikon) > 5)))
+                        && !TargetHasEffect(Debuffs.EukrasianDosis)
+                        && (TargetHasEffect(Debuffs.Toxikon) || IsMoving || GetRemainingCharges(Eukrasia) == GetMaxCharges(Eukrasia)))
                     {
                         return Eukrasia;
-                    }
-
-                    if (IsEnabled(Presets.SGEPvP_Pneuma) && ActionReady(Pneuma))
-                    {
-                        return Pneuma;
                     }
 
                     if (IsEnabled(Presets.SGEPvP_Phlegma) && ActionReady(Phlegma3) && InActionRange(Phlegma3))
@@ -91,6 +86,11 @@ internal static class SGEPvP
                     if (IsEnabled(Presets.SGEPvP_Psyche) && IsActionEnabled(Psyche))
                     {
                         return Psyche;
+                    }
+
+                    if (IsEnabled(Presets.SGEPvP_Pneuma) && ActionReady(Pneuma))
+                    {
+                        return Pneuma;
                     }
                 }
             }

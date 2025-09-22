@@ -117,11 +117,6 @@ internal class SMN
         {
             if ((actionID is Ruin or Ruin2 or Ruin3) && IsEnabled(Presets.SMN_ST_DPS))
             {
-                if (IsEnabled(Presets.SMN_ST_Reminder) && !HasPetPresent() && !InCombat())
-                {
-                    return SummonCarbuncle;
-                }
-
                 if (WasLastSpell(SummonCarbuncle) && !InCombat())
                 {
                     ActionWatching.CombatActions.Clear();
@@ -238,6 +233,11 @@ internal class SMN
                 {
                     return OriginalHook(Ruin3);
                 }
+
+                if (IsEnabled(Presets.SMN_ST_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
+                {
+                    return SummonCarbuncle;
+                }
             }
 
             return actionID;
@@ -252,11 +252,6 @@ internal class SMN
         {
             if ((actionID is Outburst or Tridisaster) && IsEnabled(Presets.SMN_AoE_DPS))
             {
-                if (IsEnabled(Presets.SMN_AoE_Reminder) && !HasPetPresent() && !InCombat())
-                {
-                    return SummonCarbuncle;
-                }
-
                 if (!InCombat() && ActionReady(OriginalHook(Tridisaster)))
                 {
                     return OriginalHook(Tridisaster);
@@ -367,6 +362,11 @@ internal class SMN
                 if (ActionReady(OriginalHook(Tridisaster)))
                 {
                     return OriginalHook(Tridisaster);
+                }
+
+                if (IsEnabled(Presets.SMN_AoE_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
+                {
+                    return SummonCarbuncle;
                 }
             }
 

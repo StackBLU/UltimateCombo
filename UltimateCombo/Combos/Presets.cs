@@ -1846,10 +1846,6 @@ public enum Presets
     SAM_ST_DPS = 15000,
 
     [ParentCombo(SAM_ST_DPS)]
-    [CustomComboInfo("Enpi", "", SAM.JobID)]
-    SAM_ST_Enpi = 15012,
-
-    [ParentCombo(SAM_ST_DPS)]
     [CustomComboInfo("Higanbana", "", SAM.JobID)]
     SAM_ST_Higanbana = 15001,
 
@@ -1892,6 +1888,14 @@ public enum Presets
     [ParentCombo(SAM_ST_DPS)]
     [CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
     SAM_ST_Shield = 15011,
+
+    [ParentCombo(SAM_ST_DPS)]
+    [CustomComboInfo("Meditate", "", SAM.JobID)]
+    SAM_ST_Meditate = 15012,
+
+    [ParentCombo(SAM_ST_DPS)]
+    [CustomComboInfo("Enpi", "", SAM.JobID)]
+    SAM_ST_Enpi = 15013,
 
     #endregion
 
@@ -1940,6 +1944,10 @@ public enum Presets
     [ParentCombo(SAM_AoE_DPS)]
     [CustomComboInfo("Third Eye / Tengentsu", "", SAM.JobID)]
     SAM_AoE_Shield = 15030,
+
+    [ParentCombo(SAM_AoE_DPS)]
+    [CustomComboInfo("Meditate", "", SAM.JobID)]
+    SAM_AoE_Meditate = 15031,
 
     #endregion
 
@@ -2632,7 +2640,7 @@ public enum Presets
 
     [ParentCombo(SMN_ST_DPS)]
     [CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
-    SMN_ST_Reminder = 17010,
+    SMN_ST_Carbuncle = 17010,
 
     #endregion
 
@@ -2676,7 +2684,7 @@ public enum Presets
 
     [ParentCombo(SMN_AoE_DPS)]
     [CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
-    SMN_AoE_Reminder = 17030,
+    SMN_AoE_Carbuncle = 17030,
 
     #endregion
 

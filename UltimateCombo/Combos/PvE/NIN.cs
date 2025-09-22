@@ -336,7 +336,7 @@ internal class NIN
                     {
                         if (ActionReady(AeolianEdge) && (Gauge.Kazematoi >= 4 || !LevelChecked(ArmorCrush)
                             || (Gauge.Kazematoi >= 1
-                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || !TargetWorthDoT()))))
+                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || TargetCloseToDeath()))))
                         {
                             return AeolianEdge;
                         }
@@ -535,12 +535,9 @@ internal class NIN
                     return PhantomKamaitachi;
                 }
 
-                if (ComboTime > 0)
+                if (lastComboActionID is DeathBlossom && ComboTime > 0 && ActionReady(HakkeMujinsatsu))
                 {
-                    if (lastComboActionID is DeathBlossom)
-                    {
-                        return HakkeMujinsatsu;
-                    }
+                    return HakkeMujinsatsu;
                 }
 
                 return DeathBlossom;

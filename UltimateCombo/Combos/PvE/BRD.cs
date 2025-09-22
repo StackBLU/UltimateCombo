@@ -144,22 +144,22 @@ internal static class BRD
                                 && ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
                                 || (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
                                 && GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 8)
-                                || HasEffect(Buffs.BattleVoice)))
+                                || HasEffect(Buffs.BattleVoice) || TargetCloseToDeath()))
                             {
                                 return OriginalHook(Bloodletter);
                             }
                         }
-                    }
 
-                    if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
-                        || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
-                    {
-                        return PitchPerfect;
-                    }
+                        if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
+                            || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
+                        {
+                            return PitchPerfect;
+                        }
 
-                    if (IsEnabled(Presets.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow))
-                    {
-                        return EmpyrealArrow;
+                        if (IsEnabled(Presets.BRD_ST_Empyreal) && ActionReady(EmpyrealArrow))
+                        {
+                            return EmpyrealArrow;
+                        }
                     }
                 }
 
@@ -292,7 +292,7 @@ internal static class BRD
                         && ((GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)))
                         || (GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(RainOfDeath)) <= 8)
-                        || HasEffect(Buffs.BattleVoice)))
+                        || HasEffect(Buffs.BattleVoice) || TargetCloseToDeath()))
                     {
                         return OriginalHook(RainOfDeath);
                     }

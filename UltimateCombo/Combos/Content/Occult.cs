@@ -501,7 +501,7 @@ internal static class Occult
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse() && IsComboAction(actionID)
+            if (IsEnabled(Presets.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
                 && ((IsEnabled(Presets.Occult_Cannoneer_Utility)
                 && (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
                 || (!IsEnabled(Presets.Occult_Cannoneer_Utility) && InCombat())))

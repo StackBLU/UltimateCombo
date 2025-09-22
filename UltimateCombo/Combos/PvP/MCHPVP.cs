@@ -59,8 +59,8 @@ internal static class MCHPvP
         {
             if ((actionID is BlastCharge or BlazingShot) && IsEnabled(Presets.MCHPvP_Combo))
             {
-                if (IsEnabled(Presets.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill)) && !HasEffect(Buffs.Overheated)
-                    && OriginalHook(Drill) == Drill && !WasLastWeaponskill(Drill)
+                if (IsEnabled(Presets.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill)) && !HasEffect(Buffs.Overheated) && !HasEffect(Buffs.Overheated)
+                    && OriginalHook(Drill) == Drill && !WasLastWeaponskill(Drill) && (TargetHasEffectAny(AllPvP.Buffs.Guard) || HasEffect(Buffs.Analysis))
                     && (ActionReady(Analysis) || HasEffect(Buffs.Analysis) || WasLastAction(Analysis)))
                 {
                     if (!HasEffect(Buffs.Analysis) && !WasLastAction(Analysis))
@@ -74,23 +74,18 @@ internal static class MCHPvP
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
                     if (IsEnabled(Presets.MCHPvP_MarksmansSpite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-                        && (WasLastAction(AirAnchor) || WasLastAction(Drill)
-                        || (HasEffect(Debuffs.Wildfire) && EffectRemainingTime(Debuffs.Wildfire) <= 4)))
+                        && TargetHasEffect(Debuffs.Wildfire) && !HasEffect(Buffs.Overheated))
                     {
                         return MarksmansSpite;
                     }
 
-                    if (CanWeave(actionID))
+                    if (IsEnabled(Presets.MCHPvP_Wildfire) && ActionReady(Wildfire) && WasLastWeaponskill(FullMetalField) && CanWeave(actionID))
                     {
-                        if (IsEnabled(Presets.MCHPvP_Wildfire) && ActionReady(Wildfire) && HasEffect(Buffs.Overheated)
-                            && (WasLastWeaponskill(BlastCharge) || WasLastWeaponskill(FullMetalField)))
-                        {
-                            return Wildfire;
-                        }
+                        return Wildfire;
                     }
 
                     if (IsEnabled(Presets.MCHPvP_Scattergun) && ActionReady(Scattergun) && !HasEffect(Buffs.Overheated)
-                        && (WasLastWeaponskill(BlazingShot) || InMeleeRange()) && InActionRange(Scattergun))
+                        && InActionRange(Scattergun))
                     {
                         return Scattergun;
                     }

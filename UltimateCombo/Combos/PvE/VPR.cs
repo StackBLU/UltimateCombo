@@ -180,7 +180,7 @@ internal class VPR
                     }
 
                     if (IsEnabled(Presets.VPR_ST_Uncoiled) && ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0
-                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3))
+                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || TargetCloseToDeath()))
                     {
                         return UncoiledFury;
                     }
@@ -383,7 +383,7 @@ internal class VPR
                     }
 
                     if (IsEnabled(Presets.VPR_AoE_Uncoiled) && ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0
-                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3))
+                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || TargetCloseToDeath()))
                     {
                         return UncoiledFury;
                     }
