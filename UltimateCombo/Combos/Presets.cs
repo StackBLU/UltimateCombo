@@ -3331,6 +3331,10 @@ public enum Presets
     [CustomComboInfo("Encore Of Light", "", BRD.JobID)]
     BRDPvP_EncoreOfLight = 113007,
 
+    [PvP]
+    [CustomComboInfo("No Silent Nocturne when target is Guarding", "", BRD.JobID)]
+    BRDPvP_SafeNocturne = 113008,
+
     #endregion
 
     #region DANCER - 114000

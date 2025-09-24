@@ -89,6 +89,16 @@ internal static class BRDPvP
                 }
             }
 
+            if (actionID is SilentNocturne && IsEnabled(Presets.BRDPvP_SafeNocturne))
+            {
+                if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
+                {
+                    return actionID;
+                }
+
+                return OriginalHook(11);
+            }
+
             return actionID;
         }
     }

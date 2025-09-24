@@ -128,8 +128,7 @@ internal static class DRK
                                 return OriginalHook(SaltedEarth);
                             }
 
-                            if (IsEnabled(Presets.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer)
-                                && !WasLastAbility(Shadowbringer) && Gauge.ShadowTimeRemaining > 0)
+                            if (IsEnabled(Presets.DRK_ST_Shadowbringer) && ActionReady(Shadowbringer) && !WasLastAbility(Shadowbringer) && Gauge.DarksideTimeRemaining > 0)
                             {
                                 return Shadowbringer;
                             }
@@ -241,7 +240,7 @@ internal static class DRK
                         return OriginalHook(SaltedEarth);
                     }
 
-                    if (IsEnabled(Presets.DRK_AoE_Shadowbringer) && ActionReady(Shadowbringer))
+                    if (IsEnabled(Presets.DRK_AoE_Shadowbringer) && ActionReady(Shadowbringer) && Gauge.DarksideTimeRemaining > 0)
                     {
                         return Shadowbringer;
                     }
