@@ -23,6 +23,9 @@ internal class PvPWindow : ConfigWindow
 
         if (OpenJob == string.Empty)
         {
+            // start two-column layout
+            ImGui.Columns(2, "preset_columns", false);
+
             foreach (var jobName in GroupedPresets.Where(x => x.Value.Any(y => PresetStorage.IsPvP(y.Preset))).Select(x => x.Key))
             {
                 var abbreviation = GroupedPresets[jobName].First().Info.JobShorthand;
@@ -48,10 +51,19 @@ internal class PvPWindow : ConfigWindow
                     ImGui.PopStyleColor();
                     ImGui.PopStyleVar();
                 }
+
+                // move to next column after drawing this item
+                ImGui.NextColumn();
             }
+
+            // restore single column mode
+            ImGui.Columns(1);
         }
         else
         {
+            //ensure column state is reset when opening a job
+            ImGui.Columns(1);
+
             var id = GroupedPresets[OpenJob].First().Info.JobID;
             IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
             var childHeight = icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f;
