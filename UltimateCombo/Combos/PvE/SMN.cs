@@ -106,7 +106,12 @@ internal class SMN
     {
         internal static UserBool
             SMN_ST_Astral_Swift = new("SMN_ST_Astral_Swift"),
-            SMN_AoE_Astral_Swift = new("SMN_AoE_Astral_Swift");
+            SMN_ST_Astral_Garuda = new("SMN_ST_Astral_Garuda"),
+            SMN_ST_Astral_Ifrit = new("SMN_ST_Astral_Ifrit"),
+
+            SMN_AoE_Astral_Swift = new("SMN_AoE_Astral_Swift"),
+            SMN_AoE_Astral_Garuda = new("SMN_AoE_Astral_Garuda"),
+            SMN_AoE_Astral_Ifrit = new("SMN_AoE_Astral_Ifrit");
     }
 
     internal class SMN_ST_DPS : CustomComboBase
@@ -122,11 +127,6 @@ internal class SMN
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (!InCombat() && ActionReady(OriginalHook(Ruin)))
-                {
-                    return OriginalHook(Ruin);
-                }
-
                 if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
                 {
                     if (IsEnabled(Presets.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
@@ -134,14 +134,12 @@ internal class SMN
                         return SearingFlash;
                     }
 
-                    if (IsEnabled(Presets.SMN_ST_SearingLight) && ActionReady(SearingLight) && TargetIsBoss()
-                        && !HasEffectAny(Buffs.SearingLight))
+                    if (IsEnabled(Presets.SMN_ST_SearingLight) && ActionReady(SearingLight) && TargetIsBoss() && !HasEffectAny(Buffs.SearingLight))
                     {
                         return SearingLight;
                     }
 
-                    if (IsEnabled(Presets.SMN_ST_EnergyDrain)
-                        && (ActionReady(EnergyDrain) || Gauge.AetherflowStacks > 0))
+                    if (IsEnabled(Presets.SMN_ST_EnergyDrain) && (ActionReady(EnergyDrain) || Gauge.AetherflowStacks > 0))
                     {
                         if (Gauge.AetherflowStacks > 0 && (HasEffect(Buffs.SearingLight) || !LevelChecked(SearingLight)))
                         {
@@ -154,7 +152,7 @@ internal class SMN
                         }
                     }
 
-                    if (IsEnabled(Presets.SMN_ST_Astral) && ActionReady(OriginalHook(AstralFlow))
+                    if (IsEnabled(Presets.SMN_ST_Astral) && ActionReady(OriginalHook(AstralFlow)) && IsEnabled(Presets.SMN_ST_Astral)
                         && (WasLastSpell(AstralImpulse) || WasLastSpell(FountainOfFire) || WasLastSpell(UmbralImpulse)
                         || HasEffect(Buffs.TitansFavor)))
                     {
@@ -167,9 +165,14 @@ internal class SMN
                     {
                         return OriginalHook(EnkindleBahamut);
                     }
+
+                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3)
+                    {
+                        return OriginalHook(LuxSolaris);
+                    }
                 }
 
-                if (HasEffect(Buffs.GarudasFavor))
+                if (HasEffect(Buffs.GarudasFavor) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Garuda))
                 {
                     if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
                     {
@@ -179,24 +182,14 @@ internal class SMN
                     return OriginalHook(AstralFlow);
                 }
 
-                if (lastComboMove is CrimsonCyclone)
+                if (lastComboMove is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Ifrit))
                 {
                     return OriginalHook(AstralFlow);
                 }
 
-                if (IsEnabled(Presets.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin) && !LevelChecked(CrimsonCyclone)
-                    && Gauge.SummonTimerRemaining == 0)
+                if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Ifrit)
+                    && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
                 {
-                    return Ruin4;
-                }
-
-                if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone) && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
-                {
-                    if (IsEnabled(Presets.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
-                    {
-                        return Ruin4;
-                    }
-
                     return OriginalHook(AstralFlow);
                 }
 
@@ -224,6 +217,16 @@ internal class SMN
                     }
                 }
 
+                if (IsEnabled(Presets.SMN_ST_Ruin4) && HasEffect(Buffs.FurtherRuin))
+                {
+                    return Ruin4;
+                }
+
+                if (IsEnabled(Presets.SMN_ST_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
+                {
+                    return SummonCarbuncle;
+                }
+
                 if (IsEnabled(Presets.SMN_ST_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))
                 {
                     return OriginalHook(SummonBahamut);
@@ -232,11 +235,6 @@ internal class SMN
                 if (ActionReady(OriginalHook(Ruin3)))
                 {
                     return OriginalHook(Ruin3);
-                }
-
-                if (IsEnabled(Presets.SMN_ST_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
-                {
-                    return SummonCarbuncle;
                 }
             }
 
@@ -252,9 +250,9 @@ internal class SMN
         {
             if ((actionID is Outburst or Tridisaster) && IsEnabled(Presets.SMN_AoE_DPS))
             {
-                if (!InCombat() && ActionReady(OriginalHook(Tridisaster)))
+                if (WasLastSpell(SummonCarbuncle) && !InCombat())
                 {
-                    return OriginalHook(Tridisaster);
+                    ActionWatching.CombatActions.Clear();
                 }
 
                 if (CanWeave(actionID))
@@ -284,7 +282,7 @@ internal class SMN
                         }
                     }
 
-                    if (IsEnabled(Presets.SMN_AoE_Astral) && ActionReady(OriginalHook(AstralFlow))
+                    if (IsEnabled(Presets.SMN_AoE_Astral) && ActionReady(OriginalHook(AstralFlow)) && IsEnabled(Presets.SMN_ST_Astral)
                         && (WasLastSpell(AstralFlare) || WasLastSpell(BrandOfPurgatory) || WasLastSpell(UmbralFlare)
                         || HasEffect(Buffs.TitansFavor)))
                     {
@@ -297,9 +295,14 @@ internal class SMN
                     {
                         return OriginalHook(EnkindleBahamut);
                     }
+
+                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3)
+                    {
+                        return OriginalHook(LuxSolaris);
+                    }
                 }
 
-                if (HasEffect(Buffs.GarudasFavor))
+                if (HasEffect(Buffs.GarudasFavor) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Garuda))
                 {
                     if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
                     {
@@ -309,24 +312,14 @@ internal class SMN
                     return OriginalHook(AstralFlow);
                 }
 
-                if (lastComboMove is CrimsonCyclone)
+                if (lastComboMove is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Ifrit))
                 {
                     return OriginalHook(AstralFlow);
                 }
 
-                if (IsEnabled(Presets.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin) && !LevelChecked(CrimsonCyclone))
-                {
-                    return Ruin4;
-                }
-
-                if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone)
+                if (HasEffect(Buffs.IfritsFavor) && ActionReady(CrimsonCyclone) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Ifrit)
                     && (HasEffect(Buffs.IfritsFavor) || HasEffect(Buffs.CrimsonStrikeReady)))
                 {
-                    if (IsEnabled(Presets.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
-                    {
-                        return Ruin4;
-                    }
-
                     return OriginalHook(AstralFlow);
                 }
 
@@ -354,6 +347,16 @@ internal class SMN
                     }
                 }
 
+                if (IsEnabled(Presets.SMN_AoE_Ruin4) && HasEffect(Buffs.FurtherRuin))
+                {
+                    return Ruin4;
+                }
+
+                if (IsEnabled(Presets.SMN_AoE_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
+                {
+                    return SummonCarbuncle;
+                }
+
                 if (IsEnabled(Presets.SMN_AoE_SummonBahaPhoenix) && ActionReady(OriginalHook(SummonBahamut)))
                 {
                     return OriginalHook(SummonBahamut);
@@ -362,11 +365,6 @@ internal class SMN
                 if (ActionReady(OriginalHook(Tridisaster)))
                 {
                     return OriginalHook(Tridisaster);
-                }
-
-                if (IsEnabled(Presets.SMN_AoE_Carbuncle) && !HasPetPresent() && ActionWatching.NumberOfGcdsUsed == 0)
-                {
-                    return SummonCarbuncle;
                 }
             }
 

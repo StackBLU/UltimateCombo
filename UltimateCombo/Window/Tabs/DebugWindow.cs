@@ -73,6 +73,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Last Spell: {ActionWatching.GetActionName(ActionWatching.LastSpell)}");
                 ImGui.TextUnformatted($"Last Ability: {ActionWatching.GetActionName(ActionWatching.LastAbility)}");
                 ImGui.TextUnformatted($"# of GCDs used: {ActionWatching.NumberOfGcdsUsed}");
+                ImGui.TextUnformatted($"Combo Timer: {CustomComboFunctions.ComboTime}");
 
                 ImGui.TextUnformatted("\n");
                 ImGui.TextUnformatted($"Territory: {Service.ClientState.TerritoryType}");

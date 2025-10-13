@@ -555,7 +555,7 @@ internal static class BLU
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor && IsEnabled(Presets.BLU_ManaGain)
+            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_ManaGain)
                 && !HasEffect(Buffs.PhantomFlurry))
             {
                 if (CurrentMP <= GetOptionValue(Config.BLU_ManaGain) && IsSpellActive(BloodDrain))
@@ -629,7 +629,7 @@ internal static class BLU
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor && IsEnabled(Presets.BLU_PhantomEnder))
+            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_PhantomEnder))
             {
                 if (HasEffect(Buffs.PhantomFlurry))
                 {

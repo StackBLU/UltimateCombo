@@ -15,7 +15,8 @@ internal abstract partial class CustomComboFunctions
 {
     internal static IGameObject? CurrentTarget => Service.TargetManager.Target;
     internal static IGameObject? PlayerTargetObject => LocalPlayer?.TargetObject;
-    internal static uint? TargetDataId => CurrentTarget?.DataId;
+
+    internal static uint? TargetDataId => CurrentTarget?.BaseId;
     internal static IGameObject? TargetOfTarget => CurrentTarget?.TargetObject;
 
     internal static bool HasTarget()
@@ -58,9 +59,9 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget is IBattleChara chara && chara.IsCasting;
     }
 
-    internal static bool CanInterruptEnemy()
+    internal static bool CanInterrupt()
     {
-        return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible;
+        return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible && chara.CurrentCastTime >= chara.TotalCastTime / 2;
     }
 
     internal static bool IsTargetOfTarget()
@@ -275,15 +276,10 @@ internal abstract partial class CustomComboFunctions
         return false;
     }
 
-    internal static bool TargetCloseToDeath()
+    internal static bool BossAlmostDead()
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            if (EnemyName() == "Striking Dummy")
-            {
-                return true;
-            }
-
             if (EnemyCurrentHP() == 1)
             {
                 return false;
@@ -296,7 +292,7 @@ internal abstract partial class CustomComboFunctions
                     return true;
                 }
 
-                if (PartyMemberLength() != 4 && EnemyPercentHP() < 3)
+                if (PartyMemberLength() != 4 && EnemyPercentHP() < 5)
                 {
                     return true;
                 }

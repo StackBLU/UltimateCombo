@@ -336,7 +336,7 @@ internal class NIN
                     {
                         if (ActionReady(AeolianEdge) && (Gauge.Kazematoi >= 4 || !LevelChecked(ArmorCrush)
                             || (Gauge.Kazematoi >= 1
-                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || TargetCloseToDeath()))))
+                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || BossAlmostDead()))))
                         {
                             return AeolianEdge;
                         }

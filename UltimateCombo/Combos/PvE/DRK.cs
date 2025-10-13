@@ -95,7 +95,7 @@ internal static class DRK
                 if (CanWeave(actionID))
                 {
                     if (IsEnabled(Presets.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
-                        && Gauge.DarksideTimeRemaining == 0)
+                        && Gauge.DarksideTimeRemaining == 0 && (CurrentMP >= GetResourceCost(EdgeOfShadow) || Gauge.HasDarkArts))
                     {
                         return OriginalHook(EdgeOfShadow);
                     }
@@ -109,11 +109,9 @@ internal static class DRK
 
                         if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
                         {
-                            if (IsEnabled(Presets.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
-                                && ((CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver)
-                                && (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow) || HasEffect(Bozja.Buffs.AutoEther)))
-                                || Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver))
-                                || CurrentMP >= 9500 || (HasEffect(Bozja.Buffs.AutoEther) && CurrentMP >= GetResourceCost(TheBlackestNight))))
+                            if (IsEnabled(Presets.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow)) && CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver)
+                                && (CurrentMP >= GetResourceCost(EdgeOfShadow) || Gauge.HasDarkArts
+                                || (HasEffect(Bozja.Buffs.AutoEther) && CurrentMP >= GetResourceCost(EdgeOfShadow))))
                             {
                                 return OriginalHook(EdgeOfShadow);
                             }
@@ -221,11 +219,8 @@ internal static class DRK
                         return TheBlackestNight;
                     }
 
-                    if (IsEnabled(Presets.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow))
-                        && ((CurrentMP >= GetOptionValue(Config.DRK_AoE_ManaSaver)
-                        && (GetCooldownRemainingTime(LivingShadow) > 20 || !LevelChecked(LivingShadow)))
-                        || Gauge.HasDarkArts || (!LevelChecked(TheBlackestNight) && CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver))
-                        || CurrentMP >= 9500))
+                    if (IsEnabled(Presets.DRK_AoE_Flood) && ActionReady(OriginalHook(FloodOfShadow)) && CurrentMP >= GetOptionValue(Config.DRK_AoE_ManaSaver)
+                        && (CurrentMP >= GetResourceCost(FloodOfShadow) || Gauge.HasDarkArts))
                     {
                         return OriginalHook(FloodOfShadow);
                     }

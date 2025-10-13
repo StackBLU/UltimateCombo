@@ -3,6 +3,7 @@ using Dalamud.Game.ClientState.JobGauge.Types;
 
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvE;
 
@@ -170,17 +171,18 @@ internal class VPR
 
                 if (EffectRemainingTime(Buffs.Swiftscaled) > 10 && EffectRemainingTime(Buffs.HuntersInstinct) > 10
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.Dreadwinder)
-                    && !Gauge.DreadCombo.HasFlag(DreadCombo.SwiftskinsCoil) && !Gauge.DreadCombo.HasFlag(DreadCombo.HuntersCoil))
+                    && !Gauge.DreadCombo.HasFlag(DreadCombo.SwiftskinsCoil)
+                    && !Gauge.DreadCombo.HasFlag(DreadCombo.HuntersCoil))
                 {
-                    if (IsEnabled(Presets.VPR_ST_Reawaken) && ActionReady(Reawaken) && TargetWorthDoT()
-                        && (GetCooldownRemainingTime(SerpentsIre) > 30 || Gauge.SerpentOffering == 100)
+                    if (IsEnabled(Presets.VPR_ST_Reawaken) && ActionReady(Reawaken)
+                        && ((TargetWorthDoT() && (GetCooldownRemainingTime(SerpentsIre) > 30 || Gauge.SerpentOffering == 100)) || BossAlmostDead())
                         && (Gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)))
                     {
                         return Reawaken;
                     }
 
                     if (IsEnabled(Presets.VPR_ST_Uncoiled) && ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0
-                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || TargetCloseToDeath()))
+                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || BossAlmostDead()))
                     {
                         return UncoiledFury;
                     }
@@ -211,7 +213,8 @@ internal class VPR
 
                 if (IsEnabled(Presets.VPR_ST_Vicewinder) && ActionReady(Vicewinder)
                     && (WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)
-                    || WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang)))
+                    || WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang)
+                    || (WasLastWeaponskill(SwiftskinsSting) && (ActionWatching.NumberOfGcdsUsed == 2 || Service.Configuration.IgnoreGCDChecks))))
                 {
                     return Vicewinder;
                 }
@@ -230,62 +233,41 @@ internal class VPR
                 {
                     if (lastComboMove is SteelFangs or ReavingFangs)
                     {
-                        if (HasEffect(Buffs.HindsbaneVenom) || HasEffect(Buffs.HindstungVenom))
-                        {
-                            return OriginalHook(SwiftskinsSting);
-                        }
-
                         if (HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.FlankstungVenom))
                         {
-                            return OriginalHook(HuntersSting);
+                            return OriginalHook(SteelFangs);
                         }
 
-                        if (ActionReady(OriginalHook(SwiftskinsSting)))
-                        {
-                            return OriginalHook(SwiftskinsSting);
-                        }
+                        return OriginalHook(ReavingFangs);
                     }
 
                     if (lastComboMove is SwiftskinsSting or HuntersSting)
                     {
                         if (HasEffect(Buffs.FlankstungVenom))
                         {
-                            return OriginalHook(FlankstingStrike);
+                            return OriginalHook(SteelFangs);
                         }
 
                         if (HasEffect(Buffs.FlanksbaneVenom))
                         {
-                            return OriginalHook(FlanksbaneFang);
+                            return OriginalHook(ReavingFangs);
                         }
 
                         if (HasEffect(Buffs.HindstungVenom))
                         {
-                            return OriginalHook(HindstingStrike);
+                            return OriginalHook(SteelFangs);
                         }
 
-                        if (HasEffect(Buffs.HindsbaneVenom))
-                        {
-                            return OriginalHook(HindsbaneFang);
-                        }
-
-                        if (ActionReady(OriginalHook(HindstingStrike)))
-                        {
-                            return OriginalHook(HindstingStrike);
-                        }
-                    }
-
-                    if (HasEffect(Buffs.HonedReavers))
-                    {
                         return OriginalHook(ReavingFangs);
-                    }
-
-                    if (HasEffect(Buffs.HonedSteel))
-                    {
-                        return OriginalHook(SteelFangs);
                     }
                 }
 
-                return SteelFangs;
+                if (HasEffect(Buffs.HonedReavers))
+                {
+                    return OriginalHook(ReavingFangs);
+                }
+
+                return OriginalHook(SteelFangs);
             }
 
             return actionID;
@@ -376,14 +358,14 @@ internal class VPR
                     && !Gauge.DreadCombo.HasFlag(DreadCombo.SwiftskinsDen) && !Gauge.DreadCombo.HasFlag(DreadCombo.HuntersDen))
                 {
                     if (IsEnabled(Presets.VPR_AoE_Reawaken) && ActionReady(Reawaken)
-                        && (GetCooldownRemainingTime(SerpentsIre) > 30 || Gauge.SerpentOffering == 100)
+                        && ((TargetWorthDoT() && (GetCooldownRemainingTime(SerpentsIre) > 30 || Gauge.SerpentOffering == 100)) || BossAlmostDead())
                         && (Gauge.SerpentOffering >= 50 || HasEffect(Buffs.ReadyToReawaken)))
                     {
                         return Reawaken;
                     }
 
                     if (IsEnabled(Presets.VPR_AoE_Uncoiled) && ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0
-                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || TargetCloseToDeath()))
+                        && (GetCooldownRemainingTime(SerpentsIre) > 60 || Gauge.RattlingCoilStacks == 3 || BossAlmostDead()))
                     {
                         return UncoiledFury;
                     }
@@ -422,52 +404,31 @@ internal class VPR
                 {
                     if (lastComboMove is SteelMaw or ReavingMaw)
                     {
-                        if (HasEffect(Buffs.GrimhuntersVenom))
+                        if (EffectRemainingTime(Buffs.Swiftscaled) > EffectRemainingTime(Buffs.HuntersInstinct))
                         {
-                            return OriginalHook(SwiftskinsBite);
+                            return OriginalHook(SteelMaw);
                         }
 
-                        if (HasEffect(Buffs.GrimskinsVenom))
-                        {
-                            return OriginalHook(HuntersBite);
-                        }
-
-                        if (ActionReady(OriginalHook(SwiftskinsBite)))
-                        {
-                            return OriginalHook(SwiftskinsBite);
-                        }
+                        return OriginalHook(ReavingMaw);
                     }
 
                     if (lastComboMove is SwiftskinsBite or HuntersBite)
                     {
                         if (HasEffect(Buffs.GrimhuntersVenom))
                         {
-                            return OriginalHook(JaggedMaw);
+                            return OriginalHook(SteelMaw);
                         }
 
-                        if (HasEffect(Buffs.GrimskinsVenom))
-                        {
-                            return OriginalHook(BloodiedMaw);
-                        }
-
-                        if (ActionReady(OriginalHook(BloodiedMaw)))
-                        {
-                            return OriginalHook(BloodiedMaw);
-                        }
-                    }
-
-                    if (HasEffect(Buffs.HonedReavers))
-                    {
                         return OriginalHook(ReavingMaw);
-                    }
-
-                    if (HasEffect(Buffs.HonedSteel))
-                    {
-                        return OriginalHook(SteelMaw);
                     }
                 }
 
-                return SteelMaw;
+                if (HasEffect(Buffs.HonedReavers))
+                {
+                    return OriginalHook(ReavingMaw);
+                }
+
+                return OriginalHook(SteelMaw);
             }
 
             return actionID;

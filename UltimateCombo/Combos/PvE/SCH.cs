@@ -132,7 +132,7 @@ internal static class SCH
 
                         if (IsEnabled(Presets.SCH_ST_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                             && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                            || TargetHasEffectAny(Debuffs.ChainStratagem) || TargetCloseToDeath()))
+                            || TargetHasEffectAny(Debuffs.ChainStratagem) || BossAlmostDead()))
                         {
                             return EnergyDrain;
                         }
@@ -212,7 +212,7 @@ internal static class SCH
 
                     if (IsEnabled(Presets.SCH_AoE_DPS_EnergyDrain) && ActionReady(EnergyDrain) && Gauge.Aetherflow > 0
                         && (GetCooldownRemainingTime(Aetherflow) <= (Gauge.Aetherflow * GetCooldown(actionID).CooldownTotal) + 0.5
-                        || TargetHasEffectAny(Debuffs.ChainStratagem) || TargetCloseToDeath()))
+                        || TargetHasEffectAny(Debuffs.ChainStratagem) || BossAlmostDead()))
                     {
                         return EnergyDrain;
                     }

@@ -60,7 +60,7 @@ internal static class SAM
             OgiNamikiriReady = 2959,
             Fuka = 1299,
             Fugetsu = 1298,
-            Zanshin = 3855,
+            ZanshinReady = 3855,
             Tendo = 3856,
             AoETsubameReady = 3852,
             TsubameReady = 4216,
@@ -150,7 +150,7 @@ internal static class SAM
                             return MeikyoShisui;
                         }
 
-                        if (IsEnabled(Presets.SAM_ST_Ikishoten) && HasEffect(Buffs.Zanshin))
+                        if (IsEnabled(Presets.SAM_ST_Ikishoten) && HasEffect(Buffs.ZanshinReady) && Gauge.Kenki >= 50)
                         {
                             return Zanshin;
                         }
@@ -164,7 +164,7 @@ internal static class SAM
                             && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || Gauge.Kenki == 100
-                            || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || TargetCloseToDeath()))
+                            || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || BossAlmostDead()))
                         {
                             return Shinten;
                         }
@@ -313,7 +313,7 @@ internal static class SAM
                         return MeikyoShisui;
                     }
 
-                    if (IsEnabled(Presets.SAM_AoE_Ikishoten) && HasEffect(Buffs.Zanshin))
+                    if (IsEnabled(Presets.SAM_AoE_Ikishoten) && HasEffect(Buffs.ZanshinReady) && Gauge.Kenki >= 50)
                     {
                         return Zanshin;
                     }
@@ -332,7 +332,7 @@ internal static class SAM
                         && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || Gauge.Kenki == 100
-                        || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || TargetCloseToDeath()))
+                        || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || BossAlmostDead()))
                     {
                         return Kyuten;
                     }

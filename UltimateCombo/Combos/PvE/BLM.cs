@@ -217,7 +217,7 @@ internal class BLM
                     && !HasEffect(Buffs.Triplecast) && !HasEffect(Common.Buffs.Swiftcast)
                     && ((Gauge.PolyglotStacks == MaxPolyglot(Level) && Gauge.EnochianTimer <= 10000)
                     || (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(Level))
-                    || ActionWatching.NumberOfGcdsUsed == 4 || IsMoving || TargetCloseToDeath()))
+                    || ActionWatching.NumberOfGcdsUsed == 4 || IsMoving || BossAlmostDead()))
                 {
                     if (IsEnabled(Presets.BLM_ST_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
                         && TargetEffectRemainingTime(ThunderList[OriginalHook(Thunder)]) <= 3)
@@ -372,7 +372,7 @@ internal class BLM
                 if (IsEnabled(Presets.BLM_AoE_Foul) && ActionReady(Foul) && Gauge.PolyglotStacks >= 1
                     && !HasEffect(Buffs.Triplecast) && !HasEffect(Common.Buffs.Swiftcast)
                     && ((Gauge.PolyglotStacks == MaxPolyglot(Level) && Gauge.EnochianTimer <= 10000)
-                    || (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(Level)) || IsMoving || TargetCloseToDeath()))
+                    || (ActionReady(Amplifier) && Gauge.PolyglotStacks == MaxPolyglot(Level)) || IsMoving || BossAlmostDead()))
                 {
                     return Foul;
                 }

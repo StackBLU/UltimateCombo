@@ -142,11 +142,8 @@ internal static class AST
                 {
                     if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
                     {
-                        if (IsEnabled(Presets.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed)
-                            && !HasEffect(Buffs.Lightspeed) && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 5
-                            && (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed)
-                            || (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) - 1
-                            && GetCooldownChargeRemainingTime(Lightspeed) < 5)))
+                        if (IsEnabled(Presets.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed)
+                            && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
                         {
                             return Lightspeed;
                         }
@@ -154,14 +151,8 @@ internal static class AST
 
                     if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
                     {
-                        if (IsEnabled(Presets.AST_ST_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3
-                            && !HasEffectAny(Buffs.Divination))
+                        if (IsEnabled(Presets.AST_ST_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
                         {
-                            if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
-                            {
-                                return Lightspeed;
-                            }
-
                             if (ActionReady(Divination))
                             {
                                 return Divination;
@@ -256,23 +247,14 @@ internal static class AST
 
                 if (CanWeave(actionID))
                 {
-                    if (IsEnabled(Presets.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed)
-                        && !HasEffect(Buffs.Lightspeed) && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 5
-                        && (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed)
-                        || (GetRemainingCharges(Lightspeed) == GetMaxCharges(Lightspeed) - 1
-                        && GetCooldownChargeRemainingTime(Lightspeed) < 5)))
+                    if (IsEnabled(Presets.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed)
+                        && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
                     {
                         return Lightspeed;
                     }
 
-                    if (IsEnabled(Presets.AST_AoE_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3
-                        && !HasEffectAny(Buffs.Divination))
+                    if (IsEnabled(Presets.AST_AoE_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
                     {
-                        if (ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed))
-                        {
-                            return Lightspeed;
-                        }
-
                         if (ActionReady(Divination))
                         {
                             return Divination;

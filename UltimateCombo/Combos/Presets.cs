@@ -106,6 +106,10 @@ public enum Presets
     [CustomComboInfo("Arm's Length", "", Common.JobID)]
     All_ArmsLength = 100017,
 
+    [ParentCombo(All_RoleActions)]
+    [CustomComboInfo("Interject / Head Graze", "", Common.JobID)]
+    All_Interrupt = 100018,
+
     #endregion
 
     #region Protections
@@ -1576,11 +1580,15 @@ public enum Presets
 
     [ParentCombo(MNK_ST_DPS)]
     [CustomComboInfo("Riddle of Wind > Wind's Reply", "", MNK.JobID)]
-    MNK_ST_Wind = 9007,
+    MNK_ST_Wind = 9006,
 
     [ParentCombo(MNK_ST_DPS)]
     [CustomComboInfo("Brotherhood", "", MNK.JobID)]
-    MNK_ST_Brother = 9006,
+    MNK_ST_Brother = 9007,
+
+    [ParentCombo(MNK_ST_DPS)]
+    [CustomComboInfo("Earth's Reply", "", MNK.JobID)]
+    MNK_ST_Earth = 9008,
 
     #endregion
 
@@ -1608,11 +1616,15 @@ public enum Presets
 
     [ParentCombo(MNK_AoE_DPS)]
     [CustomComboInfo("Riddle of Wind > Wind's Reply", "", MNK.JobID)]
-    MNK_AoE_Wind = 9026,
+    MNK_AoE_Wind = 9025,
 
     [ParentCombo(MNK_AoE_DPS)]
     [CustomComboInfo("Brotherhood", "", MNK.JobID)]
-    MNK_AoE_Brother = 9025,
+    MNK_AoE_Brother = 9026,
+
+    [ParentCombo(MNK_AoE_DPS)]
+    [CustomComboInfo("Earth's Reply", "", MNK.JobID)]
+    MNK_AoE_Earth = 9027,
 
     #endregion
 
@@ -2639,6 +2651,10 @@ public enum Presets
     SMN_ST_SearingLight = 17008,
 
     [ParentCombo(SMN_ST_DPS)]
+    [CustomComboInfo("Lux Solaris", "", SMN.JobID)]
+    SMN_ST_Lux = 17009,
+
+    [ParentCombo(SMN_ST_DPS)]
     [CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
     SMN_ST_Carbuncle = 17010,
 
@@ -2681,6 +2697,10 @@ public enum Presets
     [ParentCombo(SMN_AoE_DPS)]
     [CustomComboInfo("Searing Light > Searing Flash", "", SMN.JobID)]
     SMN_AoE_SearingLight = 17028,
+
+    [ParentCombo(SMN_AoE_DPS)]
+    [CustomComboInfo("Lux Solaris", "", SMN.JobID)]
+    SMN_AoE_Lux = 17029,
 
     [ParentCombo(SMN_AoE_DPS)]
     [CustomComboInfo("Carbuncle Reminder", "", SMN.JobID)]
@@ -2991,13 +3011,13 @@ public enum Presets
     [CustomComboInfo("Peat Pelt > Deep Clean", "", BLU.JobID)]
     BLU_Tank_PeatClean = 70034,
 
-    [BlueInactive(BLU.GoblinPunch, BLU.BloodDrain, BLU.ChocoMeteor)]
-    [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor)]
+    [BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
+    [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Blood Drain", "", BLU.JobID)]
     BLU_ManaGain = 70035,
 
-    [BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
-    [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.PhantomFlurry)]
+    [BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
+    [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
     BLU_PhantomEnder = 70036,
 

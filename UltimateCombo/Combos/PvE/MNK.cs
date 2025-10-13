@@ -35,6 +35,7 @@ internal static class MNK
         ShadowOfTheDestroyer = 25767,
         RiddleOfFire = 7395,
         RiddleOfWind = 25766,
+        RiddleOfEarth = 7394,
         Brotherhood = 7396,
         ForbiddenChakra = 3547,
         FormShift = 4262,
@@ -61,7 +62,8 @@ internal static class MNK
             DisciplinedFist = 3001,
             Brotherhood = 1185,
             WindsRumination = 3842,
-            FiresRumination = 3843;
+            FiresRumination = 3843,
+            EarthsRumination = 3841;
     }
 
     internal static MNKGauge Gauge => CustomComboFunctions.GetJobGauge<MNKGauge>();
@@ -126,6 +128,11 @@ internal static class MNK
                         && (WasLastWeaponskill(OriginalHook(Bootshine)) || WasLastWeaponskill(DragonKick)))
                     {
                         return PerfectBalance;
+                    }
+
+                    if (IsEnabled(Presets.MNK_ST_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3)
+                    {
+                        return OriginalHook(RiddleOfEarth);
                     }
                 }
 
@@ -307,6 +314,11 @@ internal static class MNK
                         && Gauge.Chakra >= 5 && InCombat())
                     {
                         return OriginalHook(HowlingFist);
+                    }
+
+                    if (IsEnabled(Presets.MNK_AoE_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3)
+                    {
+                        return OriginalHook(RiddleOfEarth);
                     }
                 }
 

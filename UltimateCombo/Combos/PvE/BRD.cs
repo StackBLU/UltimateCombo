@@ -87,7 +87,7 @@ internal static class BRD
             {
                 if (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
                 {
-                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && (CanWeave(actionID) || !HasTarget()))
+                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID) || !HasTarget()))
                     {
                         if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                         {
@@ -144,14 +144,14 @@ internal static class BRD
                                 && ((GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)))
                                 || (GetRemainingCharges(OriginalHook(Bloodletter)) == GetMaxCharges(OriginalHook(Bloodletter)) - 1
                                 && GetCooldownChargeRemainingTime(OriginalHook(Bloodletter)) <= 8)
-                                || HasEffect(Buffs.BattleVoice) || TargetCloseToDeath()))
+                                || HasEffect(Buffs.BattleVoice) || BossAlmostDead()))
                             {
                                 return OriginalHook(Bloodletter);
                             }
                         }
 
-                        if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3
-                            || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
+                        if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.Wanderer
+                            && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
                         {
                             return PitchPerfect;
                         }
@@ -205,7 +205,8 @@ internal static class BRD
                     return ResonantArrow;
                 }
 
-                if (IsEnabled(Presets.BRD_ST_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100)
+                if (IsEnabled(Presets.BRD_ST_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100
+                    && (GetCooldownRemainingTime(BattleVoice) > 45 || HasEffect(Buffs.BattleVoice)))
                 {
                     return ApexArrow;
                 }
@@ -230,7 +231,7 @@ internal static class BRD
         {
             if ((actionID is QuickNock or Ladonsbite or WideVolley or Shadowbite) && IsEnabled(Presets.BRD_AoE_DPS))
             {
-                if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && (CanWeave(actionID) || !HasTarget()))
+                if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID) || !HasTarget()))
                 {
                     if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                     {
@@ -292,7 +293,7 @@ internal static class BRD
                         && ((GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)))
                         || (GetRemainingCharges(OriginalHook(RainOfDeath)) == GetMaxCharges(OriginalHook(RainOfDeath)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(RainOfDeath)) <= 8)
-                        || HasEffect(Buffs.BattleVoice) || TargetCloseToDeath()))
+                        || HasEffect(Buffs.BattleVoice) || BossAlmostDead()))
                     {
                         return OriginalHook(RainOfDeath);
                     }
@@ -313,7 +314,8 @@ internal static class BRD
                     return ResonantArrow;
                 }
 
-                if (IsEnabled(Presets.BRD_AoE_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100)
+                if (IsEnabled(Presets.BRD_AoE_Apex) && ActionReady(ApexArrow) && Gauge.SoulVoice == 100
+                    && (GetCooldownRemainingTime(Buffs.BattleVoice) > 45 || HasEffect(Buffs.BattleVoice)))
                 {
                     return ApexArrow;
                 }

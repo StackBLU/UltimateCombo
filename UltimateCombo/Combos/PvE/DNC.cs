@@ -115,7 +115,7 @@ internal static class DNC
                         return Devilment;
                     }
 
-                    if (IsEnabled(Presets.DNC_ST_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2))
+                    if (IsEnabled(Presets.DNC_ST_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && !ActionReady(Devilment))
                     {
                         return Flourish;
                     }
@@ -131,7 +131,7 @@ internal static class DNC
                     }
 
                     if (IsEnabled(Presets.DNC_ST_FanDance) && ActionReady(FanDance1) && Gauge.Feathers > 0
-                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || TargetCloseToDeath()))
+                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || BossAlmostDead()))
                     {
                         return FanDance1;
                     }
@@ -271,7 +271,7 @@ internal static class DNC
                         return Devilment;
                     }
 
-                    if (IsEnabled(Presets.DNC_AoE_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2))
+                    if (IsEnabled(Presets.DNC_AoE_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && !ActionReady(Devilment))
                     {
                         return Flourish;
                     }
@@ -287,7 +287,7 @@ internal static class DNC
                     }
 
                     if (IsEnabled(Presets.DNC_AoE_FanDance2) && ActionReady(FanDance1) && Gauge.Feathers > 0
-                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || TargetCloseToDeath()))
+                        && (HasEffect(Buffs.TechnicalFinish) || Gauge.Feathers == 4 || BossAlmostDead()))
                     {
                         return FanDance2;
                     }

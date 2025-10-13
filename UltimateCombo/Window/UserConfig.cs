@@ -613,11 +613,15 @@ internal static class UserConfigItems
         if (preset is Presets.SMN_ST_Astral && enabled)
         {
             UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_Astral_Swift, "Use Swiftcast on Slipstream", "");
+            UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_Astral_Garuda, "Don't use for Garuda/Slipstream", "");
+            UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_ST_Astral_Ifrit, "Don't use for Ifrit/Crimson Strike", "");
         }
 
         if (preset is Presets.SMN_AoE_Astral && enabled)
         {
             UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_AoE_Astral_Swift, "Use Swiftcast on Slipstream", "");
+            UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_AoE_Astral_Garuda, "Don't use for Garuda/Slipstream", "");
+            UserConfig.DrawAdditionalBoolChoice(SMN.Config.SMN_AoE_Astral_Ifrit, "Don't use for Ifrit/Crimson Strike", "");
         }
 
         #endregion

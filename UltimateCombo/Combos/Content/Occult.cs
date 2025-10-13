@@ -287,7 +287,7 @@ internal static class Occult
             if (IsEnabled(Presets.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat() && IsComboAction(actionID))
             {
                 if (IsEnabled(Presets.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(DeadlyBlow)
-                    && !HasEffect(Buffs.Rage) && (HasEffect(Buffs.PentUpRage) || GetCooldownRemainingTime(Rage) > 20))
+                    && HasEffect(Buffs.PentUpRage) && EffectRemainingTime(Buffs.PentUpRage) <= 1)
                 {
                     return DeadlyBlow;
                 }

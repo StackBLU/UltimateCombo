@@ -156,16 +156,16 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
 
             ImGui.Spacing();
 
-            if (ImGui.Selectable("Variant", OpenWindow == OpenWindow.Variant))
+            if (ImGui.Selectable("Occult", OpenWindow == OpenWindow.Occult))
             {
-                OpenWindow = OpenWindow.Variant;
+                OpenWindow = OpenWindow.Occult;
             }
 
             ImGui.Spacing();
 
-            if (ImGui.Selectable("Occult", OpenWindow == OpenWindow.Occult))
+            if (ImGui.Selectable("Variant", OpenWindow == OpenWindow.Variant))
             {
-                OpenWindow = OpenWindow.Occult;
+                OpenWindow = OpenWindow.Variant;
             }
 
             ImGui.Spacing();
@@ -243,8 +243,8 @@ internal enum OpenWindow
     PvP = 2,
     Eureka = 3,
     Bozja = 4,
-    Variant = 5,
-    Occult = 6,
+    Occult = 5,
+    Variant = 6,
     Settings = 7,
     About = 8,
     Debug = 9

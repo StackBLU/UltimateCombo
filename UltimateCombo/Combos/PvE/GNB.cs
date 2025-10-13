@@ -123,11 +123,14 @@ internal static class GNB
 
                         if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
                         {
-                            if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(NoMercy))
+                            if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(NoMercy) && CanLateWeave(actionID))
                             {
                                 return NoMercy;
                             }
+                        }
 
+                        if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                        {
                             if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock))
                             {
                                 return BowShock;
@@ -163,15 +166,9 @@ internal static class GNB
                     return OriginalHook(GnashingFang);
                 }
 
-                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1
-                    && HasEffect(Buffs.NoMercy))
+                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1 && HasEffect(Buffs.NoMercy))
                 {
                     return DoubleDown;
-                }
-
-                if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak))
-                {
-                    return SonicBreak;
                 }
 
                 if (Gauge.AmmoComboStep is 1 or 2)
@@ -186,10 +183,15 @@ internal static class GNB
                     return OriginalHook(ReignOfBeasts);
                 }
 
-                if (IsEnabled(Presets.GNB_ST_Burst) && ActionReady(BurstStrike)
+                if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak))
+                {
+                    return SonicBreak;
+                }
+
+                if (IsEnabled(Presets.GNB_ST_Burst) && ActionReady(BurstStrike) && Gauge.Ammo > 0
                     && ((Gauge.Ammo == MaxCartridges(Level) && lastComboMove == BrutalShell)
-                    || (HasEffect(Buffs.NoMercy) && Gauge.Ammo > 0 && GetCooldownRemainingTime(OriginalHook(GnashingFang)) > 5
-                    && GetCooldownRemainingTime(DoubleDown) > 10)))
+                    || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(OriginalHook(GnashingFang)) > 5 && GetCooldownRemainingTime(DoubleDown) > 10)
+                    || BossAlmostDead()))
                 {
                     return BurstStrike;
                 }
@@ -295,9 +297,9 @@ internal static class GNB
                     return OriginalHook(ReignOfBeasts);
                 }
 
-                if (IsEnabled(Presets.GNB_AoE_Fated) && ActionReady(FatedCircle)
+                if (IsEnabled(Presets.GNB_AoE_Fated) && ActionReady(FatedCircle) && Gauge.Ammo > 0
                     && ((Gauge.Ammo == MaxCartridges(Level) && lastComboMove is DemonSlice)
-                    || (HasEffect(Buffs.NoMercy) && Gauge.Ammo > 0 && GetCooldownRemainingTime(DoubleDown) > 10)))
+                    || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) > 10)))
                 {
                     return FatedCircle;
                 }

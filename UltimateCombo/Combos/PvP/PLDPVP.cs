@@ -119,7 +119,7 @@ internal static class PLDPvP
                         return Intervene;
                     }
 
-                    if (IsEnabled(Presets.PLDPvP_HolySpirit) && ActionReady(HolySpirit) && CurrentHP <= MaxHP - 6000)
+                    if (IsEnabled(Presets.PLDPvP_HolySpirit) && ActionReady(HolySpirit) && (CurrentHP <= MaxHP - 6000 || !InActionRange(FastBlade)))
                     {
                         return HolySpirit;
                     }

@@ -12,11 +12,6 @@ internal abstract partial class CustomComboFunctions
         return CustomComboCache.GetResourceCost(actionID);
     }
 
-    internal static bool IsResourceTypeNormal(uint actionID)
-    {
-        return CustomComboCache.GetResourceCost(actionID) is >= 100 or 0;
-    }
-
     internal static T GetJobGauge<T>() where T : JobGaugeBase
     {
         return Service.ComboCache.GetJobGauge<T>();
@@ -30,10 +25,5 @@ internal abstract partial class CustomComboFunctions
     internal unsafe uint GetLimitBreakMaxValue()
     {
         return UIState.Instance()->LimitBreakController.BarUnits;
-    }
-
-    internal unsafe byte GetLimitBreakBarCount()
-    {
-        return UIState.Instance()->LimitBreakController.BarCount;
     }
 }

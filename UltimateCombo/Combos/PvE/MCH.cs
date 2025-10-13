@@ -107,16 +107,16 @@ internal class MCH
                         if (IsEnabled(Presets.MCH_ST_Reassemble) && !HasEffect(Buffs.Reassembled)
                             && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
                             && ActionReady(Reassemble) && !HasEffect(Buffs.Overheated)
-                            && (ActionReady(Drill) || GetCooldownRemainingTime(Drill) < 1
-                            || ActionReady(OriginalHook(AirAnchor)) || GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 1
-                            || ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 1))
+                            && (ActionReady(Drill) || GetCooldownRemainingTime(Drill) < 2
+                            || ActionReady(OriginalHook(AirAnchor)) || GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 2
+                            || ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 2))
                         {
                             return Reassemble;
                         }
 
                         if (IsEnabled(Presets.MCH_ST_Wildfire) && ActionReady(Wildfire)
                             && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
-                            && (HasEffect(Buffs.Hypercharged) || HasEffect(Buffs.Overheated)))
+                            && (ActionReady(FullMetalField) || GetCooldownRemainingTime(FullMetalField) > 115))
                         {
                             return Wildfire;
                         }
@@ -124,7 +124,7 @@ internal class MCH
                         if (IsEnabled(Presets.MCH_ST_GaussRico) && ActionReady(OriginalHook(GaussRound))
                             && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet))
                             && !HasEffect(Buffs.Overheated)
-                            && (GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1 || TargetCloseToDeath()))
+                            && (GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1 || BossAlmostDead()))
                         {
                             return OriginalHook(GaussRound);
                         }
@@ -132,7 +132,7 @@ internal class MCH
                         if (IsEnabled(Presets.MCH_ST_GaussRico) && ActionReady(OriginalHook(Ricochet))
                             && GetRemainingCharges(OriginalHook(Ricochet)) >= GetRemainingCharges(OriginalHook(GaussRound))
                             && !HasEffect(Buffs.Overheated)
-                            && (GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1 || TargetCloseToDeath()))
+                            && (GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1 || BossAlmostDead()))
                         {
                             return OriginalHook(Ricochet);
                         }
@@ -157,9 +157,9 @@ internal class MCH
                     if (IsEnabled(Presets.MCH_ST_Hypercharge) && !HasEffect(Buffs.Overheated) && ActionReady(Hypercharge)
                         && !WasLastWeaponskill(OriginalHook(Heatblast))
                         && (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks)
-                        && (GetCooldownRemainingTime(Drill) > 5 || !LevelChecked(Drill) || !IsEnabled(Presets.MCH_ST_Drill))
-                        && (GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 5 || !LevelChecked(OriginalHook(AirAnchor)) || !IsEnabled(Presets.MCH_ST_AirAnchor))
-                        && (GetCooldownRemainingTime(Chainsaw) > 5 || !LevelChecked(Chainsaw) || !IsEnabled(Presets.MCH_ST_Chainsaw))
+                        && (GetCooldownRemainingTime(Drill) > 8 || !LevelChecked(Drill) || !IsEnabled(Presets.MCH_ST_Drill))
+                        && (GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 8 || !LevelChecked(OriginalHook(AirAnchor)) || !IsEnabled(Presets.MCH_ST_AirAnchor))
+                        && (GetCooldownRemainingTime(Chainsaw) > 8 || !LevelChecked(Chainsaw) || !IsEnabled(Presets.MCH_ST_Chainsaw))
                         && (Gauge.Heat >= GetOptionValue(Config.MCH_ST_Hypercharge) || HasEffect(Buffs.Hypercharged)))
                     {
                         return Hypercharge;
@@ -241,7 +241,7 @@ internal class MCH
 
                         if (IsEnabled(Presets.MCH_AoE_Reassemble) && ActionReady(Reassemble)
                             && !HasEffect(Buffs.Reassembled) && !HasEffect(Buffs.Overheated)
-                            && (ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 1 || HasEffect(Buffs.ExcavatorReady)))
+                            && (ActionReady(Chainsaw) || GetCooldownRemainingTime(Chainsaw) < 2 || HasEffect(Buffs.ExcavatorReady)))
                         {
                             return Reassemble;
                         }
@@ -249,7 +249,7 @@ internal class MCH
                         if (IsEnabled(Presets.MCH_AoE_GaussRico) && ActionReady(OriginalHook(GaussRound))
                             && GetRemainingCharges(OriginalHook(GaussRound)) >= GetRemainingCharges(OriginalHook(Ricochet))
                             && !HasEffect(Buffs.Overheated) && !WasLastWeaponskill(OriginalHook(Heatblast))
-                            && (GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1 || TargetCloseToDeath()))
+                            && (GetRemainingCharges(OriginalHook(GaussRound)) >= GetMaxCharges(OriginalHook(GaussRound)) - 1 || BossAlmostDead()))
                         {
                             return OriginalHook(GaussRound);
                         }
@@ -257,7 +257,7 @@ internal class MCH
                         if (IsEnabled(Presets.MCH_AoE_GaussRico) && ActionReady(OriginalHook(Ricochet))
                             && GetRemainingCharges(OriginalHook(Ricochet)) >= GetRemainingCharges(OriginalHook(GaussRound))
                             && !HasEffect(Buffs.Overheated) && !WasLastWeaponskill(OriginalHook(Heatblast))
-                            && (GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1 || TargetCloseToDeath()))
+                            && (GetRemainingCharges(OriginalHook(Ricochet)) >= GetMaxCharges(OriginalHook(Ricochet)) - 1 || BossAlmostDead()))
                         {
                             return OriginalHook(Ricochet);
                         }
@@ -281,7 +281,7 @@ internal class MCH
 
                     if (IsEnabled(Presets.MCH_AoE_Hypercharge) && !HasEffect(Buffs.Overheated) && ActionReady(Hypercharge)
                         && !WasLastWeaponskill(OriginalHook(Heatblast))
-                        && (GetCooldownRemainingTime(Bioblaster) > 5 || !LevelChecked(Bioblaster))
+                        && (GetCooldownRemainingTime(Bioblaster) > 8 || !LevelChecked(Bioblaster))
                         && (Gauge.Heat >= GetOptionValue(Config.MCH_AoE_Hypercharge) || HasEffect(Buffs.Hypercharged)))
                     {
                         return Hypercharge;
