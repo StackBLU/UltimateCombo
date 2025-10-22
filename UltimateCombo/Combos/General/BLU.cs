@@ -519,7 +519,7 @@ internal static class BLU
         {
             if (actionID is HydroPull or RamsVoice or Ultravibration && IsEnabled(Presets.BLU_Ultravibration))
             {
-                if (!InCombat())
+                if (!InCombat() && IsOnCooldown(Ultravibration))
                 {
                     return Ultravibration;
                 }

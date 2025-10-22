@@ -2971,7 +2971,6 @@ public enum Presets
     [CustomComboInfo("Triple Trident Combo", "Whistle > Tingle > Triple Trident", BLU.JobID)]
     BLU_TripleTrident = 70013,
 
-    [BlueInactive(BLU.Bristle, BLU.BreathOfMagic, BLU.MortalFlame, BLU.SongOfTorment, BLU.MatraMagic)]
     [ReplaceSkill(BLU.BreathOfMagic, BLU.MortalFlame, BLU.SongOfTorment, BLU.MatraMagic)]
     [CustomComboInfo("Buffed Breath of Magic, Mortal Flame, Song of Torment, and Matra Magic", "Bristle > Breath of Magic > Bristle > Mortal Flame > Bristle > Song of Torment > Bristle > Matra Magic", BLU.JobID)]
     BLU_DoTs = 70014,
@@ -3011,12 +3010,10 @@ public enum Presets
     [CustomComboInfo("Peat Pelt > Deep Clean", "", BLU.JobID)]
     BLU_Tank_PeatClean = 70034,
 
-    [BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Blood Drain", "", BLU.JobID)]
     BLU_ManaGain = 70035,
 
-    [BlueInactive(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
     BLU_PhantomEnder = 70036,

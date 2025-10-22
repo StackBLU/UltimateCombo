@@ -160,8 +160,8 @@ internal static class SAM
                             return Shoha;
                         }
 
-                        if (IsEnabled(Presets.SAM_ST_Shinten) && ActionReady(Shinten)
-                            && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
+                        if (IsEnabled(Presets.SAM_ST_Shinten) && ActionReady(Shinten) && Gauge.Kenki >= 25
+                            && ((GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_ST_SaveKenkiDash))
                             || Gauge.Kenki == 100
                             || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || BossAlmostDead()))
@@ -328,8 +328,8 @@ internal static class SAM
                         return Guren;
                     }
 
-                    if (IsEnabled(Presets.SAM_AoE_Kyuten) && ActionReady(Kyuten)
-                        && ((Gauge.Kenki >= 25 && GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
+                    if (IsEnabled(Presets.SAM_AoE_Kyuten) && ActionReady(Kyuten) && Gauge.Kenki >= 25
+                        && ((GetCooldownRemainingTime(Ikishoten) > 15 && !GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || (Gauge.Kenki >= 35 && GetCooldownRemainingTime(Ikishoten) > 15 && GetOptionBool(Config.SAM_AoE_SaveKenkiDash))
                         || Gauge.Kenki == 100
                         || (LevelChecked(Ikishoten) && GetCooldownRemainingTime(Ikishoten) < 5 && Gauge.Kenki > 50) || BossAlmostDead()))
@@ -356,7 +356,7 @@ internal static class SAM
                 }
 
                 if (IsEnabled(Presets.SAM_AoE_Iaijutsu)
-                    && ((Gauge.HasGetsu && Gauge.HasKa) || (Gauge.HasGetsu && Gauge.HasSetsu) || (Gauge.HasKa && Gauge.HasKa)))
+                    && ((Gauge.HasGetsu && Gauge.HasKa) || (Gauge.HasGetsu && Gauge.HasSetsu) || (Gauge.HasSetsu && Gauge.HasKa)))
                 {
                     return OriginalHook(Iaijutsu);
                 }

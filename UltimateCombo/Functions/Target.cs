@@ -207,7 +207,7 @@ internal abstract partial class CustomComboFunctions
                     return true;
                 }
 
-                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 25 && EnemyPercentHP() > 50)
+                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 25 && EnemyPercentHP() > 20)
                 {
                     return true;
                 }

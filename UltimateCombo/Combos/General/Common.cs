@@ -407,12 +407,12 @@ internal class Common
                 //Interject and Head Graze
                 if (IsEnabled(Presets.All_Interrupt) && SafeToUse() && CanInterrupt())
                 {
-                    if (ActionReady(Interject) && CurrentJobId is PLD.JobID or WAR.JobID or DRK.JobID or GNB.JobID)
+                    if (ActionReady(Interject) && InActionRange(Interject) && CurrentJobId is PLD.JobID or WAR.JobID or DRK.JobID or GNB.JobID)
                     {
                         return Interject;
                     }
 
-                    if (ActionReady(HeadGraze) && CurrentJobId is BRD.JobID or MCH.JobID or DNC.JobID)
+                    if (ActionReady(HeadGraze) && InActionRange(HeadGraze) && CurrentJobId is BRD.JobID or MCH.JobID or DNC.JobID)
                     {
                         return HeadGraze;
                     }
