@@ -1,5 +1,4 @@
 using Dalamud.Game.ClientState.JobGauge.Types;
-
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.Content;
 using UltimateCombo.Combos.General;
@@ -102,22 +101,22 @@ internal class PCT
                         return OriginalHook(LandscapeMotif);
                     }
 
-                    if (IsEnabled(Presets.PCT_ST_RainbowDrip) && ActionReady(RainbowDrip))
+                    if (IsEnabled(Presets.PCT_ST_RainbowDrip) && ActionReady(RainbowDrip) && TargetIsBoss())
                     {
                         return RainbowDrip;
                     }
                 }
 
-                if (CanWeave(actionID) && InCombat())
+                if (CanWeave(actionID, ActionWatching.LastGCD) && InCombat())
                 {
-                    if (IsEnabled(Presets.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && TargetIsBoss()
-                        && Gauge.LandscapeMotifDrawn && !HasEffectAny(Buffs.StarryMuse)
-                        && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
+                    if (IsEnabled(Presets.PCT_ST_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && TargetIsBoss() && !BossAlmostDead() && TargetWorthDoT()
+                        && CanLateWeave(actionID, ActionWatching.LastGCD) && Gauge.LandscapeMotifDrawn && !HasEffectAny(Buffs.StarryMuse)
+                        && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                     {
                         return OriginalHook(ScenicMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_ST_Hammer) && ActionReady(OriginalHook(SteelMuse)) && Gauge.WeaponMotifDrawn
+                    if (IsEnabled(Presets.PCT_ST_Hammer) && ActionReady(OriginalHook(SteelMuse)) && Gauge.WeaponMotifDrawn && !BossAlmostDead() && TargetWorthDoT()
                         && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(SteelMuse)) < 3)
                         || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))
@@ -126,107 +125,103 @@ internal class PCT
                         return OriginalHook(SteelMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(MogOfTheAges)))
+                    if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(MogOfTheAges)) && !HasEffect(Buffs.Hyperphantasia))
                     {
                         if (Gauge.MooglePortraitReady
                             && ((Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Pom)
                             && Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Wings)
                             && Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Claw)
-                            && Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse) || !LevelChecked(RetributionOfTheMadeen)))
+                            && Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse) || !LevelChecked(RetributionOfTheMadeen) || BossAlmostDead()))
                         {
                             return OriginalHook(MogOfTheAges);
                         }
 
                         if (Gauge.MadeenPortraitReady
                             && ((Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Pom)
-                            && Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse)))
+                            && Gauge.CreatureMotifDrawn) || HasEffect(Buffs.StarryMuse) || BossAlmostDead()))
                         {
                             return OriginalHook(RetributionOfTheMadeen);
                         }
                     }
 
-                    if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn
+                    if (IsEnabled(Presets.PCT_ST_Subtractive) && ActionReady(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette)
+                        && (HasEffect(Buffs.SubtractiveSpectrum) || Gauge.PalleteGauge >= 50)
+                        && (Gauge.PalleteGauge == 100 || HasEffect(Buffs.StarryMuse) || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) <= 5))
+                    {
+                        return SubtractivePalette;
+                    }
+
+                    if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn && !HasEffect(Buffs.Hyperphantasia)
                         && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 10)
                         || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
-                        || HasEffect(Buffs.StarryMuse)))
+                        || HasEffect(Buffs.StarryMuse) || BossAlmostDead()))
                     {
                         return OriginalHook(LivingMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_ST_Subtractive) && ActionReady(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette)
-                        && (HasEffect(Buffs.SubtractiveSpectrum)
-                        || (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
-                        || Gauge.PalleteGauge == 100))
-                    {
-                        if (IsEnabled(Presets.PCT_ST_Swiftcast) && ActionReady(Common.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
-                        {
-                            return Common.Swiftcast;
-                        }
-
-                        return SubtractivePalette;
-                    }
-
-                    if (IsEnabled(Presets.PCT_ST_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick)
-                        && CanLateWeave(actionID))
+                    if (IsEnabled(Presets.PCT_ST_Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD) && ActionReady(Common.Swiftcast)
+                        && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
                     {
                         return Common.Swiftcast;
                     }
                 }
 
-                if (IsEnabled(Presets.PCT_ST_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck)
-                    && !HasEffect(Buffs.SubtractivePalette))
+                if (IsEnabled(Presets.PCT_ST_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck) && !HasEffect(Buffs.SubtractivePalette)
+                    && GetCooldownRemainingTime(OriginalHook(ScenicMuse)) <= 110)
                 {
                     return StarPrism;
                 }
 
-                if (IsEnabled(Presets.PCT_ST_RainbowDrip) && ActionReady(RainbowDrip) && HasEffect(Buffs.RainbowBright))
+                if (IsEnabled(Presets.PCT_ST_RainbowDrip) && ActionReady(RainbowDrip) && HasEffect(Buffs.RainbowBright)
+                    && GetCooldownRemainingTime(OriginalHook(ScenicMuse)) <= 105)
                 {
                     return RainbowDrip;
                 }
 
-                if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
-                    && !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1)
-                    || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))))
-                {
-                    return OriginalHook(CreatureMotif);
-                }
-
                 if (IsEnabled(Presets.PCT_ST_Hammer) && ActionReady(OriginalHook(HammerStamp)) && HasEffect(Buffs.HammerTime)
-                    && !HasEffect(Buffs.Hyperphantasia))
+                    && (!HasEffect(Buffs.Hyperphantasia) || EffectStacks(Buffs.HammerTime) == 3)
+                    && (HasEffect(Buffs.StarryMuse) || (GetCooldownRemainingTime(OriginalHook(ScenicMuse)) <= 100 && IsOnCooldown(OriginalHook(ScenicMuse)))))
                 {
                     return OriginalHook(HammerStamp);
                 }
 
-                if (IsEnabled(Presets.PCT_ST_Hammer) && ActionReady(OriginalHook(WeaponMotif)) && !IsMoving
-                    && !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1)
-                    || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))))
-                {
-                    return OriginalHook(WeaponMotif);
-                }
-
                 if (IsEnabled(Presets.PCT_ST_Landscape) && ActionReady(OriginalHook(LandscapeMotif)) && !IsMoving
                     && !Gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15)
+                    && (GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15 || (!HasTarget() && InCombat())))
                 {
                     return OriginalHook(LandscapeMotif);
                 }
 
+                if (IsEnabled(Presets.PCT_ST_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
+                    && !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
+                    && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1 && GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) <= 10)
+                    || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
+                    || (!HasTarget() && InCombat())
+                    || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15))
+                {
+                    return OriginalHook(CreatureMotif);
+                }
+
+                if (IsEnabled(Presets.PCT_ST_Hammer) && ActionReady(OriginalHook(WeaponMotif)) && !IsMoving
+                    && !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia) && !HasEffect(Buffs.HammerTime)
+                    && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1 && GetCooldownChargeRemainingTime(OriginalHook(SteelMuse)) <= 10)
+                    || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))
+                    || (!HasTarget() && InCombat())
+                    || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15))
+                {
+                    return OriginalHook(WeaponMotif);
+                }
+
                 if (IsEnabled(Presets.PCT_ST_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
-                    && (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
-                    || (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
+                    && (Gauge.Paint == 5 || IsMoving || WasLastSpell(RainbowDrip) || (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
                 {
                     if (HasEffect(Buffs.MonochromeTones))
                     {
                         return CometInBlack;
                     }
 
-                    if (!HasEffect(Buffs.HammerTime))
-                    {
-                        return HolyInWhite;
-                    }
+                    return HolyInWhite;
                 }
 
                 if (HasEffect(Buffs.SubtractivePalette))
@@ -268,21 +263,21 @@ internal class PCT
                         return OriginalHook(LandscapeMotif);
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_RainbowDrip) && ActionReady(RainbowDrip))
+                    if (IsEnabled(Presets.PCT_AoE_RainbowDrip) && ActionReady(RainbowDrip) && TargetIsBoss())
                     {
                         return RainbowDrip;
                     }
                 }
 
-                if (CanWeave(actionID) && InCombat())
+                if (CanWeave(actionID, ActionWatching.LastGCD) && InCombat())
                 {
-                    if (IsEnabled(Presets.PCT_AoE_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && TargetIsBoss()
+                    if (IsEnabled(Presets.PCT_AoE_Landscape) && ActionReady(OriginalHook(ScenicMuse)) && TargetIsBoss() && !BossAlmostDead() && TargetWorthDoT()
                         && Gauge.LandscapeMotifDrawn && !HasEffectAny(Buffs.StarryMuse))
                     {
                         return OriginalHook(ScenicMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_Hammer) && ActionReady(OriginalHook(SteelMuse)) && Gauge.WeaponMotifDrawn
+                    if (IsEnabled(Presets.PCT_AoE_Hammer) && ActionReady(OriginalHook(SteelMuse)) && Gauge.WeaponMotifDrawn && !BossAlmostDead() && TargetWorthDoT()
                         && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(SteelMuse)) < 3)
                         || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))
@@ -291,7 +286,7 @@ internal class PCT
                         return OriginalHook(SteelMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(MogOfTheAges)))
+                    if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(MogOfTheAges)) && !HasEffect(Buffs.Hyperphantasia))
                     {
                         if (Gauge.MooglePortraitReady
                             && ((Gauge.CreatureFlags.HasFlag(Dalamud.Game.ClientState.JobGauge.Enums.CreatureFlags.Pom)
@@ -310,37 +305,30 @@ internal class PCT
                         }
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn
+                    if (IsEnabled(Presets.PCT_AoE_Subtractive) && ActionReady(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette)
+                        && (HasEffect(Buffs.SubtractiveSpectrum) || Gauge.PalleteGauge >= 50)
+                        && (Gauge.PalleteGauge == 100 || HasEffect(Buffs.StarryMuse) || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) <= 5))
+                    {
+                        return SubtractivePalette;
+                    }
+
+                    if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(LivingMuse)) && Gauge.CreatureMotifDrawn && !HasEffect(Buffs.Hyperphantasia)
                         && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1
                         && GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) < 10)
                         || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
-                        || HasEffect(Buffs.StarryMuse)))
+                        || HasEffect(Buffs.StarryMuse) || BossAlmostDead()))
                     {
                         return OriginalHook(LivingMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_Subtractive) && ActionReady(SubtractivePalette) && !HasEffect(Buffs.SubtractivePalette)
-                        && (HasEffect(Buffs.SubtractiveSpectrum)
-                        || (Gauge.PalleteGauge >= 50 && HasEffect(Buffs.StarryMuse))
-                        || Gauge.PalleteGauge == 100))
-                    {
-                        if (IsEnabled(Presets.PCT_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && !HasEffect(Occult.Buffs.OccultQuick))
-                        {
-                            return Common.Swiftcast;
-                        }
-
-                        return SubtractivePalette;
-                    }
-
                     if (IsEnabled(Presets.PCT_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick)
-                        && CanLateWeave(actionID))
+                        && CanLateWeave(actionID, ActionWatching.LastGCD))
                     {
                         return Common.Swiftcast;
                     }
                 }
 
-                if (IsEnabled(Presets.PCT_AoE_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck)
-                    && !HasEffect(Buffs.SubtractivePalette))
+                if (IsEnabled(Presets.PCT_AoE_StarPrism) && ActionReady(StarPrism) && HasEffect(Buffs.Starstruck) && !HasEffect(Buffs.SubtractivePalette))
                 {
                     return StarPrism;
                 }
@@ -350,48 +338,48 @@ internal class PCT
                     return RainbowDrip;
                 }
 
-                if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
-                    && !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1)
-                    || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))))
-                {
-                    return OriginalHook(CreatureMotif);
-                }
-
                 if (IsEnabled(Presets.PCT_AoE_Hammer) && ActionReady(OriginalHook(HammerStamp)) && HasEffect(Buffs.HammerTime)
-                    && !HasEffect(Buffs.Hyperphantasia))
+                    && (!HasEffect(Buffs.Hyperphantasia) || EffectStacks(Buffs.HammerTime) == 3))
                 {
                     return OriginalHook(HammerStamp);
                 }
 
+                if (IsEnabled(Presets.PCT_AoE_Creatures) && ActionReady(OriginalHook(CreatureMotif)) && !IsMoving
+                    && !Gauge.CreatureMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
+                    && ((GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse)) - 1 && GetCooldownChargeRemainingTime(OriginalHook(LivingMuse)) <= 10)
+                    || GetRemainingCharges(OriginalHook(LivingMuse)) == GetMaxCharges(OriginalHook(LivingMuse))
+                    || (!HasTarget() && InCombat())
+                    || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15))
+                {
+                    return OriginalHook(CreatureMotif);
+                }
+
                 if (IsEnabled(Presets.PCT_AoE_Hammer) && ActionReady(OriginalHook(WeaponMotif)) && !IsMoving
-                    && !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1)
-                    || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))))
+                    && !Gauge.WeaponMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia) && !HasEffect(Buffs.HammerTime)
+                    && ((GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse)) - 1 && GetCooldownChargeRemainingTime(OriginalHook(SteelMuse)) <= 10)
+                    || GetRemainingCharges(OriginalHook(SteelMuse)) == GetMaxCharges(OriginalHook(SteelMuse))
+                    || (!HasTarget() && InCombat())
+                    || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15))
                 {
                     return OriginalHook(WeaponMotif);
                 }
 
                 if (IsEnabled(Presets.PCT_AoE_Landscape) && ActionReady(OriginalHook(LandscapeMotif)) && !IsMoving
                     && !Gauge.LandscapeMotifDrawn && !HasEffect(Buffs.StarryMuse) && !HasEffect(Buffs.Hyperphantasia)
-                    && GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15)
+                    && (GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 15 || (!HasTarget() && InCombat())))
                 {
                     return OriginalHook(LandscapeMotif);
                 }
 
                 if (IsEnabled(Presets.PCT_AoE_Comet) && ActionReady(HolyInWhite) && Gauge.Paint > 0
-                    && (Gauge.Paint > 4 || GetCooldownRemainingTime(OriginalHook(ScenicMuse)) < 30 || IsMoving
-                    || (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
+                    && (Gauge.Paint > 4 || IsMoving || (HasEffect(Buffs.MonochromeTones) && HasEffect(Buffs.StarryMuse))))
                 {
                     if (HasEffect(Buffs.MonochromeTones))
                     {
                         return CometInBlack;
                     }
 
-                    if (!HasEffect(Buffs.HammerTime))
-                    {
-                        return HolyInWhite;
-                    }
+                    return HolyInWhite;
                 }
 
                 if (HasEffect(Buffs.SubtractivePalette))

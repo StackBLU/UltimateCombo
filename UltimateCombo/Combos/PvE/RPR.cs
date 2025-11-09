@@ -103,7 +103,7 @@ internal class RPR
                     return Harpe;
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (IsEnabled(Presets.RPR_ST_Shield) && ActionReady(ArcaneCrest))
                     {
@@ -155,7 +155,7 @@ internal class RPR
                 }
 
                 if (IsEnabled(Presets.RPR_ST_Soulsow) && HasEffect(Buffs.Soulsow)
-                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return HarvestMoon;
                 }
@@ -241,7 +241,7 @@ internal class RPR
                     return Soulsow;
                 }
 
-                if (CanWeave(actionID) && InCombat())
+                if (CanWeave(actionID, ActionWatching.LastGCD) && InCombat())
                 {
                     if (IsEnabled(Presets.RPR_AoE_Shield) && ActionReady(ArcaneCrest))
                     {

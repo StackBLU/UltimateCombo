@@ -83,9 +83,9 @@ internal class DRG
             if ((actionID is TrueThrust or VorpalThrust or LanceBarrage or Disembowel or SpiralBlow or FullThrust
                 or HeavensThrust or ChaosThrust or ChaoticSpring or FangAndClaw or WheelingThrust) && IsEnabled(Presets.DRG_ST_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.DRG_ST_LanceCharge) && ActionReady(LanceCharge))
                         {
@@ -93,7 +93,7 @@ internal class DRG
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.DRG_ST_BattleLitany) && ActionReady(BattleLitany) && TargetIsBoss()
                             && !HasEffectAny(Buffs.BattleLitany))
@@ -224,7 +224,7 @@ internal class DRG
         {
             if ((actionID is DoomSpike or SonicThrust or CoerthanTorment) && IsEnabled(Presets.DRG_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.DRG_AoE_LanceCharge) && ActionReady(LanceCharge))
                     {

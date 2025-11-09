@@ -202,14 +202,14 @@ internal static class Occult
                 }
 
                 if (IsEnabled(Presets.Occult_Counter) && DutyActionReady(OccultCounter) && InActionRange(OccultCounter)
-                    && CanWeave(actionID))
+                    && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return OccultCounter;
                 }
 
                 if (IsEnabled(Presets.Occult_Counterstance) && DutyActionReady(Counterstance)
                     && IsTargetOfTarget() && EffectRemainingTime(Buffs.Counterstance) < 2
-                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return Counterstance;
                 }
@@ -233,7 +233,7 @@ internal static class Occult
                     return Vigilance;
                 }
 
-                if (InCombat() && CanWeave(actionID))
+                if (InCombat() && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.Occult_PilferWeapon) && DutyActionReady(PilferWeapon)
                         && !TargetHasEffectAny(Debuffs.WeaponPilfered) && InActionRange(PilferWeapon))
@@ -262,13 +262,13 @@ internal static class Occult
                  && IsComboAction(actionID))
             {
                 if (IsEnabled(Presets.Occult_Zeninage) && DutyActionReady(Zeninage) && InActionRange(Zeninage)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return Zeninage;
                 }
 
                 if (IsEnabled(Presets.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki) && !IsMoving
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return Iainuki;
                 }
@@ -303,11 +303,11 @@ internal static class Occult
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID)
+            if (IsEnabled(Presets.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID, ActionWatching.LastGCD)
                  && IsComboAction(actionID))
             {
                 if (IsEnabled(Presets.Occult_Aim) && DutyActionReady(PhantomAim)
-                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return PhantomAim;
                 }
@@ -331,7 +331,7 @@ internal static class Occult
                 }
 
                 if (IsEnabled(Presets.Occult_Comet) && DutyActionReady(OccultComet)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (HasEffect(Common.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.OccultQuick))
                     {
@@ -340,7 +340,7 @@ internal static class Occult
                 }
 
                 if (IsEnabled(Presets.Occult_MageMasher) && DutyActionReady(OccultMageMasher) && !TargetHasEffectAny(Debuffs.OccultMageMasher)
-                    && HasBattleTarget() && CanWeave(actionID))
+                    && HasBattleTarget() && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return OccultMageMasher;
                 }
@@ -368,7 +368,7 @@ internal static class Occult
         {
             if (IsEnabled(Presets.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_BattleBell) && DutyActionReady(BattleBell) && CanWeave(actionID)
+                if (IsEnabled(Presets.Occult_BattleBell) && DutyActionReady(BattleBell) && CanWeave(actionID, ActionWatching.LastGCD)
                     && (!HasEffectAny(Buffs.BattleBell) || (HasFriendlyTarget() && !TargetHasEffectAny(Buffs.BattleBell))))
                 {
                     return BattleBell;
@@ -407,7 +407,7 @@ internal static class Occult
                     }
                 }
 
-                if (IsEnabled(Presets.Occult_RingingRespite) && DutyActionReady(RingingRespite) && CanWeave(actionID)
+                if (IsEnabled(Presets.Occult_RingingRespite) && DutyActionReady(RingingRespite) && CanWeave(actionID, ActionWatching.LastGCD)
                     && (!HasEffectAny(Buffs.RingingRespite) || (HasFriendlyTarget() && !TargetHasEffectAny(Buffs.RingingRespite))))
                 {
                     return RingingRespite;
@@ -424,10 +424,10 @@ internal static class Occult
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID) && IsComboAction(actionID))
+            if (IsEnabled(Presets.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
             {
                 if (IsEnabled(Presets.Occult_HerosRime) && DutyActionReady(HerosRime)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return HerosRime;
                 }
@@ -484,7 +484,7 @@ internal static class Occult
                     return Predict;
                 }
 
-                if (IsEnabled(Presets.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && CanWeave(actionID)
+                if (IsEnabled(Presets.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && CanWeave(actionID, ActionWatching.LastGCD)
                     && (GetCooldownRemainingTime(Predict) <= 8 || ActionReady(Predict)))
                 {
                     return PhantomRejuvenation;

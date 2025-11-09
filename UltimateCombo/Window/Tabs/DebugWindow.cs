@@ -27,11 +27,12 @@ internal class DebugWindow : ConfigWindow
     internal static new unsafe void Draw()
     {
         IPlayerCharacter? localPlayer = Service.ClientState.LocalPlayer;
+        var chara = CustomComboFunctions.CurrentTarget as IBattleChara;
         var comboClass = new DebugCombo();
 
         if (localPlayer != null)
         {
-            if (Service.ClientState.LocalPlayer?.TargetObject is IBattleChara chara)
+            if (chara != null)
             {
                 foreach (Status status in chara.StatusList)
                 {
@@ -65,6 +66,11 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
+                ImGui.TextUnformatted($"Current Cast Time: {chara?.CurrentCastTime}");
+                ImGui.TextUnformatted($"Total Cast Time: {chara?.TotalCastTime / 3}");
+                ImGui.TextUnformatted($"Interrupt?: {CustomComboFunctions.CanInterrupt()}");
+                ImGui.TextUnformatted($"Level difference?: {localPlayer.Level - CustomComboFunctions.EnemyLevel()}");
+                ImGui.TextUnformatted($"Ignore GCDs based on level difference?: {CustomComboFunctions.LevelIgnoreGCD()}");
 
                 ImGui.TextUnformatted("\n");
                 ImGui.TextUnformatted($"Last Action: {ActionWatching.GetActionName(ActionWatching.LastAction)} (ID:{ActionWatching.LastAction})");

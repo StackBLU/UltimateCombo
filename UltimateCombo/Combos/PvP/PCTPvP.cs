@@ -1,6 +1,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -108,7 +109,7 @@ internal static class PCTPvP
                     return OriginalHook(CreatureMotif);
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.PCTPvP_TemperaCoat) && ActionReady(TemperaCoat))
                     {
@@ -147,7 +148,7 @@ internal static class PCTPvP
                     }
                 }
 
-                if (IsEnabled(Presets.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)) && CanLateWeave(actionID))
+                if (IsEnabled(Presets.PCTPvP_AutoPalette) && ActionReady(OriginalHook(SubtractivePalette)) && CanLateWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsMoving && HasEffect(Buffs.SubtractivePalette) && (GetRemainingCharges(OriginalHook(HolyInWhite)) == 0
                         || PlayerHealthPercentageHp() <= GetOptionValue(Config.PCTPvP_AutoPalette)))

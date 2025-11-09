@@ -105,7 +105,7 @@ internal static class SCH
                     return Aetherflow;
                 }
 
-                if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                 {
                     if (IsEnabled(Presets.SCH_ST_DPS_ChainStrat) && ActionReady(ChainStratagem) && TargetIsBoss()
                         && !TargetHasEffectAny(Debuffs.ChainStratagem))
@@ -114,9 +114,9 @@ internal static class SCH
                     }
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.SCH_ST_DPS_Seraph) && ActionReady(OriginalHook(SummonSeraph)) && Gauge.SeraphTimer > 0
                         && Gauge.SeraphTimer < 5000)
@@ -143,7 +143,7 @@ internal static class SCH
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.SCH_ST_DPS_Dissipation) && ActionReady(Dissipation)
                             && !HasEffect(Buffs.Seraphism) && Gauge.SeraphTimer == 0 && Gauge.Aetherflow == 0)
@@ -159,7 +159,7 @@ internal static class SCH
                 }
 
                 if (IsEnabled(Presets.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
-                    && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks) && TargetWorthDoT()
+                    && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()) && TargetWorthDoT()
                     && (!TargetHasEffect(BioList[OriginalHook(Biolysis)]) || TargetEffectRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
                         || ActionWatching.NumberOfGcdsUsed == 11))
                 {
@@ -190,7 +190,7 @@ internal static class SCH
                     return Aetherflow;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.SCH_AoE_Aetherflow) && ActionReady(Aetherflow) && Gauge.Aetherflow == 0)
                     {

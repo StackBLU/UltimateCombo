@@ -92,7 +92,7 @@ internal static class DRK
                     return Unmend;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow))
                         && Gauge.DarksideTimeRemaining == 0 && (CurrentMP >= GetResourceCost(EdgeOfShadow) || Gauge.HasDarkArts))
@@ -107,7 +107,7 @@ internal static class DRK
                             return LivingShadow;
                         }
 
-                        if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                        if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
                             if (IsEnabled(Presets.DRK_ST_Edge) && ActionReady(OriginalHook(EdgeOfShadow)) && CurrentMP >= GetOptionValue(Config.DRK_ST_ManaSaver)
                                 && (CurrentMP >= GetResourceCost(EdgeOfShadow) || Gauge.HasDarkArts
@@ -147,7 +147,7 @@ internal static class DRK
                 }
 
                 if (IsEnabled(Presets.DRK_ST_LivingShadow) && HasEffect(Buffs.Scorn)
-                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     && (HasEffect(Buffs.Delirium) || EffectRemainingTime(Buffs.Scorn) <= 3))
                 {
                     return Disesteem;
@@ -211,7 +211,7 @@ internal static class DRK
                     return Shadowstride;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
                         && CurrentMP >= GetResourceCost(TheBlackestNight))

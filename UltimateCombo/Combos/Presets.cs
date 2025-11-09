@@ -2527,10 +2527,6 @@ public enum Presets
     BLM_ST_Manafont = 2004,
 
     [ParentCombo(BLM_ST_DPS)]
-    [CustomComboInfo("Ley Lines", "", BLM.JobID)]
-    BLM_ST_LeyLines = 2005,
-
-    [ParentCombo(BLM_ST_DPS)]
     [CustomComboInfo("Triplecast", "", BLM.JobID)]
     BLM_ST_Triplecast = 2006,
 
@@ -2565,10 +2561,6 @@ public enum Presets
     [ParentCombo(BLM_AoE_DPS)]
     [CustomComboInfo("Manafont", "", BLM.JobID)]
     BLM_AoE_Manafont = 2024,
-
-    [ParentCombo(BLM_AoE_DPS)]
-    [CustomComboInfo("Ley Lines", "", BLM.JobID)]
-    BLM_AoE_LeyLines = 2025,
 
     [ParentCombo(BLM_AoE_DPS)]
     [CustomComboInfo("Triplecast", "", BLM.JobID)]

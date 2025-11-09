@@ -127,7 +127,7 @@ internal class SMN
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (IsEnabled(Presets.SMN_ST_SearingLight) && HasEffect(Buffs.RubysGlimmer))
                     {
@@ -166,7 +166,8 @@ internal class SMN
                         return OriginalHook(EnkindleBahamut);
                     }
 
-                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3)
+                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3
+                        && !WasLastAction(SummonSolarBahamut))
                     {
                         return OriginalHook(LuxSolaris);
                     }
@@ -255,7 +256,7 @@ internal class SMN
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.SMN_AoE_SearingLight) && HasEffect(Buffs.RubysGlimmer))
                     {
@@ -296,7 +297,8 @@ internal class SMN
                         return OriginalHook(EnkindleBahamut);
                     }
 
-                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3)
+                    if (IsEnabled(Presets.SMN_ST_Lux) && HasEffect(Buffs.RefulgentLux) && EffectRemainingTime(Buffs.RefulgentLux) < 3
+                        && !WasLastAction(SummonSolarBahamut))
                     {
                         return OriginalHook(LuxSolaris);
                     }
@@ -420,7 +422,7 @@ internal class SMN
         {
             if ((actionID is SummonBahamut or SummonPhoenix or SummonSolarBahamut) && IsEnabled(Presets.SMN_Enkindle))
             {
-                if (CanWeave(actionID) && ActionReady(OriginalHook(EnkindleBahamut)))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && ActionReady(OriginalHook(EnkindleBahamut)))
                 {
                     return OriginalHook(EnkindleBahamut);
                 }

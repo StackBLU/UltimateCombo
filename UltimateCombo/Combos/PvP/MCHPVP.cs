@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -79,7 +80,7 @@ internal static class MCHPvP
                         return MarksmansSpite;
                     }
 
-                    if (IsEnabled(Presets.MCHPvP_Wildfire) && ActionReady(Wildfire) && WasLastWeaponskill(FullMetalField) && CanWeave(actionID))
+                    if (IsEnabled(Presets.MCHPvP_Wildfire) && ActionReady(Wildfire) && WasLastWeaponskill(FullMetalField) && CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         return Wildfire;
                     }

@@ -1,6 +1,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -88,7 +89,7 @@ internal static class DRKPvP
 
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.DRKPvP_BlackestNight) && ActionReady(TheBlackestNight)
                             && !HasEffect(Buffs.BlackestNight) && !HasEffect(Buffs.DarkArts) && !WasLastAction(TheBlackestNight))

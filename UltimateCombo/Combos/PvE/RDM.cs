@@ -103,7 +103,7 @@ internal class RDM
                     return OriginalHook(Verthunder3);
                 }
 
-                if (CanWeave(actionID)
+                if (CanWeave(actionID, ActionWatching.LastGCD)
                     && (!WasLastGCD(EnchantedRiposte)
                     || (WasLastWeaponskill(EnchantedRiposte) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     && (!WasLastGCD(EnchantedZwerchhau)
@@ -111,9 +111,9 @@ internal class RDM
                     && (!WasLastGCD(EnchantedRedoublement)
                     || (WasLastWeaponskill(EnchantedRedoublement) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability)))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
-                        if (IsEnabled(Presets.RDM_ST_Swift) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID)
+                        if (IsEnabled(Presets.RDM_ST_Swift) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD)
                             && !HasEffect(Buffs.Acceleration) && (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
                             && Gauge.ManaStacks == 0 && !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
                             && !WasLastGCD(EnchantedRiposte) && !WasLastGCD(EnchantedZwerchhau) && !WasLastGCD(EnchantedRedoublement))
@@ -122,7 +122,7 @@ internal class RDM
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.RDM_ST_Fleche) && ActionReady(Fleche))
                         {
@@ -141,7 +141,7 @@ internal class RDM
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.RDM_ST_Embolden) && ActionReady(Embolden) && TargetIsBoss() && !HasEffectAny(Buffs.Embolden))
                         {
@@ -299,7 +299,7 @@ internal class RDM
         {
             if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(Presets.RDM_AoE_DPS))
             {
-                if (CanWeave(actionID)
+                if (CanWeave(actionID, ActionWatching.LastGCD)
                     && (!WasLastGCD(EnchantedMoulinet)
                     || (WasLastWeaponskill(EnchantedMoulinet) && ActionWatching.GetAttackType(ActionWatching.LastAction) != ActionWatching.ActionAttackType.Ability))
                     && (!WasLastGCD(EnchantedMoulinetDeux)
@@ -320,7 +320,7 @@ internal class RDM
                         return Manafication;
                     }
 
-                    if (IsEnabled(Presets.RDM_AoE_Swift) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID)
+                    if (IsEnabled(Presets.RDM_AoE_Swift) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD)
                         && !HasEffect(Buffs.Acceleration) && (Gauge.WhiteMana < 50 || Gauge.BlackMana < 50 || !InActionRange(EnchantedRiposte))
                         && Gauge.ManaStacks == 0 && !WasLastSpell(Verflare) && !WasLastSpell(Verholy) && !WasLastSpell(Scorch)
                         && !WasLastGCD(EnchantedMoulinet) && !WasLastGCD(EnchantedMoulinetDeux) && !WasLastGCD(EnchantedMoulinetTrois))

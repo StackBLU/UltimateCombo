@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -87,7 +88,7 @@ internal static class NINPvP
 
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard) && !HasEffect(Buffs.Hidden))
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.NINPvP_Dokumori) && ActionReady(Dokumori) && InActionRange(Dokumori))
                         {
@@ -101,7 +102,7 @@ internal static class NINPvP
                     }
 
                     if (IsEnabled(Presets.NINPvP_ThreeMudra) && ActionReady(ThreeMudra) && !HasEffect(Buffs.ThreeMudra)
-                        && (CanWeave(actionID) || !InActionRange(SpinningEdge)))
+                        && (CanWeave(actionID, ActionWatching.LastGCD) || !InActionRange(SpinningEdge)))
                     {
                         return ThreeMudra;
                     }

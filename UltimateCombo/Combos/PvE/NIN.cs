@@ -145,14 +145,14 @@ internal class NIN
                     return Ten;
                 }
 
-                if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
                 {
                     if (IsEnabled(Presets.NIN_ST_Kassatsu) && ActionReady(Kassatsu))
                     {
                         return Kassatsu;
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.NIN_ST_Mug) && ActionReady(OriginalHook(Mug)) && TargetIsBoss() && !TargetHasEffectAny(Debuffs.Dokumori))
                         {
@@ -165,7 +165,7 @@ internal class NIN
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.NIN_ST_Trick) && ActionReady(OriginalHook(TrickAttack)) && HasEffect(Buffs.ShadowWalker)
                             && (GetCooldownRemainingTime(OriginalHook(Mug)) > 30 || TargetHasEffectAny(MugList[OriginalHook(Mug)])))
@@ -272,7 +272,7 @@ internal class NIN
                     }
 
                     if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-                        && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                        && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Jin)))
                     {
                         if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == Jin && MudraCheck[^1] == ChiCombo)
@@ -388,7 +388,7 @@ internal class NIN
                     return Chi;
                 }
 
-                if (CanWeave(actionID) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Buffs.Mudra) && !HasEffect(Buffs.TenChiJin))
                 {
                     if (IsEnabled(Presets.NIN_AoE_Kassatsu) && ActionReady(Kassatsu))
                     {

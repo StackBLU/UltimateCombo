@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -54,7 +55,7 @@ internal static class WHMPvP
                     }
                 }
 
-                if (IsEnabled(Presets.WHMPvP_Aquaveil) && ActionReady(Aquaveil) && CanWeave(actionID))
+                if (IsEnabled(Presets.WHMPvP_Aquaveil) && ActionReady(Aquaveil) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return Aquaveil;
                 }

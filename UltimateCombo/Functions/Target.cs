@@ -39,6 +39,11 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget is IBattleChara chara ? chara.Name.ToString() : "none";
     }
 
+    internal static float EnemyLevel()
+    {
+        return CurrentTarget is IBattleChara chara ? chara.Level : 0;
+    }
+
     internal static float EnemyMaxHP()
     {
         return CurrentTarget is IBattleChara chara ? chara.MaxHp : 0;
@@ -61,7 +66,7 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool CanInterrupt()
     {
-        return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible && chara.CurrentCastTime >= chara.TotalCastTime / 2;
+        return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible && chara.CurrentCastTime >= chara.TotalCastTime / 3;
     }
 
     internal static bool IsTargetOfTarget()
@@ -166,11 +171,36 @@ internal abstract partial class CustomComboFunctions
         return TargetDataId.HasValue ? Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank : (byte) 0;
     }
 
+    internal static bool LevelIgnoreGCD()
+    {
+        if (CurrentTarget is null || LocalPlayer is null)
+        {
+            return false;
+        }
+
+        if (EnemyName() == "Striking Dummy")
+        {
+            return false;
+        }
+
+        if (EnemyCurrentHP() == 1)
+        {
+            return false;
+        }
+
+        if (LocalPlayer.Level == 100 && LocalPlayer.Level - EnemyLevel() >= 10)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     internal static bool TargetIsBoss()
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
-            if (EnemyName() == "Striking Dummy" || Service.Configuration.IgnoreGCDChecks || HasEffect(Common.Buffs.EpicEcho))
+            if (EnemyName() == "Striking Dummy" || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD() || HasEffect(Common.Buffs.EpicEcho))
             {
                 return true;
             }
@@ -280,6 +310,11 @@ internal abstract partial class CustomComboFunctions
     {
         if (HasBattleTarget() && TargetDataId.HasValue)
         {
+            if (EnemyName() == "Striking Dummy")
+            {
+                return false;
+            }
+
             if (EnemyCurrentHP() == 1)
             {
                 return false;

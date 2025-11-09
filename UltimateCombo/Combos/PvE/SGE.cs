@@ -111,7 +111,7 @@ internal static class SGE
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     && !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis1) && !WasLastSpell(EukrasianPrognosis2)
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
@@ -125,7 +125,7 @@ internal static class SGE
                     }
 
                     if (IsEnabled(Presets.SGE_ST_DPS_Psyche) && ActionReady(Psyche)
-                        && (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks))
+                        && (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                     {
                         return Psyche;
                     }
@@ -149,9 +149,8 @@ internal static class SGE
                 }
 
                 if (IsEnabled(Presets.SGE_ST_DPS_EDosis) && ActionReady(OriginalHook(Dosis1)) && HasBattleTarget() && TargetWorthDoT()
-                   && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
-                   && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3
-                   || ActionWatching.NumberOfGcdsUsed == 11))
+                   && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
+                   && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3))
                 {
                     if (ActionReady(Eukrasia) && !HasEffect(Buffs.Eukrasia))
                     {
@@ -163,7 +162,7 @@ internal static class SGE
 
                 if (IsEnabled(Presets.SGE_ST_DPS_Phlegma) && InActionRange(OriginalHook(Phlegma)) && ActionReady(OriginalHook(Phlegma))
                     && (ActionReady(Psyche) || !LevelChecked(Psyche) || WasLastSpell(OriginalHook(Phlegma)) || GetCooldownRemainingTime(Psyche) > 50)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return OriginalHook(Phlegma);
                 }
@@ -189,12 +188,13 @@ internal static class SGE
         {
             if ((actionID is Dyskrasia1 or Dyskrasia2 or EukrasianDyskrasia) && IsEnabled(Presets.SGE_AoE_DPS))
             {
-                if (CanWeave(actionID)
+                if (CanWeave(actionID, ActionWatching.LastGCD)
                     && !WasLastSpell(Eukrasia) && !WasLastSpell(EukrasianPrognosis1) && !WasLastSpell(EukrasianPrognosis2)
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
                     if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss()
+                       && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                        && (!HasEffect(Buffs.Kardia)
                        || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
@@ -202,7 +202,7 @@ internal static class SGE
                         return Kardia;
                     }
 
-                    if (IsEnabled(Presets.SGE_AoE_DPS_Psyche) && ActionReady(Psyche) && CanWeave(actionID))
+                    if (IsEnabled(Presets.SGE_AoE_DPS_Psyche) && ActionReady(Psyche) && CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         return Psyche;
                     }
@@ -227,7 +227,7 @@ internal static class SGE
                 }
 
                 if (IsEnabled(Presets.SGE_AoE_DPS_EDyskrasia) && ActionReady(OriginalHook(Dyskrasia1))
-                    && HasBattleTarget() && LevelChecked(EukrasianDyskrasia) && TargetWorthDoT() && !WasLastSpell(EukrasianDyskrasia)
+                    && HasBattleTarget() && LevelChecked(EukrasianDyskrasia) && !WasLastSpell(EukrasianDyskrasia)
                     && (!TargetHasEffect(DosisList[OriginalHook(Dosis1)]) || TargetEffectRemainingTime(DosisList[OriginalHook(Dosis1)]) <= 3)
                     && (!TargetHasEffect(Debuffs.EukrasianDyskrasia) || TargetEffectRemainingTime(Debuffs.EukrasianDyskrasia) <= 3))
                 {
@@ -260,13 +260,13 @@ internal static class SGE
         {
             if ((actionID is Diagnosis or EukrasianDiagnosis) && IsEnabled(Presets.SGE_ST_Heals))
             {
+                if (IsEnabled(Presets.SGE_ST_Heals_Krasis) && ActionReady(Krasis))
+                {
+                    return Krasis;
+                }
+
                 if (!HasEffect(Buffs.Eukrasia))
                 {
-                    if (IsEnabled(Presets.SGE_ST_Heals_Krasis) && ActionReady(Krasis))
-                    {
-                        return Krasis;
-                    }
-
                     if (IsEnabled(Presets.SGE_ST_Heals_Haima) && ActionReady(Haima))
                     {
                         return Haima;

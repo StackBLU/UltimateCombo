@@ -95,9 +95,9 @@ internal static class MNK
                     return FormShift;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.MNK_ST_Fire) && ActionReady(RiddleOfFire))
                         {
@@ -284,15 +284,14 @@ internal static class MNK
                     return FormShift;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.MNK_AoE_Fire) && ActionReady(RiddleOfFire))
                     {
                         return RiddleOfFire;
                     }
 
-                    if (IsEnabled(Presets.MNK_AoE_Brother) && ActionReady(Brotherhood) && TargetIsBoss()
-                        && !HasEffectAny(Buffs.Brotherhood))
+                    if (IsEnabled(Presets.MNK_AoE_Brother) && ActionReady(Brotherhood) && TargetIsBoss() && !HasEffectAny(Buffs.Brotherhood))
                     {
                         return Brotherhood;
                     }

@@ -263,7 +263,7 @@ internal class Common
             if (IsEnabled(Presets.All_RoleActions) && IsComboAction(actionID))
             {
                 //True North
-                if (CanLateWeave(actionID) && SafeToUse())
+                if (CanLateWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
                 {
                     if (IsEnabled(Presets.All_TrueNorth) && ActionReady(TrueNorth) && IsActionEnabled(TrueNorth)
                         && TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || EffectRemainingTime(Buffs.TrueNorth) < 1))
@@ -419,7 +419,7 @@ internal class Common
                 }
 
                 //Second Wind, Bloodbath, Arm's Length
-                if (CanWeave(actionID) && SafeToUse())
+                if (CanWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
                 {
                     if (IsEnabled(Presets.All_SecondWind) && ActionReady(SecondWind) && IsActionEnabled(SecondWind)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.All_SecondWind))
@@ -434,14 +434,14 @@ internal class Common
                     }
 
                     if (IsEnabled(Presets.All_ArmsLength) && ActionReady(ArmsLength) && IsActionEnabled(ArmsLength)
-                        && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                        && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                     {
                         return ArmsLength;
                     }
                 }
 
                 if (IsEnabled(Presets.All_Healer_Lucid) && ActionReady(LucidDreaming) && IsActionEnabled(LucidDreaming)
-                    && ((CurrentMP <= GetOptionValue(Config.All_Healer_Lucid) && CanWeave(actionID))
+                    && ((CurrentMP <= GetOptionValue(Config.All_Healer_Lucid) && CanWeave(actionID, ActionWatching.LastGCD))
                     || CurrentMP <= 1000 || (!InCombat() && CurrentMP <= 8000)))
                 {
                     if (CurrentJobId is SGE.JobID)
@@ -459,7 +459,7 @@ internal class Common
                 }
 
                 if (IsEnabled(Presets.All_Mage_Lucid) && ActionReady(LucidDreaming) && IsActionEnabled(LucidDreaming)
-                    && ((CurrentMP <= GetOptionValue(Config.All_Mage_Lucid) && CanWeave(actionID))
+                    && ((CurrentMP <= GetOptionValue(Config.All_Mage_Lucid) && CanWeave(actionID, ActionWatching.LastGCD))
                     || CurrentMP <= 1000
                     || (!InCombat() && CurrentMP <= 8000))
                     && (CurrentJobId is SMN.JobID
@@ -470,7 +470,7 @@ internal class Common
                 }
 
                 if (IsEnabled(Presets.All_BLU_Lucid) && ActionReady(LucidDreaming) && IsActionEnabled(LucidDreaming)
-                    && ((CurrentMP <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID))
+                    && ((CurrentMP <= GetOptionValue(Config.All_BLU_Lucid) && CanWeave(actionID, ActionWatching.LastGCD))
                     || CurrentMP <= 4000
                     || (!InCombat() && CurrentMP <= 8000))
                     && CurrentJobId is BLU.JobID)

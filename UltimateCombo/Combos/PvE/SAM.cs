@@ -109,9 +109,9 @@ internal static class SAM
                     return Meditate;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.SAM_ST_Hagakure) && ActionReady(Hagakure)
                             && ActionReady(Ikishoten)
@@ -129,7 +129,7 @@ internal static class SAM
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.SAM_ST_Shield) && ActionReady(OriginalHook(ThirdEye)))
                         {
@@ -195,7 +195,7 @@ internal static class SAM
                     && (!IsMoving || WasLastWeaponskill(OriginalHook(Gyofu)))
                     && OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
                     && (Gauge.HasGetsu || Gauge.HasKa || Gauge.HasSetsu)
-                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks)
+                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     && TargetWorthDoT())
                 {
                     return OriginalHook(Iaijutsu);
@@ -204,7 +204,7 @@ internal static class SAM
                 if (Gauge.HasGetsu && Gauge.HasKa && Gauge.HasSetsu
                     && (!IsMoving || WasLastWeaponskill(Jinpu) || WasLastWeaponskill(Shifu))
                     && IsEnabled(Presets.SAM_ST_Iaijutsu)
-                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks))
+                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return OriginalHook(Iaijutsu);
                 }
@@ -289,7 +289,7 @@ internal static class SAM
                     return Meditate;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.SAM_AoE_Hagakure) && ActionReady(Hagakure)
                         && Gauge.HasKa && Gauge.HasGetsu && Gauge.HasSetsu)

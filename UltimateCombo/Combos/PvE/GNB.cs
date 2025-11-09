@@ -104,7 +104,7 @@ internal static class GNB
                     return LightningShot;
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (ActionReady(Continuation)
                         && (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)
@@ -121,15 +121,15 @@ internal static class GNB
                             return Bloodfest;
                         }
 
-                        if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                        if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
-                            if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(NoMercy) && CanLateWeave(actionID))
+                            if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(NoMercy) && CanLateWeave(actionID, ActionWatching.LastGCD))
                             {
                                 return NoMercy;
                             }
                         }
 
-                        if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                        if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
                             if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock))
                             {
@@ -161,7 +161,7 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0
-                    && Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks))
+                    && Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return OriginalHook(GnashingFang);
                 }
@@ -241,7 +241,7 @@ internal static class GNB
                     return Trajectory;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (ActionReady(Continuation) && HasEffect(Buffs.ReadyToRaze))
                     {

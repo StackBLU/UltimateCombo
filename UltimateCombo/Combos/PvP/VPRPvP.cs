@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -98,7 +99,7 @@ internal static class VPRPvP
                         return WorldSwallower;
                     }
 
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.VPRPvP_RattlingCoil) && ActionReady(RattlingCoil)
                             && IsOnCooldown(UncoiledFury) && IsOnCooldown(SnakeScales))

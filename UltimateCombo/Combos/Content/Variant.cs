@@ -3,6 +3,7 @@ using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.Content;
 
@@ -123,7 +124,7 @@ internal static class Variant
         {
             if (IsEnabled(Presets.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
             {
-                if (ActionReady(VariantUltimatum) && IsActionEnabled(VariantUltimatum) && CanWeave(actionID))
+                if (ActionReady(VariantUltimatum) && IsActionEnabled(VariantUltimatum) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return VariantUltimatum;
                 }
@@ -142,7 +143,7 @@ internal static class Variant
             if (IsEnabled(Presets.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
             {
                 if (ActionReady(VariantSpiritDart) && IsActionEnabled(VariantSpiritDart)
-                    && CanWeave(actionID) && !TargetHasEffectAny(Debuffs.SustainedDamage))
+                    && CanWeave(actionID, ActionWatching.LastGCD) && !TargetHasEffectAny(Debuffs.SustainedDamage))
                 {
                     return VariantSpiritDart;
                 }
@@ -160,7 +161,7 @@ internal static class Variant
         {
             if (IsEnabled(Presets.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
             {
-                if (ActionReady(VariantRampart) && IsActionEnabled(VariantRampart) && CanWeave(actionID))
+                if (ActionReady(VariantRampart) && IsActionEnabled(VariantRampart) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return VariantRampart;
                 }

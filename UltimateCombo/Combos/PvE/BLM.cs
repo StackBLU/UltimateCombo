@@ -170,9 +170,9 @@ internal class BLM
                     }
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (IsEnabled(Presets.BLM_ST_Swiftcast) && ActionReady(Common.Swiftcast) && !Gauge.IsParadoxActive && CanLateWeave(actionID)
+                    if (IsEnabled(Presets.BLM_ST_Swiftcast) && ActionReady(Common.Swiftcast) && !Gauge.IsParadoxActive && CanLateWeave(actionID, ActionWatching.LastGCD)
                         && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
@@ -186,7 +186,7 @@ internal class BLM
                         return Amplifier;
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.BLM_ST_Triplecast) && ActionReady(Triplecast) && !Gauge.IsParadoxActive
                             && (HasEffect(Buffs.CircleOfPower) || GetRemainingCharges(Triplecast) == 2
@@ -197,11 +197,6 @@ internal class BLM
                             || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
                         {
                             return Triplecast;
-                        }
-
-                        if (IsEnabled(Presets.BLM_ST_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines) && !WasLastAction(LeyLines))
-                        {
-                            return LeyLines;
                         }
                     }
                 }
@@ -241,14 +236,19 @@ internal class BLM
                     return Xenoglossy;
                 }
 
-                if (IsEnabled(Presets.BLM_ST_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire
-                    && CurrentMP == 0)
+                if (IsEnabled(Presets.BLM_ST_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.LeyLines)
+                    && Gauge.InAstralFire && CurrentMP == 0)
                 {
                     return Manafont;
                 }
 
                 if (IsEnabled(Presets.BLM_ST_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
                 {
+                    if (IsMoving && ActionReady(Despair) && CurrentMP <= 1600 && CurrentMP >= 800)
+                    {
+                        return Despair;
+                    }
+
                     return FlareStar;
                 }
 
@@ -330,9 +330,9 @@ internal class BLM
         {
             if ((actionID is Fire2 or HighFire2 or Blizzard2 or HighBlizzard2) && IsEnabled(Presets.BLM_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (IsEnabled(Presets.BLM_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID)
+                    if (IsEnabled(Presets.BLM_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD)
                         && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
@@ -356,11 +356,6 @@ internal class BLM
                     {
                         return Triplecast;
                     }
-
-                    if (IsEnabled(Presets.BLM_AoE_LeyLines) && ActionReady(LeyLines) && !HasEffect(Buffs.LeyLines) && !WasLastAction(LeyLines))
-                    {
-                        return LeyLines;
-                    }
                 }
 
                 if (IsEnabled(Presets.BLM_AoE_Thunder) && ActionReady(OriginalHook(Thunder)) && HasEffect(Buffs.Thunderhead)
@@ -377,14 +372,19 @@ internal class BLM
                     return Foul;
                 }
 
-                if (IsEnabled(Presets.BLM_AoE_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.CircleOfPower) && Gauge.InAstralFire
-                    && CurrentMP == 0)
+                if (IsEnabled(Presets.BLM_AoE_Manafont) && ActionReady(Manafont) && HasEffect(Buffs.LeyLines)
+                    && Gauge.InAstralFire && CurrentMP == 0)
                 {
                     return Manafont;
                 }
 
                 if (IsEnabled(Presets.BLM_AoE_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
                 {
+                    if (IsMoving && ActionReady(Flare) && CurrentMP <= 3000 && CurrentMP >= 800)
+                    {
+                        return Flare;
+                    }
+
                     return FlareStar;
                 }
 

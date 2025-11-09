@@ -95,7 +95,7 @@ internal static class PLD
                     return HolySpirit;
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks) && !HasEffect(Bozja.Buffs.BloodRage))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()) && !HasEffect(Bozja.Buffs.BloodRage))
                 {
                     if (IsEnabled(Presets.PLD_ST_FightOrFlight) && ActionReady(FightOrFlight))
                     {
@@ -224,7 +224,7 @@ internal static class PLD
                     return Intervene;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.PLD_AoE_FightOrFlight) && ActionReady(FightOrFlight))
                     {

@@ -138,25 +138,23 @@ internal static class AST
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
-                        if (IsEnabled(Presets.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed)
-                            && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
+                        if (IsEnabled(Presets.AST_ST_DPS_Lightspeed) && ActionReady(Lightspeed) && TargetIsBoss()
+                            && !HasEffect(Buffs.Lightspeed) && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
                         {
                             return Lightspeed;
                         }
                     }
 
-                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                    if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
-                        if (IsEnabled(Presets.AST_ST_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
+                        if (IsEnabled(Presets.AST_ST_DPS_Divination) && ActionReady(Divination) && TargetIsBoss()
+                            && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
                         {
-                            if (ActionReady(Divination))
-                            {
-                                return Divination;
-                            }
+                            return Divination;
                         }
 
                         if (IsEnabled(Presets.AST_ST_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))
@@ -217,7 +215,7 @@ internal static class AST
                 }
 
                 if (IsEnabled(Presets.AST_ST_DPS_Combust) && ActionReady(OriginalHook(Combust3))
-                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks) && TargetWorthDoT()
+                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()) && TargetWorthDoT()
                     && (!TargetHasEffect(CombustList[OriginalHook(Combust)])
                     || TargetEffectRemainingTime(CombustList[OriginalHook(Combust)]) <= 3
                     || ActionWatching.NumberOfGcdsUsed == 11))
@@ -245,20 +243,18 @@ internal static class AST
                     return EarthlyStar;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (IsEnabled(Presets.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed) && !HasEffect(Buffs.Lightspeed)
-                        && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
+                    if (IsEnabled(Presets.AST_AoE_DPS_Lightspeed) && ActionReady(Lightspeed) && TargetIsBoss()
+                        && !HasEffect(Buffs.Lightspeed) && !HasEffect(Common.Buffs.Swiftcast) && GetCooldownRemainingTime(Divination) < 3)
                     {
                         return Lightspeed;
                     }
 
-                    if (IsEnabled(Presets.AST_AoE_DPS_Divination) && TargetIsBoss() && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
+                    if (IsEnabled(Presets.AST_AoE_DPS_Divination) && ActionReady(Divination) && TargetIsBoss()
+                        && GetCooldownRemainingTime(Divination) < 3 && !HasEffectAny(Buffs.Divination))
                     {
-                        if (ActionReady(Divination))
-                        {
-                            return Divination;
-                        }
+                        return Divination;
                     }
 
                     if (IsEnabled(Presets.AST_AoE_DPS_AutoPlay) && ActionReady(OriginalHook(Play1))

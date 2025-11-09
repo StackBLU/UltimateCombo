@@ -85,7 +85,7 @@ internal static class WAR
                     return Tomahawk;
                 }
 
-                if (CanWeave(actionID) && !HasEffect(Bozja.Buffs.BloodRage))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Bozja.Buffs.BloodRage))
                 {
                     if (IsEnabled(Presets.WAR_ST_Infuriate) && ActionReady(Infuriate)
                         && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
@@ -97,7 +97,7 @@ internal static class WAR
                     }
 
                     if ((EffectRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
-                        && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks))
+                        && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                     {
                         if (IsEnabled(Presets.WAR_ST_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))
                         {
@@ -131,7 +131,7 @@ internal static class WAR
                 }
 
                 if (IsEnabled(Presets.WAR_ST_FellCleave) && ActionReady(OriginalHook(FellCleave))
-                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks)
+                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     && (EffectRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
                     && (HasEffect(Buffs.InnerRelease) || HasEffect(Buffs.NascentChaos)
                     || (Gauge.BeastGauge >= GetOptionValue(Config.WAR_FellCleaveGauge)
@@ -198,7 +198,7 @@ internal static class WAR
                     return Holmgang;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.WAR_AoE_Infuriate) && ActionReady(Infuriate)
                         && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)

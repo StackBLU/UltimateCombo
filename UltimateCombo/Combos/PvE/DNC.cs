@@ -107,15 +107,15 @@ internal static class DNC
                     return ClosedPosition;
                 }
 
-                if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep)
-                    && (ActionWatching.NumberOfGcdsUsed >= 10 || Service.Configuration.IgnoreGCDChecks))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep)
+                    && (ActionWatching.NumberOfGcdsUsed >= 10 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (IsEnabled(Presets.DNC_ST_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish) && TargetIsBoss())
                     {
                         return Devilment;
                     }
 
-                    if (IsEnabled(Presets.DNC_ST_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && !ActionReady(Devilment))
+                    if (IsEnabled(Presets.DNC_ST_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && IsOnCooldown(Devilment))
                     {
                         return Flourish;
                     }
@@ -143,7 +143,7 @@ internal static class DNC
                 }
 
                 if (IsEnabled(Presets.DNC_ST_Technical) && ActionReady(TechnicalStep) && !HasEffect(Buffs.StandardStep) && TargetIsBoss()
-                    && !HasEffectAny(Buffs.TechnicalFinish))
+                    && !HasEffectAny(Buffs.TechnicalFinish) && InCombat())
                 {
                     return TechnicalStep;
                 }
@@ -211,20 +211,22 @@ internal static class DNC
                     return DanceOfTheDawn;
                 }
 
+                if (IsEnabled(Presets.DNC_ST_LastDance) && HasEffect(Buffs.LastDanceReady)
+                    && (HasEffect(Buffs.TechnicalFinish) || EffectRemainingTime(Buffs.LastDanceReady) <= 3
+                    || EffectRemainingTime(Buffs.LastDanceReady) < GetCooldownRemainingTime(TechnicalStep) + 7.5))
+                {
+                    return LastDance;
+                }
+
                 if (IsEnabled(Presets.DNC_ST_Starfall) && HasEffect(Buffs.FlourishingStarfall))
                 {
                     return StarfallDance;
                 }
 
-                if (IsEnabled(Presets.DNC_ST_LastDance) && HasEffect(Buffs.LastDanceReady))
-                {
-                    return LastDance;
-                }
-
-                if (IsEnabled(Presets.DNC_ST_Saber) && ActionReady(SaberDance)
+                if (IsEnabled(Presets.DNC_ST_Saber) && ActionReady(SaberDance) && Gauge.Esprit >= 50
                     && (Gauge.Esprit == 100
-                        || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)
-                        || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3))))
+                    || HasEffect(Buffs.TechnicalFinish)
+                    || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3))))
                 {
                     return SaberDance;
                 }
@@ -264,14 +266,14 @@ internal static class DNC
                     return ClosedPosition;
                 }
 
-                if (CanWeave(actionID) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Buffs.TechnicalStep) && !HasEffect(Buffs.StandardStep))
                 {
                     if (IsEnabled(Presets.DNC_AoE_Devilment) && ActionReady(Devilment) && HasEffect(Buffs.TechnicalFinish))
                     {
                         return Devilment;
                     }
 
-                    if (IsEnabled(Presets.DNC_AoE_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && !ActionReady(Devilment))
+                    if (IsEnabled(Presets.DNC_AoE_Flourish) && ActionReady(Flourish) && !WasLastWeaponskill(StandardFinish2) && IsOnCooldown(Devilment))
                     {
                         return Flourish;
                     }
@@ -367,18 +369,21 @@ internal static class DNC
                     return DanceOfTheDawn;
                 }
 
+                if (IsEnabled(Presets.DNC_AoE_LastDance) && HasEffect(Buffs.LastDanceReady)
+                    && (HasEffect(Buffs.TechnicalFinish) || EffectRemainingTime(Buffs.LastDanceReady) <= 3
+                    || EffectRemainingTime(Buffs.LastDanceReady) < GetCooldownRemainingTime(TechnicalStep) + 7.5))
+                {
+                    return LastDance;
+                }
+
                 if (IsEnabled(Presets.DNC_AoE_Starfall) && HasEffect(Buffs.FlourishingStarfall))
                 {
                     return StarfallDance;
                 }
 
-                if (IsEnabled(Presets.DNC_AoE_LastDance) && HasEffect(Buffs.LastDanceReady))
-                {
-                    return LastDance;
-                }
-
-                if (IsEnabled(Presets.DNC_AoE_Saber) && ActionReady(SaberDance)
-                    && (Gauge.Esprit == 100 || (HasEffect(Buffs.TechnicalFinish) && Gauge.Esprit >= 50)
+                if (IsEnabled(Presets.DNC_AoE_Saber) && ActionReady(SaberDance) && Gauge.Esprit >= 50
+                    && (Gauge.Esprit == 100
+                    || HasEffect(Buffs.TechnicalFinish)
                     || (Gauge.Esprit > 50 && (IsOffCooldown(Flourish) || GetCooldownRemainingTime(Flourish) < 3))))
                 {
                     return SaberDance;

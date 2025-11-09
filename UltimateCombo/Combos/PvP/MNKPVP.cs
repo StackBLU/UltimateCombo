@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -56,7 +57,7 @@ internal static class MNKPvP
                     return Meteodrive;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.MNKPvP_RiddleOfEarth) && ActionReady(RiddleOfEarth))
                     {
@@ -66,7 +67,7 @@ internal static class MNKPvP
 
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.MNKPvP_RisingPhoenix) && ActionReady(RisingPhoenix)
                             && (WasLastWeaponskill(WindsReply) || WasLastWeaponskill(PouncingCoeurl))

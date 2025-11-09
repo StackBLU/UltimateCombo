@@ -85,9 +85,9 @@ internal static class BRD
         {
             if ((actionID is HeavyShot or BurstShot or StraightShot or RefulgentArrow) && IsEnabled(Presets.BRD_ST_DPS))
             {
-                if (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks)
+                if (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                 {
-                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID) || !HasTarget()))
+                    if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID, ActionWatching.LastGCD) || !HasTarget()))
                     {
                         if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                         {
@@ -105,9 +105,9 @@ internal static class BRD
                         }
                     }
 
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
-                        if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks)
+                        if (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
                             if (TargetIsBoss())
                             {
@@ -231,7 +231,7 @@ internal static class BRD
         {
             if ((actionID is QuickNock or Ladonsbite or WideVolley or Shadowbite) && IsEnabled(Presets.BRD_AoE_DPS))
             {
-                if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID) || !HasTarget()))
+                if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID, ActionWatching.LastGCD) || !HasTarget()))
                 {
                     if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                     {
@@ -249,7 +249,7 @@ internal static class BRD
                     }
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (TargetIsBoss())
                     {

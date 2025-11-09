@@ -94,7 +94,7 @@ internal static class WHM
                     ActionWatching.CombatActions.Clear();
                 }
 
-                if (CanWeave(actionID) && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (IsEnabled(Presets.WHM_ST_DPS_PresenceOfMind) && ActionReady(PresenceOfMind) && TargetIsBoss())
                     {
@@ -107,25 +107,24 @@ internal static class WHM
                     }
                 }
 
-                if (IsEnabled(Presets.WHM_ST_DPS_Dia) && ActionReady(OriginalHook(Dia))
-                    && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks) && TargetWorthDoT()
-                    && (!TargetHasEffect(DiaList[OriginalHook(Dia)]) || TargetEffectRemainingTime(DiaList[OriginalHook(Dia)]) <= 3
-                    || ActionWatching.NumberOfGcdsUsed == 13))
-                {
-                    return OriginalHook(Dia);
-                }
-
                 if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000)))
+                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000) || Gauge.Lily == 3))
                 {
                     return AfflatusMisery;
                 }
 
                 if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusRapture)
-                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17000)
-                    || (HasEffect(Buffs.PresenceOfMind) && Gauge.BloodLily + Gauge.Lily >= 3)))
+                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17500)
+                    || (IsOnCooldown(PresenceOfMind) && GetCooldownRemainingTime(PresenceOfMind) <= 5 && Gauge.BloodLily != 3)))
                 {
                     return AfflatusRapture;
+                }
+
+                if (IsEnabled(Presets.WHM_ST_DPS_Dia) && ActionReady(OriginalHook(Dia))
+                    && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()) && TargetWorthDoT()
+                    && (!TargetHasEffect(DiaList[OriginalHook(Dia)]) || TargetEffectRemainingTime(DiaList[OriginalHook(Dia)]) <= 3))
+                {
+                    return OriginalHook(Dia);
                 }
 
                 if (IsEnabled(Presets.WHM_ST_DPS_PresenceOfMind) && EffectStacks(Buffs.SacredSight) > 0 && ActionReady(Glare4))
@@ -146,7 +145,7 @@ internal static class WHM
         {
             if ((actionID is Holy or Holy3) && IsEnabled(Presets.WHM_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.WHM_AoE_DPS_PresenceOfMind) && ActionReady(PresenceOfMind))
                     {
@@ -160,14 +159,14 @@ internal static class WHM
                 }
 
                 if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
-                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000)))
+                    && (HasEffect(Buffs.PresenceOfMind) || (Gauge.Lily >= 2 && Gauge.LilyTimer >= 15000) || Gauge.Lily == 3))
                 {
                     return AfflatusMisery;
                 }
 
                 if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusRapture)
-                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17000)
-                    || (HasEffect(Buffs.PresenceOfMind) && Gauge.BloodLily + Gauge.Lily >= 3)))
+                    && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17500)
+                    || (!IsOnCooldown(PresenceOfMind) && GetCooldownRemainingTime(PresenceOfMind) <= 5 && Gauge.BloodLily != 3)))
                 {
                     return AfflatusRapture;
                 }

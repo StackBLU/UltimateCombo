@@ -54,21 +54,31 @@ internal abstract partial class CustomComboFunctions
         return GetTargetDistance() <= range;
     }
 
-    internal static bool ActionReady(uint id)
+    internal static bool ActionReady(uint actionID)
     {
-        if (!LevelChecked(id) || (!HasCharges(id) && GetCooldown(id).CooldownTotal > 4))
+        ActionWatching.ActionAttackType attackType = ActionWatching.GetAttackType(actionID);
+
+        if (!LevelChecked(actionID) || (!HasCharges(actionID) && GetCooldown(actionID).CooldownTotal > 6))
         {
             return false;
         }
 
-        return ActionWatching.GetAttackType(id) switch
+        if (attackType == ActionWatching.ActionAttackType.Weaponskill)
         {
-            ActionWatching.ActionAttackType.Weaponskill => !HasPacification(),
-            ActionWatching.ActionAttackType.Spell => !HasSilence(),
-            ActionWatching.ActionAttackType.Ability => !HasAmnesia() && !HasSilence(),
-            ActionWatching.ActionAttackType.Unknown => false,
-            _ => false
-        };
+            return !HasPacification();
+        }
+
+        if (attackType == ActionWatching.ActionAttackType.Spell)
+        {
+            return !HasSilence();
+        }
+
+        if (attackType == ActionWatching.ActionAttackType.Ability)
+        {
+            return !HasAmnesia() && !HasSilence();
+        }
+
+        return false;
     }
 
     internal static bool DutyActionReady(uint id)
@@ -116,32 +126,51 @@ internal abstract partial class CustomComboFunctions
         return Service.Configuration.ActiveBLUSpells.Contains(id);
     }
 
-    internal static bool CanWeave(uint actionID, double weaveTime = 0.6)
+    internal static bool CanWeave(uint actionID, uint lastGCD)
     {
+        var weaveTime = 0.6;
+        var skillToUse = lastGCD;
+
+        if (GetCooldown(lastGCD).CooldownTotal >= 6.5)
+        {
+            skillToUse = actionID;
+        }
+
         if (HasSilence() || HasPacification())
         {
             return true;
         }
-
-        var cooldownRemaining = GetCooldown(actionID).CooldownRemaining;
 
         if (Service.Configuration.DisableTripleWeaving)
         {
-            return cooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved();
+            return GetCooldown(skillToUse).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved();
         }
 
-        return cooldownRemaining >= weaveTime;
+        return GetCooldown(skillToUse).CooldownRemaining >= weaveTime;
     }
 
-    internal static bool CanLateWeave(uint actionID, double weaveTime = 0.6, double weaveStart = 0.8)
+    internal static bool CanLateWeave(uint actionID, uint lastGCD)
     {
+        var weaveTime = 0.6;
+        var weaveStart = 0.8;
+        var skillToUse = lastGCD;
+
+        if (GetCooldown(lastGCD).CooldownTotal >= 6.5)
+        {
+            skillToUse = actionID;
+        }
+
         if (HasSilence() || HasPacification())
         {
             return true;
         }
 
-        var cooldownRemaining = GetCooldown(actionID).CooldownRemaining;
-        return cooldownRemaining <= weaveStart && cooldownRemaining >= weaveTime;
+        if (Service.Configuration.DisableTripleWeaving)
+        {
+            return GetCooldown(skillToUse).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved();
+        }
+
+        return GetCooldown(skillToUse).CooldownRemaining <= weaveStart && GetCooldown(skillToUse).CooldownRemaining >= weaveTime;
     }
 
     internal static unsafe bool UseAction(ActionType actionType, uint actionID)

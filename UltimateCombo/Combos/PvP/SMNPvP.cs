@@ -1,6 +1,7 @@
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -67,7 +68,7 @@ internal static class SMNPvP
             {
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.SMNPvP_Deathflare) && IsActionEnabled(Deathflare))
                         {

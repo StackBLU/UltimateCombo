@@ -98,7 +98,7 @@ internal class VPR
         {
             if ((actionID is SteelFangs or ReavingFangs) && IsEnabled(Presets.VPR_ST_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.VPR_ST_Uncoiled) && HasEffect(Buffs.PoisedForTwinfang))
                     {
@@ -214,7 +214,7 @@ internal class VPR
                 if (IsEnabled(Presets.VPR_ST_Vicewinder) && ActionReady(Vicewinder)
                     && (WasLastWeaponskill(FlankstingStrike) || WasLastWeaponskill(FlanksbaneFang)
                     || WasLastWeaponskill(HindstingStrike) || WasLastWeaponskill(HindsbaneFang)
-                    || (WasLastWeaponskill(SwiftskinsSting) && (ActionWatching.NumberOfGcdsUsed == 2 || Service.Configuration.IgnoreGCDChecks))))
+                    || (WasLastWeaponskill(SwiftskinsSting) && (ActionWatching.NumberOfGcdsUsed == 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))))
                 {
                     return Vicewinder;
                 }
@@ -282,7 +282,7 @@ internal class VPR
         {
             if ((actionID is SteelMaw or ReavingMaw) && IsEnabled(Presets.VPR_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.VPR_AoE_Uncoiled) && HasEffect(Buffs.PoisedForTwinfang))
                     {
@@ -443,7 +443,7 @@ internal class VPR
         {
             if ((actionID is Vicewinder or HuntersCoil or SwiftskinsCoil) && IsEnabled(Presets.VPR_Vicewinder))
             {
-                if (CanWeave(SwiftskinsCoil))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (HasEffect(Buffs.SwiftskinsVenom))
                     {
@@ -492,7 +492,7 @@ internal class VPR
         {
             if ((actionID is Vicepit or HuntersDen or SwiftskinsDen) && IsEnabled(Presets.VPR_Vicepit))
             {
-                if (CanWeave(SwiftskinsDen))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (HasEffect(Buffs.FellskinsVenom))
                     {
@@ -541,7 +541,7 @@ internal class VPR
         {
             if (actionID is UncoiledFury && IsEnabled(Presets.VPR_Uncoiled))
             {
-                if (CanWeave(UncoiledFury))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (HasEffect(Buffs.PoisedForTwinfang))
                     {

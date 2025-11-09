@@ -88,12 +88,12 @@ internal class MCH
                     return Reassemble;
                 }
 
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (!WasLastWeaponskill(OriginalHook(Heatblast)))
                     {
                         if (IsEnabled(Presets.MCH_ST_Barrel) && ActionReady(BarrelStabilizer) && TargetIsBoss() && InCombat()
-                            && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks))
+                            && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                         {
                             return BarrelStabilizer;
                         }
@@ -105,7 +105,7 @@ internal class MCH
                         }
 
                         if (IsEnabled(Presets.MCH_ST_Reassemble) && !HasEffect(Buffs.Reassembled)
-                            && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks)
+                            && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                             && ActionReady(Reassemble) && !HasEffect(Buffs.Overheated)
                             && (ActionReady(Drill) || GetCooldownRemainingTime(Drill) < 2
                             || ActionReady(OriginalHook(AirAnchor)) || GetCooldownRemainingTime(OriginalHook(AirAnchor)) < 2
@@ -115,7 +115,7 @@ internal class MCH
                         }
 
                         if (IsEnabled(Presets.MCH_ST_Wildfire) && ActionReady(Wildfire)
-                            && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks)
+                            && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                             && (ActionReady(FullMetalField) || GetCooldownRemainingTime(FullMetalField) > 115))
                         {
                             return Wildfire;
@@ -156,7 +156,7 @@ internal class MCH
 
                     if (IsEnabled(Presets.MCH_ST_Hypercharge) && !HasEffect(Buffs.Overheated) && ActionReady(Hypercharge)
                         && !WasLastWeaponskill(OriginalHook(Heatblast))
-                        && (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks)
+                        && (ActionWatching.NumberOfGcdsUsed >= 6 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         && (GetCooldownRemainingTime(Drill) > 8 || !LevelChecked(Drill) || !IsEnabled(Presets.MCH_ST_Drill))
                         && (GetCooldownRemainingTime(OriginalHook(AirAnchor)) > 8 || !LevelChecked(OriginalHook(AirAnchor)) || !IsEnabled(Presets.MCH_ST_AirAnchor))
                         && (GetCooldownRemainingTime(Chainsaw) > 8 || !LevelChecked(Chainsaw) || !IsEnabled(Presets.MCH_ST_Chainsaw))
@@ -230,7 +230,7 @@ internal class MCH
         {
             if ((actionID is SpreadShot or Scattergun or AutoCrossbow) && IsEnabled(Presets.MCH_AoE_DPS))
             {
-                if (CanWeave(actionID))
+                if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (!WasLastWeaponskill(OriginalHook(Heatblast)))
                     {

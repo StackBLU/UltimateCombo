@@ -1,5 +1,6 @@
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 
 namespace UltimateCombo.Combos.PvP;
 
@@ -61,7 +62,7 @@ internal static class DNCPvP
             {
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
-                    if (CanWeave(actionID))
+                    if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
                         if (IsEnabled(Presets.DNCPvP_FanDance) && ActionReady(FanDance))
                         {
