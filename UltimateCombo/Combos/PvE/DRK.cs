@@ -160,7 +160,7 @@ internal static class DRK
                     return OriginalHook(Bloodspiller);
                 }
 
-                if (IsEnabled(Presets.DRK_ST_Unmend) && ActionReady(Unmend) && OutOfMeleeRange())
+                if (IsEnabled(Presets.DRK_ST_Unmend) && ActionReady(Unmend) && ProjectileThresholdDistance())
                 {
                     return Unmend;
                 }

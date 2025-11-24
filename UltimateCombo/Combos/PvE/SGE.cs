@@ -116,7 +116,7 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss()
+                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss() && ActionWatching.NumberOfGcdsUsed >= 3
                        && (!HasEffect(Buffs.Kardia)
                        || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
@@ -193,8 +193,7 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss()
-                       && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
+                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss() && ActionWatching.NumberOfGcdsUsed >= 3
                        && (!HasEffect(Buffs.Kardia)
                        || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))

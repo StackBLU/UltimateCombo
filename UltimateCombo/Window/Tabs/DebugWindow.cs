@@ -62,7 +62,10 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Target Current HP: {CustomComboFunctions.EnemyCurrentHP()}");
                 ImGui.TextUnformatted($"Target Max HP: {CustomComboFunctions.EnemyMaxHP()}");
                 ImGui.TextUnformatted($"Target Percent HP: {CustomComboFunctions.EnemyPercentHP()}");
-                ImGui.TextUnformatted($"Distance from Target: {CustomComboFunctions.GetTargetDistance()}");
+                ImGui.TextUnformatted($"Distance from Target Center to Center: {CustomComboFunctions.GetTargetDistanceCenterToCenter()}");
+                ImGui.TextUnformatted($"Distance from Target Hitbox to Hitbox: {CustomComboFunctions.GetTargetDistanceHitboxToHitbox()}");
+                ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.PlayerTargetObject?.HitboxRadius}");
+                ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.LocalPlayer?.HitboxRadius}");
                 ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");

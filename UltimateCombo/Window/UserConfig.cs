@@ -643,9 +643,9 @@ internal static class UserConfigItems
 
         #region BLUE MAGE
 
-        if (preset is Presets.BLU_ManaGain && enabled)
+        if (preset is Presets.BLU_BloodDrain && enabled)
         {
-            UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_ManaGain, SliderIncrements.Hundreds);
+            UserConfig.DrawSliderInt(1000, 10000, BLU.Config.BLU_BloodDrain, SliderIncrements.Hundreds);
         }
 
         if (preset is Presets.BLU_Tank_WhiteWind && enabled)

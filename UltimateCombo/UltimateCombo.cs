@@ -1,9 +1,11 @@
 using Dalamud.Game.Command;
+using Dalamud.Game.Gui.Dtr;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility;
 using ECommons;
+using ECommons.DalamudServices;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +28,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     private readonly ConfigWindow _configWindow;
     internal static UltimateComboClass? P = null!;
     internal WindowSystem ws;
-
+    private readonly IDtrBarEntry DtrBarEntry;
     internal static readonly List<uint> DisabledJobsPVE =
     [
         //All.JobID,
@@ -136,12 +138,22 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 + "\n/uc toggle <featureName> → Toggles a specific option by referring to its internal name"
                 + "\n/uc enableall → Turns all options on"
                 + "\n/uc disableall → Turns all options off"
+                + "\n/uc gcd → Toggles the GCD Counting setting"
                 + "\n/uc enabled → Prints a list of every enabled option into the game chat"
                 + "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
                 + "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
         });
 
         Service.Framework.Update += OnFrameworkUpdate;
+
+        DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
+        DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+        DtrBarEntry.OnClick = (_) =>
+        {
+            Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
+            Service.Configuration.Save();
+            DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+        };
 
         KillRedundantIDs();
         HandleConflictedCombos();
@@ -319,6 +331,15 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
                     Service.ChatGui.Print("All presets enabled!");
                     Service.Configuration.Save();
+                    break;
+                }
+
+            case "gcd":
+                {
+                    Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
+                    Service.Configuration.Save();
+                    DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+
                     break;
                 }
 

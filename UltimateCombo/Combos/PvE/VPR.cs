@@ -219,7 +219,7 @@ internal class VPR
                     return Vicewinder;
                 }
 
-                if (IsEnabled(Presets.VPR_ST_UncoiledSnap) && ActionReady(WrithingSnap) && OutOfMeleeRange())
+                if (IsEnabled(Presets.VPR_ST_UncoiledSnap) && ActionReady(WrithingSnap) && ProjectileThresholdDistance())
                 {
                     if (ActionReady(UncoiledFury) && Gauge.RattlingCoilStacks > 0)
                     {

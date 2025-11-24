@@ -179,7 +179,7 @@ internal static class PLD
                     }
                 }
 
-                if (IsEnabled(Presets.PLD_ST_ShieldLob) && ActionReady(ShieldLob) && OutOfMeleeRange())
+                if (IsEnabled(Presets.PLD_ST_ShieldLob) && ActionReady(ShieldLob) && ProjectileThresholdDistance())
                 {
                     return ShieldLob;
                 }

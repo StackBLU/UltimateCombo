@@ -80,7 +80,7 @@ internal static class DRGPvP
                         return Nastrond;
                     }
 
-                    if (IsEnabled(Presets.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && HasTarget() && GetTargetDistance() > 15)
+                    if (IsEnabled(Presets.DRGPvP_WyrmwindThrust) && HasEffect(Buffs.FirstmindsFocus) && HasTarget() && InActionRange(WyrmwindThrust - 3))
                     {
                         return WyrmwindThrust;
                     }

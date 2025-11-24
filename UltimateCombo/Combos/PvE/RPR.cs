@@ -103,7 +103,7 @@ internal class RPR
                     return Harpe;
                 }
 
-                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (IsEnabled(Presets.RPR_ST_Shield) && ActionReady(ArcaneCrest))
                     {
@@ -149,13 +149,13 @@ internal class RPR
                 if (IsEnabled(Presets.RPR_ST_ShadowOfDeath) && ActionReady(ShadowOfDeath)
                     && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && TargetWorthDoT()
                     && (TargetEffectRemainingTime(Debuffs.DeathsDesign) < 3
-                    || (GetCooldownRemainingTime(ArcaneCircle) < 10 && TargetEffectRemainingTime(Debuffs.DeathsDesign) < 30)))
+                    || (GetCooldownRemainingTime(ArcaneCircle) < 10 && IsOnCooldown(ArcaneCircle) && TargetEffectRemainingTime(Debuffs.DeathsDesign) < 30)))
                 {
                     return ShadowOfDeath;
                 }
 
                 if (IsEnabled(Presets.RPR_ST_Soulsow) && HasEffect(Buffs.Soulsow)
-                    && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                    && (ActionWatching.NumberOfGcdsUsed > 6 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     return HarvestMoon;
                 }
@@ -202,7 +202,7 @@ internal class RPR
                     return SoulSlice;
                 }
 
-                if (IsEnabled(Presets.RPR_ST_Harpe) && ActionReady(Harpe) && OutOfMeleeRange()
+                if (IsEnabled(Presets.RPR_ST_Harpe) && ActionReady(Harpe) && ProjectileThresholdDistance()
                     && HasEffect(Buffs.EnhancedHarpe))
                 {
                     return Harpe;
@@ -287,7 +287,7 @@ internal class RPR
                 if (IsEnabled(Presets.RPR_AoE_WhorlOfDeath) && ActionReady(WhorlOfDeath)
                     && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner) && TargetWorthDoT()
                     && (TargetEffectRemainingTime(Debuffs.DeathsDesign) < 15
-                    || (GetCooldownRemainingTime(ArcaneCircle) < 10 && TargetEffectRemainingTime(Debuffs.DeathsDesign) < 30)))
+                    || (GetCooldownRemainingTime(ArcaneCircle) < 10 && IsOnCooldown(ArcaneCircle) && TargetEffectRemainingTime(Debuffs.DeathsDesign) < 30)))
                 {
                     return WhorlOfDeath;
                 }

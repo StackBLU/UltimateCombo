@@ -129,7 +129,7 @@ internal static class BLU
     internal static class Config
     {
         internal static UserInt
-            BLU_ManaGain = new("BLU_ManaGain", 1500),
+            BLU_BloodDrain = new("BLU_BloodDrain", 1500),
             BLU_TankWhiteWind = new("BLU_TankWhiteWind", 50),
             BLU_TreasurePomcure = new("BLU_TreasurePomcure", 75),
             BLU_TreasureGobskin = new("BLU_TreasureGobskin", 5),
@@ -145,19 +145,18 @@ internal static class BLU
         {
             if (actionID is MoonFlute && IsEnabled(Presets.BLU_MoonFluteOpener))
             {
-                if (HasEffect(Buffs.PhantomFlurry))
+                if (HasEffect(Buffs.PhantomFlurry) && actionID is MoonFlute)
                 {
                     return OriginalHook(11);
                 }
 
-                if (GetCooldownRemainingTime(PhantomFlurry) > 60
-                    && HasEffect(Buffs.WingedReprobation)
-                    && !IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener))
+                if (GetCooldownRemainingTime(PhantomFlurry) > 60 && HasEffect(Buffs.WingedReprobation) && !IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener)
+                    && actionID is MoonFlute)
                 {
                     return WingedReprobation;
                 }
 
-                if (GetCooldownRemainingTime(PhantomFlurry) > 20)
+                if (GetCooldownRemainingTime(PhantomFlurry) > 20 && actionID is MoonFlute)
                 {
                     return PhantomFlurry;
                 }
@@ -178,7 +177,8 @@ internal static class BLU
                     {
                         return RoseOfDestruction;
                     }
-                    if (IsSpellActive(MoonFlute))
+
+                    if (IsSpellActive(MoonFlute) && actionID is MoonFlute)
                     {
                         return MoonFlute;
                     }
@@ -379,8 +379,7 @@ internal static class BLU
                     return Whistle;
                 }
 
-                if (!TargetHasEffectAny(Debuffs.Offguard) && IsOffCooldown(Offguard)
-                    && actionID is FinalSting && IsSpellActive(Offguard))
+                if (!TargetHasEffectAny(Debuffs.Offguard) && actionID is FinalSting && IsOffCooldown(Offguard) && IsSpellActive(Offguard))
                 {
                     return Offguard;
                 }
@@ -390,8 +389,8 @@ internal static class BLU
                     return Tingle;
                 }
 
-                if (!HasEffect(Buffs.BasicInstinct) && IsSpellActive(BasicInstinct)
-                    && actionID is FinalSting && HasCondition(ConditionFlag.BoundByDuty) && GetPartyMembers().Length == 0)
+                if (!HasEffect(Buffs.BasicInstinct) && actionID is FinalSting && IsSpellActive(BasicInstinct)
+                    && HasCondition(ConditionFlag.BoundByDuty) && GetPartyMembers().Length == 0)
                 {
                     return BasicInstinct;
                 }
@@ -477,27 +476,21 @@ internal static class BLU
                 {
                     return MortalFlame;
                 }
-
-                if (IsSpellActive(SongOfTorment) && actionID is Bristle
-                    && (!TargetHasEffectAny(Debuffs.Bleeding) || TargetEffectRemainingTimeAny(Debuffs.Bleeding) < 3))
-                {
-                    return SongOfTorment;
-                }
             }
 
             return actionID;
         }
     }
 
-    internal class BLU_Periph : CustomComboBase
+    internal class BLU_PeriphBomb : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.BLU_Periph;
+        protected internal override Presets Preset { get; } = Presets.BLU_PeriphBomb;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (actionID is PeripheralSynthesis or MustardBomb && IsEnabled(Presets.BLU_Periph))
+            if (actionID is PeripheralSynthesis or MustardBomb && IsEnabled(Presets.BLU_PeriphBomb))
             {
-                if (IsSpellActive(MustardBomb)
+                if (IsSpellActive(MustardBomb) && (actionID is PeripheralSynthesis or MustardBomb)
                     && (WasLastSpell(PeripheralSynthesis) || HasEffect(Buffs.Bristle) || TargetHasEffectAny(Debuffs.MustardBomb)
                     || TargetHasEffectAny(Debuffs.Lightheaded)))
                 {
@@ -511,35 +504,39 @@ internal static class BLU
         }
     }
 
-    internal class BLU_Ultravibration : CustomComboBase
+    internal class BLU_VibeCheck : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.BLU_Ultravibration;
+        protected internal override Presets Preset { get; } = Presets.BLU_VibeCheck;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (actionID is HydroPull or RamsVoice or Ultravibration && IsEnabled(Presets.BLU_Ultravibration))
+            if (actionID is HydroPull or RamsVoice or Ultravibration && IsEnabled(Presets.BLU_VibeCheck))
             {
-                if (!InCombat() && IsOnCooldown(Ultravibration))
+                if (!InCombat() && IsOnCooldown(Ultravibration) && (actionID is HydroPull or RamsVoice or Ultravibration))
                 {
                     return Ultravibration;
                 }
 
-                if (IsSpellActive(HydroPull) && !WasLastSpell(HydroPull) && !WasLastSpell(RamsVoice) && !TargetHasEffectAny(Debuffs.DeepFreeze))
+                if (IsSpellActive(HydroPull) && !WasLastSpell(HydroPull) && !WasLastSpell(RamsVoice) && !TargetHasEffectAny(Debuffs.DeepFreeze)
+                    && (actionID is HydroPull or RamsVoice or Ultravibration))
                 {
                     return HydroPull;
                 }
 
-                if (IsSpellActive(RamsVoice) && !TargetHasEffectAny(Debuffs.DeepFreeze) && (WasLastSpell(HydroPull) || !IsSpellActive(HydroPull)))
+                if (IsSpellActive(RamsVoice) && !TargetHasEffectAny(Debuffs.DeepFreeze) && (WasLastSpell(HydroPull) || !IsSpellActive(HydroPull))
+                    && (actionID is HydroPull or RamsVoice or Ultravibration))
                 {
                     return RamsVoice;
                 }
 
-                if (WasLastSpell(RamsVoice) && IsOffCooldown(Common.Swiftcast) && IsOffCooldown(Ultravibration))
+                if (WasLastSpell(RamsVoice) && IsOffCooldown(Common.Swiftcast) && IsOffCooldown(Ultravibration) && TargetHasEffectAny(Debuffs.DeepFreeze)
+                    && (actionID is HydroPull or RamsVoice or Ultravibration))
                 {
                     return Common.Swiftcast;
                 }
 
-                if (IsSpellActive(Ultravibration) && WasLastSpell(RamsVoice))
+                if (IsSpellActive(Ultravibration) && WasLastSpell(RamsVoice) && TargetHasEffectAny(Debuffs.DeepFreeze)
+                    && (actionID is HydroPull or RamsVoice or Ultravibration))
                 {
                     return Ultravibration;
                 }
@@ -549,16 +546,15 @@ internal static class BLU
         }
     }
 
-    internal class BLU_ManaGain : CustomComboBase
+    internal class BLU_BloodDrain : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.BLU_ManaGain;
+        protected internal override Presets Preset { get; } = Presets.BLU_BloodDrain;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_ManaGain)
-                && !HasEffect(Buffs.PhantomFlurry))
+            if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_BloodDrain) && !HasEffect(Buffs.PhantomFlurry))
             {
-                if (CurrentMP <= GetOptionValue(Config.BLU_ManaGain) && IsSpellActive(BloodDrain))
+                if (CurrentMP <= GetOptionValue(Config.BLU_BloodDrain) && IsSpellActive(BloodDrain) && (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze))
                 {
                     return BloodDrain;
                 }
@@ -577,43 +573,45 @@ internal static class BLU
             if (actionID is GoblinPunch && IsEnabled(Presets.BLU_Tanking)
                 && HasEffect(Buffs.TankMimicry) && !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length > 0)
             {
-                if (!HasEffect(Buffs.MightyGuard) && IsSpellActive(MightyGuard))
+                if (!HasEffect(Buffs.MightyGuard) && IsSpellActive(MightyGuard) && actionID is GoblinPunch)
                 {
                     return MightyGuard;
                 }
 
-                if (IsEnabled(Presets.BLU_Tank_ToadOil) && !HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil))
+                if (IsEnabled(Presets.BLU_Tank_ToadOil) && !HasEffect(Buffs.ToadOil) && IsSpellActive(ToadOil) && !WasLastSpell(ToadOil) && actionID is GoblinPunch)
                 {
                     return ToadOil;
                 }
 
-                if (IsOffCooldown(Devour) & InActionRange(Devour) && IsSpellActive(Devour))
+                if (IsOffCooldown(Devour) & InActionRange(Devour) && IsSpellActive(Devour) && actionID is GoblinPunch)
                 {
                     return Devour;
                 }
 
-                if (IsEnabled(Presets.BLU_Tank_Peculiar) && IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight))
+                if (IsEnabled(Presets.BLU_Tank_Peculiar) && IsOffCooldown(PeculiarLight) & InMeleeRange() && IsSpellActive(PeculiarLight) && actionID is GoblinPunch)
                 {
                     return PeculiarLight;
                 }
 
-                if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind) && CurrentMP >= GetResourceCost(WhiteWind))
+                if (IsSpellActive(WhiteWind) && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TankWhiteWind)
+                    && CurrentMP >= GetResourceCost(WhiteWind) && actionID is GoblinPunch)
                 {
                     return WhiteWind;
                 }
 
-                if (IsEnabled(Presets.BLU_Tank_PeatClean) && !TargetHasEffectAny(Debuffs.PeatPelt)
+                if (IsEnabled(Presets.BLU_Tank_PeatClean) && !TargetHasEffectAny(Debuffs.PeatPelt) && actionID is GoblinPunch
                     && (!HasEffect(Buffs.DeepClean) || EffectRemainingTime(Buffs.DeepClean) < 2) && !WasLastSpell(PeatPelt) && IsSpellActive(PeatPelt))
                 {
                     return PeatPelt;
                 }
 
-                if (IsEnabled(Presets.BLU_Tank_PeatClean) && (WasLastSpell(PeatPelt) || TargetHasEffectAny(Debuffs.PeatPelt)) && IsSpellActive(DeepClean))
+                if (IsEnabled(Presets.BLU_Tank_PeatClean) && actionID is GoblinPunch && (WasLastSpell(PeatPelt) || TargetHasEffectAny(Debuffs.PeatPelt))
+                    && IsSpellActive(DeepClean))
                 {
                     return DeepClean;
                 }
 
-                if (HasEffect(Buffs.DeepClean) && IsSpellActive(GoblinPunch))
+                if (HasEffect(Buffs.DeepClean) && IsSpellActive(GoblinPunch) && actionID is GoblinPunch)
                 {
                     return GoblinPunch;
                 }
@@ -631,9 +629,9 @@ internal static class BLU
         {
             if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_PhantomEnder))
             {
-                if (HasEffect(Buffs.PhantomFlurry))
+                if (HasEffect(Buffs.PhantomFlurry) && (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze))
                 {
-                    if (EffectRemainingTime(Buffs.PhantomFlurry) <= 0.75f)
+                    if (EffectRemainingTime(Buffs.PhantomFlurry) <= 0.75f && (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze))
                     {
                         return OriginalHook(PhantomFlurry);
                     }

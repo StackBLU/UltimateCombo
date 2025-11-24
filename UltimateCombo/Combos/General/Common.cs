@@ -192,6 +192,16 @@ internal class Common
                     return OriginalHook(11);
                 }
 
+                if (CurrentJobId is BLU.JobID)
+                {
+                    if (ActionReady(Swiftcast) && ActionReady(BLU.AngelsSnack))
+                    {
+                        return Swiftcast;
+                    }
+
+                    return BLU.AngelWhisper;
+                }
+
                 if (ActionReady(Swiftcast) && !HasEffect(RDM.Buffs.Dualcast))
                 {
                     return Swiftcast;
@@ -207,11 +217,6 @@ internal class Common
                     }
 
                     return AST.Ascend;
-                }
-
-                if (CurrentJobId is BLU.JobID)
-                {
-                    return BLU.AngelWhisper;
                 }
 
                 if (CurrentJobId is RDM.JobID)

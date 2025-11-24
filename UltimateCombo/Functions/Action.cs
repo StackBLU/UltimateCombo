@@ -31,27 +31,29 @@ internal abstract partial class CustomComboFunctions
     internal static bool InActionRange(uint id)
     {
         var range = ActionWatching.GetActionRange(id);
+        var radius = ActionWatching.GetActionEffectRange(id);
+
+        if (range == 0 && radius == 0)
+        {
+            return true;
+        }
+
         if (!HasTarget())
         {
             return false;
         }
 
-        if (range == -2)
+        if (range > 0 && GetTargetDistanceHitboxToHitbox() <= range)
         {
-            return false;
+            return true;
         }
 
-        if (range == -1)
+        if (range == 0 && GetTargetDistanceCenterToCenter() <= radius + PlayerTargetObject?.HitboxRadius)
         {
-            return InMeleeRange();
+            return true;
         }
 
-        if (range == 0)
-        {
-            var radius = ActionWatching.GetActionEffectRange(id);
-            return radius <= 0 || GetTargetDistance() <= (radius - 0.5f);
-        }
-        return GetTargetDistance() <= range;
+        return false;
     }
 
     internal static bool ActionReady(uint actionID)

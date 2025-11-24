@@ -325,7 +325,7 @@ internal class NIN
                     return FleetingRaiju;
                 }
 
-                if (IsEnabled(Presets.NIN_ST_ThrowingDagger) && ActionReady(ThrowingDagger) && OutOfMeleeRange())
+                if (IsEnabled(Presets.NIN_ST_ThrowingDagger) && ActionReady(ThrowingDagger) && ProjectileThresholdDistance())
                 {
                     return ThrowingDagger;
                 }

@@ -227,7 +227,7 @@ internal static class SAM
                     }
                 }
 
-                if (IsEnabled(Presets.SAM_ST_Enpi) && ActionReady(Enpi) && OutOfMeleeRange())
+                if (IsEnabled(Presets.SAM_ST_Enpi) && ActionReady(Enpi) && ProjectileThresholdDistance())
                 {
                     return Enpi;
                 }

@@ -74,7 +74,31 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget?.TargetObject == LocalPlayer;
     }
 
-    internal static float GetTargetDistance()
+    internal static float GetTargetDistanceCenterToCenter()
+    {
+        if (CurrentTarget is null || LocalPlayer is null)
+        {
+            return 0;
+        }
+
+        if (CurrentTarget is not IBattleChara chara)
+        {
+            return 0;
+        }
+
+        if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
+        {
+            return 0;
+        }
+
+        var position = new Vector2(chara.Position.X, chara.Position.Z);
+        var selfPosition = new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
+
+        return Math.Max(0, Vector2.Distance(position, selfPosition));
+    }
+
+
+    internal static float GetTargetDistanceHitboxToHitbox()
     {
         if (CurrentTarget is null || LocalPlayer is null)
         {
@@ -97,29 +121,19 @@ internal abstract partial class CustomComboFunctions
         return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
     }
 
-    internal static bool InRange(float range)
-    {
-        return GetTargetDistance() <= range;
-    }
-
-    internal static bool OutOfRange(double range)
-    {
-        return GetTargetDistance() > range;
-    }
-
     internal static bool InMeleeRange()
     {
-        return PlayerTargetObject != null && InRange(3);
-    }
-
-    internal static bool OutOfMeleeRange()
-    {
-        return PlayerTargetObject != null && OutOfRange(Service.Configuration.RangedAttackRange);
+        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() <= 3;
     }
 
     internal static bool InMeleeRangeNoMovement()
     {
-        return PlayerTargetObject != null && InRange(0);
+        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() == 0;
+    }
+
+    internal static bool ProjectileThresholdDistance()
+    {
+        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() >= Service.Configuration.RangedAttackRange;
     }
 
     internal static bool OnTargetsRear()

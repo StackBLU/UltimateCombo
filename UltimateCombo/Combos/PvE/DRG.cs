@@ -163,7 +163,7 @@ internal class DRG
                     }
                 }
 
-                if (IsEnabled(Presets.DRG_ST_PiercingTalon) && ActionReady(PiercingTalon) && OutOfMeleeRange())
+                if (IsEnabled(Presets.DRG_ST_PiercingTalon) && ActionReady(PiercingTalon) && ProjectileThresholdDistance())
                 {
                     return PiercingTalon;
                 }

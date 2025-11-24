@@ -152,7 +152,7 @@ internal static class WAR
                     return PrimalRend;
                 }
 
-                if (IsEnabled(Presets.WAR_ST_Tomahawk) && ActionReady(Tomahawk) && OutOfMeleeRange())
+                if (IsEnabled(Presets.WAR_ST_Tomahawk) && ActionReady(Tomahawk) && ProjectileThresholdDistance())
                 {
                     return Tomahawk;
                 }

@@ -196,7 +196,7 @@ internal static class GNB
                     return BurstStrike;
                 }
 
-                if (IsEnabled(Presets.GNB_ST_LightningShot) && ActionReady(LightningShot) && OutOfMeleeRange())
+                if (IsEnabled(Presets.GNB_ST_LightningShot) && ActionReady(LightningShot) && ProjectileThresholdDistance())
                 {
                     return LightningShot;
                 }

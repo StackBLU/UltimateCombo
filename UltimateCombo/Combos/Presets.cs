@@ -2963,19 +2963,19 @@ public enum Presets
     [CustomComboInfo("Triple Trident Combo", "Whistle > Tingle > Triple Trident", BLU.JobID)]
     BLU_TripleTrident = 70013,
 
-    [ReplaceSkill(BLU.BreathOfMagic, BLU.MortalFlame, BLU.SongOfTorment, BLU.MatraMagic)]
-    [CustomComboInfo("Buffed Breath of Magic, Mortal Flame, Song of Torment, and Matra Magic", "Bristle > Breath of Magic > Bristle > Mortal Flame > Bristle > Song of Torment > Bristle > Matra Magic", BLU.JobID)]
+    [ReplaceSkill(BLU.Bristle)]
+    [CustomComboInfo("Buffed Breath of Magic and Mortal Flame", "Bristle > Breath of Magic > Bristle > Mortal Flame", BLU.JobID)]
     BLU_DoTs = 70014,
 
-    [BlueInactive(BLU.RamsVoice, BLU.Ultravibration)]
-    [ReplaceSkill(BLU.Ultravibration)]
+    [BlueInactive(BLU.HydroPull, BLU.RamsVoice, BLU.Ultravibration)]
+    [ReplaceSkill(BLU.HydroPull, BLU.RamsVoice, BLU.Ultravibration)]
     [CustomComboInfo("Vibe Check", "Hydro Pull > Ram's Voice > Swiftcast > Ultravibration", BLU.JobID)]
-    BLU_Ultravibration = 70010,
+    BLU_VibeCheck = 70010,
 
     [BlueInactive(BLU.PeripheralSynthesis, BLU.MustardBomb)]
     [ReplaceSkill(BLU.PeripheralSynthesis, BLU.MustardBomb)]
     [CustomComboInfo("Bomb Combo", "Peripheral Synthesis > Mustard Bomb", BLU.JobID)]
-    BLU_Periph = 70015,
+    BLU_PeriphBomb = 70015,
 
     #endregion
 
@@ -3004,7 +3004,7 @@ public enum Presets
 
     [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Blood Drain", "", BLU.JobID)]
-    BLU_ManaGain = 70035,
+    BLU_BloodDrain = 70035,
 
     [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]

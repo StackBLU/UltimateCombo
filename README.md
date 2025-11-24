@@ -65,6 +65,7 @@ Steps:
 | `/uc toggle <featureName>`| Toggles a specific option by referring to its internal name|
 | `/uc enableall`| Turns all options on|
 | `/uc disableall`| Turns all options off|
+| `/uc gcd`| Toggles the GCD Counting setting|
 | `/uc enabled`| Prints a list of every enabled option into the game chat|
 | `/uc debug`| Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing|
 | `/uc debug <jobShort>`| Outputs a debug file to your desktop containing only job-relevant options|
