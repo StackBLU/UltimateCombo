@@ -147,12 +147,12 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         Service.Framework.Update += OnFrameworkUpdate;
 
         DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
-        DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+        DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         DtrBarEntry.OnClick = (_) =>
         {
             Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
             Service.Configuration.Save();
-            DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+            DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         };
 
         KillRedundantIDs();
@@ -338,7 +338,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 {
                     Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
                     Service.Configuration.Save();
-                    DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "✓" : "X");
+                    DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
 
                     break;
                 }
