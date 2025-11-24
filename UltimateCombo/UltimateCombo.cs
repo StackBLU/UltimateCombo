@@ -1,5 +1,4 @@
 using Dalamud.Game.Command;
-using Dalamud.Game.Gui.Dtr;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -28,7 +27,6 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     private readonly ConfigWindow _configWindow;
     internal static UltimateComboClass? P = null!;
     internal WindowSystem ws;
-    private readonly IDtrBarEntry DtrBarEntry;
     internal static readonly List<uint> DisabledJobsPVE =
     [
         //All.JobID,
@@ -146,13 +144,13 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
         Service.Framework.Update += OnFrameworkUpdate;
 
-        DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
-        DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
-        DtrBarEntry.OnClick = (_) =>
+        Service.DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
+        Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
+        Service.DtrBarEntry.OnClick = (_) =>
         {
             Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
             Service.Configuration.Save();
-            DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
+            Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         };
 
         KillRedundantIDs();
@@ -338,7 +336,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 {
                     Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
                     Service.Configuration.Save();
-                    DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
+                    Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
 
                     break;
                 }

@@ -51,6 +51,7 @@ internal class SettingsWindow : ConfigWindow
         {
             Service.Configuration.IgnoreGCDChecks = ignoreGCDChecks;
             Service.Configuration.Save();
+            Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         }
 
         var disableTripleWeaving = Service.Configuration.DisableTripleWeaving;

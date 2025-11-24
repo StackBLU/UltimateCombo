@@ -1,5 +1,6 @@
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.Gui.Dtr;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -45,6 +46,7 @@ internal class Service
     internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService]
     internal static IGameGui GameGui { get; private set; } = null!;
+    internal static IDtrBarEntry DtrBarEntry { get; set; } = null!;
 
     // Dalamud Services - Character & Party
     [PluginService]
