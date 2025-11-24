@@ -399,7 +399,7 @@ internal static class DNC
                     return Bloodshower;
                 }
 
-                if (ComboTime > 0 && lastComboMove is Windmill)
+                if (ComboTime > 0 && lastComboMove is Windmill && ActionReady(Bladeshower))
                 {
                     return Bladeshower;
                 }

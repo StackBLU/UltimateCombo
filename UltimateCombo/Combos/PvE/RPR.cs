@@ -332,7 +332,7 @@ internal class RPR
 
                 if (ComboTime > 0)
                 {
-                    if (lastComboMove is SpinningScythe)
+                    if (lastComboMove is SpinningScythe && ActionReady(NightmareScythe))
                     {
                         return NightmareScythe;
                     }
