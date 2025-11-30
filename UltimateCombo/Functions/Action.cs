@@ -43,6 +43,11 @@ internal abstract partial class CustomComboFunctions
             return false;
         }
 
+        if (range == -1 && GetTargetDistanceHitboxToHitbox() <= 3f)
+        {
+            return true;
+        }
+
         if (range > 0 && GetTargetDistanceHitboxToHitbox() <= range)
         {
             return true;

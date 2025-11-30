@@ -24,6 +24,7 @@ internal class DebugWindow : ConfigWindow
         }
     }
 
+    [Obsolete]
     internal static new unsafe void Draw()
     {
         IPlayerCharacter? localPlayer = Service.ClientState.LocalPlayer;
@@ -65,7 +66,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Distance from Target Center to Center: {CustomComboFunctions.GetTargetDistanceCenterToCenter()}");
                 ImGui.TextUnformatted($"Distance from Target Hitbox to Hitbox: {CustomComboFunctions.GetTargetDistanceHitboxToHitbox()}");
                 ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.PlayerTargetObject?.HitboxRadius}");
-                ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.LocalPlayer?.HitboxRadius}");
+                ImGui.TextUnformatted($"Player Hitbox Radius: {CustomComboFunctions.LocalPlayer?.HitboxRadius}");
                 ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
