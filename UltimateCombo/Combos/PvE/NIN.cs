@@ -125,7 +125,8 @@ internal class NIN
             if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush)
                 && IsEnabled(Presets.NIN_ST_DPS))
             {
-                if (IsEnabled(Presets.NIN_ST_Mudras) && ActionReady(Ten) && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+                if (IsEnabled(Presets.NIN_ST_Mudras) && ActionReady(Ten) && LevelChecked(Jin)
+                    && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
                     if (OriginalHook(Ninjutsu) == Suiton)
                     {
@@ -271,7 +272,7 @@ internal class NIN
                         }
                     }
 
-                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
+                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Chi)
                         && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Jin)))
                     {
@@ -291,7 +292,7 @@ internal class NIN
                         }
                     }
 
-                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
+                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Jin) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
                     {
                         if (OriginalHook(Ninjutsu) == Suiton && MudraCheck[^3] == Ten && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == JinCombo)
                         {
@@ -312,6 +313,16 @@ internal class NIN
                         {
                             return Ten;
                         }
+                    }
+
+                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && ActionReady(Ten))
+                    {
+                        if (OriginalHook(Ninjutsu) == FumaShuriken)
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        return Ten;
                     }
                 }
 
@@ -368,7 +379,8 @@ internal class NIN
         {
             if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(Presets.NIN_AoE_DPS))
             {
-                if (IsEnabled(Presets.NIN_AoE_Mudras) && ActionReady(Ten) && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
+                if (IsEnabled(Presets.NIN_AoE_Mudras) && ActionReady(Ten) && LevelChecked(Jin)
+                    && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
                     if (OriginalHook(Ninjutsu) is Huton)
                     {
@@ -487,8 +499,7 @@ internal class NIN
                         }
                     }
 
-                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu)
-                        && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
+                    if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Chi) && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
                     {
                         if (OriginalHook(Ninjutsu) == Katon && MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
                         {
@@ -527,6 +538,16 @@ internal class NIN
                         {
                             return Chi;
                         }
+                    }
+
+                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && ActionReady(Ten))
+                    {
+                        if (OriginalHook(Ninjutsu) == FumaShuriken)
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        return Ten;
                     }
                 }
 
