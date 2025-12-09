@@ -315,7 +315,7 @@ internal class NIN
                         }
                     }
 
-                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && ActionReady(Ten))
+                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && LevelChecked(Ten) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
                     {
                         if (OriginalHook(Ninjutsu) == FumaShuriken)
                         {
@@ -517,7 +517,7 @@ internal class NIN
                         }
                     }
 
-                    if ((HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
+                    if ((HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Chi))
                     {
                         if (OriginalHook(Ninjutsu) == Huton && MudraCheck[^3] == Chi && MudraCheck[^2] == JinCombo && MudraCheck[^1] == TenCombo)
                         {
@@ -540,7 +540,7 @@ internal class NIN
                         }
                     }
 
-                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && ActionReady(Ten))
+                    if (!LevelChecked(Chi) && !LevelChecked(Jin) && LevelChecked(Ten) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
                     {
                         if (OriginalHook(Ninjutsu) == FumaShuriken)
                         {
