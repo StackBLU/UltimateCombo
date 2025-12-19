@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
@@ -108,26 +109,23 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     public UltimateComboClass(IDalamudPluginInterface pluginInterface)
     {
         P = this;
+        ECommonsMain.Init(pluginInterface, this, ECommons.Module.All);
         _ = pluginInterface.Create<Service>();
-        ECommonsMain.Init(pluginInterface, this);
-
         Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         Service.Address = new PluginAddressResolver();
         Service.Address.Setup(Service.SigScanner);
+
         PresetStorage.Init();
 
         Service.ComboCache = new CustomComboCache();
         Service.IconReplacer = new IconReplacer();
         ActionWatching.Enable();
-
         _configWindow = new ConfigWindow();
         ws = new();
         ws.AddWindow(_configWindow);
-
         Service.Interface.UiBuilder.Draw += ws.Draw;
         Service.Interface.UiBuilder.OpenConfigUi += OnOpenConfigUi;
         Service.Interface.UiBuilder.OpenMainUi += OnOpenConfigUi;
-
         _ = Service.CommandManager.AddHandler("/uc", new CommandInfo(OnCommand)
         {
             HelpMessage = "Opens the main plugin window, where you can enable and disable options"
@@ -141,9 +139,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 + "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
                 + "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
         });
-
         Service.Framework.Update += OnFrameworkUpdate;
-
         Service.DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
         Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         Service.DtrBarEntry.OnClick = (_) =>
@@ -152,10 +148,8 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
             Service.Configuration.Save();
             Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         };
-
         KillRedundantIDs();
         HandleConflictedCombos();
-
         if (Service.Configuration.OpenOnLaunch)
         {
             _configWindow.IsOpen = true;
@@ -189,9 +183,9 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
     private void OnFrameworkUpdate(IFramework framework)
     {
-        if (Service.ClientState.LocalPlayer is not null)
+        if (Service.ObjectTable.LocalPlayer is not null)
         {
-            JobID = Service.ClientState.LocalPlayer?.ClassJob.Value.RowId;
+            JobID = Service.ObjectTable.LocalPlayer?.ClassJob.Value.RowId;
 
             if (JobID == BLU.JobID)
             {
@@ -381,10 +375,10 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                         file.WriteLine($"Installation Repo: {RepoCheckFunctions.FetchCurrentRepo()?.InstalledFromUrl}");
                         file.WriteLine("");
                         file.WriteLine($"Current Job: " +
-                            $"{Service.ClientState.LocalPlayer?.ClassJob.Value.NameEnglish} / " +
-                            $"{Service.ClientState.LocalPlayer?.ClassJob.Value.Abbreviation}");
-                        file.WriteLine($"Current Job Index: {Service.ClientState.LocalPlayer?.ClassJob.Value.RowId}");
-                        file.WriteLine($"Current Job Level: {Service.ClientState.LocalPlayer?.Level}");
+                            $"{Service.ObjectTable.LocalPlayer?.ClassJob.Value.NameEnglish} / " +
+                            $"{Service.ObjectTable.LocalPlayer?.ClassJob.Value.Abbreviation}");
+                        file.WriteLine($"Current Job Index: {Service.ObjectTable.LocalPlayer?.ClassJob.Value.RowId}");
+                        file.WriteLine($"Current Job Level: {Service.ObjectTable.LocalPlayer?.Level}");
                         file.WriteLine("");
                         file.WriteLine($"Current Zone: {Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.TerritoryType>()?.FirstOrDefault(x => x.RowId == Service.ClientState.TerritoryType).PlaceName.Value.Name}");
                         file.WriteLine($"Current Party Size: {Service.PartyList.Length}");
@@ -519,10 +513,10 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
                         file.WriteLine("");
 
-                        if (Service.ClientState.LocalPlayer?.StatusList is { Length: > 0 } statusList)
+                        if (Service.ObjectTable.LocalPlayer?.StatusList is { Length: > 0 } statusList)
                         {
                             file.WriteLine($"Status Effect Count: {statusList.Count(x => x != null)}");
-                            foreach (Dalamud.Game.ClientState.Statuses.Status status in statusList)
+                            foreach (IStatus status in statusList)
                             {
                                 file.WriteLine($"ID: {status.StatusId}, Count: {status.Param}, Source: {status.SourceId} Name: {ActionWatching.GetStatusName(status.StatusId)}");
                             }

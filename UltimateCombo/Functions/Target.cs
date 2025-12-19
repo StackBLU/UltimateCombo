@@ -15,7 +15,6 @@ internal abstract partial class CustomComboFunctions
 {
     internal static IGameObject? CurrentTarget => Service.TargetManager.Target;
     internal static IGameObject? PlayerTargetObject => LocalPlayer?.TargetObject;
-
     internal static uint? TargetDataId => CurrentTarget?.BaseId;
     internal static IGameObject? TargetOfTarget => CurrentTarget?.TargetObject;
 
@@ -96,7 +95,6 @@ internal abstract partial class CustomComboFunctions
 
         return Math.Max(0, Vector2.Distance(position, selfPosition));
     }
-
 
     internal static float GetTargetDistanceHitboxToHitbox()
     {

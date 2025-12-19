@@ -1,6 +1,7 @@
 using Dalamud.Bindings.ImGui;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Statuses;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -8,7 +9,6 @@ using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
-using Status = Dalamud.Game.ClientState.Statuses.Status;
 
 namespace UltimateCombo.Window.Tabs;
 
@@ -24,10 +24,9 @@ internal class DebugWindow : ConfigWindow
         }
     }
 
-    [Obsolete]
     internal static new unsafe void Draw()
     {
-        IPlayerCharacter? localPlayer = Service.ClientState.LocalPlayer;
+        IPlayerCharacter? localPlayer = Service.ObjectTable.LocalPlayer;
         var chara = CustomComboFunctions.CurrentTarget as IBattleChara;
         var comboClass = new DebugCombo();
 
@@ -35,19 +34,19 @@ internal class DebugWindow : ConfigWindow
         {
             if (chara != null)
             {
-                foreach (Status status in chara.StatusList)
+                foreach (IStatus status in chara.StatusList)
                 {
                     ImGui.TextUnformatted($"Target Status: {chara.Name} -> " +
                         $"{ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
                 }
             }
 
-            if (Service.ClientState.LocalPlayer?.StatusList is { } statusList)
+            if (Service.ObjectTable.LocalPlayer?.StatusList is { } statusList)
             {
                 ImGui.TextUnformatted("\n");
-                foreach (Status status in statusList)
+                foreach (IStatus status in statusList)
                 {
-                    ImGui.TextUnformatted($"Self Status: {Service.ClientState.LocalPlayer?.Name} -> " +
+                    ImGui.TextUnformatted($"Self Status: {Service.ObjectTable.LocalPlayer?.Name} -> " +
                         $"{ActionWatching.GetStatusName(status.StatusId)}: {status.StatusId} {Math.Round(status.RemainingTime, 1)}");
                 }
 

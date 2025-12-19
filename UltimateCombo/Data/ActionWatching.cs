@@ -36,6 +36,7 @@ internal static class ActionWatching
     private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
     private static readonly Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
 
+
     private static void ReceiveActionEffectDetour(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
     {
         ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
@@ -48,7 +49,7 @@ internal static class ActionWatching
 
         if (header.ActionId != 7 &&
             header.ActionId != 8 &&
-            sourceObjectId == Service.ClientState.LocalPlayer?.GameObjectId)
+            sourceObjectId == Service.ObjectTable.LocalPlayer?.GameObjectId)
         {
             TimeLastActionUsed = DateTime.Now;
             LastActionUseCount++;
@@ -202,6 +203,7 @@ internal static class ActionWatching
         ReceiveActionEffectHook?.Dispose();
         SendActionHook?.Dispose();
     }
+
 
     static unsafe ActionWatching()
     {

@@ -4,9 +4,10 @@ using System.Linq;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 namespace UltimateCombo.ComboHelper.Functions;
+
 internal abstract partial class CustomComboFunctions
 {
-    internal static Status? FindEffect(ushort effectID, IGameObject? target, ulong? sourceID)
+    internal static IStatus? FindEffect(ushort effectID, IGameObject? target, ulong? sourceID)
     {
         return Service.ComboCache.GetStatus(effectID, target, sourceID);
     }
@@ -32,6 +33,7 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget != null && FindEffect(effectID, CurrentTarget, null) is not null;
     }
 
+
     internal static bool TargetOfTargetHasEffect(ushort effectID)
     {
         return TargetOfTarget != null && FindEffect(effectID, TargetOfTarget, LocalPlayerId) is not null;
@@ -43,15 +45,18 @@ internal abstract partial class CustomComboFunctions
     }
 
     //Effect Remaining Time
+
     internal static float EffectRemainingTime(ushort effectID)
     {
         return FindEffect(effectID, LocalPlayer, LocalPlayerId)?.RemainingTime ?? 0;
     }
 
+
     internal static float EffectRemainingTimeAny(ushort effectID)
     {
         return FindEffect(effectID, LocalPlayer, null)?.RemainingTime ?? 0;
     }
+
 
     internal static float TargetEffectRemainingTime(ushort effectID)
     {
@@ -62,6 +67,7 @@ internal abstract partial class CustomComboFunctions
     {
         return CurrentTarget != null ? FindEffect(effectID, CurrentTarget, null)?.RemainingTime ?? 0 : 0;
     }
+
 
     internal static float TargetOfTargetEffectRemainingTime(ushort effectID)
     {
@@ -74,15 +80,18 @@ internal abstract partial class CustomComboFunctions
     }
 
     //Effect Stacks
+
     internal static ushort EffectStacks(ushort effectID)
     {
         return FindEffect(effectID, LocalPlayer, LocalPlayerId)?.Param ?? 0;
     }
 
+
     internal static ushort EffectStacksAny(ushort effectID)
     {
         return FindEffect(effectID, LocalPlayer, null)?.Param ?? 0;
     }
+
 
     internal static ushort TargetEffectStacks(ushort effectID)
     {
@@ -93,6 +102,7 @@ internal abstract partial class CustomComboFunctions
     {
         return CurrentTarget != null ? FindEffect(effectID, CurrentTarget, null)?.Param ?? 0 : (ushort) 0;
     }
+
 
     internal static ushort TargetOfTargetEffectStacks(ushort effectID)
     {
@@ -105,16 +115,21 @@ internal abstract partial class CustomComboFunctions
     }
 
     //Common Effects
+
     internal static bool HasSilence()
     {
         return ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(7))
             ?.Any(status => FindEffect((ushort) status, LocalPlayer, null) is not null) ?? false;
     }
+
+
     internal static bool HasPacification()
     {
         return ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(6))
             ?.Any(status => FindEffect((ushort) status, LocalPlayer, null) is not null) ?? false;
     }
+
+
     internal static bool HasAmnesia()
     {
         return ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(5))

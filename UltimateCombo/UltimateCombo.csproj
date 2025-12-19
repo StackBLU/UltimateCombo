@@ -3,9 +3,9 @@
   <PropertyGroup>
     <Authors>Stack</Authors>
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
-    <AssemblyVersion>1.0.1.12</AssemblyVersion>
+    <AssemblyVersion>1.0.1.13</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -34,10 +34,6 @@
     <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
   
-  <PropertyGroup>
-    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
-  </PropertyGroup>
-  
   <Target Name="UpdatePluginMaster" BeforeTargets="Build">
     <Exec Command="powershell -ExecutionPolicy Bypass -File versionUpdate.ps1" />
   </Target>
@@ -47,7 +43,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="DalamudPackager" Version="13.1.0" />
+    <PackageReference Include="DalamudPackager" Version="14.0.1" />
   </ItemGroup>
   
   <ItemGroup>

@@ -10,17 +10,23 @@ namespace UltimateCombo.ComboHelper.Functions;
 internal abstract partial class CustomComboFunctions
 {
     // Core player reference
-    internal static IPlayerCharacter? LocalPlayer => Service.ClientState.LocalPlayer;
+    internal static IPlayerCharacter? LocalPlayer => Service.ObjectTable.LocalPlayer;
 
     internal static ulong LocalPlayerId => LocalPlayer?.GameObjectId ?? 0;
 
     // Player stats
     internal static uint CurrentJobId => LocalPlayer?.ClassJob.Value.RowId ?? 0;
+
     internal static byte Level => LocalPlayer?.Level ?? 0;
+
     internal static uint CurrentHP => LocalPlayer?.CurrentHp ?? 0;
+
     internal static uint MaxHP => LocalPlayer?.MaxHp ?? 0;
+
     internal static uint CurrentMP => LocalPlayer?.CurrentMp ?? 0;
+
     internal static uint MaxMP => LocalPlayer?.MaxMp ?? 0;
+
     internal static uint ShieldPercentage => LocalPlayer?.ShieldPercentage ?? 0;
 
     // Player health helpers

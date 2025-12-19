@@ -15,6 +15,7 @@ public sealed partial class IconReplacer : IDisposable
     private IntPtr _actionManager = IntPtr.Zero;
     private readonly IntPtr _module = IntPtr.Zero;
 
+
     internal IconReplacer()
     {
         _customCombos = [.. Assembly.GetAssembly(typeof(CustomComboBase))!.GetTypes()
@@ -48,7 +49,7 @@ public sealed partial class IconReplacer : IDisposable
         _actionManager = actionManager;
         try
         {
-            if (Service.ClientState.LocalPlayer == null)
+            if (Service.ObjectTable.LocalPlayer == null)
             {
                 return OriginalHook(actionID);
             }
