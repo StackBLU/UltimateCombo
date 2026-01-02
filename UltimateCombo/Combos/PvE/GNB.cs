@@ -166,7 +166,7 @@ internal static class GNB
                     return OriginalHook(GnashingFang);
                 }
 
-                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1 && HasEffect(Buffs.NoMercy))
+                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && HasEffect(Buffs.NoMercy))
                 {
                     return DoubleDown;
                 }
@@ -248,8 +248,7 @@ internal static class GNB
                         return OriginalHook(Continuation);
                     }
 
-                    if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0
-                        && (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
+                    if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0 && (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
                     {
                         return Bloodfest;
                     }
@@ -285,7 +284,7 @@ internal static class GNB
                     }
                 }
 
-                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 1)
+                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2)
                 {
                     return DoubleDown;
                 }

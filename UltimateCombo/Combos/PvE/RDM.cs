@@ -478,33 +478,54 @@ internal class RDM
                     return Scorch;
                 }
 
-                if ((ActionReady(Verholy) || ActionReady(Verflare)) && Gauge.ManaStacks is 3)
+                if (Gauge.ManaStacks is 3)
                 {
-                    if (Gauge.BlackMana >= Gauge.WhiteMana)
+                    if (ActionReady(Verholy))
                     {
-                        return Verholy;
+                        if (Gauge.BlackMana >= Gauge.WhiteMana)
+                        {
+                            return Verholy;
+                        }
                     }
 
-                    if (Gauge.WhiteMana >= Gauge.BlackMana)
+                    if (ActionReady(Verflare))
                     {
-                        return Verflare;
+                        if (Gauge.WhiteMana >= Gauge.BlackMana)
+                        {
+                            return Verflare;
+                        }
                     }
                 }
 
-                if (WasLastWeaponskill(OriginalHook(EnchantedZwerchhau)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+                if (!HasEffect(Buffs.Dualcast)
+                    && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50)
+                    || HasEffect(Buffs.MagickedSwordPlay)
+                    || (WasLastWeaponskill(EnchantedRiposte) && Gauge.ManaStacks == 1)
+                    || (WasLastWeaponskill(EnchantedZwerchhau) && Gauge.ManaStacks == 2)))
                 {
-                    return EnchantedRedoublement;
+                    if (WasLastWeaponskill(EnchantedZwerchhau) && Gauge.ManaStacks == 2
+                        && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        return OriginalHook(EnchantedRedoublement);
+                    }
+
+                    if (WasLastWeaponskill(EnchantedRiposte) && Gauge.ManaStacks == 1
+                        && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        return OriginalHook(EnchantedZwerchhau);
+                    }
+
+                    if (Gauge.ManaStacks == 0 && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        if (InActionRange(EnchantedRiposte))
+                        {
+                            return OriginalHook(EnchantedRiposte);
+                        }
+                    }
                 }
 
-                if (WasLastWeaponskill(OriginalHook(EnchantedRiposte)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
-                {
-                    return EnchantedZwerchhau;
-                }
-
-                if (Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
-                {
-                    return EnchantedRiposte;
-                }
+                return OriginalHook(13);
             }
 
             return actionID;
@@ -529,33 +550,51 @@ internal class RDM
                     return Scorch;
                 }
 
-                if ((ActionReady(Verholy) || ActionReady(Verflare)) && Gauge.ManaStacks is 3)
+                if (Gauge.ManaStacks is 3)
                 {
-                    if (Gauge.BlackMana >= Gauge.WhiteMana)
+                    if (ActionReady(Verholy))
                     {
-                        return Verholy;
+                        if (Gauge.BlackMana >= Gauge.WhiteMana)
+                        {
+                            return Verholy;
+                        }
                     }
 
-                    if (Gauge.WhiteMana >= Gauge.BlackMana)
+                    if (ActionReady(Verflare))
                     {
-                        return Verflare;
+                        if (Gauge.WhiteMana >= Gauge.BlackMana)
+                        {
+                            return Verflare;
+                        }
                     }
                 }
 
-                if (WasLastWeaponskill(OriginalHook(EnchantedMoulinetDeux)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
+                if (!HasEffect(Buffs.Dualcast)
+                    && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50)
+                    || HasEffect(Buffs.MagickedSwordPlay)
+                    || (WasLastWeaponskill(EnchantedMoulinet) && Gauge.ManaStacks == 1)
+                    || (WasLastWeaponskill(EnchantedMoulinetDeux) && Gauge.ManaStacks == 2)))
                 {
-                    return EnchantedMoulinetTrois;
+                    if (WasLastWeaponskill(EnchantedMoulinetDeux) && Gauge.ManaStacks == 2
+                        && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        return OriginalHook(EnchantedMoulinetTrois);
+                    }
+
+                    if (WasLastWeaponskill(EnchantedMoulinet) && Gauge.ManaStacks == 1
+                        && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        return OriginalHook(EnchantedMoulinetDeux);
+                    }
+
+                    if (Gauge.ManaStacks == 0 && (GetCooldownRemainingTime(Manafication) > 15 || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
+                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                    {
+                        return OriginalHook(EnchantedMoulinet);
+                    }
                 }
 
-                if (WasLastWeaponskill(OriginalHook(EnchantedMoulinet)) && Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15)
-                {
-                    return EnchantedMoulinetDeux;
-                }
-
-                if (Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
-                {
-                    return EnchantedMoulinet;
-                }
+                return OriginalHook(13);
             }
 
             return actionID;

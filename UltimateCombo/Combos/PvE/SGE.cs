@@ -116,9 +116,9 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss() && ActionWatching.NumberOfGcdsUsed >= 3
-                       && (!HasEffect(Buffs.Kardia)
-                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
+                    if (IsEnabled(Presets.SGE_ST_DPS_Kardia) && ActionReady(Kardia) && InCombat() && ActionWatching.NumberOfGcdsUsed >= 3
+                       && (TargetIsBoss() || !HasEffect(Buffs.Kardia))
+                       && ((HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
                     {
                         return Kardia;
@@ -193,9 +193,9 @@ internal static class SGE
                     && !WasLastSpell(EukrasianDosis1) && !WasLastSpell(EukrasianDosis2) && !WasLastSpell(EukrasianDosis2)
                     && !WasLastSpell(EukrasianDyskrasia))
                 {
-                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && TargetIsBoss() && ActionWatching.NumberOfGcdsUsed >= 3
-                       && (!HasEffect(Buffs.Kardia)
-                       || (HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
+                    if (IsEnabled(Presets.SGE_AoE_DPS_Kardia) && ActionReady(Kardia) && InCombat() && ActionWatching.NumberOfGcdsUsed >= 3
+                       && (TargetIsBoss() || !HasEffect(Buffs.Kardia))
+                       && ((HasEffect(Buffs.Kardion) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                        || (!TargetOfTargetHasEffect(Buffs.Kardion) && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))))
                     {
                         return Kardia;
