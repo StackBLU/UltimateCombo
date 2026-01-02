@@ -114,7 +114,7 @@ internal static class WHM
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusRapture) && Gauge.BloodLily != 3
+                if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusRapture) && Gauge.BloodLily != 3 && Gauge.Lily >= 1
                     && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17500)
                     || (IsOnCooldown(PresenceOfMind) && GetCooldownRemainingTime(PresenceOfMind) <= 5)))
                 {
@@ -165,7 +165,7 @@ internal static class WHM
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusRapture) && Gauge.BloodLily != 3
+                if (IsEnabled(Presets.WHM_AoE_DPS_Misery) && ActionReady(AfflatusRapture) && Gauge.BloodLily != 3 && Gauge.Lily >= 1
                     && (Gauge.Lily == 3 || (Gauge.Lily == 2 && Gauge.LilyTimer >= 17500)
                     || (!IsOnCooldown(PresenceOfMind) && GetCooldownRemainingTime(PresenceOfMind) <= 5)))
                 {
@@ -200,7 +200,7 @@ internal static class WHM
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_Heals_Solace) && ActionReady(AfflatusSolace) && Gauge.Lily > 0 && Gauge.BloodLily != 3)
+                if (IsEnabled(Presets.WHM_ST_Heals_Solace) && ActionReady(AfflatusSolace) && Gauge.Lily >= 1 && Gauge.BloodLily != 3)
                 {
                     return AfflatusSolace;
                 }
@@ -246,7 +246,7 @@ internal static class WHM
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily > 0 && Gauge.BloodLily != 3 && HasBattleTarget())
+                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily >= 1 && Gauge.BloodLily != 3 && HasBattleTarget())
                 {
                     return AfflatusRapture;
                 }
