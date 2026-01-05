@@ -9,26 +9,25 @@ namespace UltimateCombo.Combos.Content;
 internal static class Occult
 {
     internal const uint
-        OccultResuscitation = 41650,
-        OccultTreasureSight = 41651,
+        Resuscitation = 41650,
 
         PhantomGuard = 41588,
         Pray = 41589,
-        OccultHeal = 41590,
+        Heal = 41590,
         Pledge = 41591,
 
         PhantomKick = 41595,
-        OccultCounter = 41596,
+        Counter = 41596,
         Counterstance = 41597,
-        OccultChakra = 41598,
+        Chakra = 41598,
 
         PhantomAim = 41599,
 
-        OccultSlowga = 41621,
-        OccultDispel = 41622,
-        OccultComet = 41623,
-        OccultMageMasher = 41624,
-        OccultQuick = 41625,
+        Slowga = 41621,
+        Dispel = 41622,
+        Comet = 41623,
+        MageMasher = 41624,
+        Quick = 41625,
 
         OffensiveAria = 41608,
         RomeosBallad = 41609,
@@ -74,7 +73,26 @@ internal static class Occult
         PilferWeapon = 41649,
 
         DeadlyBlow = 41594,
-        Rage = 41592;
+        Rage = 41592,
+
+        SunderingSpellblade = 46591,
+        MagicShell = 46590,
+        HolySpellblade = 46592,
+        BlazingSpellblade = 46593,
+
+        Dance = 46598,
+        SwordDance = 46599,
+        TemptingTango = 46600,
+        Jitterbug = 46601,
+        MysteryWaltz = 46602,
+        Quickstep = 46603,
+        SteadfastStance = 46604,
+        Mesmerize = 46605,
+
+        Finisher = 46594,
+        Defend = 46595,
+        LongReach = 46596,
+        Bladeblitz = 46597;
 
     internal static class PhantomJobs
     {
@@ -91,7 +109,10 @@ internal static class Occult
             Cannoneer = 4366,
             Chemist = 4367,
             Oracle = 4368,
-            Thief = 4369;
+            Thief = 4369,
+            MysticKnight = 4803,
+            Gladiator = 4804,
+            Dancer = 4805;
     }
 
     internal static class Buffs
@@ -120,16 +141,26 @@ internal static class Occult
             Rage = 4235,
             PentUpRage = 4236,
 
-            OccultQuick = 4260,
-            OccultSwift = 4261;
+            Quick = 4260,
+            Swift = 4261,
+
+            BlazingSpellblade = 4790,
+
+            PoisedToSwordDance = 4794,
+            TemptedToTango = 4795,
+            Jitterbugged = 4796,
+            WillingToWaltz = 4797,
+            Quickstep = 4798;
     }
 
     internal static class Debuffs
     {
         internal const ushort
             Slow = 3493,
-            OccultMageMasher = 4259,
-            WeaponPilfered = 4279;
+            MageMasher = 4259,
+            WeaponPilfered = 4279,
+
+            BlazingBane = 4791;
     }
 
     internal static class Config
@@ -163,11 +194,10 @@ internal static class Occult
                     return Pray;
                 }
 
-                if (IsEnabled(Presets.Occult_Heal) && DutyActionReady(OccultHeal)
-                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_Heal)
-                    && CurrentMP >= GetResourceCost(OccultHeal))
+                if (IsEnabled(Presets.Occult_Heal) && DutyActionReady(Heal) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_Heal)
+                    && CurrentMP >= GetResourceCost(Heal))
                 {
-                    return OccultHeal;
+                    return Heal;
                 }
             }
 
@@ -183,9 +213,9 @@ internal static class Occult
         {
             if (IsEnabled(Presets.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Chakra) && DutyActionReady(OccultChakra) && PlayerHealthPercentageHp() < 30)
+                if (IsEnabled(Presets.Occult_Chakra) && DutyActionReady(Chakra) && PlayerHealthPercentageHp() < 30)
                 {
-                    return OccultChakra;
+                    return Chakra;
                 }
 
                 if (IsEnabled(Presets.Occult_PhantomKick) && DutyActionReady(PhantomKick))
@@ -201,10 +231,10 @@ internal static class Occult
                     }
                 }
 
-                if (IsEnabled(Presets.Occult_Counter) && DutyActionReady(OccultCounter) && InActionRange(OccultCounter)
+                if (IsEnabled(Presets.Occult_Counter) && DutyActionReady(Counter) && InActionRange(Counter)
                     && CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    return OccultCounter;
+                    return Counter;
                 }
 
                 if (IsEnabled(Presets.Occult_Counterstance) && DutyActionReady(Counterstance)
@@ -325,24 +355,24 @@ internal static class Occult
         {
             if (IsEnabled(Presets.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Quick) && DutyActionReady(OccultQuick))
+                if (IsEnabled(Presets.Occult_Quick) && DutyActionReady(Quick))
                 {
-                    return OccultQuick;
+                    return Quick;
                 }
 
-                if (IsEnabled(Presets.Occult_Comet) && DutyActionReady(OccultComet)
+                if (IsEnabled(Presets.Occult_Comet) && DutyActionReady(Comet)
                     && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
-                    if (HasEffect(Common.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.OccultQuick))
+                    if (HasEffect(Common.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.Quick))
                     {
-                        return OccultComet;
+                        return Comet;
                     }
                 }
 
-                if (IsEnabled(Presets.Occult_MageMasher) && DutyActionReady(OccultMageMasher) && !TargetHasEffectAny(Debuffs.OccultMageMasher)
+                if (IsEnabled(Presets.Occult_MageMasher) && DutyActionReady(MageMasher) && !TargetHasEffectAny(Debuffs.MageMasher)
                     && HasBattleTarget() && CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    return OccultMageMasher;
+                    return MageMasher;
                 }
             }
 
@@ -551,10 +581,119 @@ internal static class Occult
             if (IsEnabled(Presets.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse()
                  && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_PhantomResuscitation) && DutyActionReady(OccultResuscitation)
+                if (IsEnabled(Presets.Occult_PhantomResuscitation) && DutyActionReady(Resuscitation)
                     && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_PhantomResuscitation))
                 {
-                    return OccultResuscitation;
+                    return Resuscitation;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_MysticKnight : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_MysticKnight;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_MysticKnight) && HasEffect(PhantomJobs.MysticKnight) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_MagicShell) && DutyActionReady(MagicShell))
+                {
+                    return MagicShell;
+                }
+
+                if (IsEnabled(Presets.Occult_HolySpellblade) && DutyActionReady(HolySpellblade) && InActionRange(HolySpellblade)
+                    && TargetEffectRemainingTimeAny(Debuffs.BlazingBane) >= 15)
+                {
+                    return HolySpellblade;
+                }
+
+                if (IsEnabled(Presets.Occult_BlazingSpellblade) && DutyActionReady(BlazingSpellblade) && InActionRange(BlazingSpellblade)
+                    && (!HasEffect(Buffs.BlazingSpellblade) || !TargetHasEffectAny(Debuffs.BlazingBane) || TargetEffectRemainingTimeAny(Debuffs.BlazingBane) <= 15))
+                {
+                    return BlazingSpellblade;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Gladiator : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Gladiator;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Gladiator) && HasEffect(PhantomJobs.Gladiator) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Finisher) && DutyActionReady(Finisher) && InActionRange(Finisher))
+                {
+                    return Finisher;
+                }
+
+                if (IsEnabled(Presets.Occult_LongReach) && DutyActionReady(LongReach) && InActionRange(LongReach))
+                {
+                    return LongReach;
+                }
+
+                if (IsEnabled(Presets.Occult_Bladeblitz) && DutyActionReady(Bladeblitz) && InActionRange(Bladeblitz))
+                {
+                    return Bladeblitz;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Dancer : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Dancer;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Dancer) && HasEffect(PhantomJobs.Dancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Dance))
+                {
+                    if (HasEffect(Buffs.PoisedToSwordDance))
+                    {
+                        return SwordDance;
+                    }
+
+                    if (HasEffect(Buffs.TemptedToTango))
+                    {
+                        return TemptingTango;
+                    }
+
+                    if (HasEffect(Buffs.Jitterbugged))
+                    {
+                        return Jitterbug;
+                    }
+
+                    if (HasEffect(Buffs.WillingToWaltz))
+                    {
+                        return MysteryWaltz;
+                    }
+
+                    if (DutyActionReady(Dance))
+                    {
+                        return Dance;
+                    }
+                }
+
+                if (IsEnabled(Presets.Occult_Quickstep) && DutyActionReady(Quickstep) && !HasEffect(Buffs.Quickstep))
+                {
+                    return Quickstep;
+                }
+
+                if (IsEnabled(Presets.Occult_Mesmerize) && DutyActionReady(Mesmerize))
+                {
+                    return Mesmerize;
                 }
             }
 

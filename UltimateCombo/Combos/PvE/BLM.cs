@@ -173,7 +173,7 @@ internal class BLM
                 if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.BLM_ST_Swiftcast) && ActionReady(Common.Swiftcast) && !Gauge.IsParadoxActive && CanLateWeave(actionID, ActionWatching.LastGCD)
-                        && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
+                        && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.Quick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
                     {
@@ -192,7 +192,7 @@ internal class BLM
                             && (HasEffect(Buffs.CircleOfPower) || GetRemainingCharges(Triplecast) == 2
                             || (GetCooldownChargeRemainingTime(Triplecast) < 10 && GetRemainingCharges(Triplecast) == 1))
                             && Gauge.InAstralFire
-                            && !HasEffect(Common.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
+                            && !HasEffect(Common.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.Quick)
                             && (CurrentMP >= 4000 || ActionReady(Manafont)
                             || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
                         {
@@ -333,7 +333,7 @@ internal class BLM
                 if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.BLM_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD)
-                        && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
+                        && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.Quick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
                     {
@@ -350,7 +350,7 @@ internal class BLM
                         && (HasEffect(Buffs.CircleOfPower) || GetRemainingCharges(Triplecast) == 2
                         || (GetCooldownChargeRemainingTime(Triplecast) < 10 && GetRemainingCharges(Triplecast) == 1))
                         && Gauge.InAstralFire
-                        && !HasEffect(Common.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.OccultQuick)
+                        && !HasEffect(Common.Buffs.Swiftcast) && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.Quick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
                     {

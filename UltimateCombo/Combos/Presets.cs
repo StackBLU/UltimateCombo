@@ -337,7 +337,7 @@ public enum Presets
     #region Knight
 
     [Occult]
-    [ReplaceSkill(Occult.Pray, Occult.OccultHeal)]
+    [ReplaceSkill(Occult.Pray, Occult.Heal)]
     [CustomComboInfo("Phantom Knight", "", Common.JobID)]
     Occult_Knight = 100060,
 
@@ -356,7 +356,7 @@ public enum Presets
     #region Monk
 
     [Occult]
-    [ReplaceSkill(Occult.PhantomKick, Occult.OccultCounter, Occult.Counterstance, Occult.OccultChakra)]
+    [ReplaceSkill(Occult.PhantomKick, Occult.Counter, Occult.Counterstance, Occult.Chakra)]
     [CustomComboInfo("Phantom Monk", "", Common.JobID)]
     Occult_Monk = 100070,
 
@@ -456,7 +456,7 @@ public enum Presets
     #region Time Mage
 
     [Occult]
-    [ReplaceSkill(Occult.OccultSlowga, Occult.OccultComet, Occult.OccultMageMasher, Occult.OccultDispel, Occult.OccultQuick)]
+    [ReplaceSkill(Occult.Slowga, Occult.Comet, Occult.MageMasher, Occult.Quick)]
     [CustomComboInfo("Phantom Time Mage", "", Common.JobID)]
     Occult_TimeMage = 100080,
 
@@ -577,7 +577,7 @@ public enum Presets
     #region Freelancer
 
     [Occult]
-    [ReplaceSkill(Occult.OccultResuscitation)]
+    [ReplaceSkill(Occult.Resuscitation)]
     [CustomComboInfo("Phantom Freelancer", "", Common.JobID)]
     Occult_Freelancer = 100110,
 
@@ -585,6 +585,78 @@ public enum Presets
     [ParentCombo(Occult_Freelancer)]
     [CustomComboInfo("Occult Phantom Resuscitation", "", Common.JobID)]
     Occult_PhantomResuscitation = 100111,
+
+    #endregion
+
+    #region Mystic Knight
+
+    [Occult]
+    [ReplaceSkill(Occult.MagicShell, Occult.HolySpellblade, Occult.BlazingSpellblade)]
+    [CustomComboInfo("Phantom Mystic Knight", "", Common.JobID)]
+    Occult_MysticKnight = 100180,
+
+    [Occult]
+    [ParentCombo(Occult_MysticKnight)]
+    [CustomComboInfo("Magic Shell", "", Common.JobID)]
+    Occult_MagicShell = 100181,
+
+    [Occult]
+    [ParentCombo(Occult_MysticKnight)]
+    [CustomComboInfo("Holy Spellblade", "", Common.JobID)]
+    Occult_HolySpellblade = 100182,
+
+    [Occult]
+    [ParentCombo(Occult_MysticKnight)]
+    [CustomComboInfo("Blazing Spellblade", "", Common.JobID)]
+    Occult_BlazingSpellblade = 100183,
+
+    #endregion
+
+    #region Gladiator
+
+    [Occult]
+    [ReplaceSkill(Occult.Finisher, Occult.LongReach, Occult.Bladeblitz)]
+    [CustomComboInfo("Phantom Gladiator", "", Common.JobID)]
+    Occult_Gladiator = 100190,
+
+    [Occult]
+    [ParentCombo(Occult_Gladiator)]
+    [CustomComboInfo("Finisher", "", Common.JobID)]
+    Occult_Finisher = 100191,
+
+    [Occult]
+    [ParentCombo(Occult_Gladiator)]
+    [CustomComboInfo("Long Reach", "", Common.JobID)]
+    Occult_LongReach = 100192,
+
+    [Occult]
+    [ParentCombo(Occult_Gladiator)]
+    [CustomComboInfo("Bladeblitz", "", Common.JobID)]
+    Occult_Bladeblitz = 100193,
+
+    #endregion
+
+    #region Dancer
+
+    [Occult]
+    [ReplaceSkill(Occult.Dance, Occult.Quickstep, Occult.Mesmerize)]
+    [CustomComboInfo("Phantom Dancer", "", Common.JobID)]
+    Occult_Dancer = 100200,
+
+    [Occult]
+    [ParentCombo(Occult_Dancer)]
+    [CustomComboInfo("Dance", "", Common.JobID)]
+    Occult_Dance = 100201,
+
+    [Occult]
+    [ParentCombo(Occult_Dancer)]
+    [CustomComboInfo("Quickstep", "", Common.JobID)]
+    Occult_Quickstep = 100202,
+
+    [Occult]
+    [ParentCombo(Occult_Dancer)]
+    [CustomComboInfo("Mesmerize", "", Common.JobID)]
+    Occult_Mesmerize = 100203,
 
     #endregion
 

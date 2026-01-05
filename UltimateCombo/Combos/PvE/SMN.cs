@@ -175,7 +175,7 @@ internal class SMN
 
                 if (HasEffect(Buffs.GarudasFavor) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Garuda))
                 {
-                    if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
+                    if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_ST_Astral_Swift) && !HasEffect(Occult.Buffs.Quick))
                     {
                         return Common.Swiftcast;
                     }
@@ -306,7 +306,7 @@ internal class SMN
 
                 if (HasEffect(Buffs.GarudasFavor) && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Garuda))
                 {
-                    if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.OccultQuick))
+                    if (ActionReady(Common.Swiftcast) && GetOptionBool(Config.SMN_AoE_Astral_Swift) && !HasEffect(Occult.Buffs.Quick))
                     {
                         return Common.Swiftcast;
                     }

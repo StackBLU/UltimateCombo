@@ -161,7 +161,7 @@ internal class PCT
                     }
 
                     if (IsEnabled(Presets.PCT_ST_Swiftcast) && CanLateWeave(actionID, ActionWatching.LastGCD) && ActionReady(Common.Swiftcast)
-                        && IsMoving && !HasEffect(Occult.Buffs.OccultQuick))
+                        && IsMoving && !HasEffect(Occult.Buffs.Quick))
                     {
                         return Common.Swiftcast;
                     }
@@ -321,7 +321,7 @@ internal class PCT
                         return OriginalHook(LivingMuse);
                     }
 
-                    if (IsEnabled(Presets.PCT_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.OccultQuick)
+                    if (IsEnabled(Presets.PCT_AoE_Swiftcast) && ActionReady(Common.Swiftcast) && IsMoving && !HasEffect(Occult.Buffs.Quick)
                         && CanLateWeave(actionID, ActionWatching.LastGCD))
                     {
                         return Common.Swiftcast;
