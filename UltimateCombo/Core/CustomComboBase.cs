@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using UltimateCombo.ComboHelper.Functions;
@@ -27,7 +28,13 @@ internal abstract partial class CustomComboBase : CustomComboFunctions
             return false;
         }
 
-        var classJobID = LocalPlayer!.ClassJob.Value.RowId;
+        IPlayerCharacter? lp = LocalPlayer;
+        if (lp == null)
+        {
+            return false;
+        }
+
+        var classJobID = lp.ClassJob.Value.RowId;
         if (JobID != Common.JobID && JobID != classJobID && ClassID != classJobID)
         {
             return false;

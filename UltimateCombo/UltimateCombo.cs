@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Statuses;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
@@ -20,6 +21,7 @@ using UltimateCombo.Core;
 using UltimateCombo.Data;
 using UltimateCombo.Window;
 using UltimateCombo.Window.Tabs;
+using static IconReplacer;
 
 namespace UltimateCombo;
 
@@ -109,7 +111,8 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     public UltimateComboClass(IDalamudPluginInterface pluginInterface)
     {
         P = this;
-        ECommonsMain.Init(pluginInterface, this, ECommons.Module.All);
+        ECommonsMain.Init(pluginInterface, this);
+        ECommonsMain.ReducedLogging = true;
         _ = pluginInterface.Create<Service>();
         Service.Configuration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
         Service.Address = new PluginAddressResolver();
@@ -139,6 +142,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 + "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
                 + "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
         });
+
         Service.Framework.Update += OnFrameworkUpdate;
         Service.DtrBarEntry = Svc.DtrBar.Get("Ultimate Combo");
         Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
@@ -148,6 +152,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
             Service.Configuration.Save();
             Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
         };
+
         KillRedundantIDs();
         HandleConflictedCombos();
         if (Service.Configuration.OpenOnLaunch)
@@ -183,6 +188,10 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
     private void OnFrameworkUpdate(IFramework framework)
     {
+        IPlayerCharacter? p = Service.ObjectTable.LocalPlayer;
+        ThreadSafeCache.LocalPlayerAvailable = p != null;
+        ThreadSafeCache.LocalPlayerObjectId = p?.GameObjectId ?? 0;
+
         if (Service.ObjectTable.LocalPlayer is not null)
         {
             JobID = Service.ObjectTable.LocalPlayer?.ClassJob.Value.RowId;
@@ -206,27 +215,31 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
     }
 
-    private void DrawUI()
+    public void Dispose()
     {
-        _configWindow.Draw();
-    }
-
-    internal void Dispose()
-    {
-        _configWindow?.Dispose();
-
-        ws.RemoveAllWindows();
-        _ = Service.CommandManager.RemoveHandler("/uc");
-        Service.Framework.Update -= OnFrameworkUpdate;
+        Service.Interface.UiBuilder.Draw -= ws.Draw;
         Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
-        Service.Interface.UiBuilder.Draw -= DrawUI;
+        Service.Interface.UiBuilder.OpenMainUi -= OnOpenConfigUi;
+        Service.Framework.Update -= OnFrameworkUpdate;
+
+        _ = Service.CommandManager.RemoveHandler("/uc");
+
+        _configWindow?.Dispose();
+        ws.RemoveAllWindows();
+
+        Svc.DtrBar.Remove("Ultimate Combo");
+
+        ActionWatching.Disable();
+        ActionWatching.Dispose();
 
         Service.IconReplacer?.Dispose();
         Service.ComboCache?.Dispose();
-        ActionWatching.Dispose();
+
+        ECommonsMain.Dispose();
 
         P = null;
     }
+
 
     private void OnOpenConfigUi()
     {

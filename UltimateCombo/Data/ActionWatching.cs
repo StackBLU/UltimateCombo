@@ -34,12 +34,14 @@ internal static class ActionWatching
     internal static readonly List<uint> CombatActions = [];
 
     private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
-    private static readonly Hook<ReceiveActionEffectDelegate>? ReceiveActionEffectHook;
+    private static Hook<ReceiveActionEffectDelegate>? _receiveActionEffectHook;
+
+    private static bool _enabled;
 
 
     private static void ReceiveActionEffectDetour(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
     {
-        ReceiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
+        _receiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
         ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
 
         if (ActionType is 13 or 2)
@@ -90,20 +92,20 @@ internal static class ActionWatching
     }
 
     private delegate void SendActionDelegate(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
-    private static readonly Hook<SendActionDelegate>? SendActionHook;
+    private static Hook<SendActionDelegate>? _sendActionHook;
 
     private static unsafe void SendActionDetour(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
     {
         try
         {
-            SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
+            _sendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
             TimeLastActionUsed = DateTime.Now;
             ActionType = actionType;
         }
         catch (Exception ex)
         {
             Service.PluginLog.Error(ex, "SendActionDetour");
-            SendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
+            _sendActionHook!.Original(targetObjectId, actionType, actionId, sequence, a5, a6, a7, a8, a9);
         }
     }
 
@@ -198,31 +200,56 @@ internal static class ActionWatching
         Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
     }
 
-    internal static void Dispose()
+    private static unsafe void EnsureHooks()
     {
-        ReceiveActionEffectHook?.Dispose();
-        SendActionHook?.Dispose();
-    }
+        // Create only once per process, but allow recreation after Dispose by setting fields null.
+        _receiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>(
+            "E8 ?? ?? ?? ?? 48 8B 8D ?? ?? ?? ?? 48 33 CC E8 ?? ?? ?? ?? 48 81 C4 00 05 00 00",
+            ReceiveActionEffectDetour);
 
-
-    static unsafe ActionWatching()
-    {
-        ReceiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>("E8 ?? ?? ?? ?? 48 8B 8D ?? ?? ?? ?? 48 33 CC E8 ?? ?? ?? ?? 48 81 C4 00 05 00 00", ReceiveActionEffectDetour);
-        SendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>("48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9", SendActionDetour);
+        _sendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>(
+            "48 89 5C 24 ?? 48 89 6C 24 ?? 48 89 74 24 ?? 57 48 81 EC ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 48 33 C4 48 89 84 24 ?? ?? ?? ?? 48 8B E9 41 0F B7 D9",
+            SendActionDetour);
     }
 
     internal static void Enable()
     {
-        ReceiveActionEffectHook?.Enable();
-        SendActionHook?.Enable();
+        if (_enabled)
+        {
+            return;
+        }
+
+        _enabled = true;
+
+        EnsureHooks();
+        _receiveActionEffectHook?.Enable();
+        _sendActionHook?.Enable();
         Svc.Condition.ConditionChange += ResetActions;
     }
 
     internal static void Disable()
     {
-        ReceiveActionEffectHook?.Disable();
-        SendActionHook?.Disable();
+        if (!_enabled)
+        {
+            return;
+        }
+
+        _enabled = false;
+
         Svc.Condition.ConditionChange -= ResetActions;
+        _receiveActionEffectHook?.Disable();
+        _sendActionHook?.Disable();
+    }
+
+    internal static void Dispose()
+    {
+        Disable();
+
+        _receiveActionEffectHook?.Dispose();
+        _receiveActionEffectHook = null;
+
+        _sendActionHook?.Dispose();
+        _sendActionHook = null;
     }
 
     private static void ResetActions(ConditionFlag flag, bool value)

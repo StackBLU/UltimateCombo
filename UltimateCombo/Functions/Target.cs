@@ -68,6 +68,11 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible && chara.CurrentCastTime >= chara.TotalCastTime / 3;
     }
 
+    internal static bool ShouldInterrupt()
+    {
+        return CurrentTarget is IBattleChara chara && chara.IsCasting && chara.IsCastInterruptible && chara.TotalCastTime > 2;
+    }
+
     internal static bool IsTargetOfTarget()
     {
         return CurrentTarget?.TargetObject == LocalPlayer;

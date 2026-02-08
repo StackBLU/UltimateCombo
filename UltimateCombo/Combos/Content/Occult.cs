@@ -515,7 +515,8 @@ internal static class Occult
                 }
 
                 if (IsEnabled(Presets.Occult_PhantomRejuvination) && DutyActionReady(PhantomRejuvenation) && CanWeave(actionID, ActionWatching.LastGCD)
-                    && (GetCooldownRemainingTime(Predict) <= 8 || ActionReady(Predict)))
+                    && (GetCooldownRemainingTime(Predict) <= 8 || ActionReady(Predict)
+                    || (ActionReady(PhantomRejuvenation) && GetOptionValue(Config.Occult_Prediction) != 4)))
                 {
                     return PhantomRejuvenation;
                 }

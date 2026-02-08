@@ -5,7 +5,7 @@
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
-    <AssemblyVersion>1.0.1.16</AssemblyVersion>
+    <AssemblyVersion>1.0.1.17</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -24,6 +24,11 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <OutputPath>bin\</OutputPath>
+	<Deterministic>true</Deterministic>
+	<PathMap>$(MSBuildProjectDirectory)=/src/UltimateCombo</PathMap>
+	<EnableSourceLink>false</EnableSourceLink>
+	<PublishRepositoryUrl>false</PublishRepositoryUrl>
+	<EmbedUntrackedSources>false</EmbedUntrackedSources>
   </PropertyGroup>
   
   <PropertyGroup Label="Documentation">

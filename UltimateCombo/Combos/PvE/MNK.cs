@@ -130,7 +130,8 @@ internal static class MNK
                         return PerfectBalance;
                     }
 
-                    if (IsEnabled(Presets.MNK_ST_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3)
+                    if (IsEnabled(Presets.MNK_ST_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3
+                        && !WasLastAction(RiddleOfEarth))
                     {
                         return OriginalHook(RiddleOfEarth);
                     }
@@ -315,7 +316,8 @@ internal static class MNK
                         return OriginalHook(HowlingFist);
                     }
 
-                    if (IsEnabled(Presets.MNK_AoE_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3)
+                    if (IsEnabled(Presets.MNK_AoE_Earth) && HasEffect(Buffs.EarthsRumination) && EffectRemainingTime(Buffs.EarthsRumination) < 3
+                        && !WasLastAction(RiddleOfEarth))
                     {
                         return OriginalHook(RiddleOfEarth);
                     }

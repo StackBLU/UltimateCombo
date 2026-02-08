@@ -98,11 +98,6 @@ internal abstract partial class CustomComboFunctions
         return DutyActionManager.GetDutyActionId(0) == actionId || DutyActionManager.GetDutyActionId(1) == actionId;
     }
 
-    internal static bool DutyActionNotEquipped(uint actionId)
-    {
-        return !DutyActionEquipped(actionId);
-    }
-
     internal static bool WasLastAction(uint id)
     {
         return ActionWatching.LastAction == id;

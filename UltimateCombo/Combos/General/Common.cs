@@ -410,7 +410,7 @@ internal class Common
                 }
 
                 //Interject and Head Graze
-                if (IsEnabled(Presets.All_Interrupt) && SafeToUse() && CanInterrupt())
+                if (IsEnabled(Presets.All_Interrupt) && SafeToUse() && CanInterrupt() && ShouldInterrupt())
                 {
                     if (ActionReady(Interject) && InActionRange(Interject) && CurrentJobId is PLD.JobID or WAR.JobID or DRK.JobID or GNB.JobID)
                     {

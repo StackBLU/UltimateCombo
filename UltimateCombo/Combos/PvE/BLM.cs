@@ -140,7 +140,7 @@ internal class BLM
 
                         if (EffectRemainingTime(Bozja.Debuffs.FlareStar) < 5 || !HasEffect(Bozja.Debuffs.FlareStar) || DutyActionReady(Bozja.FontOfMagic))
                         {
-                            if (WasLastAction(Blizzard4) && (HasEffect(Bozja.Buffs.FontOfMagic) || DutyActionNotEquipped(Bozja.FontOfMagic)))
+                            if (WasLastAction(Blizzard4) && (HasEffect(Bozja.Buffs.FontOfMagic) || !DutyActionEquipped(Bozja.FontOfMagic)))
                             {
                                 return Bozja.FlareStar;
                             }

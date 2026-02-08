@@ -114,31 +114,6 @@ internal static class Bozja
         }
     }
 
-    internal class Bozja_Seraph : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.Bozja_Seraph;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            if (IsEnabled(Presets.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && CurrentJobId is WHM.JobID
-                 && IsComboAction(actionID))
-            {
-                if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
-                {
-                    return WHM.ThinAir;
-                }
-
-                if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && HasEffect(WHM.Buffs.ThinAir)
-                    && (InMeleeRange() || EffectRemainingTime(WHM.Buffs.ThinAir) < 3))
-                {
-                    return SeraphStrike;
-                }
-            }
-
-            return actionID;
-        }
-    }
-
     internal class Bozja_FoP_HSac_NEnds : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_FoP_HSac_NEnds;
@@ -196,7 +171,7 @@ internal static class Bozja
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionNotEquipped(FlareStar)
+            if (IsEnabled(Presets.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && !DutyActionEquipped(FlareStar)
                  && IsComboAction(actionID))
             {
                 if (DutyActionReady(FontOfMagic) && DutyActionEquipped(FontOfMagic))
@@ -204,9 +179,34 @@ internal static class Bozja
                     return FontOfMagic;
                 }
 
-                if (DutyActionReady(Chainspell) && DutyActionEquipped(Chainspell) && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic)))
+                if (DutyActionReady(Chainspell) && DutyActionEquipped(Chainspell)
+                    && (WasLastAction(FontOfMagic) || HasEffect(Buffs.FontOfMagic) || !DutyActionEquipped(FontOfMagic)))
                 {
                     return Chainspell;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Bozja_Seraph : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Bozja_Seraph;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && CurrentJobId is WHM.JobID && IsComboAction(actionID))
+            {
+                if (IsOffCooldown(SeraphStrike) && DutyActionEquipped(SeraphStrike) && ActionReady(WHM.ThinAir) && !HasEffect(WHM.Buffs.ThinAir))
+                {
+                    return WHM.ThinAir;
+                }
+
+                if (DutyActionReady(SeraphStrike) && DutyActionEquipped(SeraphStrike) && HasEffect(WHM.Buffs.ThinAir)
+                    && (InMeleeRange() || EffectRemainingTime(WHM.Buffs.ThinAir) < 3))
+                {
+                    return SeraphStrike;
                 }
             }
 

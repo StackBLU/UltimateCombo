@@ -70,7 +70,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
                 ImGui.TextUnformatted($"Current Cast Time: {chara?.CurrentCastTime}");
-                ImGui.TextUnformatted($"Total Cast Time: {chara?.TotalCastTime / 3}");
+                ImGui.TextUnformatted($"Total Cast Time: {chara?.TotalCastTime}");
                 ImGui.TextUnformatted($"Interrupt?: {CustomComboFunctions.CanInterrupt()}");
                 ImGui.TextUnformatted($"Level difference?: {localPlayer.Level - CustomComboFunctions.EnemyLevel()}");
                 ImGui.TextUnformatted($"Ignore GCDs based on level difference?: {CustomComboFunctions.LevelIgnoreGCD()}");

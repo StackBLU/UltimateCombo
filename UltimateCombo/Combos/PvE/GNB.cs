@@ -66,7 +66,8 @@ internal static class GNB
             ReadyToRaze = 3839,
             ReadyToBreak = 3886,
             ReadyToReign = 3840,
-            ReadyToBlast = 2686;
+            ReadyToBlast = 2686,
+            Bloodfest = 5051;
     }
 
     internal static class Debuffs
@@ -107,16 +108,15 @@ internal static class GNB
                 if (CanWeave(actionID, ActionWatching.LastGCD) && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
                 {
                     if (ActionReady(Continuation)
-                        && (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear)
-                        || HasEffect(Buffs.ReadyToGouge) || HasEffect(Buffs.ReadyToBlast)))
+                        && (HasEffect(Buffs.ReadyToRip) || HasEffect(Buffs.ReadyToTear) || HasEffect(Buffs.ReadyToGouge) || HasEffect(Buffs.ReadyToBlast)))
                     {
                         return OriginalHook(Continuation);
                     }
 
                     if (!HasEffect(Bozja.Buffs.BloodRage))
                     {
-                        if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0 && TargetIsBoss()
-                            && (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)) && (IsActionEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
+                        if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(Bloodfest) && TargetIsBoss()
+                            && (IsActionEnabled(Bozja.BloodRage) || !HasEffect(Bozja.Buffs.Reminiscence)))
                         {
                             return Bloodfest;
                         }
@@ -161,7 +161,10 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0
-                    && Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                    && Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
+                    && (GetRemainingCharges(OriginalHook(GnashingFang)) == GetMaxCharges(OriginalHook(GnashingFang))
+                    || ((HasEffect(Buffs.Bloodfest) || !LevelChecked(Bloodfest)) && !HasEffect(Buffs.ReadyToReign)
+                    && !WasLastWeaponskill(ReignOfBeasts) && !WasLastWeaponskill(NobleBlood))))
                 {
                     return OriginalHook(GnashingFang);
                 }
@@ -171,25 +174,24 @@ internal static class GNB
                     return DoubleDown;
                 }
 
-                if (Gauge.AmmoComboStep is 1 or 2)
-                {
-                    return OriginalHook(GnashingFang);
-                }
-
-                if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts)
-                    && ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
-                    || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
-                {
-                    return OriginalHook(ReignOfBeasts);
-                }
-
                 if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak))
                 {
                     return SonicBreak;
                 }
 
+                if (Gauge.AmmoComboStep is 1 or 2)
+                {
+                    return OriginalHook(GnashingFang);
+                }
+
+                if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts) && ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
+                    || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
+                {
+                    return OriginalHook(ReignOfBeasts);
+                }
+
                 if (IsEnabled(Presets.GNB_ST_Burst) && ActionReady(BurstStrike) && Gauge.Ammo > 0
-                    && ((Gauge.Ammo == MaxCartridges(Level) && lastComboMove == BrutalShell)
+                    && ((Gauge.Ammo >= MaxCartridges(Level) && lastComboMove == BrutalShell)
                     || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(OriginalHook(GnashingFang)) > 5 && GetCooldownRemainingTime(DoubleDown) > 10)
                     || BossAlmostDead()))
                 {
@@ -248,7 +250,7 @@ internal static class GNB
                         return OriginalHook(Continuation);
                     }
 
-                    if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(Bloodfest) && Gauge.Ammo == 0 && (ActionReady(NoMercy) || HasEffect(Buffs.NoMercy)))
+                    if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(Bloodfest))
                     {
                         return Bloodfest;
                     }
@@ -297,7 +299,7 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_AoE_Fated) && ActionReady(FatedCircle) && Gauge.Ammo > 0
-                    && ((Gauge.Ammo == MaxCartridges(Level) && lastComboMove is DemonSlice)
+                    && ((Gauge.Ammo >= MaxCartridges(Level) && lastComboMove is DemonSlice)
                     || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) > 10)))
                 {
                     return FatedCircle;
