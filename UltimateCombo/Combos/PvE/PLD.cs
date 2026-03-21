@@ -74,6 +74,10 @@ internal static class PLD
             PLD_AoE_Intervention = new("PLD_AoE_Intervention", 50),
             PLD_ST_Invuln = new("PLD_ST_Invuln", 10),
             PLD_AoE_Invuln = new("PLD_AoE_Invuln", 10);
+
+        internal static UserBool
+           PLD_ST_InterveneSave = new("PLD_ST_InterveneSave"),
+           PLD_AoE_InterveneSave = new("PLD_AoE_InterveneSave");
     }
 
     internal class PLD_ST_DPS : CustomComboBase
@@ -118,7 +122,8 @@ internal static class PLD
                         return OriginalHook(Expiacion);
                     }
 
-                    if (IsEnabled(Presets.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
+                    if (IsEnabled(Presets.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement() && !WasLastAbility(Intervene)
+                        && ((Config.PLD_ST_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_ST_InterveneSave))
                     {
                         return Intervene;
                     }
@@ -247,7 +252,8 @@ internal static class PLD
                         return OriginalHook(Expiacion);
                     }
 
-                    if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement())
+                    if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement() && !WasLastAbility(Intervene)
+                        && ((Config.PLD_AoE_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_AoE_InterveneSave))
                     {
                         return Intervene;
                     }

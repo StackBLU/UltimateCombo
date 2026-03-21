@@ -17,7 +17,6 @@ internal static class MNKPvP
 
         RisingPhoenix = 29481,
 
-        FlintsReply = 41447,
         FiresReply = 41448,
         WindsReply = 41509,
         RiddleOfEarth = 29482,
@@ -52,9 +51,15 @@ internal static class MNKPvP
             if ((actionID is DragonKick or TwinSnakes or Demolish or LeapingOpo or RisingRaptor or PouncingCoeurl or PhantomRush)
                 && IsEnabled(Presets.MNKPvP_Combo))
             {
-                if (IsEnabled(Presets.MNKPvP_Meteodrive) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue() && HasEffectAny(AllPvP.Buffs.Guard))
+                if (IsEnabled(Presets.MNKPvP_Meteodrive) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
+                    && (TargetHasEffectAny(AllPvP.Buffs.Guard) || (TargetHasEffectAny(Debuffs.PressurePoint) && WasLastWeaponskill(FiresReply))))
                 {
                     return Meteodrive;
+                }
+
+                if (IsEnabled(Presets.MNKPvP_RiddleOfEarth) && IsActionEnabled(EarthsReply) && EffectRemainingTime(Buffs.EarthResonance) < 1)
+                {
+                    return EarthsReply;
                 }
 
                 if (CanWeave(actionID, ActionWatching.LastGCD))
@@ -69,41 +74,21 @@ internal static class MNKPvP
                 {
                     if (CanWeave(actionID, ActionWatching.LastGCD))
                     {
-                        if (IsEnabled(Presets.MNKPvP_RisingPhoenix) && ActionReady(RisingPhoenix)
-                            && (WasLastWeaponskill(WindsReply) || WasLastWeaponskill(PouncingCoeurl))
-                            && !WasLastAction(RisingPhoenix))
+                        if (IsEnabled(Presets.MNKPvP_RisingPhoenix) && ActionReady(RisingPhoenix) && !WasLastAction(RisingPhoenix)
+                            && (WasLastWeaponskill(WindsReply) || WasLastWeaponskill(PouncingCoeurl)))
                         {
                             return RisingPhoenix;
                         }
                     }
 
-                    if (IsEnabled(Presets.MNKPvP_Thunderclap) && ActionReady(Thunderclap)
-                        && !InActionRange(DragonKick) && (HasEffect(Buffs.FireResonance) || WasLastWeaponskill(WindsReply)))
-                    {
-                        return Thunderclap;
-                    }
-
-                    if (!WasLastAbility(RisingPhoenix))
-                    {
-                        if (IsEnabled(Presets.MNKPvP_RiddleOfEarth) && IsActionEnabled(EarthsReply) && EffectRemainingTime(Buffs.EarthResonance) < 2)
-                        {
-                            return EarthsReply;
-                        }
-
-                        if (IsEnabled(Presets.MNKPvP_FlintsReply) && HasEffect(Buffs.FiresRumination) && !WasLastWeaponskill(WindsReply))
-                        {
-                            return FiresReply;
-                        }
-
-                        if (IsEnabled(Presets.MNKPvP_FlintsReply) && ActionReady(FlintsReply) && !InActionRange(DragonKick))
-                        {
-                            return FlintsReply;
-                        }
-                    }
-
-                    if (IsEnabled(Presets.MNKPvP_WindsReply) && ActionReady(WindsReply) && WasLastWeaponskill(PouncingCoeurl))
+                    if (IsEnabled(Presets.MNKPvP_WindsReply) && ActionReady(WindsReply) && WasLastWeaponskill(PhantomRush))
                     {
                         return WindsReply;
+                    }
+
+                    if (IsEnabled(Presets.MNKPvP_FiresReply) && (WasLastWeaponskill(WindsReply) || (!InActionRange(DragonKick) && GetRemainingCharges(FiresReply) == 2)))
+                    {
+                        return FiresReply;
                     }
                 }
             }

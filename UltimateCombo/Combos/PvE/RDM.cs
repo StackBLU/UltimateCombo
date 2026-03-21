@@ -409,10 +409,7 @@ internal class RDM
                             return Corpsacorps;
                         }
 
-                        if (Gauge.ManaStacks == 2)
-                        {
-                            return OriginalHook(EnchantedMoulinetTrois);
-                        }
+                        return OriginalHook(EnchantedMoulinetTrois);
                     }
 
                     if (WasLastWeaponskill(OriginalHook(EnchantedMoulinet)) && (Gauge.ManaStacks == 1 || !LevelChecked(Verflare))

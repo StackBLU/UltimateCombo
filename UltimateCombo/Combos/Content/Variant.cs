@@ -13,6 +13,7 @@ internal static class Variant
         VariantUltimatum = 29730,
         VariantRaise = 29731,
         VariantRaise2 = 29734,
+        VariantEagleEyeShot = 46942,
 
         //Don't use these for logic - they are just for the ReplaceSkill icon
         VariantCure_Image = 29729,
@@ -72,8 +73,7 @@ internal static class Variant
         {
             if (IsEnabled(Presets.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
             {
-                if (ActionReady(VariantCure) && IsActionEnabled(VariantCure)
-                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
+                if (ActionReady(VariantCure) && IsActionEnabled(VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
                 {
                     return VariantCure;
                 }
@@ -164,6 +164,24 @@ internal static class Variant
                 if (ActionReady(VariantRampart) && IsActionEnabled(VariantRampart) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return VariantRampart;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Variant_EagleEyeShot : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Variant_EagleEyeShot;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Variant_EagleEyeShot) && SafeToUse() && IsComboAction(actionID))
+            {
+                if (ActionReady(VariantEagleEyeShot) && IsActionEnabled(VariantEagleEyeShot) && CanWeave(actionID, ActionWatching.LastGCD))
+                {
+                    return VariantEagleEyeShot;
                 }
             }
 

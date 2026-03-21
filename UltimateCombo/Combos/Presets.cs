@@ -330,6 +330,11 @@ public enum Presets
     [CustomComboInfo("Variant Rampart", "", Common.JobID)]
     Variant_Rampart = 100054,
 
+    [Variant]
+    [ReplaceSkill(Variant.VariantEagleEyeShot)]
+    [CustomComboInfo("Variant Eagle Eye Shot", "", Common.JobID)]
+    Variant_EagleEyeShot = 100055,
+
     #endregion
 
     #region Occult Crescent
@@ -3601,8 +3606,8 @@ public enum Presets
 
     [PvP]
     [ParentCombo(MNKPvP_Combo)]
-    [CustomComboInfo("Flint's Reply > Fire's Reply", "", MNK.JobID)]
-    MNKPvP_FlintsReply = 119001,
+    [CustomComboInfo("Fire's Reply", "", MNK.JobID)]
+    MNKPvP_FiresReply = 119001,
 
     [PvP]
     [ParentCombo(MNKPvP_Combo)]
@@ -3613,11 +3618,6 @@ public enum Presets
     [ParentCombo(MNKPvP_Combo)]
     [CustomComboInfo("Rising Phoenix", "", MNK.JobID)]
     MNKPvP_RisingPhoenix = 119003,
-
-    [PvP]
-    [ParentCombo(MNKPvP_Combo)]
-    [CustomComboInfo("Thunderclap", "", MNK.JobID)]
-    MNKPvP_Thunderclap = 119004,
 
     [PvP]
     [ParentCombo(MNKPvP_Combo)]

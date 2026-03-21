@@ -64,6 +64,10 @@ internal static class WAR
             WAR_DecimateGauge = new("WAR_DecimateGauge", 50),
             WAR_ST_Invuln = new("WAR_ST_Invuln", 10),
             WAR_AoE_Invuln = new("WAR_AoE_Invuln", 10);
+
+        internal static UserBool
+            WAR_ST_OnslaughtSave = new("WAR_ST_OnslaughtSave"),
+            WAR_AoE_OnslaughtSave = new("WAR_AoE_OnslaughtSave");
     }
 
     internal class WAR_ST_DPS : CustomComboBase
@@ -89,9 +93,10 @@ internal static class WAR
                 {
                     if (IsEnabled(Presets.WAR_ST_Infuriate) && ActionReady(Infuriate)
                         && Gauge.BeastGauge <= 50 && !WasLastAbility(Infuriate)
+                        && (EffectRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
                         && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
                         && !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady)
-                        && (HasEffect(Bozja.Buffs.BloodRush) || !HasEffect(Bozja.Buffs.Reminiscence)))
+                        && (HasEffect(Bozja.Buffs.BloodRush) || !DutyActionEquipped(Bozja.BloodRage)))
                     {
                         return Infuriate;
                     }
@@ -104,8 +109,8 @@ internal static class WAR
                             return OriginalHook(InnerRelease);
                         }
 
-                        if (IsEnabled(Presets.WAR_ST_Onslaught) && ActionReady(Onslaught)
-                            && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+                        if (IsEnabled(Presets.WAR_ST_Onslaught) && ActionReady(Onslaught) && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught)
+                            && ((Config.WAR_ST_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_ST_OnslaughtSave))
                         {
                             return Onslaught;
                         }
@@ -115,7 +120,8 @@ internal static class WAR
                             return Upheaval;
                         }
 
-                        if (IsEnabled(Presets.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
+                        if (IsEnabled(Presets.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)) && CanLateWeave(actionID, ActionWatching.LastGCD)
+                            && !HasEffect(Bozja.Buffs.BannerOfNobleEnds))
                         {
                             if (!IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                             {
@@ -221,8 +227,8 @@ internal static class WAR
                             return OriginalHook(InnerRelease);
                         }
 
-                        if (IsEnabled(Presets.WAR_AoE_Onslaught) && ActionReady(Onslaught)
-                            && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught))
+                        if (IsEnabled(Presets.WAR_AoE_Onslaught) && ActionReady(Onslaught) && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught)
+                            && ((Config.WAR_AoE_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_AoE_OnslaughtSave))
                         {
                             return Onslaught;
                         }
@@ -232,7 +238,8 @@ internal static class WAR
                             return Orogeny;
                         }
 
-                        if (IsEnabled(Presets.WAR_ST_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)))
+                        if (IsEnabled(Presets.WAR_AoE_Bloodwhetting) && ActionReady(OriginalHook(RawIntuition)) && CanLateWeave(actionID, ActionWatching.LastGCD)
+                            && !HasEffect(Bozja.Buffs.BannerOfNobleEnds))
                         {
                             if (!IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget))
                             {

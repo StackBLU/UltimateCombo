@@ -111,7 +111,8 @@ internal static class SAMPvP
                         return TendoKaeshiSetsugekka;
                     }
 
-                    if (IsEnabled(Presets.SAMPvP_MeikyoShisui) && HasEffect(Buffs.TendoSetsugekkaReady) && InActionRange(TendoSetsugekka))
+                    if (IsEnabled(Presets.SAMPvP_MeikyoShisui) && HasEffect(Buffs.TendoSetsugekkaReady) && InActionRange(TendoSetsugekka) && !WasLastAction(MeikyoShisui)
+                        && (CurrentHP <= MaxHP - 10000 || EffectRemainingTime(Buffs.TendoSetsugekkaReady) <= 4))
                     {
                         return TendoSetsugekka;
                     }

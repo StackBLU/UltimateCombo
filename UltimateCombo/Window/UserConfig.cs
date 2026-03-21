@@ -316,6 +316,16 @@ internal static class UserConfigItems
             UserConfig.DrawSliderInt(50, 100, PLD.Config.PLD_AoE_Intervention, SliderIncrements.Fives);
         }
 
+        if (preset == Presets.PLD_ST_Intervene && enabled)
+        {
+            UserConfig.DrawAdditionalBoolChoice(PLD.Config.PLD_ST_InterveneSave, "Save one charge", "");
+        }
+
+        if (preset == Presets.PLD_AoE_Intervene && enabled)
+        {
+            UserConfig.DrawAdditionalBoolChoice(PLD.Config.PLD_AoE_InterveneSave, "Save one charge", "");
+        }
+
         if (preset == Presets.PLD_ST_Invuln && enabled)
         {
             UserConfig.DrawSliderInt(0, 100, PLD.Config.PLD_ST_Invuln, SliderIncrements.Ones);
@@ -352,6 +362,16 @@ internal static class UserConfigItems
         if (preset == Presets.WAR_AoE_Decimate && enabled)
         {
             UserConfig.DrawSliderInt(50, 100, WAR.Config.WAR_DecimateGauge, SliderIncrements.Fives);
+        }
+
+        if (preset == Presets.WAR_ST_Onslaught && enabled)
+        {
+            UserConfig.DrawAdditionalBoolChoice(WAR.Config.WAR_ST_OnslaughtSave, "Save one charge", "");
+        }
+
+        if (preset == Presets.WAR_AoE_Onslaught && enabled)
+        {
+            UserConfig.DrawAdditionalBoolChoice(WAR.Config.WAR_AoE_OnslaughtSave, "Save one charge", "");
         }
 
         if (preset == Presets.WAR_ST_Invuln && enabled)
