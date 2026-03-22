@@ -16,7 +16,7 @@ namespace UltimateCombo.Window;
 
 internal class PresetHandler : ConfigWindow
 {
-    internal static unsafe void DrawPreset(Presets preset, CustomComboInfoAttribute info, ref int i)
+    internal static void DrawPreset(Presets preset, CustomComboInfoAttribute info, ref int i)
     {
         var enabled = PresetStorage.IsEnabled(preset);
         var secret = PresetStorage.IsPvP(preset);

@@ -1,4 +1,5 @@
 using ECommons.DalamudServices;
+using ECommons.Logging;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Combos.PvE;
@@ -10,24 +11,48 @@ namespace UltimateCombo.Combos.Content;
 internal static class Variant
 {
     internal const uint
-        VariantUltimatum = 29730,
-        VariantRaise = 29731,
-        VariantRaise2 = 29734,
-        VariantEagleEyeShot = 46942,
-
-        //Don't use these for logic - they are just for the ReplaceSkill icon
-        VariantCure_Image = 29729,
-        VariantSpiritDart_Image = 29732,
-        VariantRampart_Image = 29733;
+    //Purely for image purposes in the plugin
+        VariantCure_Image = 46939,
+        VariantUltimatum_Image = 29730,
+        VariantRaise_Image = 29731,
+        VariantRaise2_Image = 29734,
+        VariantSpiritDart_Image = 46940,
+        VariantRampart_Image = 46941,
+        VariantEagleEyeShot_Image = 46942;
 
     //1069 = The Sil'dihn Subterrane
     //1137 = Mount Rokkon
     //1176 = Aloalo Island
+    //1315 = Merchant's Tale
+
+    //1075 = Another Sil'dihn Subterrane
+    //1155 = Another Mount Rokkon
+    //1179 = Another Aloalo Island
+    //1316 = Another Merchant's Tale
+
+    //1076 = Another Sil'dihn Subterrane (Savage)
+    //1156 = Another Mount Rokkon (Savage)
+    //1180 = Another Aloalo Island (Savage)
+    //1317 = Another Merchant's Tale (Savage)
 
     internal static uint VariantCure => Svc.ClientState.TerritoryType switch
     {
         1069 => 29729,
         1137 or 1176 => 33862,
+        1315 => 46939,
+        _ => 0
+    };
+
+    internal static uint VariantUltimatum => Svc.ClientState.TerritoryType switch
+    {
+        1069 or 1137 or 1176 or 1315 => 29730,
+        _ => 0
+    };
+
+    internal static uint VariantRaise => Svc.ClientState.TerritoryType switch
+    {
+        1069 or 1137 or 1176 or 1315 => 29731,
+        1075 or 1076 or 1155 or 1156 or 1179 or 1180 or 1316 or 1317 => 29734,
         _ => 0
     };
 
@@ -35,6 +60,7 @@ internal static class Variant
     {
         1069 => 29732,
         1137 or 1176 => 33863,
+        1315 => 46940,
         _ => 0
     };
 
@@ -42,6 +68,13 @@ internal static class Variant
     {
         1069 => 29733,
         1137 or 1176 => 33864,
+        1315 => 46941,
+        _ => 0
+    };
+
+    internal static uint VariantEagleEyeShot => Svc.ClientState.TerritoryType switch
+    {
+        1069 or 1137 or 1176 or 1315 => 46942,
         _ => 0
     };
 
@@ -89,6 +122,8 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
+            PluginLog.Debug(Svc.ClientState.TerritoryType + " ");
+
             if (IsEnabled(Presets.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
             {
                 if (IsActionEnabled(VariantCure)
@@ -98,11 +133,6 @@ internal static class Variant
                     if (ActionReady(Common.Swiftcast))
                     {
                         return Common.Swiftcast;
-                    }
-
-                    if (ActionReady(VariantRaise2) && IsActionEnabled(VariantRaise2))
-                    {
-                        return VariantRaise2;
                     }
 
                     if (ActionReady(VariantRaise) && IsActionEnabled(VariantRaise))

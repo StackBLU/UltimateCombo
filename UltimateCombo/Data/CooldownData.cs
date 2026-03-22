@@ -8,10 +8,10 @@ internal class CooldownData
     internal bool IsCooldown => CooldownRemaining > 0;
     internal uint ActionID;
     internal unsafe float CooldownElapsed => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, ActionID);
-    internal unsafe float CooldownTotal => ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f * MaxCharges;
+    internal float CooldownTotal => ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f * MaxCharges;
     internal unsafe float AdjustedCastTime => ActionManager.GetAdjustedCastTime(ActionType.Action, ActionID) / 1000f;
 
-    internal unsafe float CooldownRemaining
+    internal float CooldownRemaining
     {
         get
         {

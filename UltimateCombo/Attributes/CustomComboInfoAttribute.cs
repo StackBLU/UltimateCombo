@@ -12,8 +12,8 @@ namespace UltimateCombo.Attributes;
 [AttributeUsage(AttributeTargets.Field)]
 internal class CustomComboInfoAttribute : Attribute
 {
-    internal static Dictionary<uint, ClassJob> ClassSheet = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
-    private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>()!.ToDictionary(i => i.RowId, i => i);
+    internal static Dictionary<uint, ClassJob> ClassSheet = Service.DataManager.GetExcelSheet<ClassJob>().ToDictionary(i => i.RowId, i => i);
+    private static readonly Dictionary<uint, ClassJob> ClassJobs = Service.DataManager.GetExcelSheet<ClassJob>().ToDictionary(i => i.RowId, i => i);
 
     internal CustomComboInfoAttribute(string fancyName, string description, byte jobID)
     {

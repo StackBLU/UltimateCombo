@@ -17,17 +17,17 @@ namespace UltimateCombo.Data;
 
 internal static class ActionWatching
 {
-    internal static Dictionary<uint, Lumina.Excel.Sheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.Action>()!
+    internal static Dictionary<uint, Lumina.Excel.Sheets.Action> ActionSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.Action>()
         .Where(i => i.RowId is not 7)
         .ToDictionary(i => i.RowId, i => i);
 
-    internal static Dictionary<uint, Lumina.Excel.Sheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.Status>()!
+    internal static Dictionary<uint, Lumina.Excel.Sheets.Status> StatusSheet = Service.DataManager.GetExcelSheet<Lumina.Excel.Sheets.Status>()
         .ToDictionary(i => i.RowId, i => i);
 
-    internal static Dictionary<uint, Trait> TraitSheet = Service.DataManager.GetExcelSheet<Trait>()!
+    internal static Dictionary<uint, Trait> TraitSheet = Service.DataManager.GetExcelSheet<Trait>()
         .ToDictionary(i => i.RowId, i => i);
 
-    internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()!
+    internal static Dictionary<uint, BNpcBase> BNpcSheet = Service.DataManager.GetExcelSheet<BNpcBase>()
         .ToDictionary(i => i.RowId, i => i);
 
     private static readonly Dictionary<string, List<uint>> StatusCache = [];
@@ -94,7 +94,7 @@ internal static class ActionWatching
     private delegate void SendActionDelegate(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9);
     private static Hook<SendActionDelegate>? _sendActionHook;
 
-    private static unsafe void SendActionDetour(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
+    private static void SendActionDetour(ulong targetObjectId, byte actionType, uint actionId, ushort sequence, long a5, long a6, long a7, long a8, long a9)
     {
         try
         {
@@ -200,7 +200,7 @@ internal static class ActionWatching
         Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
     }
 
-    private static unsafe void EnsureHooks()
+    private static void EnsureHooks()
     {
         // Create only once per process, but allow recreation after Dispose by setting fields null.
         _receiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>(
@@ -345,7 +345,7 @@ internal static class ActionWatching
 
     internal static string GetBLUIndex(uint id)
     {
-        var aozKey = Svc.Data.GetExcelSheet<AozAction>()!.First(x => x.Action.RowId == id).RowId;
+        var aozKey = Svc.Data.GetExcelSheet<AozAction>().First(x => x.Action.RowId == id).RowId;
         var index = Svc.Data.GetExcelSheet<AozActionTransient>().GetRow(aozKey).Number;
 
         return $"#{index} ";

@@ -28,7 +28,7 @@ namespace UltimateCombo;
 internal sealed partial class UltimateComboClass : IDalamudPlugin
 {
     private readonly ConfigWindow _configWindow;
-    internal static UltimateComboClass? P = null!;
+    internal static UltimateComboClass? P = null;
     internal WindowSystem ws;
     internal static readonly List<uint> DisabledJobsPVE =
     [
@@ -491,7 +491,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
                             foreach (MemberInfo? config in whichConfig.GetMembers().Where(x => x.MemberType is MemberTypes.Field or MemberTypes.Property))
                             {
-                                var key = config.Name!;
+                                var key = config.Name;
 
                                 if (PluginConfiguration.CustomIntValues.TryGetValue(key, out var intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
                                 if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out var floatvalue)) { file.WriteLine($"{key} - {floatvalue}"); continue; }
@@ -503,7 +503,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
 
                             foreach (MemberInfo? config in typeof(AllPvP.Config).GetMembers().Where(x => x.MemberType is MemberTypes.Field or MemberTypes.Property))
                             {
-                                var key = config.Name!;
+                                var key = config.Name;
 
                                 if (PluginConfiguration.CustomIntValues.TryGetValue(key, out var intvalue)) { file.WriteLine($"{key} - {intvalue}"); continue; }
                                 if (PluginConfiguration.CustomFloatValues.TryGetValue(key, out var floatalue)) { file.WriteLine($"{key} - {floatalue}"); continue; }

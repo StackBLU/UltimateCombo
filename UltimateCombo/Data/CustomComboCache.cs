@@ -68,7 +68,7 @@ internal partial class CustomComboCache : IDisposable
         return _statusCache[key] = null;
     }
 
-    internal unsafe CooldownData GetCooldown(uint actionID)
+    internal CooldownData GetCooldown(uint actionID)
     {
         if (_cooldownCache.TryGetValue(actionID, out CooldownData? found))
         {
@@ -95,7 +95,7 @@ internal partial class CustomComboCache : IDisposable
         return cost;
     }
 
-    private unsafe void Framework_Update(IFramework framework)
+    private void Framework_Update(IFramework framework)
     {
         _statusCache.Clear();
         _cooldownCache.Clear();

@@ -287,8 +287,8 @@ public enum Presets
     Bozja_FoM_CS = 100044,
 
     [Bozja]
-    [ReplaceSkill(Bozja.FlareStar)]
-    [CustomComboInfo("Lost Flare Star - BLM only at the moment", "", Common.JobID)]
+    [ReplaceSkill(Bozja.FontOfMagic, Bozja.FlareStar)]
+    [CustomComboInfo("Font of Magic & Lost Flare Star - BLM only", "", Common.JobID)]
     Bozja_LFS = 100045,
 
     [Bozja]
@@ -311,12 +311,12 @@ public enum Presets
     Variant_Cure = 100050,
 
     [Variant]
-    [ReplaceSkill(Variant.VariantUltimatum)]
+    [ReplaceSkill(Variant.VariantUltimatum_Image)]
     [CustomComboInfo("Variant Ultimatum", "", Common.JobID)]
     Variant_Ultimatum = 100051,
 
     [Variant]
-    [ReplaceSkill(Variant.VariantRaise, Variant.VariantRaise2)]
+    [ReplaceSkill(Variant.VariantRaise_Image, Variant.VariantRaise2_Image)]
     [CustomComboInfo("Variant Raise", "", Common.JobID)]
     Variant_Raise = 100052,
 
@@ -331,7 +331,7 @@ public enum Presets
     Variant_Rampart = 100054,
 
     [Variant]
-    [ReplaceSkill(Variant.VariantEagleEyeShot)]
+    [ReplaceSkill(Variant.VariantEagleEyeShot_Image)]
     [CustomComboInfo("Variant Eagle Eye Shot", "", Common.JobID)]
     Variant_EagleEyeShot = 100055,
 

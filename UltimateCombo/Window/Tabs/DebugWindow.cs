@@ -24,7 +24,7 @@ internal class DebugWindow : ConfigWindow
         }
     }
 
-    internal static new unsafe void Draw()
+    internal static new void Draw()
     {
         IPlayerCharacter? localPlayer = Service.ObjectTable.LocalPlayer;
         var chara = CustomComboFunctions.CurrentTarget as IBattleChara;
