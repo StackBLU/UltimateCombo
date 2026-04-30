@@ -5,7 +5,7 @@
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
-    <AssemblyVersion>1.0.1.20</AssemblyVersion>
+    <AssemblyVersion>1.0.1.21</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -48,7 +48,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="DalamudPackager" Version="14.0.1" />
+    <PackageReference Include="DalamudPackager" Version="15.0.0" />
   </ItemGroup>
   
   <ItemGroup>

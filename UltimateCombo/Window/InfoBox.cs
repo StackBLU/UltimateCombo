@@ -78,7 +78,7 @@ internal class InfoBox
         ImGui.SetCursorScreenPos(topLeftCurveCenter);
         ImGui.PushTextWrapPos(Size.X);
 
-        using (ImRaii.IEndObject group = ImRaii.Group())
+        using (ImRaii.GroupDisposable group = ImRaii.Group())
         {
             ImGui.PushID(Label);
             ContentsAction();

@@ -113,8 +113,8 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
         Vector2 region = ImGui.GetContentRegionAvail();
         var topLeftSideHeight = region.Y;
 
-        using ImRaii.Style style = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0));
-        using ImRaii.IEndObject table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.BordersInnerV);
+        using ImRaii.StyleDisposable style = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0));
+        using ImRaii.TableDisposable table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.BordersInnerV);
         if (!table)
         {
             return;
@@ -125,7 +125,7 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
         Vector2 regionSize = ImGui.GetContentRegionAvail();
         ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
 
-        using (ImRaii.IEndObject leftChild = ImRaii.Child($"###LeftSide", regionSize with { Y = topLeftSideHeight }, false))
+        using (ImRaii.ChildDisposable leftChild = ImRaii.Child($"###LeftSide", regionSize with { Y = topLeftSideHeight }, false))
         {
             if (ImGui.Selectable("PvE", OpenWindow == OpenWindow.PvE))
             {
@@ -193,7 +193,7 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
 
         ImGui.PopStyleVar();
         _ = ImGui.TableNextColumn();
-        using ImRaii.IEndObject rightChild = ImRaii.Child($"###RightSide", Vector2.Zero, false);
+        using ImRaii.ChildDisposable rightChild = ImRaii.Child($"###RightSide", Vector2.Zero, false);
         switch (OpenWindow)
         {
             case OpenWindow.PvE:

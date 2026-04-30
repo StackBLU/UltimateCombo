@@ -149,7 +149,7 @@ internal class PvPWindow : ConfigWindow
             IDalamudTextureWrap? icon = Icons.GetJobIcon(id);
             var childHeight = icon is null ? 24f.Scale() : (icon.Size.Y / 2f.Scale()) + 4f;
 
-            using (ImRaii.IEndObject headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, childHeight)))
+            using (ImRaii.ChildDisposable headingTab = ImRaii.Child("HeadingTab", new Vector2(ImGui.GetContentRegionAvail().X, childHeight)))
             {
                 if (ImGui.Button("Back", new Vector2(0, 24f.Scale())))
                 {
@@ -168,7 +168,7 @@ internal class PvPWindow : ConfigWindow
                 });
             }
 
-            using ImRaii.IEndObject contents = ImRaii.Child("Contents", new Vector2(0), false);
+            using ImRaii.ChildDisposable contents = ImRaii.Child("Contents", new Vector2(0), false);
             try
             {
                 DrawHeadingContents(OpenJob, i);

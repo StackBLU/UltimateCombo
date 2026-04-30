@@ -25,12 +25,12 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool HasBattleTarget()
     {
-        return CurrentTarget is not null and IBattleNpc { BattleNpcKind: BattleNpcSubKind.Enemy };
+        return CurrentTarget is not null and IBattleNpc { BattleNpcKind: BattleNpcSubKind.Combatant };
     }
 
     internal static bool HasFriendlyTarget()
     {
-        return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Player;
+        return CurrentTarget is not null && CurrentTarget.ObjectKind is ObjectKind.Pc;
     }
 
     internal static string EnemyName()

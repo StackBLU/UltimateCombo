@@ -89,17 +89,17 @@ internal static class BRD
                 {
                     if (IsEnabled(Presets.BRD_ST_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID, ActionWatching.LastGCD) || !HasTarget()))
                     {
-                        if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
+                        if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ArmysPaeon || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                         {
                             return WanderersMinuet;
                         }
 
-                        if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                        if (ActionReady(MagesBallad) && (Gauge.Song is Song.WanderersMinuet || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                         {
                             return MagesBallad;
                         }
 
-                        if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                        if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.MagesBallad || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                         {
                             return ArmysPaeon;
                         }
@@ -150,7 +150,7 @@ internal static class BRD
                             }
                         }
 
-                        if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.Wanderer
+                        if (IsEnabled(Presets.BRD_ST_Songs) && Gauge.Song is Song.WanderersMinuet
                             && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
                         {
                             return PitchPerfect;
@@ -233,17 +233,17 @@ internal static class BRD
             {
                 if (IsEnabled(Presets.BRD_AoE_Songs) && InCombat() && Gauge.Repertoire < 3 && (CanLateWeave(actionID, ActionWatching.LastGCD) || !HasTarget()))
                 {
-                    if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
+                    if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ArmysPaeon || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                     {
                         return WanderersMinuet;
                     }
 
-                    if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    if (ActionReady(MagesBallad) && (Gauge.Song is Song.WanderersMinuet || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                     {
                         return MagesBallad;
                     }
 
-                    if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.MagesBallad || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                     {
                         return ArmysPaeon;
                     }
@@ -274,7 +274,7 @@ internal static class BRD
                         }
                     }
 
-                    if (Gauge.Song is Song.Wanderer && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
+                    if (Gauge.Song is Song.WanderersMinuet && (Gauge.Repertoire == 3 || (Gauge.SongTimer <= 4000 && Gauge.Repertoire >= 1)))
                     {
                         return PitchPerfect;
                     }
@@ -377,17 +377,17 @@ internal static class BRD
             {
                 if (IsEnabled(Presets.BRD_ST_Songs) && InCombat())
                 {
-                    if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.Army || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
+                    if (ActionReady(WanderersMinuet) && (Gauge.Song is Song.ArmysPaeon || Gauge.Song is Song.None) && Gauge.SongTimer <= 12000)
                     {
                         return WanderersMinuet;
                     }
 
-                    if (ActionReady(MagesBallad) && (Gauge.Song is Song.Wanderer || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    if (ActionReady(MagesBallad) && (Gauge.Song is Song.WanderersMinuet || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                     {
                         return MagesBallad;
                     }
 
-                    if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.Mage || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
+                    if (ActionReady(ArmysPaeon) && (Gauge.Song is Song.MagesBallad || Gauge.Song is Song.None) && Gauge.SongTimer <= 3000)
                     {
                         return ArmysPaeon;
                     }
