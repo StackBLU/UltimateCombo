@@ -2,7 +2,7 @@
   "Author": "Stack",
   "Name": "Ultimate Combo",
   "InternalName": "UltimateCombo",
-  "AssemblyVersion": "1.0.1.20",
+  "AssemblyVersion": "1.0.1.21",
   "Description": "A cleaner, more refined, combo plugin for FFXIV!",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
@@ -16,7 +16,7 @@
     "eureka",
     "bozja"
   ],
-  "DalamudApiLevel": 14,
+  "DalamudApiLevel": 15,
   "LoadRequiredState": 0,
   "LoadSync": false,
   "CanUnloadAsync": false,
