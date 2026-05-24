@@ -24,7 +24,9 @@ internal class PresetHandler : ConfigWindow
         Presets? parent = PresetStorage.GetParent(preset);
         BlueInactiveAttribute? blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
 
-        if (ImGui.Checkbox($"{info.FancyName}###{info.FancyName}{i}", ref enabled))
+        var internalName = preset.ToString();
+
+        if (ImGui.Checkbox($"{info.FancyName}###{internalName}", ref enabled))
         {
             if (enabled)
             {
@@ -41,6 +43,14 @@ internal class PresetHandler : ConfigWindow
             }
 
             Service.Configuration.Save();
+        }
+
+        if (Service.Configuration.ShowInternalNames)
+        {
+            ImGui.SameLine();
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.45f, 0.45f, 0.45f, 1.0f));
+            ImGui.TextUnformatted($"- {internalName}");
+            ImGui.PopStyleColor();
         }
 
         DrawReplaceAttribute(preset);

@@ -75,7 +75,8 @@ internal static class MCHPvP
                 if (!TargetHasEffectAny(AllPvP.Buffs.Guard))
                 {
                     if (IsEnabled(Presets.MCHPvP_MarksmansSpite) && GetLimitBreakCurrentValue() == GetLimitBreakMaxValue()
-                        && TargetHasEffect(Debuffs.Wildfire) && !HasEffect(Buffs.Overheated))
+                        && ((TargetHasEffect(Debuffs.Wildfire) && !HasEffect(Buffs.Overheated))
+                        || (TargetHasEffectAny(AllPvP.Debuffs.Stun) && EnemyCurrentHP() <= 40000)))
                     {
                         return MarksmansSpite;
                     }

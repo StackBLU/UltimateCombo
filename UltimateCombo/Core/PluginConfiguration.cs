@@ -18,6 +18,7 @@ public class PluginConfiguration : IPluginConfiguration
     public bool OpenOnLaunch { get; set; } = false;
     public bool HideChildren { get; set; } = false;
     public bool HideConflictedCombos { get; set; } = false;
+    public bool ShowInternalNames { get; set; } = false;
     public bool IgnoreGCDChecks { get; set; } = false;
     public bool DisableTripleWeaving { get; set; } = false;
     public double RangedAttackRange { get; set; } = 7;

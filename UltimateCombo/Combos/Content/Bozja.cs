@@ -124,7 +124,8 @@ internal static class Bozja
                  && IsComboAction(actionID))
             {
                 if (DutyActionReady(FontOfPower) && DutyActionEquipped(FontOfPower)
-                    && (!HasEffect(Buffs.BloodRage) || HasEffect(Buffs.BloodRush)))
+                    && (!DutyActionEquipped(BloodRage) || HasEffect(Buffs.BloodRush)
+                    || (GetCooldownRemainingTime(BloodRage) >= 90 && !HasEffect(Buffs.BloodRage))))
                 {
                     return FontOfPower;
                 }

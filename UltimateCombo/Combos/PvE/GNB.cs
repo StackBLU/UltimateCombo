@@ -184,7 +184,9 @@ internal static class GNB
                     return OriginalHook(GnashingFang);
                 }
 
-                if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts) && ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
+                if (IsEnabled(Presets.GNB_ST_Bloodfest) && ActionReady(ReignOfBeasts)
+                    && ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
+                    || (HasEffect(Buffs.ReadyToReign) && EffectRemainingTime(Buffs.ReadyToReign) <= 10)
                     || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
                 {
                     return OriginalHook(ReignOfBeasts);
@@ -292,8 +294,7 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(ReignOfBeasts)
-                    && ((HasEffect(Buffs.NoMercy) && HasEffect(Buffs.ReadyToReign))
-                    || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
+                    && (HasEffect(Buffs.ReadyToReign) || WasLastWeaponskill(ReignOfBeasts) || WasLastWeaponskill(NobleBlood)))
                 {
                     return OriginalHook(ReignOfBeasts);
                 }

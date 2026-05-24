@@ -46,6 +46,13 @@ internal class SettingsWindow : ConfigWindow
             Service.Configuration.Save();
         }
 
+        var showInternalNames = Service.Configuration.ShowInternalNames;
+        if (ImGui.Checkbox("Show internal names", ref showInternalNames))
+        {
+            Service.Configuration.ShowInternalNames = showInternalNames;
+            Service.Configuration.Save();
+        }
+
         var ignoreGCDChecks = Service.Configuration.IgnoreGCDChecks;
         if (ImGui.Checkbox("Ignore GCD Checks - Combos will start using abilities immediately", ref ignoreGCDChecks))
         {

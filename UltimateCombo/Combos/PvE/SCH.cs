@@ -125,7 +125,7 @@ internal static class SCH
                         }
 
                         if (IsEnabled(Presets.SCH_ST_DPS_ChainStrat) && HasEffect(Buffs.ImpactImminent)
-                            && TargetEffectRemainingTime(Debuffs.ChainStratagem) is < 15 and > 1)
+                            && TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1)
                         {
                             return BanefulImpaction;
                         }
@@ -161,7 +161,7 @@ internal static class SCH
                 if (IsEnabled(Presets.SCH_ST_DPS_Bio) && ActionReady(OriginalHook(Biolysis))
                     && (ActionWatching.NumberOfGcdsUsed >= 1 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()) && TargetWorthDoT()
                     && (!TargetHasEffect(BioList[OriginalHook(Biolysis)]) || TargetEffectRemainingTime(BioList[OriginalHook(Biolysis)]) <= 3
-                        || ActionWatching.NumberOfGcdsUsed == 11))
+                    || ActionWatching.NumberOfGcdsUsed == 11))
                 {
                     return OriginalHook(Biolysis);
                 }
@@ -204,7 +204,7 @@ internal static class SCH
                             return ChainStratagem;
                         }
 
-                        if (HasEffect(Buffs.ImpactImminent) && TargetEffectRemainingTime(Debuffs.ChainStratagem) is < 15 and > 1)
+                        if (HasEffect(Buffs.ImpactImminent) && TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1)
                         {
                             return BanefulImpaction;
                         }

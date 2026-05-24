@@ -2,8 +2,8 @@
   "Author": "Stack",
   "Name": "Ultimate Combo",
   "InternalName": "UltimateCombo",
-  "AssemblyVersion": "1.0.1.21",
-  "Description": "A cleaner, more refined, combo plugin for FFXIV!",
+  "AssemblyVersion": "1.0.1.22",
+  "Description": "Brand new combos like never before - 1 button mode included! Features extra functionality not in other combo plugins like PvP, Blue Mage, Eureka, and Bozja!",
   "ApplicableVersion": "any",
   "RepoUrl": "https://github.com/StackBLU/UltimateCombo",
   "Tags": [

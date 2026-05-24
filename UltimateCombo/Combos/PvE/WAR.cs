@@ -96,7 +96,7 @@ internal static class WAR
                         && (EffectRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
                         && !HasEffect(Buffs.NascentChaos) && !HasEffect(Buffs.InnerRelease)
                         && !HasEffect(Buffs.PrimalRendReady) && !HasEffect(Buffs.PrimalRuinationReady)
-                        && (HasEffect(Bozja.Buffs.BloodRush) || !DutyActionEquipped(Bozja.BloodRage)))
+                        && (HasEffect(Bozja.Buffs.BloodRush) || !DutyActionEquipped(Bozja.BloodRage) || GetCooldownRemainingTime(Bozja.BloodRage) >= 60))
                     {
                         return Infuriate;
                     }

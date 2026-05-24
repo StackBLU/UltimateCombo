@@ -160,9 +160,8 @@ internal class RPR
                     return HarvestMoon;
                 }
 
-                if (IsEnabled(Presets.RPR_ST_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle)
-                    && HasEffect(Buffs.ImmortalSacrifice)
-                    && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
+                if (IsEnabled(Presets.RPR_ST_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle) && HasEffect(Buffs.ImmortalSacrifice)
+                    && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
                 {
                     return PlentifulHarvest;
                 }
@@ -297,9 +296,8 @@ internal class RPR
                     return HarvestMoon;
                 }
 
-                if (IsEnabled(Presets.RPR_AoE_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle)
-                    && HasEffect(Buffs.ImmortalSacrifice)
-                    && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
+                if (IsEnabled(Presets.RPR_AoE_PlentifulHarvest) && !HasEffect(Buffs.BloodsownCircle) && HasEffect(Buffs.ImmortalSacrifice)
+                    && !HasEffect(Buffs.Enshrouded) && !HasEffect(Buffs.SoulReaver) && !HasEffect(Buffs.Executioner))
                 {
                     return PlentifulHarvest;
                 }
