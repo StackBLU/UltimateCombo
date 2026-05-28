@@ -150,8 +150,8 @@ internal static class BLU
                     return OriginalHook(11);
                 }
 
-                if (GetCooldownRemainingTime(PhantomFlurry) > 60 && HasEffect(Buffs.WingedReprobation) && !IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener)
-                    && actionID is MoonFlute)
+                if (GetCooldownRemainingTime(PhantomFlurry) > 60 && HasEffect(Buffs.WingedReprobation)
+                    && !IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener) && actionID is MoonFlute)
                 {
                     return WingedReprobation;
                 }
@@ -199,7 +199,8 @@ internal static class BLU
                     return Nightbloom;
                 }
 
-                if (IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener) && actionID is MoonFlute)
+                if ((IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener) || IsEnabled(Presets.BLU_MoonFluteOpener_DoubleDoTOpener))
+                    && actionID is MoonFlute)
                 {
                     if (WasLastAbility(Nightbloom) && actionID is MoonFlute && IsSpellActive(Bristle) && !WasLastSpell(Bristle))
                     {
@@ -219,12 +220,12 @@ internal static class BLU
                     {
                         if (!WasLastSpell(BreathOfMagic) && !WasLastSpell(MortalFlame) && actionID is MoonFlute)
                         {
-                            if (IsSpellActive(BreathOfMagic) && actionID is MoonFlute && IsSpellActive(BreathOfMagic) && WasLastAbility(SeaShanty))
+                            if (actionID is MoonFlute && IsSpellActive(BreathOfMagic) && WasLastAction(SeaShanty))
                             {
                                 return BreathOfMagic;
                             }
 
-                            if (IsSpellActive(MortalFlame) && actionID is MoonFlute && IsSpellActive(MortalFlame) && WasLastAbility(SeaShanty))
+                            if (actionID is MoonFlute && IsSpellActive(MortalFlame) && WasLastAction(SeaShanty))
                             {
                                 return MortalFlame;
                             }
@@ -252,9 +253,15 @@ internal static class BLU
                         return Surpanakha;
                     }
 
-                    if (IsOffCooldown(MatraMagic) && actionID is MoonFlute && IsSpellActive(MatraMagic))
+                    if (IsOffCooldown(MatraMagic) && actionID is MoonFlute && IsSpellActive(MatraMagic)
+                        && !IsEnabled(Presets.BLU_MoonFluteOpener_DoubleDoTOpener))
                     {
                         return MatraMagic;
+                    }
+
+                    if (actionID is MoonFlute && IsSpellActive(MortalFlame) && WasLastAction(Surpanakha))
+                    {
+                        return MortalFlame;
                     }
 
                     if (IsOffCooldown(BeingMortal) && actionID is MoonFlute && IsSpellActive(BeingMortal))
@@ -268,7 +275,8 @@ internal static class BLU
                     }
                 }
 
-                if (!IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener) && actionID is MoonFlute)
+                if (!IsEnabled(Presets.BLU_MoonFluteOpener_DoTOpener) && !IsEnabled(Presets.BLU_MoonFluteOpener_DoubleDoTOpener)
+                    && actionID is MoonFlute)
                 {
                     if (IsOffCooldown(WingedReprobation) && actionID is MoonFlute && IsSpellActive(WingedReprobation)
                         && !WasLastSpell(WingedReprobation) && !WasLastAbility(FeatherRain) && !HasEffect(Buffs.WingedReprobation))
@@ -475,6 +483,12 @@ internal static class BLU
                 if (IsSpellActive(MortalFlame) && !TargetHasEffectAny(Debuffs.MortalFlame) && actionID is Bristle)
                 {
                     return MortalFlame;
+                }
+
+                if (IsSpellActive(MatraMagic) && IsOffCooldown(MatraMagic) && actionID is Bristle
+                    && IsEnabled(Presets.BLU_MoonFluteOpener_DoubleDoTOpener))
+                {
+                    return MatraMagic;
                 }
             }
 

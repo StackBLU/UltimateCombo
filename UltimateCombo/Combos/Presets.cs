@@ -3015,13 +3015,20 @@ public enum Presets
 
     [ReplaceSkill(BLU.MoonFlute)]
     [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedReprobation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle, BLU.FeatherRain)]
-    [CustomComboInfo("Moon Flute Combo", "Turns Moon Flute into a full opener\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!\nCan be done with 2.50 spell speed", BLU.JobID)]
+    [CustomComboInfo("Moon Flute Combo", "Turns Moon Flute into a full opener.\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!\nCan be done with 2.50 spell speed", BLU.JobID)]
     BLU_MoonFluteOpener = 70001,
 
     [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
     [ParentCombo(BLU_MoonFluteOpener)]
-    [CustomComboInfo("DoT Alternative", "Only have 1 DoT active (Breath of Magic OR Mortal Flame)\nRequires 2.20 spell speed or faster", BLU.JobID)]
+    [ConflictingCombos(BLU_MoonFluteOpener_DoubleDoTOpener)]
+    [CustomComboInfo("DoT Alternative (Breath of Magic OR Mortal Flame)", "Only have 1 DoT active (Breath of Magic OR Mortal Flame)\nRequires 2.20 spell speed or faster", BLU.JobID)]
     BLU_MoonFluteOpener_DoTOpener = 70002,
+
+    [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
+    [ParentCombo(BLU_MoonFluteOpener)]
+    [ConflictingCombos(BLU_MoonFluteOpener_DoTOpener)]
+    [CustomComboInfo("Double DoT Opener (Breath of Magic AND Mortal Flame)", "Apply both DoTs.\nRequires 2.20 spell speed or faster", BLU.JobID)]
+    BLU_MoonFluteOpener_DoubleDoTOpener = 70003,
 
     #region Combos
 
