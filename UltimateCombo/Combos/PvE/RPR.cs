@@ -166,7 +166,7 @@ internal class RPR
                     return PlentifulHarvest;
                 }
 
-                if (IsEnabled(Presets.RPR_ST_Enshroud) && Gauge.LemureShroud > 1)
+                if (IsEnabled(Presets.RPR_ST_Enshroud) && Gauge.LemureShroud > 0 && (Gauge.LemureShroud > 1 || Level <= 89))
                 {
                     if (WasLastWeaponskill(OriginalHook(VoidReaping)))
                     {
@@ -302,7 +302,7 @@ internal class RPR
                     return PlentifulHarvest;
                 }
 
-                if (IsEnabled(Presets.RPR_AoE_Enshroud) && Gauge.LemureShroud > 1)
+                if (IsEnabled(Presets.RPR_AoE_Enshroud) && Gauge.LemureShroud > 0 && (Gauge.LemureShroud > 1 || Level <= 89))
                 {
                     return OriginalHook(GrimReaping);
                 }
