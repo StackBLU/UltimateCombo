@@ -123,7 +123,8 @@ internal static class PLD
                     }
 
                     if (IsEnabled(Presets.PLD_ST_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement() && !WasLastAbility(Intervene)
-                        && ((Config.PLD_ST_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_ST_InterveneSave))
+                        && ((Config.PLD_ST_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_ST_InterveneSave)
+                        && !DutyActionEquipped(Bozja.Buffs.BloodRage))
                     {
                         return Intervene;
                     }
@@ -224,7 +225,7 @@ internal static class PLD
                 }
 
                 if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange()
-                    && !InCombat())
+                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
                 {
                     return Intervene;
                 }
@@ -253,7 +254,8 @@ internal static class PLD
                     }
 
                     if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && InMeleeRangeNoMovement() && !WasLastAbility(Intervene)
-                        && ((Config.PLD_AoE_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_AoE_InterveneSave))
+                        && ((Config.PLD_AoE_InterveneSave && GetRemainingCharges(Intervene) > 1) || !Config.PLD_AoE_InterveneSave)
+                        && !DutyActionEquipped(Bozja.Buffs.BloodRage))
                     {
                         return Intervene;
                     }

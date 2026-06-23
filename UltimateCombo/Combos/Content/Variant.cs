@@ -1,5 +1,4 @@
 using ECommons.DalamudServices;
-using ECommons.Logging;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Combos.PvE;
@@ -122,8 +121,6 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            PluginLog.Debug(Svc.ClientState.TerritoryType + " ");
-
             if (IsEnabled(Presets.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
             {
                 if (IsActionEnabled(VariantCure)

@@ -110,7 +110,8 @@ internal static class WAR
                         }
 
                         if (IsEnabled(Presets.WAR_ST_Onslaught) && ActionReady(Onslaught) && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught)
-                            && ((Config.WAR_ST_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_ST_OnslaughtSave))
+                            && ((Config.WAR_ST_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_ST_OnslaughtSave)
+                            && !DutyActionEquipped(Bozja.Buffs.BloodRage))
                         {
                             return Onslaught;
                         }
@@ -215,7 +216,7 @@ internal static class WAR
                     }
 
                     if (IsEnabled(Presets.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange()
-                        && !InCombat())
+                        && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
                     {
                         return Onslaught;
                     }
@@ -228,7 +229,8 @@ internal static class WAR
                         }
 
                         if (IsEnabled(Presets.WAR_AoE_Onslaught) && ActionReady(Onslaught) && InMeleeRangeNoMovement() && !WasLastAbility(Onslaught)
-                            && ((Config.WAR_AoE_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_AoE_OnslaughtSave))
+                            && ((Config.WAR_AoE_OnslaughtSave && GetRemainingCharges(Onslaught) > 1) || !Config.WAR_AoE_OnslaughtSave)
+                            && !DutyActionEquipped(Bozja.Buffs.BloodRage))
                         {
                             return Onslaught;
                         }

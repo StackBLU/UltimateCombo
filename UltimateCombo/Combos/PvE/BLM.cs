@@ -118,7 +118,7 @@ internal class BLM
             {
                 //Bozja
                 {
-                    if (HasEffect(Bozja.Buffs.Reminiscence) && IsEnabled(Presets.Bozja_LFS))
+                    if (HasEffect(Bozja.Buffs.Reminiscence) && IsEnabled(Presets.Bozja_LFS) && DutyActionEquipped(Bozja.FlareStar))
                     {
                         //LFM takes roughly 1200-1000 mp per tick
                         if (HasEffect(Bozja.Buffs.FontOfMagic) && !WasLastAction(Bozja.FontOfMagic) && (EffectRemainingTime(Bozja.Buffs.FontOfMagic) < 7 || CurrentMP <= 3500))
@@ -193,7 +193,8 @@ internal class BLM
 
                 if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (IsEnabled(Presets.BLM_ST_Swiftcast) && ActionReady(Common.Swiftcast) && !Gauge.IsParadoxActive && CanLateWeave(actionID, ActionWatching.LastGCD)
+                    if (IsEnabled(Presets.BLM_ST_Swiftcast) && ActionReady(Common.Swiftcast)
+                        && !Gauge.IsParadoxActive && CanLateWeave(actionID, ActionWatching.LastGCD) && !HasEffect(Bozja.Buffs.Chainspell)
                         && Gauge.InAstralFire && !HasEffect(Buffs.Triplecast) && !HasEffect(Occult.Buffs.Quick)
                         && (CurrentMP >= 4000 || ActionReady(Manafont)
                         || (GetCooldownRemainingTime(Manafont) < 5 && CurrentMP > 2000)))
@@ -210,6 +211,7 @@ internal class BLM
                     if (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     {
                         if (IsEnabled(Presets.BLM_ST_Triplecast) && ActionReady(Triplecast) && !Gauge.IsParadoxActive
+                            && !HasEffect(Bozja.Buffs.Chainspell)
                             && (HasEffect(Buffs.CircleOfPower) || GetRemainingCharges(Triplecast) == 2
                             || (GetCooldownChargeRemainingTime(Triplecast) < 10 && GetRemainingCharges(Triplecast) == 1))
                             && Gauge.InAstralFire
@@ -249,7 +251,7 @@ internal class BLM
                         }
                     }
 
-                    if (ActionReady(Despair) && Gauge.InAstralFire && CurrentMP <= 1600 && CurrentMP >= 800)
+                    if (ActionReady(Despair) && Gauge.InAstralFire && CurrentMP <= 1600 && CurrentMP >= 800 && !HasEffect(Bozja.Buffs.FontOfMagic))
                     {
                         return Despair;
                     }
@@ -265,7 +267,7 @@ internal class BLM
 
                 if (IsEnabled(Presets.BLM_ST_FlareStar) && ActionReady(FlareStar) && Gauge.InAstralFire && Gauge.AstralSoulStacks == 6)
                 {
-                    if (IsMoving && ActionReady(Despair) && CurrentMP <= 1600 && CurrentMP >= 800)
+                    if (IsMoving && ActionReady(Despair) && CurrentMP <= 1600 && CurrentMP >= 800 && !HasEffect(Bozja.Buffs.FontOfMagic))
                     {
                         return Despair;
                     }
@@ -286,7 +288,8 @@ internal class BLM
                     }
                 }
 
-                if (ActionReady(Despair) && Gauge.InAstralFire && ((CurrentMP <= 1600 && CurrentMP >= 800) || HasEffect(Bozja.Buffs.AutoEther)))
+                if (ActionReady(Despair) && Gauge.InAstralFire && ((CurrentMP <= 1600 && CurrentMP >= 800 && !HasEffect(Bozja.Buffs.FontOfMagic))
+                    || HasEffect(Bozja.Buffs.AutoEther)))
                 {
                     return Despair;
                 }
@@ -317,13 +320,21 @@ internal class BLM
                 if (ActionReady(Blizzard3) && !WasLastAction(Transpose)
                     && ((Gauge.InAstralFire && CurrentMP < 800)
                     || (!Gauge.InAstralFire && !Gauge.InUmbralIce && CurrentMP < 10000 && CurrentMP >= GetResourceCost(Blizzard3))
-                    || (!LevelChecked(Despair) && CurrentMP < 1600 && !WasLastSpell(Blizzard4))))
+                    || (!LevelChecked(Despair) && CurrentMP < 1600 && !WasLastSpell(Blizzard4))
+                    || (HasEffect(Bozja.Buffs.FontOfMagic) && HasEffect(Bozja.Buffs.Chainspell) && CurrentMP <= 2840)))
                 {
                     return Blizzard3;
                 }
 
-                if (ActionReady(Fire4) && Gauge.InAstralFire && CurrentMP >= GetResourceCost(Fire4) && !WasLastAction(Transpose) && !WasLastSpell(Blizzard4))
+                if (ActionReady(Fire4) && Gauge.InAstralFire && CurrentMP >= GetResourceCost(Fire4)
+                    && !WasLastAction(Transpose) && !WasLastSpell(Blizzard4))
                 {
+                    if (ActionReady(Common.LucidDreaming) && CanWeave(actionID, ActionWatching.LastGCD)
+                        && HasEffect(Bozja.Buffs.FontOfMagic) && HasEffect(Bozja.Buffs.Chainspell))
+                    {
+                        return Common.LucidDreaming;
+                    }
+
                     return Fire4;
                 }
 

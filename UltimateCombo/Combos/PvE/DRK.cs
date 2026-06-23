@@ -206,7 +206,7 @@ internal static class DRK
                 }
 
                 if (IsEnabled(Presets.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange()
-                    && !InCombat())
+                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
                 {
                     return Shadowstride;
                 }

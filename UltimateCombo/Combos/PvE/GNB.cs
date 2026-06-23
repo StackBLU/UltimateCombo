@@ -131,7 +131,7 @@ internal static class GNB
 
                         if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
-                            if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock))
+                            if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock) && InActionRange(BowShock))
                             {
                                 return BowShock;
                             }
@@ -169,7 +169,8 @@ internal static class GNB
                     return OriginalHook(GnashingFang);
                 }
 
-                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && HasEffect(Buffs.NoMercy))
+                if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && HasEffect(Buffs.NoMercy)
+                    && InActionRange(DoubleDown))
                 {
                     return DoubleDown;
                 }
@@ -240,7 +241,7 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_AoE_Trajectory) && ActionReady(Trajectory) && !InMeleeRange()
-                    && !InCombat())
+                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
                 {
                     return Trajectory;
                 }
@@ -267,7 +268,7 @@ internal static class GNB
                         return OriginalHook(BlastingZone);
                     }
 
-                    if (IsEnabled(Presets.GNB_AoE_BowShock) && ActionReady(BowShock))
+                    if (IsEnabled(Presets.GNB_AoE_BowShock) && ActionReady(BowShock) && InActionRange(BowShock))
                     {
                         return BowShock;
                     }
@@ -288,7 +289,7 @@ internal static class GNB
                     }
                 }
 
-                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2)
+                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && InActionRange(DoubleDown))
                 {
                     return DoubleDown;
                 }

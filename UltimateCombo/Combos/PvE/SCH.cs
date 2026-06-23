@@ -125,7 +125,7 @@ internal static class SCH
                         }
 
                         if (IsEnabled(Presets.SCH_ST_DPS_ChainStrat) && HasEffect(Buffs.ImpactImminent)
-                            && TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1)
+                            && (TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1 || EffectRemainingTime(Buffs.ImpactImminent) <= 15))
                         {
                             return BanefulImpaction;
                         }
@@ -204,7 +204,8 @@ internal static class SCH
                             return ChainStratagem;
                         }
 
-                        if (HasEffect(Buffs.ImpactImminent) && TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1)
+                        if (HasEffect(Buffs.ImpactImminent)
+                            && (TargetEffectRemainingTimeAny(Debuffs.ChainStratagem) is < 15 and > 1 || EffectRemainingTime(Buffs.ImpactImminent) <= 15))
                         {
                             return BanefulImpaction;
                         }

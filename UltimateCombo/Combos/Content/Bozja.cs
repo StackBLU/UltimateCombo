@@ -79,7 +79,11 @@ internal static class Bozja
         {
             if (IsEnabled(Presets.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat() && IsComboAction(actionID))
             {
-                if (DutyActionReady(BloodRage) && DutyActionEquipped(BloodRage))
+                if (DutyActionReady(BloodRage) && DutyActionEquipped(BloodRage)
+                    && ((CurrentJobId is PLD.JobID && GetRemainingCharges(PLD.Intervene) == GetMaxCharges(PLD.Intervene))
+                    || (CurrentJobId is WAR.JobID && GetRemainingCharges(WAR.Onslaught) == GetMaxCharges(WAR.Onslaught))
+                    || (CurrentJobId is DRK.JobID && GetRemainingCharges(DRK.Shadowstride) == GetMaxCharges(DRK.Shadowstride))
+                    || (CurrentJobId is GNB.JobID && GetRemainingCharges(GNB.Trajectory) == GetMaxCharges(GNB.Trajectory))))
                 {
                     return BloodRage;
                 }
