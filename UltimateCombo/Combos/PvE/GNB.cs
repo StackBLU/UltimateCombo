@@ -160,9 +160,10 @@ internal static class GNB
                     }
                 }
 
-                if (IsEnabled(Presets.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0
-                    && Gauge.AmmoComboStep == 0 && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
+                if (IsEnabled(Presets.GNB_ST_Gnashing) && ActionReady(OriginalHook(GnashingFang)) && Gauge.Ammo > 0 && Gauge.AmmoComboStep == 0
+                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                     && (GetRemainingCharges(OriginalHook(GnashingFang)) == GetMaxCharges(OriginalHook(GnashingFang))
+                    || (GetRemainingCharges(OriginalHook(GnashingFang)) == GetMaxCharges(OriginalHook(GnashingFang)) - 1 && GetCooldownChargeRemainingTime(OriginalHook(GnashingFang)) < 10)
                     || ((HasEffect(Buffs.Bloodfest) || !LevelChecked(Bloodfest)) && !HasEffect(Buffs.ReadyToReign)
                     && !WasLastWeaponskill(ReignOfBeasts) && !WasLastWeaponskill(NobleBlood))))
                 {

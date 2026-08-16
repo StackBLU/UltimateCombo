@@ -23,7 +23,7 @@ internal static class FSH
         Cast = 289,
         Hook = 296,
         Mooch = 297,
-        MoochII = 268,
+        Mooch2 = 268,
         CastLight = 2135,
         Snagging = 4100,
         Chum = 4104,
@@ -33,7 +33,7 @@ internal static class FSH
         SurfaceSlap = 4595,
         Gig = 7632,
         SharkEye = 7904,
-        SharkEyeII = 7905,
+        SharkEye2 = 7905,
         VeteranTrade = 7906,
         NaturesBounty = 7909,
         Salvage = 7910,
@@ -133,9 +133,9 @@ internal static class FSH
                         return SharkEye;
                     }
 
-                    if (actionID is MoochII)
+                    if (actionID is Mooch2)
                     {
-                        return SharkEyeII;
+                        return SharkEye2;
                     }
                 }
 

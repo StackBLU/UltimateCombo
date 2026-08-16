@@ -186,10 +186,7 @@ internal class PvPWindow : ConfigWindow
                 Color = Colors.Grey,
                 BorderThickness = 1f,
                 CurveRadius = 8f,
-                ContentsAction = () =>
-                {
-                    PresetHandler.DrawPreset(preset, info, ref i);
-                }
+                ContentsAction = () => PresetHandler.DrawPreset(preset, info, ref i)
             };
 
             if (Service.Configuration.HideConflictedCombos)

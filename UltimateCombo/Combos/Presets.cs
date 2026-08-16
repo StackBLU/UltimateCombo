@@ -47,7 +47,7 @@ public enum Presets
     FSH_PowerfulCurrent = 51006,
 
     [ParentCombo(FSH_FishingToSpearfishing)]
-    [ReplaceSkill(FSH.Mooch, FSH.MoochII, FSH.SharkEye, FSH.SharkEyeII)]
+    [ReplaceSkill(FSH.Mooch, FSH.Mooch2, FSH.SharkEye, FSH.SharkEye2)]
     [CustomComboInfo("Mooch to Shark Eye", "", FSH.JobID)]
     FSH_MoochEye = 51007,
 
@@ -339,94 +339,36 @@ public enum Presets
 
     #region Occult Crescent
 
+    #region Freelancer
+
+    [Occult]
+    [ReplaceSkill(Occult.Resuscitation)]
+    [CustomComboInfo("Phantom Freelancer", "", Common.JobID)]
+    Occult_Freelancer = 100060,
+
+    [Occult]
+    [ParentCombo(Occult_Freelancer)]
+    [CustomComboInfo("Occult Phantom Resuscitation", "", Common.JobID)]
+    Occult_PhantomResuscitation = 100061,
+
+    #endregion
+
     #region Knight
 
     [Occult]
     [ReplaceSkill(Occult.Pray, Occult.Heal)]
     [CustomComboInfo("Phantom Knight", "", Common.JobID)]
-    Occult_Knight = 100060,
+    Occult_Knight = 100070,
 
     [Occult]
     [ParentCombo(Occult_Knight)]
     [CustomComboInfo("Pray", "", Common.JobID)]
-    Occult_Pray = 100061,
+    Occult_Pray = 100071,
 
     [Occult]
     [ParentCombo(Occult_Knight)]
     [CustomComboInfo("Occult Heal", "", Common.JobID)]
-    Occult_Heal = 100062,
-
-    #endregion
-
-    #region Monk
-
-    [Occult]
-    [ReplaceSkill(Occult.PhantomKick, Occult.Counter, Occult.Counterstance, Occult.Chakra)]
-    [CustomComboInfo("Phantom Monk", "", Common.JobID)]
-    Occult_Monk = 100070,
-
-    [Occult]
-    [ParentCombo(Occult_Monk)]
-    [CustomComboInfo("Phantom Kick", "", Common.JobID)]
-    Occult_PhantomKick = 100071,
-
-    [Occult]
-    [ParentCombo(Occult_Monk)]
-    [CustomComboInfo("Occult Counter", "", Common.JobID)]
-    Occult_Counter = 100072,
-
-    [Occult]
-    [ParentCombo(Occult_Monk)]
-    [CustomComboInfo("Counterstance", "", Common.JobID)]
-    Occult_Counterstance = 100073,
-
-    [Occult]
-    [ParentCombo(Occult_Monk)]
-    [CustomComboInfo("Occult Chakra", "", Common.JobID)]
-    Occult_Chakra = 100074,
-
-    #endregion
-
-    #region Thief
-
-    [Occult]
-    [ReplaceSkill(Occult.Steal, Occult.Vigilance, Occult.PilferWeapon)]
-    [CustomComboInfo("Phantom Thief", "", Common.JobID)]
-    Occult_Thief = 100150,
-
-    [Occult]
-    [ParentCombo(Occult_Thief)]
-    [CustomComboInfo("Steal", "", Common.JobID)]
-    Occult_Steal = 100151,
-
-    [Occult]
-    [ParentCombo(Occult_Thief)]
-    [CustomComboInfo("Vigilance", "", Common.JobID)]
-    Occult_Vigilance = 100152,
-
-    [Occult]
-    [ParentCombo(Occult_Thief)]
-    [CustomComboInfo("Pilfer Weapon", "", Common.JobID)]
-    Occult_PilferWeapon = 100153,
-
-    #endregion
-
-    #region Samurai
-
-    [Occult]
-    [ReplaceSkill(Occult.Mineuchi, Occult.Iainuki, Occult.Zeninage)]
-    [CustomComboInfo("Phantom Samurai", "", Common.JobID)]
-    Occult_Samurai = 100130,
-
-    [Occult]
-    [ParentCombo(Occult_Samurai)]
-    [CustomComboInfo("Iainuki", "", Common.JobID)]
-    Occult_Iainuki = 100131,
-
-    [Occult]
-    [ParentCombo(Occult_Samurai)]
-    [CustomComboInfo("Zeninage", "", Common.JobID)]
-    Occult_Zeninage = 100132,
+    Occult_Heal = 100072,
 
     #endregion
 
@@ -435,12 +377,41 @@ public enum Presets
     [Occult]
     [ReplaceSkill(Occult.DeadlyBlow)]
     [CustomComboInfo("Phantom Berserker", "", Common.JobID)]
-    Occult_Berserker = 100170,
+    Occult_Berserker = 100080,
 
     [Occult]
     [ParentCombo(Occult_Berserker)]
     [CustomComboInfo("Deadly Blow", "", Common.JobID)]
-    Occult_DeadlyBlow = 100171,
+    Occult_DeadlyBlow = 100081,
+
+    #endregion
+
+    #region Monk
+
+    [Occult]
+    [ReplaceSkill(Occult.PhantomKick, Occult.Counter, Occult.Counterstance, Occult.Chakra)]
+    [CustomComboInfo("Phantom Monk", "", Common.JobID)]
+    Occult_Monk = 100090,
+
+    [Occult]
+    [ParentCombo(Occult_Monk)]
+    [CustomComboInfo("Phantom Kick", "", Common.JobID)]
+    Occult_PhantomKick = 100091,
+
+    [Occult]
+    [ParentCombo(Occult_Monk)]
+    [CustomComboInfo("Occult Counter", "", Common.JobID)]
+    Occult_Counter = 100092,
+
+    [Occult]
+    [ParentCombo(Occult_Monk)]
+    [CustomComboInfo("Counterstance", "", Common.JobID)]
+    Occult_Counterstance = 100093,
+
+    [Occult]
+    [ParentCombo(Occult_Monk)]
+    [CustomComboInfo("Occult Chakra", "", Common.JobID)]
+    Occult_Chakra = 100094,
 
     #endregion
 
@@ -449,66 +420,31 @@ public enum Presets
     [Occult]
     [ReplaceSkill(Occult.PhantomAim)]
     [CustomComboInfo("Phantom Ranger", "", Common.JobID)]
-    Occult_Ranger = 100160,
+    Occult_Ranger = 100100,
 
     [Occult]
     [ParentCombo(Occult_Ranger)]
     [CustomComboInfo("Phantom Aim", "", Common.JobID)]
-    Occult_Aim = 100161,
+    Occult_Aim = 100101,
 
     #endregion
 
-    #region Time Mage
+    #region Samurai
 
     [Occult]
-    [ReplaceSkill(Occult.Slowga, Occult.Comet, Occult.MageMasher, Occult.Quick)]
-    [CustomComboInfo("Phantom Time Mage", "", Common.JobID)]
-    Occult_TimeMage = 100080,
+    [ReplaceSkill(Occult.Mineuchi, Occult.Iainuki, Occult.Zeninage)]
+    [CustomComboInfo("Phantom Samurai", "", Common.JobID)]
+    Occult_Samurai = 100110,
 
     [Occult]
-    [ParentCombo(Occult_TimeMage)]
-    [CustomComboInfo("Occult Comet", "", Common.JobID)]
-    Occult_Comet = 100081,
+    [ParentCombo(Occult_Samurai)]
+    [CustomComboInfo("Iainuki", "", Common.JobID)]
+    Occult_Iainuki = 100111,
 
     [Occult]
-    [ParentCombo(Occult_TimeMage)]
-    [CustomComboInfo("Occult Mage Masher", "", Common.JobID)]
-    Occult_MageMasher = 100082,
-
-    [Occult]
-    [ParentCombo(Occult_TimeMage)]
-    [CustomComboInfo("Occult Quick", "", Common.JobID)]
-    Occult_Quick = 100083,
-
-    #endregion
-
-    #region Chemist
-
-
-
-    #endregion
-
-    #region Geomancer
-
-    [Occult]
-    [ReplaceSkill(Occult.BattleBell, Occult.Weather, Occult.RingingRespite)]
-    [CustomComboInfo("Phantom Geomancer", "", Common.JobID)]
-    Occult_Geomancer = 100140,
-
-    [Occult]
-    [ParentCombo(Occult_Geomancer)]
-    [CustomComboInfo("Battle Bell", "", Common.JobID)]
-    Occult_BattleBell = 100141,
-
-    [Occult]
-    [ParentCombo(Occult_Geomancer)]
-    [CustomComboInfo("Weather", "", Common.JobID)]
-    Occult_Weather = 100142,
-
-    [Occult]
-    [ParentCombo(Occult_Geomancer)]
-    [CustomComboInfo("Ringing Respite", "", Common.JobID)]
-    Occult_RingingRespite = 100143,
+    [ParentCombo(Occult_Samurai)]
+    [CustomComboInfo("Zeninage", "", Common.JobID)]
+    Occult_Zeninage = 100112,
 
     #endregion
 
@@ -517,36 +453,65 @@ public enum Presets
     [Occult]
     [ReplaceSkill(Occult.OffensiveAria, Occult.HerosRime)]
     [CustomComboInfo("Phantom Bard", "", Common.JobID)]
-    Occult_Bard = 100090,
+    Occult_Bard = 100120,
 
     [Occult]
     [ParentCombo(Occult_Bard)]
     [CustomComboInfo("Offensive Aria", "", Common.JobID)]
-    Occult_OffensiveAria = 100091,
+    Occult_OffensiveAria = 100121,
 
     [Occult]
     [ParentCombo(Occult_Bard)]
     [CustomComboInfo("Hero's Rime", "", Common.JobID)]
-    Occult_HerosRime = 100092,
+    Occult_HerosRime = 100122,
 
     #endregion
 
-    #region Oracle
+    #region Geomancer
 
     [Occult]
-    [ReplaceSkill(Occult.Predict, Occult.PhantomJudgement, Occult.Cleansing, Occult.Blessing, Occult.Starfall, Occult.PhantomRejuvenation)]
-    [CustomComboInfo("Phantom Oracle", "", Common.JobID)]
-    Occult_Oracle = 100100,
+    [ReplaceSkill(Occult.BattleBell, Occult.Weather, Occult.RingingRespite)]
+    [CustomComboInfo("Phantom Geomancer", "", Common.JobID)]
+    Occult_Geomancer = 100130,
 
     [Occult]
-    [ParentCombo(Occult_Oracle)]
-    [CustomComboInfo("Predict", "", Common.JobID)]
-    Occult_Predict = 100101,
+    [ParentCombo(Occult_Geomancer)]
+    [CustomComboInfo("Battle Bell", "", Common.JobID)]
+    Occult_BattleBell = 100131,
 
     [Occult]
-    [ParentCombo(Occult_Oracle)]
-    [CustomComboInfo("Phantom Rejuvination", "", Common.JobID)]
-    Occult_PhantomRejuvination = 100102,
+    [ParentCombo(Occult_Geomancer)]
+    [CustomComboInfo("Weather", "", Common.JobID)]
+    Occult_Weather = 100132,
+
+    [Occult]
+    [ParentCombo(Occult_Geomancer)]
+    [CustomComboInfo("Ringing Respite", "", Common.JobID)]
+    Occult_RingingRespite = 100133,
+
+    #endregion
+
+    #region Time Mage
+
+    [Occult]
+    [ReplaceSkill(Occult.Slowga, Occult.Comet, Occult.MageMasher, Occult.Quick)]
+    [CustomComboInfo("Phantom Time Mage", "", Common.JobID)]
+    Occult_TimeMage = 100140,
+
+    [Occult]
+    [ParentCombo(Occult_TimeMage)]
+    [CustomComboInfo("Occult Comet", "", Common.JobID)]
+    Occult_Comet = 100141,
+
+    [Occult]
+    [ParentCombo(Occult_TimeMage)]
+    [CustomComboInfo("Occult Mage Masher", "", Common.JobID)]
+    Occult_MageMasher = 100142,
+
+    [Occult]
+    [ParentCombo(Occult_TimeMage)]
+    [CustomComboInfo("Occult Quick", "", Common.JobID)]
+    Occult_Quick = 100143,
 
     #endregion
 
@@ -555,41 +520,70 @@ public enum Presets
     [Occult]
     [ReplaceSkill(Occult.PhantomFire, Occult.HolyCannon, Occult.DarkCannon, Occult.ShockCannon, Occult.SilverCannon)]
     [CustomComboInfo("Phantom Cannoneer", "", Common.JobID)]
-    Occult_Cannoneer = 100120,
+    Occult_Cannoneer = 100150,
 
     [Occult]
     [ParentCombo(Occult_Cannoneer)]
     [CustomComboInfo("Utility - If checked, will combine listed actions \ninto \"Execute Phantom Action\", instead of your main GCD", "", Common.JobID)]
-    Occult_Cannoneer_Utility = 100125,
+    Occult_Cannoneer_Utility = 100151,
 
     [Occult]
     [ParentCombo(Occult_Cannoneer)]
     [CustomComboInfo("Phantom Fire", "", Common.JobID)]
-    Occult_PhantomFire = 100121,
+    Occult_PhantomFire = 100152,
 
     [Occult]
     [ParentCombo(Occult_Cannoneer)]
     [CustomComboInfo("Holy Cannon / Silver Cannon", "", Common.JobID)]
-    Occult_HolySilverCannon = 100122,
+    Occult_HolySilverCannon = 100153,
 
     [Occult]
     [ParentCombo(Occult_Cannoneer)]
     [CustomComboInfo("Dark Cannon / Shock Cannon", "", Common.JobID)]
-    Occult_DarkShockCannon = 100123,
+    Occult_DarkShockCannon = 100154,
 
     #endregion
 
-    #region Freelancer
+    #region Oracle
 
     [Occult]
-    [ReplaceSkill(Occult.Resuscitation)]
-    [CustomComboInfo("Phantom Freelancer", "", Common.JobID)]
-    Occult_Freelancer = 100110,
+    [ReplaceSkill(Occult.Predict, Occult.PhantomJudgement, Occult.Cleansing, Occult.Blessing, Occult.Starfall, Occult.PhantomRejuvenation)]
+    [CustomComboInfo("Phantom Oracle", "", Common.JobID)]
+    Occult_Oracle = 100160,
 
     [Occult]
-    [ParentCombo(Occult_Freelancer)]
-    [CustomComboInfo("Occult Phantom Resuscitation", "", Common.JobID)]
-    Occult_PhantomResuscitation = 100111,
+    [ParentCombo(Occult_Oracle)]
+    [CustomComboInfo("Predict", "", Common.JobID)]
+    Occult_Predict = 100161,
+
+    [Occult]
+    [ParentCombo(Occult_Oracle)]
+    [CustomComboInfo("Phantom Rejuvination", "", Common.JobID)]
+    Occult_PhantomRejuvination = 100162,
+
+    #endregion
+
+    #region Thief
+
+    [Occult]
+    [ReplaceSkill(Occult.Steal, Occult.Vigilance, Occult.PilferWeapon)]
+    [CustomComboInfo("Phantom Thief", "", Common.JobID)]
+    Occult_Thief = 100170,
+
+    [Occult]
+    [ParentCombo(Occult_Thief)]
+    [CustomComboInfo("Steal", "", Common.JobID)]
+    Occult_Steal = 100171,
+
+    [Occult]
+    [ParentCombo(Occult_Thief)]
+    [CustomComboInfo("Vigilance", "", Common.JobID)]
+    Occult_Vigilance = 100172,
+
+    [Occult]
+    [ParentCombo(Occult_Thief)]
+    [CustomComboInfo("Pilfer Weapon", "", Common.JobID)]
+    Occult_PilferWeapon = 100173,
 
     #endregion
 
@@ -662,6 +656,173 @@ public enum Presets
     [ParentCombo(Occult_Dancer)]
     [CustomComboInfo("Mesmerize", "", Common.JobID)]
     Occult_Mesmerize = 100203,
+
+    #endregion
+
+    #region Ninja
+
+    [Occult]
+    [ReplaceSkill(Occult.Shuriken, Occult.Smoke, Occult.LightningScroll, Occult.FireScroll, Occult.Image)]
+    [CustomComboInfo("Phantom Ninja", "", Common.JobID)]
+    Occult_Ninja = 100210,
+
+    [Occult]
+    [ParentCombo(Occult_Ninja)]
+    [CustomComboInfo("Shuriken", "", Common.JobID)]
+    Occult_Shuriken = 100211,
+
+    [Occult]
+    [ParentCombo(Occult_Ninja)]
+    [CustomComboInfo("Smoke", "", Common.JobID)]
+    Occult_Smoke = 100212,
+
+    [Occult]
+    [ParentCombo(Occult_Ninja)]
+    [CustomComboInfo("Lightning Scroll", "", Common.JobID)]
+    Occult_LightningScroll = 100213,
+
+    [Occult]
+    [ParentCombo(Occult_Ninja)]
+    [CustomComboInfo("Fire Scroll", "", Common.JobID)]
+    Occult_FireScroll = 100214,
+
+    [Occult]
+    [ParentCombo(Occult_Ninja)]
+    [CustomComboInfo("Image", "", Common.JobID)]
+    Occult_Image = 100215,
+
+    #endregion
+
+    #region White Mage
+
+    [Occult]
+    [ReplaceSkill(Occult.Cure2_WHM, Occult.Cure3, Occult.Blink, Occult.Raise, Occult.Holy)]
+    [CustomComboInfo("Phantom White Mage", "", Common.JobID)]
+    Occult_WhiteMage = 100220,
+
+    [Occult]
+    [ParentCombo(Occult_WhiteMage)]
+    [CustomComboInfo("Holy", "", Common.JobID)]
+    Occult_Holy = 100221,
+
+    #endregion
+
+    #region Black Mage
+
+    [Occult]
+    [ReplaceSkill(Occult.Fire3, Occult.Blizzard3, Occult.Thunder3, Occult.Toad, Occult.Flare)]
+    [CustomComboInfo("Phantom Black Mage", "", Common.JobID)]
+    Occult_BlackMage = 100230,
+
+    [Occult]
+    [ParentCombo(Occult_BlackMage)]
+    [CustomComboInfo("Fire III / Blizzard III / Thunder III\n\nDefault when no Elemental Weakness", "", Common.JobID)]
+    Occult_Spell3 = 100231,
+
+    [Occult]
+    [ParentCombo(Occult_BlackMage)]
+    [CustomComboInfo("Flare", "", Common.JobID)]
+    Occult_Flare = 100232,
+
+    #endregion
+
+    #region Dragoon
+
+    [Occult]
+    [ReplaceSkill(Occult.Jump, Occult.StepForth, Occult.Lance)]
+    [CustomComboInfo("Phantom Dragoon", "", Common.JobID)]
+    Occult_Dragoon = 100240,
+
+    [Occult]
+    [ParentCombo(Occult_Dragoon)]
+    [CustomComboInfo("Jump", "", Common.JobID)]
+    Occult_Jump = 100241,
+
+    [Occult]
+    [ParentCombo(Occult_Dragoon)]
+    [CustomComboInfo("Lance", "", Common.JobID)]
+    Occult_Lance = 100242,
+
+    #endregion
+
+    #region Summoner
+
+    [Occult]
+    [ReplaceSkill(Occult.Hellfire, Occult.JudgmentBolt, Occult.EarthenWall, Occult.Thunderstorm, Occult.Megaflare)]
+    [CustomComboInfo("Phantom Summoner", "", Common.JobID)]
+    Occult_Summoner = 100250,
+
+    [Occult]
+    [ParentCombo(Occult_Summoner)]
+    [CustomComboInfo("Hellfire / Judgement Bolt / Thunderstorm\n\nDefault when no Elemental Weakness", "", Common.JobID)]
+    Occult_SMNSpell = 100251,
+
+    [Occult]
+    [ParentCombo(Occult_Summoner)]
+    [CustomComboInfo("Megaflare", "", Common.JobID)]
+    Occult_Megaflare = 100252,
+
+    #endregion
+
+    #region Blue Mage
+
+    [Occult]
+    [ReplaceSkill(Occult.Aero, Occult.Aero2, Occult.Aero3, Occult.AquaBreath)]
+    [CustomComboInfo("Phantom Blue Mage", "", Common.JobID)]
+    Occult_BlueMage = 100260,
+
+    [Occult]
+    [ParentCombo(Occult_BlueMage)]
+    [CustomComboInfo("Aero / Aero II / Aero III", "", Common.JobID)]
+    Occult_Aero = 100261,
+
+    [Occult]
+    [ParentCombo(Occult_BlueMage)]
+    [CustomComboInfo("Aqua Breath", "", Common.JobID)]
+    Occult_AquaBreath = 100262,
+
+    #endregion
+
+    #region Red Mage
+
+    [Occult]
+    [ReplaceSkill(Occult.Fire2, Occult.Cure2_RDM, Occult.Libra, Occult.Blizzard2, Occult.Thunder2)]
+    [CustomComboInfo("Phantom Red Mage", "", Common.JobID)]
+    Occult_RedMage = 100270,
+
+    [Occult]
+    [ParentCombo(Occult_RedMage)]
+    [CustomComboInfo("Fire II / Blizzard II / Thunder II\n\nDefault when no Elemental Weakness", "", Common.JobID)]
+    Occult_Spell2 = 100271,
+
+    [Occult]
+    [ParentCombo(Occult_RedMage)]
+    [CustomComboInfo("Libra", "", Common.JobID)]
+    Occult_Libra = 100272,
+
+    #endregion
+
+    #region Necromancer
+
+    [Occult]
+    [ReplaceSkill(Occult.DrainTouch, Occult.DeepFreeze, Occult.HellWind, Occult.ChaosDrive, Occult.Doomsday)]
+    [CustomComboInfo("Phantom Necromancer", "", Common.JobID)]
+    Occult_Necromancer = 100280,
+
+    [Occult]
+    [ParentCombo(Occult_Necromancer)]
+    [CustomComboInfo("Drain Touch", "", Common.JobID)]
+    Occult_DrainTouch = 100281,
+
+    [Occult]
+    [ParentCombo(Occult_Necromancer)]
+    [CustomComboInfo("Deep Freeze / Hell Wind / Chaos Drive\n\nDefault when no Elemental Weakness", "", Common.JobID)]
+    Occult_NECSpell = 100282,
+
+    [Occult]
+    [ParentCombo(Occult_Necromancer)]
+    [CustomComboInfo("Doomsday", "", Common.JobID)]
+    Occult_Doomsday = 100285,
 
     #endregion
 

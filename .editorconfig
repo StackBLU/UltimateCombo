@@ -18,6 +18,9 @@ generated_code = true
 [**/bin/**]
 generated_code = true
 
+[*.{g,generated,designer}.cs]
+generated_code = true
+
 #########################
 # C# Code Style Rules   #
 #########################
@@ -45,12 +48,22 @@ dotnet_sort_system_directives_first = false
 dotnet_separate_import_directive_groups = false
 
 # --- Modifier ordering ---
-dotnet_sort_modifiers = true
+csharp_preferred_modifier_order = public,private,protected,internal,file,static,extern,new,virtual,abstract,sealed,override,readonly,unsafe,required,volatile,async:suggestion
+dotnet_diagnostic.IDE0036.severity = suggestion
+
+# --- Accessibility ---
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:warning
 
 # --- Var preferences ---
 csharp_style_var_for_built_in_types = true:suggestion
 csharp_style_var_when_type_is_apparent = true:suggestion
 csharp_style_var_elsewhere = false:suggestion
+
+# --- Member qualification ---
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
 
 # --- Expression-level preferences ---
 dotnet_style_prefer_conditional_expression_over_assignment = false:none
@@ -61,6 +74,22 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:warning
 dotnet_style_prefer_collection_expression = true:suggestion
 dotnet_style_prefer_foreach_explicit_cast_in_source = when_strongly_typed:suggestion
+
+# --- Expression-bodied members ---
+csharp_style_expression_bodied_methods = false:none
+csharp_style_expression_bodied_constructors = false:none
+csharp_style_expression_bodied_operators = true:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+csharp_style_expression_bodied_lambdas = true:suggestion
+csharp_style_expression_bodied_local_functions = false:none
+
+# --- Parentheses ---
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:suggestion
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:suggestion
 
 # --- Null checking ---
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
@@ -76,7 +105,7 @@ csharp_style_prefer_range_operator = true:suggestion
 
 # --- Modern C# Features ---
 csharp_style_prefer_method_group_conversion = true:suggestion
-csharp_style_prefer_top_level_statements = true:suggestion
+csharp_style_prefer_top_level_statements = false:suggestion
 csharp_style_prefer_primary_constructors = true:suggestion
 csharp_style_prefer_readonly_struct = true:suggestion
 csharp_style_prefer_static_local_function = true:warning
@@ -122,9 +151,15 @@ dotnet_naming_symbols.static_readonly_fields.applicable_kinds = field
 dotnet_naming_symbols.static_readonly_fields.applicable_accessibilities = *
 dotnet_naming_symbols.static_readonly_fields.required_modifiers = static,readonly
 
-# Code analysis
-dotnet_analyzer_diagnostic.category-style.severity = warning
+# --- Analyzer configuration ---
+dotnet_code_quality_unused_parameters = non_public
+
+# --- Code analysis ---
+dotnet_analyzer_diagnostic.category-style.severity = suggestion
 dotnet_analyzer_diagnostic.category-maintainability.severity = warning
+
+# Keep required unsafe modifiers
+dotnet_diagnostic.IDE0380.severity = none
 
 ##################################
 # JSON, XML, HTML, CSS, etc.     #

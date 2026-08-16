@@ -1,6 +1,8 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using System.Collections.Generic;
 using System.Linq;
+using UltimateCombo.Combos.Content;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 namespace UltimateCombo.ComboHelper.Functions;
@@ -33,6 +35,10 @@ internal abstract partial class CustomComboFunctions
         return CurrentTarget != null && FindEffect(effectID, CurrentTarget, null) is not null;
     }
 
+    internal static bool TargetHasEffectAny(IEnumerable<ushort> effectIDs)
+    {
+        return CurrentTarget != null && effectIDs.Any(effectID => FindEffect(effectID, CurrentTarget, null) is not null);
+    }
 
     internal static bool TargetOfTargetHasEffect(ushort effectID)
     {
@@ -134,5 +140,12 @@ internal abstract partial class CustomComboFunctions
     {
         return ActionWatching.GetStatusesByName(ActionWatching.GetStatusName(5))
             ?.Any(status => FindEffect((ushort) status, LocalPlayer, null) is not null) ?? false;
+    }
+
+    //Occult Weaknesses
+
+    internal static ushort CurrentElementalWeakness()
+    {
+        return Occult.Debuffs.ElementalWeaknesses.FirstOrDefault(TargetHasEffectAny);
     }
 }

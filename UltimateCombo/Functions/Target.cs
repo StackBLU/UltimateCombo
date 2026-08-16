@@ -7,6 +7,7 @@ using System;
 using System.Numerics;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
+using UltimateCombo.Data;
 using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace UltimateCombo.ComboHelper.Functions;
@@ -385,5 +386,10 @@ internal abstract partial class CustomComboFunctions
         {
             return (float) Math.Atan2(b.X - a.X, b.Z - a.Z);
         }
+    }
+
+    internal static bool GCDCheck(int requiredGCDs)
+    {
+        return ActionWatching.NumberOfGcdsUsed >= requiredGCDs || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD();
     }
 }

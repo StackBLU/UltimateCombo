@@ -18,10 +18,7 @@ internal abstract partial class CustomComboFunctions
 internal class UserData(string v)
 {
     internal string Name { get; } = v;
-    public static implicit operator string(UserData o)
-    {
-        return o.Name;
-    }
+    public static implicit operator string(UserData o) => o.Name;
 }
 
 internal class UserFloat : UserData
@@ -45,10 +42,7 @@ internal class UserFloat : UserData
         Service.Configuration.Save();
     }
 
-    public static implicit operator float(UserFloat o)
-    {
-        return PluginConfiguration.GetCustomFloatValue(o.Name);
-    }
+    public static implicit operator float(UserFloat o) => PluginConfiguration.GetCustomFloatValue(o.Name);
 }
 
 internal class UserInt : UserData
@@ -69,10 +63,7 @@ internal class UserInt : UserData
         PluginConfiguration.SetCustomIntValue(Name, _defaultValue);
         Service.Configuration.Save();
     }
-    public static implicit operator int(UserInt o)
-    {
-        return PluginConfiguration.GetCustomIntValue(o.Name);
-    }
+    public static implicit operator int(UserInt o) => PluginConfiguration.GetCustomIntValue(o.Name);
 }
 
 internal class UserBool : UserData
@@ -96,10 +87,7 @@ internal class UserBool : UserData
         Service.Configuration.Save();
     }
 
-    public static implicit operator bool(UserBool o)
-    {
-        return PluginConfiguration.GetCustomBoolValue(o.Name);
-    }
+    public static implicit operator bool(UserBool o) => PluginConfiguration.GetCustomBoolValue(o.Name);
 }
 
 internal class UserIntArray(string v) : UserData(v)

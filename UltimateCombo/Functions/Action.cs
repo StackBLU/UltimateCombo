@@ -352,4 +352,9 @@ internal abstract partial class CustomComboFunctions
 
             or WHMPvP.Glare3;
     }
+
+    internal static bool IsTankProjectile(uint actionID)
+    {
+        return actionID is PLD.ShieldLob or WAR.Tomahawk or DRK.Unmend or GNB.LightningShot;
+    }
 }

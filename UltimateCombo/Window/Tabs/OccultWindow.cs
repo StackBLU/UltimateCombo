@@ -17,10 +17,7 @@ internal class OccultWindow : ConfigWindow
                 Color = Colors.Grey,
                 BorderThickness = 1f,
                 CurveRadius = 8f,
-                ContentsAction = () =>
-                {
-                    PresetHandler.DrawPreset(preset, info, ref i);
-                }
+                ContentsAction = () => PresetHandler.DrawPreset(preset, info, ref i)
             };
             presetBox.Draw();
             ImGuiHelpers.ScaledDummy(12.0f);

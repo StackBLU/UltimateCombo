@@ -254,6 +254,38 @@ internal static class UserConfigItems
                 "\nhas fewer than 5 seconds left", "");
         }
 
+        if (preset is Presets.Occult_Spell2 && enabled)
+        {
+            ImGui.Spacing();
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell2, "Fire II", "", 1, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell2, "Blizzard II", "", 2, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell2, "Thunder II", "", 3, 150);
+        }
+
+        if (preset is Presets.Occult_Spell3 && enabled)
+        {
+            ImGui.Spacing();
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell3, "Fire III", "", 1, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell3, "Blizzard III", "", 2, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_Spell3, "Thunder III", "", 3, 150);
+        }
+
+        if (preset is Presets.Occult_SMNSpell && enabled)
+        {
+            ImGui.Spacing();
+            UserConfig.DrawRadioButton(Occult.Config.Occult_SMNSpell, "Hellfire", "", 1, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_SMNSpell, "Judgement Bolt", "", 2, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_SMNSpell, "Thunderstorm (Wind)", "", 3, 150);
+        }
+
+        if (preset is Presets.Occult_NECSpell && enabled)
+        {
+            ImGui.Spacing();
+            UserConfig.DrawRadioButton(Occult.Config.Occult_NECSpell, "Deep Freeze", "", 1, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_NECSpell, "Hell Wind", "", 2, 150);
+            UserConfig.DrawRadioButton(Occult.Config.Occult_NECSpell, "Chaos Drive (Lightning)", "", 3, 150);
+        }
+
         #endregion
 
         #endregion

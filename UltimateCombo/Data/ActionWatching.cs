@@ -405,7 +405,7 @@ internal static class ActionWatching
     }
 }
 
-internal static unsafe class ActionManagerHelper
+internal static class ActionManagerHelper
 {
     private static readonly IntPtr ActionMgrPtr;
     internal static IntPtr FpUseAction => ActionManager.Addresses.UseAction.Value;
@@ -477,7 +477,7 @@ internal static unsafe class ActionManagerHelper
         }
     }
 
-    static ActionManagerHelper()
+    static unsafe ActionManagerHelper()
     {
         ActionMgrPtr = (IntPtr) ActionManager.Instance();
     }

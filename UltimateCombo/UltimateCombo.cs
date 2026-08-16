@@ -21,7 +21,6 @@ using UltimateCombo.Core;
 using UltimateCombo.Data;
 using UltimateCombo.Window;
 using UltimateCombo.Window.Tabs;
-using static IconReplacer;
 
 namespace UltimateCombo;
 
@@ -189,8 +188,8 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     private void OnFrameworkUpdate(IFramework framework)
     {
         IPlayerCharacter? p = Service.ObjectTable.LocalPlayer;
-        ThreadSafeCache.LocalPlayerAvailable = p != null;
-        ThreadSafeCache.LocalPlayerObjectId = p?.GameObjectId ?? 0;
+        IconReplacer.ThreadSafeCache.LocalPlayerAvailable = p != null;
+        IconReplacer.ThreadSafeCache.LocalPlayerObjectId = p?.GameObjectId ?? 0;
 
         if (Service.ObjectTable.LocalPlayer is not null)
         {

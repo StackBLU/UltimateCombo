@@ -92,7 +92,55 @@ internal static class Occult
         Finisher = 46594,
         Defend = 46595,
         LongReach = 46596,
-        Bladeblitz = 46597;
+        Bladeblitz = 46597,
+
+        Shuriken = 49062,
+        Smoke = 49063,
+        LightningScroll = 49064,
+        FireScroll = 49065,
+        Image = 49066,
+
+        Cure2_WHM = 49067,
+        Cure3 = 49068,
+        Blink = 49069,
+        Raise = 49070,
+        Holy = 49071,
+
+        Fire3 = 49072,
+        Blizzard3 = 49073,
+        Thunder3 = 49074,
+        Toad = 49075,
+        Flare = 49076,
+
+        Jump = 49077,
+        StepForth = 49078,
+        Lance = 49079,
+
+        Hellfire = 49080,
+        JudgmentBolt = 49081,
+        EarthenWall = 49082,
+        Thunderstorm = 49083,
+        Megaflare = 49084,
+
+        Aero = 49085,
+        Missile = 49086,
+        AquaBreath = 49087,
+        MightyGuard = 49088,
+        Aero2 = 49089,
+        WhiteWind = 49090,
+        Aero3 = 49091,
+
+        Fire2 = 49092,
+        Cure2_RDM = 49093,
+        Libra = 49094,
+        Blizzard2 = 49095,
+        Thunder2 = 49096,
+
+        DrainTouch = 49097,
+        DeepFreeze = 49098,
+        HellWind = 49099,
+        ChaosDrive = 49100,
+        Doomsday = 49101;
 
     internal static class PhantomJobs
     {
@@ -112,7 +160,15 @@ internal static class Occult
             Thief = 4369,
             MysticKnight = 4803,
             Gladiator = 4804,
-            Dancer = 4805;
+            Dancer = 4805,
+            Ninja = 5328,
+            WhiteMage = 5329,
+            BlackMage = 5330,
+            Dragoon = 5331,
+            Summoner = 5332,
+            BlueMage = 5333,
+            RedMage = 5334,
+            Necromancer = 5335;
     }
 
     internal static class Buffs
@@ -150,7 +206,11 @@ internal static class Occult
             TemptedToTango = 4795,
             Jitterbugged = 4796,
             WillingToWaltz = 4797,
-            Quickstep = 4798;
+            Quickstep = 4798,
+
+            Smoke = 5327,
+
+            DrainTouch = 5326;
     }
 
     internal static class Debuffs
@@ -160,7 +220,20 @@ internal static class Occult
             MageMasher = 4259,
             WeaponPilfered = 4279,
 
-            BlazingBane = 4791;
+            BlazingBane = 4791,
+
+            FireWeakness = 5322,
+            IceWeakness = 5323,
+            LightningWeakness = 5324,
+            WindWeakness = 5325;
+
+        internal static readonly ushort[] ElementalWeaknesses =
+        [
+            FireWeakness,
+            IceWeakness,
+            LightningWeakness,
+            WindWeakness
+        ];
     }
 
     internal static class Config
@@ -177,7 +250,30 @@ internal static class Occult
         internal static readonly UserIntArray
             Occult_Prediction = new("Occult_Prediction"),
             Occult_HolySilverCannon = new("Occult_HolySilverCannon"),
-            Occult_DarkShockCannon = new("Occult_DarkShockCannon");
+            Occult_DarkShockCannon = new("Occult_DarkShockCannon"),
+            Occult_Spell2 = new("Occult_Spell2"),
+            Occult_Spell3 = new("Occult_Spell3"),
+            Occult_SMNSpell = new("Occult_SMNSpell"),
+            Occult_NECSpell = new("Occult_NECSpell");
+    }
+
+    internal class Occult_Freelancer : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Freelancer;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_PhantomResuscitation) && DutyActionReady(Resuscitation)
+                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_PhantomResuscitation))
+                {
+                    return Resuscitation;
+                }
+            }
+
+            return actionID;
+        }
     }
 
     internal class Occult_Knight : CustomComboBase
@@ -198,6 +294,25 @@ internal static class Occult
                     && CurrentMP >= GetResourceCost(Heal))
                 {
                     return Heal;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Berserker : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Berserker;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(DeadlyBlow)
+                    && HasEffect(Buffs.PentUpRage) && EffectRemainingTime(Buffs.PentUpRage) <= 3)
+                {
+                    return DeadlyBlow;
                 }
             }
 
@@ -231,95 +346,14 @@ internal static class Occult
                     }
                 }
 
-                if (IsEnabled(Presets.Occult_Counter) && DutyActionReady(Counter) && InActionRange(Counter)
-                    && CanWeave(actionID, ActionWatching.LastGCD))
+                if (IsEnabled(Presets.Occult_Counter) && DutyActionReady(Counter) && InActionRange(Counter) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     return Counter;
                 }
 
-                if (IsEnabled(Presets.Occult_Counterstance) && DutyActionReady(Counterstance)
-                    && IsTargetOfTarget() && EffectRemainingTime(Buffs.Counterstance) < 2
-                    && (ActionWatching.NumberOfGcdsUsed >= 3 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                if (IsEnabled(Presets.Occult_Counterstance) && DutyActionReady(Counterstance) && IsTargetOfTarget() && !HasEffect(Buffs.Counterstance))
                 {
                     return Counterstance;
-                }
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class Occult_Thief : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.Occult_Thief;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            if (IsEnabled(Presets.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse() && IsComboAction(actionID))
-            {
-                if (IsEnabled(Presets.Occult_Vigilance) && DutyActionReady(Vigilance)
-                    && !InCombat() && !HasEffect(Buffs.Vigilance) && HasBattleTarget())
-                {
-                    return Vigilance;
-                }
-
-                if (InCombat() && CanWeave(actionID, ActionWatching.LastGCD))
-                {
-                    if (IsEnabled(Presets.Occult_PilferWeapon) && DutyActionReady(PilferWeapon)
-                        && !TargetHasEffectAny(Debuffs.WeaponPilfered) && InActionRange(PilferWeapon))
-                    {
-                        return PilferWeapon;
-                    }
-
-                    if (IsEnabled(Presets.Occult_Steal) && DutyActionReady(Steal) && InActionRange(Steal) && HasBattleTarget())
-                    {
-                        return Steal;
-                    }
-                }
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class Occult_Samurai : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.Occult_Samurai;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            if (IsEnabled(Presets.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse()
-                 && IsComboAction(actionID))
-            {
-                if (IsEnabled(Presets.Occult_Zeninage) && DutyActionReady(Zeninage) && InActionRange(Zeninage)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
-                {
-                    return Zeninage;
-                }
-
-                if (IsEnabled(Presets.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki) && !IsMoving
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
-                {
-                    return Iainuki;
-                }
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class Occult_Berserker : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.Occult_Berserker;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            if (IsEnabled(Presets.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat() && IsComboAction(actionID))
-            {
-                if (IsEnabled(Presets.Occult_DeadlyBlow) && DutyActionReady(DeadlyBlow) && InActionRange(DeadlyBlow)
-                    && HasEffect(Buffs.PentUpRage) && EffectRemainingTime(Buffs.PentUpRage) <= 1)
-                {
-                    return DeadlyBlow;
                 }
             }
 
@@ -333,11 +367,10 @@ internal static class Occult
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat() && CanWeave(actionID, ActionWatching.LastGCD)
-                 && IsComboAction(actionID))
+            if (IsEnabled(Presets.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat()
+                && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Aim) && DutyActionReady(PhantomAim)
-                    && (ActionWatching.NumberOfGcdsUsed >= 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                if (IsEnabled(Presets.Occult_Aim) && DutyActionReady(PhantomAim) && GCDCheck(2))
                 {
                     return PhantomAim;
                 }
@@ -347,32 +380,22 @@ internal static class Occult
         }
     }
 
-    internal class Occult_TimeMage : CustomComboBase
+    internal class Occult_Samurai : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.Occult_TimeMage;
+        protected internal override Presets Preset { get; } = Presets.Occult_Samurai;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Quick) && DutyActionReady(Quick))
+                if (IsEnabled(Presets.Occult_Zeninage) && DutyActionReady(Zeninage) && InActionRange(Zeninage) && GCDCheck(5))
                 {
-                    return Quick;
+                    return Zeninage;
                 }
 
-                if (IsEnabled(Presets.Occult_Comet) && DutyActionReady(Comet)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                if (IsEnabled(Presets.Occult_Iainuki) && DutyActionReady(Iainuki) && InActionRange(Iainuki) && !IsMoving && GCDCheck(5))
                 {
-                    if (HasEffect(Common.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.Quick))
-                    {
-                        return Comet;
-                    }
-                }
-
-                if (IsEnabled(Presets.Occult_MageMasher) && DutyActionReady(MageMasher) && !TargetHasEffectAny(Debuffs.MageMasher)
-                    && HasBattleTarget() && CanWeave(actionID, ActionWatching.LastGCD))
-                {
-                    return MageMasher;
+                    return Iainuki;
                 }
             }
 
@@ -380,12 +403,27 @@ internal static class Occult
         }
     }
 
-    internal class Occult_Chemist : CustomComboBase
+    internal class Occult_Bard : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.Occult_Thief;
+        protected internal override Presets Preset { get; } = Presets.Occult_Bard;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
+            if (IsEnabled(Presets.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_HerosRime) && DutyActionReady(HerosRime) && GCDCheck(3))
+                {
+                    return HerosRime;
+                }
+
+                if (IsEnabled(Presets.Occult_OffensiveAria) && DutyActionReady(OffensiveAria)
+                    && (!HasEffect(Buffs.HerosRime) || EffectRemainingTime(Buffs.HerosRime) < 2)
+                    && (!HasEffect(Buffs.OffensiveAria) || EffectRemainingTime(Buffs.OffensiveAria) < 5))
+                {
+                    return OffensiveAria;
+                }
+            }
+
             return actionID;
         }
     }
@@ -448,25 +486,79 @@ internal static class Occult
         }
     }
 
-    internal class Occult_Bard : CustomComboBase
+    internal class Occult_TimeMage : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.Occult_Bard;
+        protected internal override Presets Preset { get; } = Presets.Occult_TimeMage;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
+            if (IsEnabled(Presets.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_HerosRime) && DutyActionReady(HerosRime)
-                    && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
+                if (IsEnabled(Presets.Occult_Quick) && DutyActionReady(Quick) && !IsMoving)
                 {
-                    return HerosRime;
+                    return Quick;
                 }
 
-                if (IsEnabled(Presets.Occult_OffensiveAria) && DutyActionReady(OffensiveAria)
-                    && (!HasEffect(Buffs.HerosRime) || EffectRemainingTime(Buffs.HerosRime) < 2)
-                    && (!HasEffect(Buffs.OffensiveAria) || EffectRemainingTime(Buffs.OffensiveAria) < 5))
+                if (IsEnabled(Presets.Occult_Comet) && DutyActionReady(Comet) && GCDCheck(5))
                 {
-                    return OffensiveAria;
+                    if (HasEffect(Common.Buffs.Swiftcast) || HasEffect(RDM.Buffs.Dualcast) || HasEffect(BLM.Buffs.Triplecast) || HasEffect(Buffs.Quick))
+                    {
+                        return Comet;
+                    }
+                }
+
+                if (IsEnabled(Presets.Occult_MageMasher) && DutyActionReady(MageMasher) && !TargetHasEffectAny(Debuffs.MageMasher)
+                    && HasBattleTarget() && CanWeave(actionID, ActionWatching.LastGCD))
+                {
+                    return MageMasher;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+
+    internal class Occult_Cannoneer : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Cannoneer;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
+                && ((IsEnabled(Presets.Occult_Cannoneer_Utility)
+                && (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
+                || (!IsEnabled(Presets.Occult_Cannoneer_Utility) && InCombat())))
+            {
+                if (IsEnabled(Presets.Occult_HolySilverCannon))
+                {
+                    if (DutyActionReady(HolyCannon) && (GetOptionValue(Config.Occult_HolySilverCannon) == 1 || !DutyActionReady(SilverCannon)))
+                    {
+                        return HolyCannon;
+                    }
+
+                    if (DutyActionReady(SilverCannon) && GetOptionValue(Config.Occult_HolySilverCannon) == 2)
+                    {
+                        return SilverCannon;
+                    }
+                }
+
+                if (IsEnabled(Presets.Occult_PhantomFire) && DutyActionReady(PhantomFire))
+                {
+                    return PhantomFire;
+                }
+
+                if (IsEnabled(Presets.Occult_DarkShockCannon))
+                {
+                    if (DutyActionReady(DarkCannon) && (GetOptionValue(Config.Occult_DarkShockCannon) == 1 || !DutyActionReady(ShockCannon)))
+                    {
+                        return DarkCannon;
+                    }
+
+                    if (DutyActionReady(ShockCannon) && GetOptionValue(Config.Occult_DarkShockCannon) == 2)
+                    {
+                        return ShockCannon;
+                    }
                 }
             }
 
@@ -526,66 +618,31 @@ internal static class Occult
         }
     }
 
-    internal class Occult_Cannoneer : CustomComboBase
+    internal class Occult_Thief : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.Occult_Cannoneer;
+        protected internal override Presets Preset { get; } = Presets.Occult_Thief;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            if (IsEnabled(Presets.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
-                && ((IsEnabled(Presets.Occult_Cannoneer_Utility)
-                && (actionID is PhantomFire or HolyCannon or DarkCannon or ShockCannon or SilverCannon))
-                || (!IsEnabled(Presets.Occult_Cannoneer_Utility) && InCombat())))
+            if (IsEnabled(Presets.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse() && (IsComboAction(actionID) || IsTankProjectile(actionID)))
             {
-                if (IsEnabled(Presets.Occult_HolySilverCannon))
+                if (IsEnabled(Presets.Occult_Vigilance) && DutyActionReady(Vigilance) && !InCombat() && !HasEffect(Buffs.Vigilance))
                 {
-                    if (DutyActionReady(HolyCannon) && (GetOptionValue(Config.Occult_HolySilverCannon) == 1 || !DutyActionReady(SilverCannon)))
-                    {
-                        return HolyCannon;
-                    }
-
-                    if (DutyActionReady(SilverCannon) && GetOptionValue(Config.Occult_HolySilverCannon) == 2)
-                    {
-                        return SilverCannon;
-                    }
+                    return Vigilance;
                 }
 
-                if (IsEnabled(Presets.Occult_PhantomFire) && DutyActionReady(PhantomFire))
+                if (InCombat() && CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    return PhantomFire;
-                }
-
-                if (IsEnabled(Presets.Occult_DarkShockCannon))
-                {
-                    if (DutyActionReady(DarkCannon) && (GetOptionValue(Config.Occult_DarkShockCannon) == 1 || !DutyActionReady(ShockCannon)))
+                    if (IsEnabled(Presets.Occult_PilferWeapon) && DutyActionReady(PilferWeapon)
+                        && !TargetHasEffectAny(Debuffs.WeaponPilfered) && InActionRange(PilferWeapon))
                     {
-                        return DarkCannon;
+                        return PilferWeapon;
                     }
 
-                    if (DutyActionReady(ShockCannon) && GetOptionValue(Config.Occult_DarkShockCannon) == 2)
+                    if (IsEnabled(Presets.Occult_Steal) && DutyActionReady(Steal) && InActionRange(Steal) && HasBattleTarget())
                     {
-                        return ShockCannon;
+                        return Steal;
                     }
-                }
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class Occult_Freelancer : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.Occult_Freelancer;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            if (IsEnabled(Presets.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse()
-                 && IsComboAction(actionID))
-            {
-                if (IsEnabled(Presets.Occult_PhantomResuscitation) && DutyActionReady(Resuscitation)
-                    && PlayerHealthPercentageHp() <= GetOptionValue(Config.Occult_PhantomResuscitation))
-                {
-                    return Resuscitation;
                 }
             }
 
@@ -607,12 +664,12 @@ internal static class Occult
                 }
 
                 if (IsEnabled(Presets.Occult_HolySpellblade) && DutyActionReady(HolySpellblade) && InActionRange(HolySpellblade)
-                    && TargetEffectRemainingTimeAny(Debuffs.BlazingBane) >= 15)
+                    && TargetEffectRemainingTimeAny(Debuffs.BlazingBane) >= 15 && GCDCheck(5))
                 {
                     return HolySpellblade;
                 }
 
-                if (IsEnabled(Presets.Occult_BlazingSpellblade) && DutyActionReady(BlazingSpellblade) && InActionRange(BlazingSpellblade)
+                if (IsEnabled(Presets.Occult_BlazingSpellblade) && DutyActionReady(BlazingSpellblade) && InActionRange(BlazingSpellblade) && GCDCheck(5)
                     && (!HasEffect(Buffs.BlazingSpellblade) || !TargetHasEffectAny(Debuffs.BlazingBane) || TargetEffectRemainingTimeAny(Debuffs.BlazingBane) <= 15))
                 {
                     return BlazingSpellblade;
@@ -631,17 +688,17 @@ internal static class Occult
         {
             if (IsEnabled(Presets.Occult_Gladiator) && HasEffect(PhantomJobs.Gladiator) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Finisher) && DutyActionReady(Finisher) && InActionRange(Finisher))
+                if (IsEnabled(Presets.Occult_Finisher) && DutyActionReady(Finisher) && InActionRange(Finisher) && GCDCheck(5))
                 {
                     return Finisher;
                 }
 
-                if (IsEnabled(Presets.Occult_LongReach) && DutyActionReady(LongReach) && InActionRange(LongReach))
+                if (IsEnabled(Presets.Occult_LongReach) && DutyActionReady(LongReach) && InActionRange(LongReach) && GCDCheck(5))
                 {
                     return LongReach;
                 }
 
-                if (IsEnabled(Presets.Occult_Bladeblitz) && DutyActionReady(Bladeblitz) && InActionRange(Bladeblitz))
+                if (IsEnabled(Presets.Occult_Bladeblitz) && DutyActionReady(Bladeblitz) && InActionRange(Bladeblitz) && GCDCheck(5))
                 {
                     return Bladeblitz;
                 }
@@ -659,7 +716,7 @@ internal static class Occult
         {
             if (IsEnabled(Presets.Occult_Dancer) && HasEffect(PhantomJobs.Dancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
-                if (IsEnabled(Presets.Occult_Dance))
+                if (IsEnabled(Presets.Occult_Dance) && GCDCheck(5))
                 {
                     if (HasEffect(Buffs.PoisedToSwordDance))
                     {
@@ -695,6 +752,265 @@ internal static class Occult
                 if (IsEnabled(Presets.Occult_Mesmerize) && DutyActionReady(Mesmerize))
                 {
                     return Mesmerize;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Ninja : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Ninja;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Ninja) && HasEffect(PhantomJobs.Ninja) && InCombat() && SafeToUse()
+                && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Smoke) && DutyActionReady(Smoke) && !HasEffect(Buffs.Smoke))
+                {
+                    return Smoke;
+                }
+
+                if (IsEnabled(Presets.Occult_Image) && DutyActionReady(Image))
+                {
+                    return Image;
+                }
+
+                if (IsEnabled(Presets.Occult_Shuriken) && DutyActionReady(Shuriken) && GCDCheck(5))
+                {
+                    return Shuriken;
+                }
+
+                if (IsEnabled(Presets.Occult_LightningScroll) && DutyActionReady(LightningScroll) && GCDCheck(5))
+                {
+                    return LightningScroll;
+                }
+
+                if (IsEnabled(Presets.Occult_FireScroll) && DutyActionReady(FireScroll) && GCDCheck(5))
+                {
+                    return FireScroll;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_WhiteMage : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_WhiteMage;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_WhiteMage) && HasEffect(PhantomJobs.WhiteMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Holy) && DutyActionReady(Holy) && GCDCheck(5) && !IsMoving)
+                {
+                    return Holy;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_BlackMage : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_BlackMage;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_BlackMage) && HasEffect(PhantomJobs.BlackMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Spell3) && DutyActionReady(Fire3) && GCDCheck(5) && !IsMoving)
+                {
+                    return CurrentElementalWeakness() switch
+                    {
+                        Debuffs.FireWeakness => Fire3,
+                        Debuffs.IceWeakness => Blizzard3,
+                        Debuffs.LightningWeakness => Thunder3,
+                        _ => GetOptionValue(Config.Occult_SMNSpell) switch
+                        {
+                            1 => Fire3,
+                            2 => Blizzard3,
+                            3 => Thunder3,
+                            _ => 1
+                        }
+                    };
+                }
+
+                if (IsEnabled(Presets.Occult_Flare) && DutyActionReady(Flare) && GCDCheck(5) && !IsMoving)
+                {
+                    return Flare;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Dragoon : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Dragoon;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Dragoon) && HasEffect(PhantomJobs.Dragoon) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Jump) && DutyActionReady(Jump) && GCDCheck(5) && !IsMoving)
+                {
+                    return Jump;
+                }
+
+                if (IsEnabled(Presets.Occult_Lance) && DutyActionReady(Lance) && CanWeave(actionID, ActionWatching.LastGCD) && GCDCheck(5))
+                {
+                    return Lance;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Summoner : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Summoner;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Summoner) && HasEffect(PhantomJobs.Summoner) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_SMNSpell) && DutyActionReady(Hellfire) && GCDCheck(3) && !IsMoving)
+                {
+                    return CurrentElementalWeakness() switch
+                    {
+                        Debuffs.FireWeakness => Hellfire,
+                        Debuffs.LightningWeakness => JudgmentBolt,
+                        Debuffs.WindWeakness => Thunderstorm,
+                        _ => GetOptionValue(Config.Occult_SMNSpell) switch
+                        {
+                            1 => Hellfire,
+                            2 => JudgmentBolt,
+                            3 => Thunderstorm,
+                            _ => 1
+                        }
+                    };
+                }
+
+                if (IsEnabled(Presets.Occult_Megaflare) && DutyActionReady(Megaflare) && GCDCheck(3) && !IsMoving)
+                {
+                    return Megaflare;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_BlueMage : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_BlueMage;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_BlueMage) && HasEffect(PhantomJobs.BlueMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Aero) && DutyActionReady(Aero) && GCDCheck(5) && !IsMoving)
+                {
+                    return Aero;
+                }
+
+                if (IsEnabled(Presets.Occult_Aero) && DutyActionReady(Aero2) && GCDCheck(5) && !IsMoving)
+                {
+                    return Aero2;
+                }
+
+                if (IsEnabled(Presets.Occult_Aero) && DutyActionReady(Aero3) && GCDCheck(5) && !IsMoving)
+                {
+                    return Aero3;
+                }
+
+                if (IsEnabled(Presets.Occult_AquaBreath) && DutyActionReady(AquaBreath) && GCDCheck(5) && !IsMoving)
+                {
+                    return AquaBreath;
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_RedMage : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_RedMage;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_RedMage) && HasEffect(PhantomJobs.RedMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_Libra) && DutyActionReady(Libra) && CanWeave(actionID, ActionWatching.LastGCD)
+                    && !TargetHasEffectAny(Debuffs.ElementalWeaknesses))
+                {
+                    return Libra;
+                }
+
+                if (IsEnabled(Presets.Occult_Spell2) && DutyActionReady(Fire2) && GCDCheck(5) && !IsMoving)
+                {
+                    return CurrentElementalWeakness() switch
+                    {
+                        Debuffs.FireWeakness => Fire2,
+                        Debuffs.IceWeakness => Blizzard2,
+                        Debuffs.LightningWeakness => Thunder2,
+                        _ => GetOptionValue(Config.Occult_Spell2) switch
+                        {
+                            1 => Fire2,
+                            2 => Blizzard2,
+                            3 => Thunder2,
+                            _ => 1
+                        }
+                    };
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class Occult_Necromancer : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.Occult_Necromancer;
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.Occult_Necromancer) && HasEffect(PhantomJobs.Necromancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
+            {
+                if (IsEnabled(Presets.Occult_DrainTouch) && DutyActionReady(DrainTouch) && CanWeave(actionID, ActionWatching.LastGCD) && GCDCheck(5))
+                {
+                    return DrainTouch;
+                }
+
+                if (IsEnabled(Presets.Occult_Doomsday) && DutyActionReady(Doomsday) && HasEffect(Buffs.DrainTouch) && GCDCheck(5) && !IsMoving)
+                {
+                    return Doomsday;
+                }
+
+                if (IsEnabled(Presets.Occult_NECSpell) && DutyActionReady(DeepFreeze) && HasEffect(Buffs.DrainTouch) && GCDCheck(5) && !IsMoving)
+                {
+                    return CurrentElementalWeakness() switch
+                    {
+                        Debuffs.IceWeakness => DeepFreeze,
+                        Debuffs.LightningWeakness => ChaosDrive,
+                        Debuffs.WindWeakness => HellWind,
+                        _ => GetOptionValue(Config.Occult_Spell2) switch
+                        {
+                            1 => DeepFreeze,
+                            2 => ChaosDrive,
+                            3 => HellWind,
+                            _ => 1
+                        }
+                    };
                 }
             }
 
