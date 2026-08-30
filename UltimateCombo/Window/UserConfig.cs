@@ -705,16 +705,6 @@ internal static class UserConfigItems
             UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TankWhiteWind, SliderIncrements.Fives);
         }
 
-        if (preset is Presets.BLU_Treasure_Healer_Pomcure && enabled)
-        {
-            UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasurePomcure, SliderIncrements.Fives);
-        }
-
-        if (preset is Presets.BLU_Treasure_Healer_Gobskin && enabled)
-        {
-            UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureGobskin, SliderIncrements.Fives);
-        }
-
         if (preset is Presets.BLU_Treasure_Tank_WhiteWind && enabled)
         {
             UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureWhiteWind, SliderIncrements.Fives);
@@ -723,6 +713,18 @@ internal static class UserConfigItems
         if (preset is Presets.BLU_Treasure_Tank_Rehydration && enabled)
         {
             UserConfig.DrawSliderInt(0, 100, BLU.Config.BLU_TreasureRehydration, SliderIncrements.Fives);
+        }
+
+        if (preset is Presets.BLU_OffFlute && enabled)
+        {
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_FeatherRain, "Feather Rain", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_Eruption, "Eruption", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_MountainBuster, "Mountain Buster", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_ShockStrike, "Shock Strike", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_Quasar, "Quasar", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_JKick, "J Kick", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_RoseOfDestruction, "Rose of Destruction", "");
+            UserConfig.DrawAdditionalBoolChoice(BLU.Config.BLU_WingedReprobation, "Winged Reprobation", "");
         }
 
         #endregion

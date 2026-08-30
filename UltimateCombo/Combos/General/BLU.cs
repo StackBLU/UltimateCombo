@@ -26,6 +26,7 @@ internal static class BLU
         PeculiarLight = 11421,
         FeatherRain = 11426,
         Eruption = 11427,
+        MountainBuster = 11428,
         ShockStrike = 11429,
         Electrogenesis = 18298,
         Pomcure = 18303,
@@ -61,6 +62,7 @@ internal static class BLU
         BreathOfMagic = 34567,
         PeatPelt = 34569,
         DeepClean = 34570,
+        DimensionalShift = 34573,
         WingedReprobation = 34576,
         MortalFlame = 34579,
         SeaShanty = 34580,
@@ -131,10 +133,18 @@ internal static class BLU
         internal static UserInt
             BLU_BloodDrain = new("BLU_BloodDrain", 1500),
             BLU_TankWhiteWind = new("BLU_TankWhiteWind", 50),
-            BLU_TreasurePomcure = new("BLU_TreasurePomcure", 75),
-            BLU_TreasureGobskin = new("BLU_TreasureGobskin", 5),
             BLU_TreasureWhiteWind = new("BLU_TreasureWhiteWind", 60),
             BLU_TreasureRehydration = new("BLU_TreasureRehydration", 30);
+
+        internal static UserBool
+            BLU_FeatherRain = new("BLU_FeatherRain"),
+            BLU_Eruption = new("BLU_Eruption"),
+            BLU_MountainBuster = new("BLU_MountainBuster"),
+            BLU_ShockStrike = new("BLU_ShockStrike"),
+            BLU_Quasar = new("BLU_Quasar"),
+            BLU_JKick = new("BLU_JKick"),
+            BLU_RoseOfDestruction = new("BLU_RoseOfDestruction"),
+            BLU_WingedReprobation = new("BLU_WingedReprobation");
     }
 
     internal class BLU_MoonFluteOpener : CustomComboBase
@@ -156,7 +166,7 @@ internal static class BLU
                     return WingedReprobation;
                 }
 
-                if (GetCooldownRemainingTime(PhantomFlurry) > 20 && actionID is MoonFlute)
+                if (GetCooldownRemainingTime(PhantomFlurry) > 15 && actionID is MoonFlute)
                 {
                     return PhantomFlurry;
                 }
@@ -334,6 +344,136 @@ internal static class BLU
                     {
                         return PhantomFlurry;
                     }
+                }
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class BLU_OffFlute : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.BLU_OffFlute;
+
+        private static uint LowerCooldown(uint current, uint candidate)
+        {
+            if (!IsSpellActive(candidate))
+            {
+                return current;
+            }
+
+            if (current == 0)
+            {
+                return candidate;
+            }
+
+            if (GetCooldownRemainingTime(candidate) < GetCooldownRemainingTime(current))
+            {
+                return candidate;
+            }
+
+            return current;
+        }
+
+        protected override uint Invoke(uint actionID, uint lastComboMove)
+        {
+            if (IsEnabled(Presets.BLU_OffFlute)
+                && ((actionID is FeatherRain && GetOptionBool(Config.BLU_FeatherRain))
+                 || (actionID is Eruption && GetOptionBool(Config.BLU_Eruption))
+                 || (actionID is MountainBuster && GetOptionBool(Config.BLU_MountainBuster))
+                 || (actionID is ShockStrike && GetOptionBool(Config.BLU_ShockStrike))
+                 || (actionID is Quasar && GetOptionBool(Config.BLU_Quasar))
+                 || (actionID is JKick && GetOptionBool(Config.BLU_JKick))
+                 || (actionID is RoseOfDestruction && GetOptionBool(Config.BLU_RoseOfDestruction))
+                 || (actionID is WingedReprobation && GetOptionBool(Config.BLU_WingedReprobation))))
+            {
+                if (BLUActionReady(FeatherRain) && GetOptionBool(Config.BLU_FeatherRain))
+                {
+                    return FeatherRain;
+                }
+
+                if (BLUActionReady(Eruption) && GetOptionBool(Config.BLU_Eruption))
+                {
+                    return Eruption;
+                }
+
+                if (BLUActionReady(MountainBuster) && GetOptionBool(Config.BLU_MountainBuster))
+                {
+                    return MountainBuster;
+                }
+
+                if (BLUActionReady(ShockStrike) && GetOptionBool(Config.BLU_ShockStrike))
+                {
+                    return ShockStrike;
+                }
+
+                if (BLUActionReady(Quasar) && GetOptionBool(Config.BLU_Quasar))
+                {
+                    return Quasar;
+                }
+
+                if (BLUActionReady(JKick) && GetOptionBool(Config.BLU_JKick))
+                {
+                    return JKick;
+                }
+
+                if (BLUActionReady(RoseOfDestruction) && GetOptionBool(Config.BLU_RoseOfDestruction))
+                {
+                    return RoseOfDestruction;
+                }
+
+                if (BLUActionReady(WingedReprobation) && GetOptionBool(Config.BLU_WingedReprobation))
+                {
+                    return WingedReprobation;
+                }
+
+                //Cooldown checking to show the shortest cooldown remaining
+
+                uint lowest = 0;
+
+                if (GetOptionBool(Config.BLU_FeatherRain))
+                {
+                    lowest = LowerCooldown(lowest, FeatherRain);
+                }
+
+                if (GetOptionBool(Config.BLU_Eruption))
+                {
+                    lowest = LowerCooldown(lowest, Eruption);
+                }
+
+                if (GetOptionBool(Config.BLU_MountainBuster))
+                {
+                    lowest = LowerCooldown(lowest, MountainBuster);
+                }
+
+                if (GetOptionBool(Config.BLU_ShockStrike))
+                {
+                    lowest = LowerCooldown(lowest, ShockStrike);
+                }
+
+                if (GetOptionBool(Config.BLU_Quasar))
+                {
+                    lowest = LowerCooldown(lowest, Quasar);
+                }
+
+                if (GetOptionBool(Config.BLU_JKick))
+                {
+                    lowest = LowerCooldown(lowest, JKick);
+                }
+
+                if (GetOptionBool(Config.BLU_RoseOfDestruction))
+                {
+                    lowest = LowerCooldown(lowest, RoseOfDestruction);
+                }
+
+                if (GetOptionBool(Config.BLU_WingedReprobation))
+                {
+                    lowest = LowerCooldown(lowest, WingedReprobation);
+                }
+
+                if (lowest != 0)
+                {
+                    return lowest;
                 }
             }
 
@@ -658,239 +798,16 @@ internal static class BLU
         }
     }
 
-    internal class BLU_Treasure_Healer : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.BLU_Treasure_Healer;
-
-        protected override uint Invoke(uint actionID, uint lastComboMove)
-        {
-            var notInMap = Svc.ClientState.TerritoryType is not Maps.Dragonskin and not Maps.Gazelle1
-                and not Maps.Gazelle2 and not Maps.Thief and not Maps.Zonure1 and not Maps.Zonure2;
-
-            var inMap = Svc.ClientState.TerritoryType is Maps.Dragonskin or Maps.Gazelle1
-                or Maps.Gazelle2 or Maps.Thief or Maps.Zonure1 or Maps.Zonure2;
-
-            if (actionID is GoblinPunch && IsEnabled(Presets.BLU_Treasure_Healer) && HasEffect(Buffs.HealerMimicry)
-                && !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length == 0)
-            {
-                if (notInMap)
-                {
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_MightyGuard) && HasEffect(Buffs.MightyGuard))
-                    {
-                        return MightyGuard;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_AutoSpell)
-                        && CurrentTarget == null && !InCombat() && !IsCasting()
-                        && IsOffCooldown(ShockStrike) && IsOffCooldown(Gobskin) && IsOffCooldown(Quasar) && IsOffCooldown(SeaShanty)
-                        && (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile)
-                        || !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull)))
-                    {
-                        for (var i = 0; i < 24; i++)
-                        {
-                            if (!ActionQueued())
-                            {
-                                if (GetActiveBlueMageActionInSlot(20) == ShockStrike)
-                                {
-                                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
-                                    {
-                                        AssignBlueMageActionToSlot(20, RamsVoice);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(21) == Gobskin)
-                                {
-                                    if (IsOffCooldown(Gobskin) && IsSpellActive(Gobskin))
-                                    {
-                                        AssignBlueMageActionToSlot(21, Missile);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(22) == Quasar)
-                                {
-                                    if (IsOffCooldown(Quasar) && IsSpellActive(Quasar))
-                                    {
-                                        AssignBlueMageActionToSlot(22, Ultravibration);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(23) == SeaShanty)
-                                {
-                                    if (IsOffCooldown(SeaShanty) && IsSpellActive(SeaShanty))
-                                    {
-                                        AssignBlueMageActionToSlot(23, HydroPull);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (!IsSpellActive(RamsVoice) || !IsSpellActive(Missile) || !IsSpellActive(Ultravibration) || !IsSpellActive(HydroPull))
-                    {
-                        return OriginalHook(11);
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_AngelsSnack)
-                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure) && IsOffCooldown(AngelsSnack)
-                        && IsSpellActive(AngelsSnack))
-                    {
-                        if (ActionReady(Common.Swiftcast))
-                        {
-                            return Common.Swiftcast;
-                        }
-
-                        return AngelsSnack;
-                    }
-                }
-
-                if (inMap)
-                {
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_BasicInstinct) && !HasEffect(Buffs.BasicInstinct))
-                    {
-                        return BasicInstinct;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_MightyGuard) && !HasEffect(Buffs.MightyGuard))
-                    {
-                        return MightyGuard;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_AutoSpell)
-                        && CurrentTarget == null && !InCombat() && !IsCasting() && Svc.DutyState.IsDutyStarted
-                        && IsOffCooldown(RamsVoice) && IsOffCooldown(Missile) && IsOffCooldown(Ultravibration) && IsOffCooldown(HydroPull)
-                        && (!IsSpellActive(ShockStrike) || !IsSpellActive(Gobskin)
-                        || !IsSpellActive(Quasar) || !IsSpellActive(SeaShanty)))
-                    {
-                        for (var i = 0; i < 24; i++)
-                        {
-                            if (!ActionQueued())
-                            {
-                                if (GetActiveBlueMageActionInSlot(20) == RamsVoice)
-                                {
-                                    if (IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice))
-                                    {
-                                        AssignBlueMageActionToSlot(20, ShockStrike);
-                                    }
-                                }
-
-
-                                if (GetActiveBlueMageActionInSlot(21) == Missile)
-                                {
-                                    if (IsOffCooldown(Missile) && IsSpellActive(Missile))
-                                    {
-                                        AssignBlueMageActionToSlot(21, Gobskin);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(22) == Ultravibration)
-                                {
-                                    if (IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration))
-                                    {
-                                        AssignBlueMageActionToSlot(22, Quasar);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(23) == HydroPull)
-                                {
-                                    if (IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
-                                    {
-                                        AssignBlueMageActionToSlot(23, SeaShanty);
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_AngelsSnack)
-                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure)
-                        && ActionReady(AngelsSnack) && IsSpellActive(AngelsSnack))
-                    {
-                        if (PlayerHealthPercentageHp() < 50 && ActionReady(Common.Swiftcast))
-                        {
-                            return Common.Swiftcast;
-                        }
-
-                        return AngelsSnack;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_Pomcure)
-                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.BLU_TreasurePomcure)
-                        && IsOnCooldown(AngelsSnack) && IsSpellActive(Pomcure)
-                        && !HasEffect(Buffs.AngelsSnack) && !WasLastSpell(AngelsSnack))
-                    {
-                        if (PlayerHealthPercentageHp() < 50 && ActionReady(Common.Swiftcast) && !WasLastSpell(Pomcure))
-                        {
-                            return Common.Swiftcast;
-                        }
-
-                        return Pomcure;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_Gobskin)
-                        && ShieldPercentage <= GetOptionValue(Config.BLU_TreasureGobskin) && IsSpellActive(Gobskin))
-                    {
-                        return Gobskin;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_BreathOfMagic) && TargetIsBoss()
-                        && !TargetHasEffectAny(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
-                        && TargetWorthDoT())
-                    {
-                        if (!HasEffect(Buffs.Bristle))
-                        {
-                            return Bristle;
-                        }
-
-                        return BreathOfMagic;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_MortalFlame) && TargetIsBoss()
-                        && !TargetHasEffectAny(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
-                        && TargetWorthDoT())
-                    {
-                        if (!HasEffect(Buffs.Bristle))
-                        {
-                            return Bristle;
-                        }
-
-                        return MortalFlame;
-                    }
-
-                    if (IsEnabled(Presets.BLU_Treasure_Healer_TripleTrident) && IsSpellActive(TripleTrident)
-                        && TargetIsBoss()
-                        && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
-                        && TargetWorthDoT())
-                    {
-                        if (!HasEffect(Buffs.Whistle))
-                        {
-                            return Whistle;
-                        }
-
-                        if (!HasEffect(Buffs.Tingle))
-                        {
-                            return Tingle;
-                        }
-
-                        return TripleTrident;
-                    }
-                }
-            }
-
-            return actionID;
-        }
-    }
-
     internal class BLU_Treasure_Tank : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.BLU_Treasure_Tank;
 
         protected override uint Invoke(uint actionID, uint lastComboMove)
         {
-            var notInMap = Svc.ClientState.TerritoryType is not Maps.Dragonskin and not Maps.Gazelle1
-                and not Maps.Gazelle2 and not Maps.Thief and not Maps.Zonure1 and not Maps.Zonure2;
+            var notInMap = Svc.ClientState.TerritoryType is not Maps.Dragonskin and not Maps.Gazelle1 and not Maps.Gazelle2
+                and not Maps.Thief and not Maps.Zonure1 and not Maps.Zonure2;
 
-            var inMap = Svc.ClientState.TerritoryType is Maps.Dragonskin or Maps.Gazelle1
-                or Maps.Gazelle2 or Maps.Thief or Maps.Zonure1 or Maps.Zonure2;
+            var inMap = Svc.ClientState.TerritoryType is Maps.Dragonskin or Maps.Gazelle1 or Maps.Gazelle2 or Maps.Thief or Maps.Zonure1 or Maps.Zonure2;
 
             if (actionID is GoblinPunch && IsEnabled(Presets.BLU_Treasure_Tank) && HasEffect(Buffs.TankMimicry)
                 && !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length == 0)
@@ -912,36 +829,36 @@ internal static class BLU
                         {
                             if (!ActionQueued())
                             {
-                                if (GetActiveBlueMageActionInSlot(20) == ShockStrike)
+                                if (GetActiveBlueMageActionInSlot(18) == ShockStrike && IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
                                 {
-                                    if (IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
-                                    {
-                                        AssignBlueMageActionToSlot(20, RamsVoice);
-                                    }
+                                    AssignBlueMageActionToSlot(18, RamsVoice);
                                 }
 
-                                if (GetActiveBlueMageActionInSlot(21) == Quasar)
+                                if (GetActiveBlueMageActionInSlot(19) == Quasar && IsOffCooldown(Quasar) && IsSpellActive(Quasar))
                                 {
-                                    if (IsOffCooldown(Quasar) && IsSpellActive(Quasar))
-                                    {
-                                        AssignBlueMageActionToSlot(21, Missile);
-                                    }
+                                    AssignBlueMageActionToSlot(19, Missile);
                                 }
 
-                                if (GetActiveBlueMageActionInSlot(22) == Rehydration)
+                                if (GetActiveBlueMageActionInSlot(20) == Rehydration && IsOffCooldown(Rehydration) && IsSpellActive(Rehydration))
                                 {
-                                    if (IsOffCooldown(Rehydration) && IsSpellActive(Rehydration))
-                                    {
-                                        AssignBlueMageActionToSlot(22, Ultravibration);
-                                    }
+                                    AssignBlueMageActionToSlot(20, ShockStrike);
                                 }
 
-                                if (GetActiveBlueMageActionInSlot(23) == SeaShanty)
+                                if (GetActiveBlueMageActionInSlot(21) == SeaShanty && IsOffCooldown(SeaShanty) && IsSpellActive(SeaShanty))
                                 {
-                                    if (IsOffCooldown(SeaShanty) && IsSpellActive(SeaShanty))
-                                    {
-                                        AssignBlueMageActionToSlot(23, HydroPull);
-                                    }
+                                    AssignBlueMageActionToSlot(21, Ultravibration);
+                                }
+
+                                if ((GetActiveBlueMageActionInSlot(22) == PeripheralSynthesis && IsOffCooldown(PeripheralSynthesis) && IsSpellActive(PeripheralSynthesis))
+                                    || (GetActiveBlueMageActionInSlot(22) == RamsVoice && IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice)))
+                                {
+                                    AssignBlueMageActionToSlot(22, HydroPull);
+                                }
+
+                                if ((GetActiveBlueMageActionInSlot(23) == MustardBomb && IsOffCooldown(MustardBomb) && IsSpellActive(MustardBomb))
+                                    || (GetActiveBlueMageActionInSlot(23) == Ultravibration && IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration)))
+                                {
+                                    AssignBlueMageActionToSlot(23, DimensionalShift);
                                 }
                             }
                         }
@@ -1001,36 +918,49 @@ internal static class BLU
                         {
                             if (!ActionQueued())
                             {
-                                if (GetActiveBlueMageActionInSlot(20) == RamsVoice)
+                                if (GetActiveBlueMageActionInSlot(18) == RamsVoice && IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice))
                                 {
-                                    if (IsOffCooldown(RamsVoice) && IsSpellActive(RamsVoice))
+                                    AssignBlueMageActionToSlot(18, ShockStrike);
+                                }
+
+                                if (GetActiveBlueMageActionInSlot(19) == Missile && IsOffCooldown(Missile) && IsSpellActive(Missile))
+                                {
+                                    AssignBlueMageActionToSlot(19, Quasar);
+                                }
+
+                                if (GetActiveBlueMageActionInSlot(20) == ShockStrike && IsOffCooldown(ShockStrike) && IsSpellActive(ShockStrike))
+                                {
+                                    AssignBlueMageActionToSlot(20, Rehydration);
+                                }
+
+                                if (GetActiveBlueMageActionInSlot(21) == Ultravibration && IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration))
+                                {
+                                    AssignBlueMageActionToSlot(21, SeaShanty);
+                                }
+
+                                if (Svc.ClientState.TerritoryType is not Maps.Zonure1 and not Maps.Zonure2)
+                                {
+                                    if (GetActiveBlueMageActionInSlot(22) == HydroPull && IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
                                     {
-                                        AssignBlueMageActionToSlot(20, ShockStrike);
+                                        AssignBlueMageActionToSlot(22, PeripheralSynthesis);
+                                    }
+
+                                    if (GetActiveBlueMageActionInSlot(23) == DimensionalShift && IsOffCooldown(DimensionalShift) && IsSpellActive(DimensionalShift))
+                                    {
+                                        AssignBlueMageActionToSlot(23, MustardBomb);
                                     }
                                 }
 
-
-                                if (GetActiveBlueMageActionInSlot(21) == Missile)
+                                if (Svc.ClientState.TerritoryType is Maps.Zonure1 or Maps.Zonure2)
                                 {
-                                    if (IsOffCooldown(Missile) && IsSpellActive(Missile))
+                                    if (GetActiveBlueMageActionInSlot(22) == HydroPull && IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
                                     {
-                                        AssignBlueMageActionToSlot(21, Quasar);
+                                        AssignBlueMageActionToSlot(22, RamsVoice);
                                     }
-                                }
 
-                                if (GetActiveBlueMageActionInSlot(22) == Ultravibration)
-                                {
-                                    if (IsOffCooldown(Ultravibration) && IsSpellActive(Ultravibration))
+                                    if (GetActiveBlueMageActionInSlot(23) == DimensionalShift && IsOffCooldown(DimensionalShift) && IsSpellActive(DimensionalShift))
                                     {
-                                        AssignBlueMageActionToSlot(22, Rehydration);
-                                    }
-                                }
-
-                                if (GetActiveBlueMageActionInSlot(23) == HydroPull)
-                                {
-                                    if (IsOffCooldown(HydroPull) && IsSpellActive(HydroPull))
-                                    {
-                                        AssignBlueMageActionToSlot(23, SeaShanty);
+                                        AssignBlueMageActionToSlot(23, Ultravibration);
                                     }
                                 }
                             }
@@ -1061,9 +991,8 @@ internal static class BLU
                         return WhiteWind;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Tank_BreathOfMagic) && TargetIsBoss()
-                        && !TargetHasEffectAny(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic)
-                        && TargetWorthDoT())
+                    if (IsEnabled(Presets.BLU_Treasure_Tank_BreathOfMagic) && TargetIsBoss() && TargetWorthDoT()
+                        && !TargetHasEffectAny(Debuffs.BreathOfMagic) && !WasLastSpell(BreathOfMagic))
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -1073,9 +1002,8 @@ internal static class BLU
                         return BreathOfMagic;
                     }
 
-                    if (IsEnabled(Presets.BLU_Treasure_Tank_MortalFlame) && TargetIsBoss()
-                        && !TargetHasEffectAny(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame)
-                        && TargetWorthDoT())
+                    if (IsEnabled(Presets.BLU_Treasure_Tank_MortalFlame) && TargetIsBoss() && TargetWorthDoT()
+                        && !TargetHasEffectAny(Debuffs.MortalFlame) && !WasLastSpell(MortalFlame))
                     {
                         if (!HasEffect(Buffs.Bristle))
                         {
@@ -1086,9 +1014,8 @@ internal static class BLU
                     }
 
                     if (IsEnabled(Presets.BLU_Treasure_Tank_TripleTrident) && IsSpellActive(TripleTrident)
-                        && TargetIsBoss()
-                        && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident)
-                        && TargetWorthDoT())
+                        && TargetIsBoss() && TargetWorthDoT()
+                        && (IsOffCooldown(TripleTrident) || GetCooldownRemainingTime(TripleTrident) < 5) && !WasLastSpell(TripleTrident))
                     {
                         if (!HasEffect(Buffs.Whistle))
                         {

@@ -228,6 +228,11 @@ internal abstract partial class CustomComboFunctions
                 return false;
             }
 
+            if (HasEffect(BLU.Buffs.BasicInstinct) && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 10)
+            {
+                return true;
+            }
+
             if (EnemyRank() == 2)
             {
                 return true;
@@ -277,6 +282,11 @@ internal abstract partial class CustomComboFunctions
             if (EnemyCurrentHP() == 1)
             {
                 return false;
+            }
+
+            if (HasEffect(BLU.Buffs.BasicInstinct) && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 10)
+            {
+                return true;
             }
 
             if (EnemyRank() == 2)

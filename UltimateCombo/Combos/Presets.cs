@@ -3176,59 +3176,65 @@ public enum Presets
 
     [ReplaceSkill(BLU.MoonFlute)]
     [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.RoseOfDestruction, BLU.MoonFlute, BLU.JKick, BLU.TripleTrident, BLU.Nightbloom, BLU.WingedReprobation, BLU.SeaShanty, BLU.BeingMortal, BLU.ShockStrike, BLU.Surpanakha, BLU.MatraMagic, BLU.PhantomFlurry, BLU.Bristle, BLU.FeatherRain)]
-    [CustomComboInfo("Moon Flute Combo", "Turns Moon Flute into a full opener.\nUse the remaining 2 charges of Winged Reprobation before starting the opener again!\nCan be done with 2.50 spell speed", BLU.JobID)]
+    [CustomComboInfo("Moon Flute Combo", "", BLU.JobID)]
     BLU_MoonFluteOpener = 70001,
 
     [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
     [ParentCombo(BLU_MoonFluteOpener)]
     [ConflictingCombos(BLU_MoonFluteOpener_DoubleDoTOpener)]
-    [CustomComboInfo("DoT Alternative (Breath of Magic OR Mortal Flame)", "Only have 1 DoT active (Breath of Magic OR Mortal Flame)\nRequires 2.20 spell speed or faster", BLU.JobID)]
+    [CustomComboInfo("DoT Alternative (Breath of Magic OR Mortal Flame)", "", BLU.JobID)]
     BLU_MoonFluteOpener_DoTOpener = 70002,
 
     [BlueInactive(BLU.BreathOfMagic, BLU.MortalFlame)]
     [ParentCombo(BLU_MoonFluteOpener)]
     [ConflictingCombos(BLU_MoonFluteOpener_DoTOpener)]
-    [CustomComboInfo("Double DoT Opener (Breath of Magic AND Mortal Flame)", "Apply both DoTs.\nRequires 2.20 spell speed or faster", BLU.JobID)]
+    [CustomComboInfo("Double DoT Opener (Breath of Magic AND Mortal Flame)", "", BLU.JobID)]
     BLU_MoonFluteOpener_DoubleDoTOpener = 70003,
+
+    [ReplaceSkill(BLU.FeatherRain, BLU.Eruption, BLU.MountainBuster, BLU.ShockStrike, BLU.Quasar, BLU.JKick, BLU.RoseOfDestruction, BLU.WingedReprobation)]
+    [CustomComboInfo("Off-Flute Attacks (Spells and Abilities that can be used between Moon Flute Combos)", "", BLU.JobID)]
+    BLU_OffFlute = 70008,
 
     #region Combos
 
     [BlueInactive(BLU.Whistle, BLU.Offguard, BLU.Tingle, BLU.BasicInstinct, BLU.MoonFlute, BLU.FinalSting)]
     [ReplaceSkill(BLU.FinalSting)]
-    [CustomComboInfo("Final Sting Combo", "Whistle > Off-guard > Tingle > [Basic Instinct] > Moon Flute > Swiftcast > Final Sting", BLU.JobID)]
+    [CustomComboInfo("Final Sting Combo", "", BLU.JobID)]
     BLU_Sting = 70011,
 
     [BlueInactive(BLU.ToadOil, BLU.Bristle, BLU.MoonFlute, BLU.SelfDestruct)]
     [ReplaceSkill(BLU.SelfDestruct)]
-    [CustomComboInfo("Self-destruct Combo", "Toad Oil > Bristle > Moon Flute > Self-destruct", BLU.JobID)]
+    [CustomComboInfo("Self-destruct Combo", "", BLU.JobID)]
     BLU_Explode = 70012,
 
     [BlueInactive(BLU.Whistle, BLU.Tingle, BLU.TripleTrident)]
     [ReplaceSkill(BLU.TripleTrident)]
-    [CustomComboInfo("Triple Trident Combo", "Whistle > Tingle > Triple Trident", BLU.JobID)]
+    [CustomComboInfo("Triple Trident Combo", "", BLU.JobID)]
     BLU_TripleTrident = 70013,
 
     [ReplaceSkill(BLU.Bristle)]
-    [CustomComboInfo("Buffed Breath of Magic and Mortal Flame", "Bristle > Breath of Magic > Bristle > Mortal Flame", BLU.JobID)]
+    [CustomComboInfo("Buffed Breath of Magic and Mortal Flame", "", BLU.JobID)]
     BLU_DoTs = 70014,
 
     [BlueInactive(BLU.HydroPull, BLU.RamsVoice, BLU.Ultravibration)]
     [ReplaceSkill(BLU.HydroPull, BLU.RamsVoice, BLU.Ultravibration)]
-    [CustomComboInfo("Vibe Check", "Hydro Pull > Ram's Voice > Swiftcast > Ultravibration", BLU.JobID)]
+    [CustomComboInfo("Vibe Check", "", BLU.JobID)]
     BLU_VibeCheck = 70010,
 
     [BlueInactive(BLU.PeripheralSynthesis, BLU.MustardBomb)]
     [ReplaceSkill(BLU.PeripheralSynthesis, BLU.MustardBomb)]
-    [CustomComboInfo("Bomb Combo", "Peripheral Synthesis > Mustard Bomb", BLU.JobID)]
+    [CustomComboInfo("Bomb Combo", "", BLU.JobID)]
     BLU_PeriphBomb = 70015,
 
     #endregion
 
     #region Utility
 
+    #region BLU Tanking
+
     [BlueInactive(BLU.GoblinPunch, BLU.MightyGuard, BLU.ToadOil, BLU.Devour, BLU.PeatPelt, BLU.DeepClean)]
     [ReplaceSkill(BLU.GoblinPunch)]
-    [CustomComboInfo("Tank Combo (Doesn't work while solo)", "Mighty Guard, Toad Oil, and Devour Checks, then Peculiar Light, Peat Pelt, and Deep Clean", BLU.JobID)]
+    [CustomComboInfo("Tank Combo (Doesn't work while solo)", "", BLU.JobID)]
     BLU_Tanking = 70030,
 
     [ParentCombo(BLU_Tanking)]
@@ -3247,6 +3253,8 @@ public enum Presets
     [CustomComboInfo("Peat Pelt > Deep Clean", "", BLU.JobID)]
     BLU_Tank_PeatClean = 70034,
 
+    #endregion
+
     [ReplaceSkill(BLU.GoblinPunch, BLU.SonicBoom, BLU.ChocoMeteor, BLU.Blaze)]
     [CustomComboInfo("Blood Drain", "", BLU.JobID)]
     BLU_BloodDrain = 70035,
@@ -3255,76 +3263,19 @@ public enum Presets
     [CustomComboInfo("Phantom Flurry Perfect Ending", "", BLU.JobID)]
     BLU_PhantomEnder = 70036,
 
-    #region Treasure Healer
-
-    [BlueInactive(BLU.AethericMimicry, BLU.GoblinPunch, BLU.Gobskin, BLU.Pomcure, BLU.BasicInstinct, BLU.MightyGuard, BLU.AngelsSnack,
-                  BLU.FeatherRain, BLU.BreathOfMagic, BLU.MortalFlame, BLU.TripleTrident)]
-    [ReplaceSkill(BLU.GoblinPunch)]
-    [CustomComboInfo("Solo Treasure Mappin' (Healer Mimic required)", "", BLU.JobID)]
-    BLU_Treasure_Healer = 70040,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Auto Spell Setting\n" +
-        "Ram's Voice = Shock Strike\n" +
-        "Missile = Glass Dance\n" +
-        "Ultravibration = Quasar\n" +
-        "Hydro Pull = Sea Shanty\n" +
-        "You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
-        "You MUST NOT have Shock Strike, Glass Dance, Quasar, or Sea Shanty active in the spellbook.\n" +
-        "When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
-    BLU_Treasure_Healer_AutoSpell = 70041,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Basic Instinct", "", BLU.JobID)]
-    BLU_Treasure_Healer_BasicInstinct = 70042,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Mighty Guard", "", BLU.JobID)]
-    BLU_Treasure_Healer_MightyGuard = 70043,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Angel's Snack", "", BLU.JobID)]
-    BLU_Treasure_Healer_AngelsSnack = 70044,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Pomcure", "", BLU.JobID)]
-    BLU_Treasure_Healer_Pomcure = 70045,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Gobskin", "", BLU.JobID)]
-    BLU_Treasure_Healer_Gobskin = 70046,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Triple Trident", "", BLU.JobID)]
-    BLU_Treasure_Healer_TripleTrident = 70048,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Breath of Magic", "", BLU.JobID)]
-    BLU_Treasure_Healer_BreathOfMagic = 70049,
-
-    [ParentCombo(BLU_Treasure_Healer)]
-    [CustomComboInfo("Mortal Flame", "", BLU.JobID)]
-    BLU_Treasure_Healer_MortalFlame = 70050,
-
-    #endregion
-
     #region Treasure Tank
 
     [BlueInactive(BLU.AethericMimicry, BLU.GoblinPunch, BLU.BasicInstinct, BLU.MightyGuard, BLU.FeatherRain, BLU.BreathOfMagic,
                   BLU.Devour, BLU.WhiteWind, BLU.MortalFlame, BLU.TripleTrident)]
     [ReplaceSkill(BLU.GoblinPunch)]
-    [CustomComboInfo("Solo Treasure Mappin' (Tank Mimic required)", "", BLU.JobID)]
+    [CustomComboInfo("Solo Treasure Mappin' (Tank Mimic)", "", BLU.JobID)]
     BLU_Treasure_Tank = 70060,
 
     [ParentCombo(BLU_Treasure_Tank)]
     [CustomComboInfo("Auto Spell Setting\n" +
-        "Ram's Voice = Shock Strike\n" +
-        "Missile = Qusar\n" +
-        "Ultravibration = Rehydration\n" +
-        "Hydro Pull = Sea Shanty\n" +
-        "You MUST have Ram's Voice, Missile, Ultravibration, and Hydropull, in that order, in the last 4 slots of your spellbook.\n" +
-        "You MUST NOT have Shock Strike, Quasar, Rehydration, or Sea Shanty active in the spellbook.\n" +
-        "When outside of a map, spells will only change when you have no target.", "", BLU.JobID)]
+        "In the overworld, put these spells in the last 6 slots of your spellbook, in this exact order:" +
+        "\n- Ram's Voice\n- Missile\n- Shock Strike\n- Ultravibration\n- Hydro Pull\n- Dimensional Shift\n\n" +
+        "Remove the following spells from your spellbook:\n- Quasar\n- Rehydration\n- Sea Shanty\n- Peripheral Synthesis\n- Mustard Bomb", "", BLU.JobID)]
     BLU_Treasure_Tank_AutoSpell = 70061,
 
     [ParentCombo(BLU_Treasure_Tank)]
@@ -3349,15 +3300,15 @@ public enum Presets
 
     [ParentCombo(BLU_Treasure_Tank)]
     [CustomComboInfo("Triple Trident", "", BLU.JobID)]
-    BLU_Treasure_Tank_TripleTrident = 70068,
+    BLU_Treasure_Tank_TripleTrident = 70067,
 
     [ParentCombo(BLU_Treasure_Tank)]
     [CustomComboInfo("Breath of Magic", "", BLU.JobID)]
-    BLU_Treasure_Tank_BreathOfMagic = 70069,
+    BLU_Treasure_Tank_BreathOfMagic = 70068,
 
     [ParentCombo(BLU_Treasure_Tank)]
     [CustomComboInfo("Mortal Flame", "", BLU.JobID)]
-    BLU_Treasure_Tank_MortalFlame = 70070,
+    BLU_Treasure_Tank_MortalFlame = 70069,
 
     #endregion
 

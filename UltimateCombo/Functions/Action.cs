@@ -128,6 +128,11 @@ internal abstract partial class CustomComboFunctions
         return Service.Configuration.ActiveBLUSpells.Contains(id);
     }
 
+    internal static bool BLUActionReady(uint id)
+    {
+        return IsSpellActive(id) && IsOffCooldown(id);
+    }
+
     internal static bool CanWeave(uint actionID, uint lastGCD)
     {
         var weaveTime = 0.6;
