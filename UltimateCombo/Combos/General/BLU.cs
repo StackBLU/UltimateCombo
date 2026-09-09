@@ -151,7 +151,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_MoonFluteOpener;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is MoonFlute && IsEnabled(Presets.BLU_MoonFluteOpener))
             {
@@ -375,7 +375,7 @@ internal static class BLU
             return current;
         }
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.BLU_OffFlute)
                 && ((actionID is FeatherRain && GetOptionBool(Config.BLU_FeatherRain))
@@ -485,7 +485,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_TripleTrident;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is TripleTrident && IsEnabled(Presets.BLU_TripleTrident) && IsSpellActive(TripleTrident))
             {
@@ -518,7 +518,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_Sting;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is FinalSting && IsEnabled(Presets.BLU_Sting) && IsSpellActive(FinalSting))
             {
@@ -567,7 +567,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_Explode;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is SelfDestruct && IsEnabled(Presets.BLU_Explode) && IsSpellActive(SelfDestruct))
             {
@@ -605,7 +605,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_DoTs;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Bristle && IsEnabled(Presets.BLU_DoTs) && !HasEffect(Buffs.MoonFlute))
             {
@@ -640,7 +640,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_PeriphBomb;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is PeripheralSynthesis or MustardBomb && IsEnabled(Presets.BLU_PeriphBomb))
             {
@@ -662,7 +662,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_VibeCheck;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is HydroPull or RamsVoice or Ultravibration && IsEnabled(Presets.BLU_VibeCheck))
             {
@@ -704,7 +704,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_BloodDrain;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_BloodDrain) && !HasEffect(Buffs.PhantomFlurry))
             {
@@ -722,7 +722,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_Tanking;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is GoblinPunch && IsEnabled(Presets.BLU_Tanking)
                 && HasEffect(Buffs.TankMimicry) && !HasEffect(Buffs.PhantomFlurry) && GetPartyMembers().Length > 0)
@@ -779,7 +779,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_PhantomEnder;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is GoblinPunch or SonicBoom or ChocoMeteor or Blaze && IsEnabled(Presets.BLU_PhantomEnder))
             {
@@ -802,7 +802,7 @@ internal static class BLU
     {
         protected internal override Presets Preset { get; } = Presets.BLU_Treasure_Tank;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             var notInMap = Svc.ClientState.TerritoryType is not Maps.Dragonskin and not Maps.Gazelle1 and not Maps.Gazelle2
                 and not Maps.Thief and not Maps.Zonure1 and not Maps.Zonure2;

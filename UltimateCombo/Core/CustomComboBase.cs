@@ -13,7 +13,7 @@ internal abstract partial class CustomComboBase : CustomComboFunctions
     protected byte ClassID { get; }
     protected byte JobID { get; }
 
-    internal unsafe bool TryInvoke(uint actionID, uint lastComboMove, out uint newActionID)
+    internal unsafe bool TryInvoke(uint actionID, uint ComboAction, out uint newActionID)
     {
         newActionID = 0;
         if (ActionManager.Instance()->QueuedActionType == ActionType.Action
@@ -40,7 +40,7 @@ internal abstract partial class CustomComboBase : CustomComboFunctions
             return false;
         }
 
-        var resultingActionID = Invoke(actionID, lastComboMove);
+        var resultingActionID = Invoke(actionID);
         if (resultingActionID == 0 || actionID == resultingActionID)
         {
             return false;
@@ -50,5 +50,5 @@ internal abstract partial class CustomComboBase : CustomComboFunctions
         return true;
     }
 
-    protected abstract uint Invoke(uint actionID, uint lastComboActionID);
+    protected abstract uint Invoke(uint actionID);
 }

@@ -54,7 +54,7 @@ internal static class SCHPvP
     {
         protected internal override Presets Preset { get; } = Presets.SCHPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Broil4 or SeraphicHalo) && IsEnabled(Presets.SCHPvP_Combo))
             {

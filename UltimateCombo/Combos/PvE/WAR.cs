@@ -74,7 +74,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HeavySwing or Maim or StormsPath or StormsEye) && IsEnabled(Presets.WAR_ST_DPS))
             {
@@ -164,24 +164,21 @@ internal static class WAR
                     return Tomahawk;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is HeavySwing && ActionReady(Maim))
                 {
-                    if (lastComboMove is HeavySwing && ActionReady(Maim))
-                    {
-                        return Maim;
-                    }
+                    return Maim;
+                }
 
-                    if (lastComboMove is Maim && ActionReady(StormsPath) && IsEnabled(Presets.WAR_ST_StormsEye))
+                if (ComboAction is Maim && ActionReady(StormsPath) && IsEnabled(Presets.WAR_ST_StormsEye))
+                {
+                    if (ActionReady(StormsEye)
+                        && EffectRemainingTime(Buffs.SurgingTempest) <= GetOptionValue(Config.WAR_SurgingRefresh))
                     {
-                        if (ActionReady(StormsEye)
-                            && EffectRemainingTime(Buffs.SurgingTempest) <= GetOptionValue(Config.WAR_SurgingRefresh))
-                        {
-                            return StormsEye;
-                        }
-                        if (ActionReady(StormsPath))
-                        {
-                            return StormsPath;
-                        }
+                        return StormsEye;
+                    }
+                    if (ActionReady(StormsPath))
+                    {
+                        return StormsPath;
                     }
                 }
 
@@ -196,7 +193,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Overpower or MythrilTempest) && IsEnabled(Presets.WAR_AoE_DPS))
             {
@@ -277,12 +274,9 @@ internal static class WAR
                     return PrimalRend;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is Overpower && ActionReady(MythrilTempest))
                 {
-                    if (lastComboMove is Overpower && ActionReady(MythrilTempest))
-                    {
-                        return MythrilTempest;
-                    }
+                    return MythrilTempest;
                 }
 
                 return Overpower;
@@ -296,7 +290,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_InfurCleav;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is InnerBeast or FellCleave) && IsEnabled(Presets.WAR_InfurCleav))
             {
@@ -319,7 +313,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_InfurCyclo;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SteelCyclone or Decimate) && IsEnabled(Presets.WAR_InfurCyclo))
             {
@@ -342,7 +336,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_Release;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is InnerRelease or Berserk) && IsEnabled(Presets.WAR_Release))
             {
@@ -375,7 +369,7 @@ internal static class WAR
     {
         protected internal override Presets Preset { get; } = Presets.WAR_ThrillShake;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is ThrillOfBattle or ShakeItOff) && IsEnabled(Presets.WAR_ThrillShake))
             {

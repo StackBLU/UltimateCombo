@@ -78,7 +78,7 @@ internal class DRG
     {
         protected internal override Presets Preset { get; } = Presets.DRG_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is TrueThrust or VorpalThrust or LanceBarrage or Disembowel or SpiralBlow or FullThrust
                 or HeavensThrust or ChaosThrust or ChaoticSpring or FangAndClaw or WheelingThrust) && IsEnabled(Presets.DRG_ST_DPS))
@@ -168,45 +168,42 @@ internal class DRG
                     return PiercingTalon;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is TrueThrust or RaidenThrust)
                 {
-                    if (lastComboMove is TrueThrust or RaidenThrust)
+                    if (ActionReady(OriginalHook(Disembowel))
+                        && ((ActionReady(ChaosThrust) && TargetEffectRemainingTime(Debuffs.ChaosThrust) < 7 && !LevelChecked(ChaoticSpring))
+                            || (ActionReady(ChaoticSpring) && TargetEffectRemainingTime(Debuffs.ChaoticSpring) < 7)
+                            || !HasEffect(Buffs.PowerSurge)))
                     {
-                        if (ActionReady(OriginalHook(Disembowel))
-                            && ((ActionReady(ChaosThrust) && TargetEffectRemainingTime(Debuffs.ChaosThrust) < 7 && !LevelChecked(ChaoticSpring))
-                                || (ActionReady(ChaoticSpring) && TargetEffectRemainingTime(Debuffs.ChaoticSpring) < 7)
-                                || !HasEffect(Buffs.PowerSurge)))
-                        {
-                            return OriginalHook(Disembowel);
-                        }
-
-                        return OriginalHook(VorpalThrust);
+                        return OriginalHook(Disembowel);
                     }
 
-                    if ((lastComboMove is Disembowel or SpiralBlow) && ActionReady(OriginalHook(ChaosThrust)))
-                    {
-                        return OriginalHook(ChaosThrust);
-                    }
+                    return OriginalHook(VorpalThrust);
+                }
 
-                    if ((lastComboMove is ChaosThrust or ChaoticSpring) && ActionReady(WheelingThrust))
-                    {
-                        return WheelingThrust;
-                    }
+                if ((ComboAction is Disembowel or SpiralBlow) && ActionReady(OriginalHook(ChaosThrust)))
+                {
+                    return OriginalHook(ChaosThrust);
+                }
 
-                    if ((lastComboMove is VorpalThrust or LanceBarrage) && ActionReady(OriginalHook(FullThrust)))
-                    {
-                        return OriginalHook(FullThrust);
-                    }
+                if ((ComboAction is ChaosThrust or ChaoticSpring) && ActionReady(WheelingThrust))
+                {
+                    return WheelingThrust;
+                }
 
-                    if ((lastComboMove is FullThrust or HeavensThrust) && ActionReady(FangAndClaw))
-                    {
-                        return FangAndClaw;
-                    }
+                if ((ComboAction is VorpalThrust or LanceBarrage) && ActionReady(OriginalHook(FullThrust)))
+                {
+                    return OriginalHook(FullThrust);
+                }
 
-                    if ((lastComboMove is WheelingThrust or FangAndClaw) && ActionReady(Drakesbane))
-                    {
-                        return Drakesbane;
-                    }
+                if ((ComboAction is FullThrust or HeavensThrust) && ActionReady(FangAndClaw))
+                {
+                    return FangAndClaw;
+                }
+
+                if ((ComboAction is WheelingThrust or FangAndClaw) && ActionReady(Drakesbane))
+                {
+                    return Drakesbane;
                 }
 
                 return TrueThrust;
@@ -220,7 +217,7 @@ internal class DRG
     {
         protected internal override Presets Preset { get; } = Presets.DRG_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is DoomSpike or SonicThrust or CoerthanTorment) && IsEnabled(Presets.DRG_AoE_DPS))
             {
@@ -292,17 +289,14 @@ internal class DRG
                     }
                 }
 
-                if (ComboTime > 0)
+                if ((ComboAction is DoomSpike or DraconianFury) && ActionReady(SonicThrust))
                 {
-                    if ((lastComboMove is DoomSpike or DraconianFury) && ActionReady(SonicThrust))
-                    {
-                        return SonicThrust;
-                    }
+                    return SonicThrust;
+                }
 
-                    if (lastComboMove is SonicThrust && ActionReady(CoerthanTorment))
-                    {
-                        return CoerthanTorment;
-                    }
+                if (ComboAction is SonicThrust && ActionReady(CoerthanTorment))
+                {
+                    return CoerthanTorment;
                 }
 
                 return DoomSpike;

@@ -94,7 +94,7 @@ internal class VPR
     {
         protected internal override Presets Preset { get; } = Presets.VPR_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SteelFangs or ReavingFangs) && IsEnabled(Presets.VPR_ST_DPS))
             {
@@ -229,37 +229,34 @@ internal class VPR
                     return WrithingSnap;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is SteelFangs or ReavingFangs)
                 {
-                    if (lastComboMove is SteelFangs or ReavingFangs)
+                    if (HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.FlankstungVenom))
                     {
-                        if (HasEffect(Buffs.FlanksbaneVenom) || HasEffect(Buffs.FlankstungVenom))
-                        {
-                            return OriginalHook(SteelFangs);
-                        }
+                        return OriginalHook(SteelFangs);
+                    }
 
+                    return OriginalHook(ReavingFangs);
+                }
+
+                if (ComboAction is SwiftskinsSting or HuntersSting)
+                {
+                    if (HasEffect(Buffs.FlankstungVenom))
+                    {
+                        return OriginalHook(SteelFangs);
+                    }
+
+                    if (HasEffect(Buffs.FlanksbaneVenom))
+                    {
                         return OriginalHook(ReavingFangs);
                     }
 
-                    if (lastComboMove is SwiftskinsSting or HuntersSting)
+                    if (HasEffect(Buffs.HindstungVenom))
                     {
-                        if (HasEffect(Buffs.FlankstungVenom))
-                        {
-                            return OriginalHook(SteelFangs);
-                        }
-
-                        if (HasEffect(Buffs.FlanksbaneVenom))
-                        {
-                            return OriginalHook(ReavingFangs);
-                        }
-
-                        if (HasEffect(Buffs.HindstungVenom))
-                        {
-                            return OriginalHook(SteelFangs);
-                        }
-
-                        return OriginalHook(ReavingFangs);
+                        return OriginalHook(SteelFangs);
                     }
+
+                    return OriginalHook(ReavingFangs);
                 }
 
                 if (HasEffect(Buffs.HonedReavers))
@@ -278,7 +275,7 @@ internal class VPR
     {
         protected internal override Presets Preset { get; } = Presets.VPR_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SteelMaw or ReavingMaw) && IsEnabled(Presets.VPR_AoE_DPS))
             {
@@ -400,27 +397,24 @@ internal class VPR
                     return Vicepit;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is SteelMaw or ReavingMaw)
                 {
-                    if (lastComboMove is SteelMaw or ReavingMaw)
+                    if (EffectRemainingTime(Buffs.Swiftscaled) > EffectRemainingTime(Buffs.HuntersInstinct))
                     {
-                        if (EffectRemainingTime(Buffs.Swiftscaled) > EffectRemainingTime(Buffs.HuntersInstinct))
-                        {
-                            return OriginalHook(SteelMaw);
-                        }
-
-                        return OriginalHook(ReavingMaw);
+                        return OriginalHook(SteelMaw);
                     }
 
-                    if (lastComboMove is SwiftskinsBite or HuntersBite)
-                    {
-                        if (HasEffect(Buffs.GrimhuntersVenom))
-                        {
-                            return OriginalHook(SteelMaw);
-                        }
+                    return OriginalHook(ReavingMaw);
+                }
 
-                        return OriginalHook(ReavingMaw);
+                if (ComboAction is SwiftskinsBite or HuntersBite)
+                {
+                    if (HasEffect(Buffs.GrimhuntersVenom))
+                    {
+                        return OriginalHook(SteelMaw);
                     }
+
+                    return OriginalHook(ReavingMaw);
                 }
 
                 if (HasEffect(Buffs.HonedReavers))
@@ -439,7 +433,7 @@ internal class VPR
     {
         protected internal override Presets Preset { get; } = Presets.VPR_Vicewinder;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Vicewinder or HuntersCoil or SwiftskinsCoil) && IsEnabled(Presets.VPR_Vicewinder))
             {
@@ -488,7 +482,7 @@ internal class VPR
     {
         protected internal override Presets Preset { get; } = Presets.VPR_Vicepit;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Vicepit or HuntersDen or SwiftskinsDen) && IsEnabled(Presets.VPR_Vicepit))
             {
@@ -537,7 +531,7 @@ internal class VPR
     {
         protected internal override Presets Preset { get; } = Presets.VPR_Uncoiled;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is UncoiledFury && IsEnabled(Presets.VPR_Uncoiled))
             {

@@ -124,7 +124,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Malefic or Malefic2 or Malefic3 or Malefic4 or FallMalefic) && IsEnabled(Presets.AST_ST_DPS))
             {
@@ -234,7 +234,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Gravity or Gravity2) && IsEnabled(Presets.AST_AoE_DPS))
             {
@@ -323,7 +323,7 @@ internal static class AST
     internal class AST_ST_Heals : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.AST_ST_Heals;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Benefic1 or Benefic2) && IsEnabled(Presets.AST_ST_Heals))
             {
@@ -349,7 +349,7 @@ internal static class AST
     internal class AST_AoE_Heals : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.AST_AoE_Heals;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Helios or AspectedHelios or HeliosConjuction) && IsEnabled(Presets.AST_AoE_Heals))
             {
@@ -393,7 +393,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_Lightspeed_Protection;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Lightspeed && IsEnabled(Presets.AST_Lightspeed_Protection))
             {
@@ -411,7 +411,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_DrawCooldown;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Play1)
             {

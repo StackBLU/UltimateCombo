@@ -5,7 +5,7 @@
     <Description>A cleaner, more refined, combo plugin for FFXIV!</Description>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Configurations>Release</Configurations>
-    <AssemblyVersion>1.0.1.27</AssemblyVersion>
+    <AssemblyVersion>1.0.1.28</AssemblyVersion>
   </PropertyGroup>
   
   <PropertyGroup>

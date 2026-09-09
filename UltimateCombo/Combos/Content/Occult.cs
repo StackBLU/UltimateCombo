@@ -261,7 +261,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Freelancer;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Freelancer) && HasEffect(PhantomJobs.Freelancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -280,7 +280,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Knight;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Knight) && HasEffect(PhantomJobs.Knight) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -305,7 +305,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Berserker;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Berserker) && HasEffect(PhantomJobs.Berserker) && InCombat() && IsComboAction(actionID))
             {
@@ -324,7 +324,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Monk;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Monk) && HasEffect(PhantomJobs.Monk) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -365,7 +365,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Thief;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Ranger) && HasEffect(PhantomJobs.Ranger) && SafeToUse() && InCombat()
                 && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
@@ -384,7 +384,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Samurai;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Samurai) && HasEffect(PhantomJobs.Samurai) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -407,7 +407,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Bard;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Bard) && HasEffect(PhantomJobs.Bard) && SafeToUse() && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
             {
@@ -432,7 +432,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Geomancer;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Geomancer) && HasEffect(PhantomJobs.Geomancer) && SafeToUse() && IsComboAction(actionID))
             {
@@ -490,7 +490,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_TimeMage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_TimeMage) && HasEffect(PhantomJobs.TimeMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -523,7 +523,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Cannoneer;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Cannoneer) && HasEffect(PhantomJobs.Cannoneer) && SafeToUse()
                 && ((IsEnabled(Presets.Occult_Cannoneer_Utility)
@@ -570,7 +570,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Oracle;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Oracle) && HasEffect(PhantomJobs.Oracle) && SafeToUse() && IsComboAction(actionID))
             {
@@ -622,7 +622,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Thief;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Thief) && HasEffect(PhantomJobs.Thief) && SafeToUse() && (IsComboAction(actionID) || IsTankProjectile(actionID)))
             {
@@ -654,7 +654,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_MysticKnight;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_MysticKnight) && HasEffect(PhantomJobs.MysticKnight) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -684,7 +684,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Gladiator;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Gladiator) && HasEffect(PhantomJobs.Gladiator) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -712,7 +712,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Dancer;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Dancer) && HasEffect(PhantomJobs.Dancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -763,7 +763,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Ninja;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Ninja) && HasEffect(PhantomJobs.Ninja) && InCombat() && SafeToUse()
                 && CanWeave(actionID, ActionWatching.LastGCD) && IsComboAction(actionID))
@@ -802,7 +802,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_WhiteMage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_WhiteMage) && HasEffect(PhantomJobs.WhiteMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -820,7 +820,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_BlackMage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_BlackMage) && HasEffect(PhantomJobs.BlackMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -855,7 +855,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Dragoon;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Dragoon) && HasEffect(PhantomJobs.Dragoon) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -878,7 +878,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Summoner;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Summoner) && HasEffect(PhantomJobs.Summoner) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -913,7 +913,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_BlueMage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_BlueMage) && HasEffect(PhantomJobs.BlueMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -946,7 +946,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_RedMage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_RedMage) && HasEffect(PhantomJobs.RedMage) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -982,7 +982,7 @@ internal static class Occult
     {
         protected internal override Presets Preset { get; } = Presets.Occult_Necromancer;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Occult_Necromancer) && HasEffect(PhantomJobs.Necromancer) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {

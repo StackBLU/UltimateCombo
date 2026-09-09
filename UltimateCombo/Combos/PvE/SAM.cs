@@ -87,7 +87,7 @@ internal static class SAM
     {
         protected internal override Presets Preset { get; } = Presets.SAM_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Hakaze or Gyofu or Jinpu or Gekko or Shifu or Kasha or Yukikaze)
                 && IsEnabled(Presets.SAM_ST_DPS))
@@ -232,34 +232,31 @@ internal static class SAM
                     return Enpi;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is Jinpu && ActionReady(Gekko))
                 {
-                    if (lastComboMove is Jinpu && ActionReady(Gekko))
+                    return Gekko;
+                }
+
+                if (ComboAction is Shifu && ActionReady(Kasha))
+                {
+                    return Kasha;
+                }
+
+                if (ComboAction is Hakaze or Gyofu)
+                {
+                    if (ActionReady(Yukikaze) && !Gauge.HasSetsu)
                     {
-                        return Gekko;
+                        return Yukikaze;
                     }
 
-                    if (lastComboMove is Shifu && ActionReady(Kasha))
+                    if (ActionReady(Jinpu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.HasGetsu))
                     {
-                        return Kasha;
+                        return Jinpu;
                     }
 
-                    if (lastComboMove is Hakaze or Gyofu)
+                    if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.HasKa))
                     {
-                        if (ActionReady(Yukikaze) && !Gauge.HasSetsu)
-                        {
-                            return Yukikaze;
-                        }
-
-                        if (ActionReady(Jinpu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.HasGetsu))
-                        {
-                            return Jinpu;
-                        }
-
-                        if (ActionReady(Shifu) && (!HasEffect(Buffs.Fuka) || !Gauge.HasKa))
-                        {
-                            return Shifu;
-                        }
+                        return Shifu;
                     }
                 }
 
@@ -274,7 +271,7 @@ internal static class SAM
     {
         protected internal override Presets Preset { get; } = Presets.SAM_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fuga or Fuko or Mangetsu or Oka) && IsEnabled(Presets.SAM_AoE_DPS))
             {
@@ -374,19 +371,16 @@ internal static class SAM
                     }
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is Fuga or Fuko)
                 {
-                    if (lastComboMove is Fuga or Fuko)
+                    if (ActionReady(Oka) && (!HasEffect(Buffs.Fuka) || !Gauge.HasKa))
                     {
-                        if (ActionReady(Oka) && (!HasEffect(Buffs.Fuka) || !Gauge.HasKa))
-                        {
-                            return Oka;
-                        }
+                        return Oka;
+                    }
 
-                        if (ActionReady(Mangetsu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.HasGetsu))
-                        {
-                            return Mangetsu;
-                        }
+                    if (ActionReady(Mangetsu) && (!HasEffect(Buffs.Fugetsu) || !Gauge.HasGetsu))
+                    {
+                        return Mangetsu;
                     }
                 }
 
@@ -401,7 +395,7 @@ internal static class SAM
     {
         protected internal override Presets Preset { get; } = Presets.SAM_Iaijutsu;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Iaijutsu or TsubameGaeshi) && IsEnabled(Presets.SAM_Iaijutsu))
             {

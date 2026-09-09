@@ -61,7 +61,7 @@ internal static class WARPvP
     {
         protected internal override Presets Preset { get; } = Presets.WARPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HeavySwing or Maim or StormsPath or FellCleave)
                 && IsEnabled(Presets.WARPvP_Combo))

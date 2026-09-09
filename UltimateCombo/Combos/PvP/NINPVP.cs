@@ -73,7 +73,7 @@ internal static class NINPvP
     {
         protected internal override Presets Preset { get; } = Presets.NINPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ZeshoMeppo or ForkedRaiju or FleetingRaiju or Assassinate)
                 && IsEnabled(Presets.NINPvP_Combo))

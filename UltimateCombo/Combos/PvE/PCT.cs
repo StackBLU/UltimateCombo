@@ -76,7 +76,7 @@ internal class PCT
     {
         protected internal override Presets Preset { get; } = Presets.PCT_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire or Aero or Water or Blizzard or Stone or Thunder)
                 && IsEnabled(Presets.PCT_ST_DPS))
@@ -238,7 +238,7 @@ internal class PCT
     {
         protected internal override Presets Preset { get; } = Presets.PCT_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire2 or Aero2 or Water2 or Blizzard2 or Stone2 or Thunder2)
                 && IsEnabled(Presets.PCT_AoE_DPS))
@@ -395,7 +395,7 @@ internal class PCT
     internal class PCT_HolyComet : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.PCT_HolyComet;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HolyInWhite or CometInBlack) && IsEnabled(Presets.PCT_HolyComet))
             {
@@ -414,7 +414,7 @@ internal class PCT
     internal class PCT_CreatureMuse : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.PCT_CreatureMuse;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is CreatureMotif or LivingMuse) && IsEnabled(Presets.PCT_CreatureMuse))
             {
@@ -436,7 +436,7 @@ internal class PCT
     internal class PCT_WeaponMuse : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.PCT_WeaponMuse;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is WeaponMotif or SteelMuse) && IsEnabled(Presets.PCT_WeaponMuse))
             {
@@ -463,7 +463,7 @@ internal class PCT
     internal class PCT_LandscapeMuse : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.PCT_LandscapeMuse;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is LandscapeMotif or ScenicMuse) && IsEnabled(Presets.PCT_LandscapeMuse))
             {

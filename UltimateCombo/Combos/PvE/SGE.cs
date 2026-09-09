@@ -102,7 +102,7 @@ internal static class SGE
     internal class SGE_ST_DPS : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SGE_ST_DPS;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Dosis1 or Dosis2 or Dosis3 or EukrasianDosis1 or EukrasianDosis2 or EukrasianDosis3) && IsEnabled(Presets.SGE_ST_DPS))
             {
@@ -184,7 +184,7 @@ internal static class SGE
     internal class SGE_AoE_DPS : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SGE_AoE_DPS;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Dyskrasia1 or Dyskrasia2 or EukrasianDyskrasia) && IsEnabled(Presets.SGE_AoE_DPS))
             {
@@ -255,7 +255,7 @@ internal static class SGE
     internal class SGE_ST_Heals : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SGE_ST_Heals;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Diagnosis or EukrasianDiagnosis) && IsEnabled(Presets.SGE_ST_Heals))
             {
@@ -280,7 +280,7 @@ internal static class SGE
     internal class SGE_AoE_Heals : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SGE_AoE_Heals;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Prognosis or EukrasianPrognosis1 or EukrasianPrognosis2) && IsEnabled(Presets.SGE_AoE_Heals))
             {

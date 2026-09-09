@@ -41,7 +41,7 @@ internal static class BRDPvP
     {
         protected internal override Presets Preset { get; } = Presets.BRDPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is PowerfulShot or PitchPerfect) && IsEnabled(Presets.BRDPvP_Combo))
             {

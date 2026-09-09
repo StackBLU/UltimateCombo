@@ -71,7 +71,7 @@ internal static class DRK
     {
         protected internal override Presets Preset { get; } = Presets.DRK_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HardSlash or SyphonStrike or Souleater) && IsEnabled(Presets.DRK_ST_DPS))
             {
@@ -165,17 +165,14 @@ internal static class DRK
                     return Unmend;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is HardSlash && ActionReady(SyphonStrike))
                 {
-                    if (lastComboMove is HardSlash && ActionReady(SyphonStrike))
-                    {
-                        return SyphonStrike;
-                    }
+                    return SyphonStrike;
+                }
 
-                    if (lastComboMove is SyphonStrike && ActionReady(Souleater))
-                    {
-                        return Souleater;
-                    }
+                if (ComboAction is SyphonStrike && ActionReady(Souleater))
+                {
+                    return Souleater;
                 }
 
                 return HardSlash;
@@ -189,7 +186,7 @@ internal static class DRK
     {
         protected internal override Presets Preset { get; } = Presets.DRK_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Unleash or StalwartSoul) && IsEnabled(Presets.DRK_AoE_DPS))
             {
@@ -264,12 +261,9 @@ internal static class DRK
                     return OriginalHook(Quietus);
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is Unleash && ActionReady(StalwartSoul))
                 {
-                    if (lastComboMove is Unleash && ActionReady(StalwartSoul))
-                    {
-                        return StalwartSoul;
-                    }
+                    return StalwartSoul;
                 }
 
                 return Unleash;
@@ -283,7 +277,7 @@ internal static class DRK
     {
         protected internal override Presets Preset { get; } = Presets.DRK_DelirSpiller;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Bloodspiller && IsEnabled(Presets.DRK_DelirSpiller))
             {
@@ -306,7 +300,7 @@ internal static class DRK
     {
         protected internal override Presets Preset { get; } = Presets.DRK_DelirQuiet;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Quietus && IsEnabled(Presets.DRK_DelirQuiet))
             {

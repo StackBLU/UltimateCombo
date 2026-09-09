@@ -61,7 +61,7 @@ internal static class DRKPvP
     {
         protected internal override Presets Preset { get; } = Presets.DRKPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HardSlash or SyphonStrike or Souleater or ScarletDelirium or Comeuppance or Torcleaver)
                 && IsEnabled(Presets.DRKPvP_Combo))

@@ -101,7 +101,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_Cure;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
             {
@@ -119,7 +119,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_Raise;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
             {
@@ -147,7 +147,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_Ultimatum;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
             {
@@ -165,7 +165,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_SpiritDart;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
             {
@@ -184,7 +184,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_Rampart;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
             {
@@ -202,7 +202,7 @@ internal static class Variant
     {
         protected internal override Presets Preset { get; } = Presets.Variant_EagleEyeShot;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Variant_EagleEyeShot) && SafeToUse() && IsComboAction(actionID))
             {

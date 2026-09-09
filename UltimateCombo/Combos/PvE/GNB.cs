@@ -90,7 +90,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is KeenEdge or BrutalShell or SolidBarrel) && IsEnabled(Presets.GNB_ST_DPS))
             {
@@ -195,7 +195,7 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_ST_Burst) && ActionReady(BurstStrike) && Gauge.Ammo > 0
-                    && ((Gauge.Ammo >= MaxCartridges(Level) && lastComboMove == BrutalShell)
+                    && ((Gauge.Ammo >= MaxCartridges(Level) && ComboAction == BrutalShell)
                     || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(OriginalHook(GnashingFang)) > 5 && GetCooldownRemainingTime(DoubleDown) > 10)
                     || BossAlmostDead()))
                 {
@@ -207,17 +207,14 @@ internal static class GNB
                     return LightningShot;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is KeenEdge && ActionReady(BrutalShell))
                 {
-                    if (lastComboMove is KeenEdge && ActionReady(BrutalShell))
-                    {
-                        return BrutalShell;
-                    }
+                    return BrutalShell;
+                }
 
-                    if (lastComboMove is BrutalShell && ActionReady(SolidBarrel))
-                    {
-                        return SolidBarrel;
-                    }
+                if (ComboAction is BrutalShell && ActionReady(SolidBarrel))
+                {
+                    return SolidBarrel;
                 }
 
                 return KeenEdge;
@@ -231,7 +228,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is DemonSlice or DemonSlaughter) && IsEnabled(Presets.GNB_AoE_DPS))
             {
@@ -302,13 +299,13 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_AoE_Fated) && ActionReady(FatedCircle) && Gauge.Ammo > 0
-                    && ((Gauge.Ammo >= MaxCartridges(Level) && lastComboMove is DemonSlice)
+                    && ((Gauge.Ammo >= MaxCartridges(Level) && ComboAction is DemonSlice)
                     || (HasEffect(Buffs.NoMercy) && GetCooldownRemainingTime(DoubleDown) > 10)))
                 {
                     return FatedCircle;
                 }
 
-                if (ComboTime > 0 && lastComboMove is DemonSlice && ActionReady(DemonSlaughter))
+                if (ComboTime > 0 && ComboAction is DemonSlice && ActionReady(DemonSlaughter))
                 {
                     return DemonSlaughter;
                 }
@@ -322,7 +319,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_BurstCont;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is BurstStrike && IsEnabled(Presets.GNB_BurstCont))
             {
@@ -345,7 +342,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_GnashCont;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is GnashingFang && IsEnabled(Presets.GNB_GnashCont))
             {
@@ -368,7 +365,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_FatedCont;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is FatedCircle && IsEnabled(Presets.GNB_FatedCont))
             {
@@ -391,7 +388,7 @@ internal static class GNB
     {
         protected internal override Presets Preset { get; } = Presets.GNB_AuroraProtection;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Aurora)
             {

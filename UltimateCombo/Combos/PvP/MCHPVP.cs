@@ -56,7 +56,7 @@ internal static class MCHPvP
     {
         protected internal override Presets Preset { get; } = Presets.MCHPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is BlastCharge or BlazingShot) && IsEnabled(Presets.MCHPvP_Combo))
             {

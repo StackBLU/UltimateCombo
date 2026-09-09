@@ -43,7 +43,7 @@ internal static class WHMPvP
     {
         protected internal override Presets Preset { get; } = Presets.WHMPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Glare3 && IsEnabled(Presets.WHMPvP_Combo))
             {
@@ -80,7 +80,7 @@ internal static class WHMPvP
     {
         protected internal override Presets Preset { get; } = Presets.WHMPvP_NoWasteMiracleOfNature;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is MiracleOfNature && IsEnabled(Presets.WHMPvP_NoWasteMiracleOfNature))
             {

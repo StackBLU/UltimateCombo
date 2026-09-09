@@ -1,6 +1,7 @@
 using Dalamud.Game.ClientState.JobGauge.Enums;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using System;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos.PvE;
 using UltimateCombo.Core;
@@ -92,7 +93,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Tank_Reprisal;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Reprisal && IsEnabled(Presets.All_Tank_Reprisal) && SafeToUse())
             {
@@ -110,7 +111,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Caster_Addle;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Addle && IsEnabled(Presets.All_Caster_Addle) && SafeToUse())
             {
@@ -128,7 +129,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Melee_Feint;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Feint && IsEnabled(Presets.All_Melee_Feint) && SafeToUse())
             {
@@ -146,7 +147,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Melee_TrueNorth;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is TrueNorth && IsEnabled(Presets.All_Melee_TrueNorth) && SafeToUse())
             {
@@ -164,7 +165,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Ranged_Mitigation;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is BRD.Troubadour or MCH.Tactician or DNC.ShieldSamba && IsEnabled(Presets.All_Ranged_Mitigation))
             {
@@ -182,7 +183,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Raise;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is WHM.Raise or SCH.Resurrection or AST.Ascend or SGE.Egeiro or SMN.Resurrection or RDM.Verraise or BLU.AngelWhisper
                 && IsEnabled(Presets.All_Raise))
@@ -263,7 +264,7 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.All_RoleActions) && IsComboAction(actionID))
             {
@@ -302,13 +303,13 @@ internal class Common
                                 or DRG.HeavensThrust or DRG.ChaosThrust or DRG.ChaoticSpring
                                 or DRG.FangAndClaw or DRG.WheelingThrust)
                             {
-                                if (lastComboMove is DRG.Disembowel or DRG.SpiralBlow or DRG.ChaosThrust or DRG.ChaoticSpring
+                                if (ComboAction is DRG.Disembowel or DRG.SpiralBlow or DRG.ChaosThrust or DRG.ChaoticSpring
                                     && LevelChecked(DRG.ChaosThrust) && !OnTargetsRear())
                                 {
                                     return TrueNorth;
                                 }
 
-                                if (lastComboMove is DRG.FullThrust or DRG.HeavensThrust
+                                if (ComboAction is DRG.FullThrust or DRG.HeavensThrust
                                     && LevelChecked(DRG.FangAndClaw) && !OnTargetsFlank())
                                 {
                                     return TrueNorth;
@@ -318,7 +319,7 @@ internal class Common
 
                         if (CurrentJobId is NIN.JobID)
                         {
-                            if (lastComboMove is NIN.GustSlash
+                            if (ComboAction is NIN.GustSlash
                                 && actionID is NIN.SpinningEdge or NIN.GustSlash or NIN.AeolianEdge or NIN.ArmorCrush)
                             {
                                 if (ActionReady(NIN.AeolianEdge) && !OnTargetsRear()
@@ -343,12 +344,12 @@ internal class Common
                         {
                             if (actionID is SAM.Hakaze or SAM.Gyofu or SAM.Jinpu or SAM.Gekko or SAM.Shifu or SAM.Kasha or SAM.Yukikaze)
                             {
-                                if (HasEffect(SAM.Buffs.MeikyoShisui) || (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Jinpu && !OnTargetsRear()))
+                                if (HasEffect(SAM.Buffs.MeikyoShisui) || (!HasEffect(SAM.Buffs.MeikyoShisui) && ComboAction is SAM.Jinpu && !OnTargetsRear()))
                                 {
                                     return TrueNorth;
                                 }
 
-                                if (HasEffect(SAM.Buffs.MeikyoShisui) || (!HasEffect(SAM.Buffs.MeikyoShisui) && lastComboMove is SAM.Shifu && !OnTargetsFlank()))
+                                if (HasEffect(SAM.Buffs.MeikyoShisui) || (!HasEffect(SAM.Buffs.MeikyoShisui) && ComboAction is SAM.Shifu && !OnTargetsFlank()))
                                 {
                                     return TrueNorth;
                                 }
@@ -394,13 +395,13 @@ internal class Common
                                 }
 
                                 if ((HasEffect(VPR.Buffs.HindstungVenom) || HasEffect(VPR.Buffs.HindsbaneVenom))
-                                    && lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting && !OnTargetsRear())
+                                    && ComboAction is VPR.HuntersSting or VPR.SwiftskinsSting && !OnTargetsRear())
                                 {
                                     return TrueNorth;
                                 }
 
                                 if ((HasEffect(VPR.Buffs.FlankstungVenom) || HasEffect(VPR.Buffs.FlanksbaneVenom))
-                                    && lastComboMove is VPR.HuntersSting or VPR.SwiftskinsSting && !OnTargetsFlank())
+                                    && ComboAction is VPR.HuntersSting or VPR.SwiftskinsSting && !OnTargetsFlank())
                                 {
                                     return TrueNorth;
                                 }
@@ -495,45 +496,53 @@ internal class Common
     {
         protected internal override Presets Preset { get; } = Presets.All_Choco;
 
-        protected override unsafe uint Invoke(uint actionID, uint lastComboMove)
+        private static DateTime _lastChocoCheck = DateTime.MinValue;
+
+        protected override unsafe uint Invoke(uint actionID)
         {
-            //5 is Tank Mode
-            //6 is Attack Mode
-            //7 is Healing Mode
+            if ((DateTime.UtcNow - _lastChocoCheck).TotalSeconds < 1)
+            {
+                return actionID;
+            }
+
+            _lastChocoCheck = DateTime.UtcNow;
+
+            // 5 is Tank Mode
+            // 6 is Attack Mode
+            // 7 is Healing Mode
 
             if (IsEnabled(Presets.All_Choco) && HasCompanionPresent())
             {
+                var command = UIState.Instance()->Buddy.CompanionInfo.ActiveCommand;
+
                 if (Config.All_ChocoAuto)
                 {
-                    if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6 && !ActionQueued()
-                        && PlayerHealthPercentageHp() >= GetOptionValue(Config.All_ChocoHP))
-                    {
-                        _ = UseAction(ActionType.BuddyAction, 6);
-                    }
+                    var hp = PlayerHealthPercentageHp();
+                    var threshold = GetOptionValue(Config.All_ChocoHP);
 
-                    if (UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7 && !ActionQueued()
-                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.All_ChocoHP))
+                    if (hp >= threshold)
+                    {
+                        if (command != 6 && !ActionQueued())
+                        {
+                            _ = UseAction(ActionType.BuddyAction, 6);
+                        }
+                    }
+                    else if (command != 7 && !ActionQueued())
                     {
                         _ = UseAction(ActionType.BuddyAction, 7);
                     }
                 }
-
-                if (!Config.All_ChocoAuto)
+                else
                 {
-                    if (Config.All_ChocoMode == 1 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 6
-                         && !ActionQueued())
+                    if (Config.All_ChocoMode == 1 && command != 6 && !ActionQueued())
                     {
                         _ = UseAction(ActionType.BuddyAction, 6);
                     }
-
-                    if (Config.All_ChocoMode == 2 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 7
-                         && !ActionQueued())
+                    else if (Config.All_ChocoMode == 2 && command != 7 && !ActionQueued())
                     {
                         _ = UseAction(ActionType.BuddyAction, 7);
                     }
-
-                    if (Config.All_ChocoMode == 3 && UIState.Instance()->Buddy.CompanionInfo.ActiveCommand != 5
-                         && !ActionQueued())
+                    else if (Config.All_ChocoMode == 3 && command != 5 && !ActionQueued())
                     {
                         _ = UseAction(ActionType.BuddyAction, 5);
                     }

@@ -55,7 +55,7 @@ internal static class DNCPvP
     {
         protected internal override Presets Preset { get; } = Presets.DNCPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Cascade or Fountain or ReverseCascade or Fountainfall or SaberDance)
                 && IsEnabled(Presets.DNCPvP_Combo))

@@ -66,7 +66,7 @@ internal static class PLDPvP
     {
         protected internal override Presets Preset { get; } = Presets.PLDPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is FastBlade or RiotBlade or RoyalAuthority or Atonement or Supplication or Sepulchre)
                 && IsEnabled(Presets.PLDPvP_Combo))
@@ -105,7 +105,7 @@ internal static class PLDPvP
                     }
 
                     if (IsEnabled(Presets.PLDPvP_Blades)
-                        && (HasEffect(Buffs.BladeOfFaithReady) || lastComboMove is BladeOfFaith || lastComboMove is BladeOfTruth))
+                        && (HasEffect(Buffs.BladeOfFaithReady) || ComboAction is BladeOfFaith || ComboAction is BladeOfTruth))
                     {
                         return OriginalHook(Phalanx);
                     }

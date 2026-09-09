@@ -13,6 +13,8 @@ internal abstract partial class CustomComboFunctions
 {
     public static unsafe float ComboTime => ActionManager.Instance()->Combo.Timer;
 
+    public static unsafe uint ComboAction => ActionManager.Instance()->Combo.Action;
+
     internal static uint OriginalHook(uint actionID)
     {
         return Service.IconReplacer.OriginalHook(actionID);

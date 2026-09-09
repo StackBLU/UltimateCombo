@@ -98,7 +98,7 @@ internal static class DNC
     {
         protected internal override Presets Preset { get; } = Presets.DNC_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Cascade or Fountain) && IsEnabled(Presets.DNC_ST_DPS))
             {
@@ -241,7 +241,7 @@ internal static class DNC
                     return Fountainfall;
                 }
 
-                if (ComboTime > 0 && lastComboMove is Cascade && ActionReady(Fountain))
+                if (ComboTime > 0 && ComboAction is Cascade && ActionReady(Fountain))
                 {
                     return Fountain;
                 }
@@ -257,7 +257,7 @@ internal static class DNC
     {
         protected internal override Presets Preset { get; } = Presets.DNC_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Windmill or Bladeshower) && IsEnabled(Presets.DNC_AoE_DPS))
             {
@@ -399,7 +399,7 @@ internal static class DNC
                     return Bloodshower;
                 }
 
-                if (ComboTime > 0 && lastComboMove is Windmill && ActionReady(Bladeshower))
+                if (ComboTime > 0 && ComboAction is Windmill && ActionReady(Bladeshower))
                 {
                     return Bladeshower;
                 }
@@ -414,7 +414,7 @@ internal static class DNC
     internal class DNC_StandardStep : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.DNC_StandardStep;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is StandardStep && IsEnabled(Presets.DNC_StandardStep))
             {
@@ -455,7 +455,7 @@ internal static class DNC
     internal class DNC_TechnicalStep : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.DNC_TechnicalStep;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is TechnicalStep && IsEnabled(Presets.DNC_TechnicalStep))
             {

@@ -61,7 +61,7 @@ internal static class RPRPvP
     {
         protected internal override Presets Preset { get; } = Presets.RPRPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Slice or WaxingSlice or InfernalSlice) && IsEnabled(Presets.RPRPvP_Combo))
             {

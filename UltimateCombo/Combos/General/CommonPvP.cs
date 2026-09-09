@@ -107,7 +107,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.PvP_Purify;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (HasEffect(Buffs.Guard))
             {
@@ -140,7 +140,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.PvP_Guard;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (HasEffect(Buffs.Guard))
             {
@@ -174,7 +174,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.PvP_Recuperate;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (HasEffect(Buffs.Guard))
             {
@@ -208,7 +208,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.PvP_IgnoreSAMKuzuchi;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.PvP_IgnoreSAMKuzuchi) && TargetHasEffectAny(SAMPvP.Buffs.Chiten)
                 && !HasEffect(NINPvP.Buffs.UnsealedSeitonTenchu) && IsPvPComboAction(actionID))
@@ -224,7 +224,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.TankPvP_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.TankPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
             {
@@ -254,7 +254,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.HealerPvP_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.HealerPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
             {
@@ -278,7 +278,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.MeleePvP_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.MeleePvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
             {
@@ -309,7 +309,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.RangedPvP_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.RangedPvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
             {
@@ -338,7 +338,7 @@ internal static class AllPvP
     {
         protected internal override Presets Preset { get; } = Presets.MagePvP_RoleActions;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.MagePvP_RoleActions) && InCombat() && IsPvPComboAction(actionID))
             {

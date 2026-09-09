@@ -53,7 +53,7 @@ internal static class DRGPvP
     {
         protected internal override Presets Preset { get; } = Presets.DRGPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is RaidenThrust or FangAndClaw or WheelingThrust or Drakesbane or HeavensThrust)
                 && IsEnabled(Presets.DRGPvP_Combo))

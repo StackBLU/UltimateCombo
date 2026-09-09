@@ -77,7 +77,7 @@ internal static class MNK
     {
         protected internal override Presets Preset { get; } = Presets.MNK_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Bootshine or LeapingOpo or TrueStrike or RisingRaptor or SnapPunch or PouncingCoeurl or DragonKick or TwinSnakes or Demolish)
                 && IsEnabled(Presets.MNK_ST_DPS))
@@ -268,7 +268,7 @@ internal static class MNK
     {
         protected internal override Presets Preset { get; } = Presets.MNK_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is ArmOfTheDestroyer or ShadowOfTheDestroyer or FourPointFury or Rockbreaker) && IsEnabled(Presets.MNK_AoE_DPS))
             {
@@ -408,7 +408,7 @@ internal static class MNK
     {
         protected internal override Presets Preset { get; } = Presets.MNK_PerfectBlitz;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is PerfectBalance or MasterfulBlitz) && IsEnabled(Presets.MNK_PerfectBlitz))
             {

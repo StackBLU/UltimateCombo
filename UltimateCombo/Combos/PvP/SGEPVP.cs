@@ -52,7 +52,7 @@ internal static class SGEPvP
     {
         protected internal override Presets Preset { get; } = Presets.SGEPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Dosis3 or EukrasianDosis3) && IsEnabled(Presets.SGEPvP_Combo))
             {

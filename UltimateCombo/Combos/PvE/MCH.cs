@@ -78,7 +78,7 @@ internal class MCH
     {
         protected internal override Presets Preset { get; } = Presets.MCH_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SplitShot or SlugShot or CleanShot or HeatedSplitShot or HeatedSlugShot or HeatedCleanShot) && IsEnabled(Presets.MCH_ST_DPS))
             {
@@ -204,12 +204,12 @@ internal class MCH
                     && (GetCooldownRemainingTime(Chainsaw) > 0.5 || !LevelChecked(Chainsaw)
                     || ActionWatching.NumberOfGcdsUsed <= 2 || !IsEnabled(Presets.MCH_ST_Chainsaw)))
                 {
-                    if ((lastComboMove is SplitShot or HeatedSplitShot) && ActionReady(OriginalHook(SlugShot)))
+                    if ((ComboAction is SplitShot or HeatedSplitShot) && ActionReady(OriginalHook(SlugShot)))
                     {
                         return OriginalHook(SlugShot);
                     }
 
-                    if ((lastComboMove is SlugShot or HeatedSlugShot) && ActionReady(OriginalHook(CleanShot)))
+                    if ((ComboAction is SlugShot or HeatedSlugShot) && ActionReady(OriginalHook(CleanShot)))
                     {
                         return OriginalHook(CleanShot);
                     }
@@ -226,7 +226,7 @@ internal class MCH
     {
         protected internal override Presets Preset { get; } = Presets.MCH_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SpreadShot or Scattergun or AutoCrossbow) && IsEnabled(Presets.MCH_AoE_DPS))
             {
@@ -332,7 +332,7 @@ internal class MCH
     {
         protected internal override Presets Preset { get; } = Presets.MCH_GaussRicochet;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is GaussRound or Ricochet or Checkmate or DoubleCheck) && IsEnabled(Presets.MCH_GaussRicochet))
             {
@@ -354,7 +354,7 @@ internal class MCH
     {
         protected internal override Presets Preset { get; } = Presets.MCH_DismantleProtect;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Dismantle && IsEnabled(Presets.MCH_DismantleProtect))
             {

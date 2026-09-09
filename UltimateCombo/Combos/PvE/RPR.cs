@@ -89,7 +89,7 @@ internal class RPR
     {
         protected internal override Presets Preset { get; } = Presets.RPR_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Slice or WaxingSlice or InfernalSlice) && IsEnabled(Presets.RPR_ST_DPS))
             {
@@ -207,17 +207,14 @@ internal class RPR
                     return Harpe;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is WaxingSlice && ActionReady(InfernalSlice))
                 {
-                    if (lastComboMove is WaxingSlice && ActionReady(InfernalSlice))
-                    {
-                        return InfernalSlice;
-                    }
+                    return InfernalSlice;
+                }
 
-                    if (lastComboMove is Slice && ActionReady(WaxingSlice))
-                    {
-                        return WaxingSlice;
-                    }
+                if (ComboAction is Slice && ActionReady(WaxingSlice))
+                {
+                    return WaxingSlice;
                 }
 
                 return Slice;
@@ -231,7 +228,7 @@ internal class RPR
     {
         protected internal override Presets Preset { get; } = Presets.RPR_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SpinningScythe or NightmareScythe) && IsEnabled(Presets.RPR_AoE_DPS))
             {
@@ -328,12 +325,9 @@ internal class RPR
                     return SoulScythe;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is SpinningScythe && ActionReady(NightmareScythe))
                 {
-                    if (lastComboMove is SpinningScythe && ActionReady(NightmareScythe))
-                    {
-                        return NightmareScythe;
-                    }
+                    return NightmareScythe;
                 }
 
                 return SpinningScythe;
@@ -347,7 +341,7 @@ internal class RPR
     {
         protected internal override Presets Preset { get; } = Presets.RPR_BloodGluttony;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Gluttony or BloodStalk) && IsEnabled(Presets.RPR_BloodGluttony))
             {
@@ -372,7 +366,7 @@ internal class RPR
     {
         protected internal override Presets Preset { get; } = Presets.RPR_GibbetGallows;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Gibbet or Gallows) && IsEnabled(Presets.RPR_GibbetGallows))
             {
@@ -392,7 +386,7 @@ internal class RPR
     {
         protected internal override Presets Preset { get; } = Presets.RPR_Regress;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HellsIngress or HellsEgress) && IsEnabled(Presets.RPR_Regress))
             {

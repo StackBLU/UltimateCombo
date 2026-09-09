@@ -42,6 +42,7 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
             .ThenByDescending(tpl => tpl.Info!.JobID == SAM.JobID)
             .ThenByDescending(tpl => tpl.Info!.JobID == RPR.JobID)
             .ThenByDescending(tpl => tpl.Info!.JobID == VPR.JobID)
+            .ThenByDescending(tpl => tpl.Info!.JobID == BST.JobID)
             .ThenByDescending(tpl => tpl.Info!.JobID == BRD.JobID)
             .ThenByDescending(tpl => tpl.Info!.JobID == MCH.JobID)
             .ThenByDescending(tpl => tpl.Info!.JobID == DNC.JobID)

@@ -90,7 +90,7 @@ internal static class SCH
     {
         protected internal override Presets Preset { get; } = Presets.SCH_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Ruin or Broil or Broil2 or Broil3 or Broil4) && IsEnabled(Presets.SCH_ST_DPS))
             {
@@ -181,7 +181,7 @@ internal static class SCH
     internal class SCH_AoE_DPS : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_AoE_DPS;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is ArtOfWar or ArtOfWar2) && IsEnabled(Presets.SCH_AoE_DPS))
             {
@@ -241,7 +241,7 @@ internal static class SCH
     internal class SCH_ST_Heals : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_ST_Heals;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Physick or Adloquium) && IsEnabled(Presets.SCH_ST_Heals))
             {
@@ -260,7 +260,7 @@ internal static class SCH
     internal class SCH_Lustrate : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_Lustrate;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Lustrate or Excogitation) && IsEnabled(Presets.SCH_Lustrate))
             {
@@ -282,7 +282,7 @@ internal static class SCH
     internal class SCH_DissipationDrain : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_DissipationDrain;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Aetherflow or Dissipation or EnergyDrain) && IsEnabled(Presets.SCH_DissipationDrain))
             {
@@ -312,7 +312,7 @@ internal static class SCH
     internal class SCH_SeraphBlessing : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_SeraphBlessing;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is FeyBlessing or SummonSeraph or Consolation) && IsEnabled(Presets.SCH_SeraphBlessing))
             {
@@ -339,7 +339,7 @@ internal static class SCH
     internal class SCH_ProRecitation : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_ProRecitation;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Protraction or Recitation) && IsEnabled(Presets.SCH_ProRecitation))
             {
@@ -361,7 +361,7 @@ internal static class SCH
     internal class SCH_NoDissipate : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_NoDissipate;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Dissipation && IsEnabled(Presets.SCH_NoDissipate))
             {
@@ -378,7 +378,7 @@ internal static class SCH
     internal class SCH_SeraphNoWaste : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.SCH_SeraphNoWaste;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is SummonSeraph && IsEnabled(Presets.SCH_SeraphNoWaste))
             {

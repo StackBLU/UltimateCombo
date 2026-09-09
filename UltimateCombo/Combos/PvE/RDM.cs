@@ -92,7 +92,7 @@ internal class RDM
     {
         protected internal override Presets Preset { get; } = Presets.RDM_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Jolt or Jolt2 or Jolt3 or Verthunder or Verthunder3 or Veraero or Veraero3 or Verfire or Verstone)
                 && IsEnabled(Presets.RDM_ST_DPS))
@@ -296,7 +296,7 @@ internal class RDM
     {
         protected internal override Presets Preset { get; } = Presets.RDM_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Scatter or Impact or Verthunder2 or Veraero2) && IsEnabled(Presets.RDM_AoE_DPS))
             {
@@ -463,7 +463,7 @@ internal class RDM
     {
         protected internal override Presets Preset { get; } = Presets.RDM_ST_Melee;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Riposte or Zwerchhau or Redoublement) && IsEnabled(Presets.RDM_ST_Melee))
             {
@@ -536,7 +536,7 @@ internal class RDM
     {
         protected internal override Presets Preset { get; } = Presets.RDM_AoE_Melee;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Moulinet && IsEnabled(Presets.RDM_AoE_Melee))
             {

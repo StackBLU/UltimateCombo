@@ -84,7 +84,7 @@ internal static class PLD
     {
         protected internal override Presets Preset { get; } = Presets.PLD_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is FastBlade or RiotBlade or RageOfHalone or RoyalAuthority) && IsEnabled(Presets.PLD_ST_DPS))
             {
@@ -169,7 +169,7 @@ internal static class PLD
 
                 if ((HasEffect(Buffs.FightOrFlight) && GetCooldownRemainingTime(FightOrFlight) > 5)
                     || (GetCooldownRemainingTime(OriginalHook(Imperator)) > 20 && !HasEffect(Buffs.Requiescat))
-                    || lastComboActionID is RiotBlade)
+                    || ComboAction is RiotBlade)
                 {
                     if (IsEnabled(Presets.PLD_ST_Atonement) && ActionReady(OriginalHook(Atonement))
                         && (HasEffect(Buffs.AtonementReady) || HasEffect(Buffs.SupplicationReady) || HasEffect(Buffs.SepulchreReady)))
@@ -190,17 +190,14 @@ internal static class PLD
                     return ShieldLob;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is FastBlade && ActionReady(RiotBlade))
                 {
-                    if (lastComboActionID is FastBlade && ActionReady(RiotBlade))
-                    {
-                        return RiotBlade;
-                    }
+                    return RiotBlade;
+                }
 
-                    if (lastComboActionID is RiotBlade && ActionReady(OriginalHook(RoyalAuthority)))
-                    {
-                        return OriginalHook(RoyalAuthority);
-                    }
+                if (ComboAction is RiotBlade && ActionReady(OriginalHook(RoyalAuthority)))
+                {
+                    return OriginalHook(RoyalAuthority);
                 }
 
                 return FastBlade;
@@ -214,7 +211,7 @@ internal static class PLD
     {
         protected internal override Presets Preset { get; } = Presets.PLD_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is TotalEclipse or Prominence) && IsEnabled(Presets.PLD_AoE_DPS))
             {
@@ -313,7 +310,7 @@ internal static class PLD
     {
         protected internal override Presets Preset { get; } = Presets.PLD_Blades;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Requiescat or Imperator) && IsEnabled(Presets.PLD_Blades))
             {
@@ -336,7 +333,7 @@ internal static class PLD
     {
         protected internal override Presets Preset { get; } = Presets.PLD_ExpiScorn;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is CircleOfScorn or SpiritsWithin or Expiacion) && IsEnabled(Presets.PLD_ExpiScorn))
             {
@@ -359,7 +356,7 @@ internal static class PLD
     {
         protected internal override Presets Preset { get; } = Presets.PLD_Intervention;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Intervention && IsEnabled(Presets.PLD_Intervention))
             {

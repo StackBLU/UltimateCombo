@@ -104,11 +104,11 @@ public sealed partial class IconReplacer : IDisposable
 
         try
         {
-            var lastComboMove = ActionManager.Instance()->Combo.Action;
+            var ComboAction = ActionManager.Instance()->Combo.Action;
 
             foreach (CustomComboBase combo in _customCombos)
             {
-                if (combo.TryInvoke(actionID, lastComboMove, out var newActionID))
+                if (combo.TryInvoke(actionID, ComboAction, out var newActionID))
                 {
                     return newActionID;
                 }

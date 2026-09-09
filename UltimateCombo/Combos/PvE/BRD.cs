@@ -81,7 +81,7 @@ internal static class BRD
     {
         protected internal override Presets Preset { get; } = Presets.BRD_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is HeavyShot or BurstShot or StraightShot or RefulgentArrow) && IsEnabled(Presets.BRD_ST_DPS))
             {
@@ -227,7 +227,7 @@ internal static class BRD
     {
         protected internal override Presets Preset { get; } = Presets.BRD_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is QuickNock or Ladonsbite or WideVolley or Shadowbite) && IsEnabled(Presets.BRD_AoE_DPS))
             {
@@ -335,7 +335,7 @@ internal static class BRD
     internal class BRD_DoTs : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.BRD_DoTs;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is VenomousBite or CausticBite or Windbite or Stormbite or IronJaws) && IsEnabled(Presets.BRD_DoTs))
             {
@@ -371,7 +371,7 @@ internal static class BRD
     internal class BRD_Songs : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.BRD_Songs;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is MagesBallad or ArmysPaeon or WanderersMinuet) && IsEnabled(Presets.BRD_Songs))
             {

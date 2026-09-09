@@ -2,6 +2,7 @@ using Dalamud.Bindings.ImGui;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.ClientState.Statuses;
+using ECommons.DalamudServices.Legacy;
 using System;
 using System.Linq;
 using System.Numerics;
@@ -18,7 +19,7 @@ internal class DebugWindow : ConfigWindow
     {
         protected internal override Presets Preset { get; }
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             return actionID;
         }
@@ -66,7 +67,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted($"Distance from Target Hitbox to Hitbox: {CustomComboFunctions.GetTargetDistanceHitboxToHitbox()}");
                 ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.PlayerTargetObject?.HitboxRadius}");
                 ImGui.TextUnformatted($"Player Hitbox Radius: {CustomComboFunctions.LocalPlayer?.HitboxRadius}");
-                ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
+                //ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
                 ImGui.TextUnformatted($"Current Cast Time: {chara?.CurrentCastTime}");
@@ -87,6 +88,7 @@ internal class DebugWindow : ConfigWindow
                 ImGui.TextUnformatted("\n");
                 ImGui.TextUnformatted($"Territory: {Service.ClientState.TerritoryType}");
                 ImGui.TextUnformatted($"Map ID: {Service.ClientState.MapId}");
+                ImGui.TextUnformatted($"Job ID: {Service.ClientState.LocalPlayer.ClassJob.RowId}");
 
                 ImGui.TextUnformatted("\n");
                 ImGui.TextUnformatted($"-- Active BLU Spells --");

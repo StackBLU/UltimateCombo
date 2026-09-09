@@ -56,7 +56,7 @@ internal static class RDMPvP
     {
         protected internal override Presets Preset { get; } = Presets.RDMPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Jolt3 or GrandImpact) && IsEnabled(Presets.RDMPvP_Combo))
             {

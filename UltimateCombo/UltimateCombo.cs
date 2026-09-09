@@ -51,6 +51,8 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         //RPR.JobID,
         //VPR.JobID,
 
+        //BST.JobID,
+
         //BRD.JobID,
         //MCH.JobID,
         //DNC.JobID,
@@ -485,6 +487,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                                 40 => typeof(SGE.Config),
                                 41 => typeof(VPR.Config),
                                 42 => typeof(PCT.Config),
+                                43 => typeof(BST.Config),
                                 _ => throw new NotImplementedException(),
                             };
 

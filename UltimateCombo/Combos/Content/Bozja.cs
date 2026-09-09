@@ -75,7 +75,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_BloodRage;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_BloodRage) && HasEffect(Buffs.Reminiscence) && InCombat() && IsComboAction(actionID))
             {
@@ -122,7 +122,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_FoP_HSac_NEnds;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_FoP_HSac_NEnds) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse()
                  && IsComboAction(actionID))
@@ -155,7 +155,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_Assassination;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_Assassination) && HasEffect(Buffs.Reminiscence) && InCombat() && SafeToUse()
                  && IsComboAction(actionID))
@@ -174,7 +174,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_FoM_CS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_FoM_CS) && HasEffect(Buffs.Reminiscence) && InCombat() && !DutyActionEquipped(FlareStar)
                  && IsComboAction(actionID))
@@ -199,7 +199,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_Seraph;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_Seraph) && HasEffect(Buffs.Reminiscence) && InCombat() && CurrentJobId is WHM.JobID && IsComboAction(actionID))
             {
@@ -223,7 +223,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_Slash;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_Slash) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Slash)
                  && IsComboAction(actionID))
@@ -255,7 +255,7 @@ internal static class Bozja
     {
         protected internal override Presets Preset { get; } = Presets.Bozja_CureIV;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Bozja_CureIV) && HasEffect(Buffs.Reminiscence) && InCombat() && DutyActionEquipped(Cure4)
                  && IsComboAction(actionID))

@@ -62,7 +62,7 @@ internal static class FSH
     internal class FSH_CastRest : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.FSH_CastRest;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Cast && IsEnabled(Presets.FSH_CastRest))
             {
@@ -79,7 +79,7 @@ internal static class FSH
     internal class FSH_CastHook : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.FSH_CastHook;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Cast && IsEnabled(Presets.FSH_CastHook))
             {
@@ -96,7 +96,7 @@ internal static class FSH
     internal class FSH_FishingToSpearfishing : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.FSH_FishingToSpearfishing;
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.FSH_FishingToSpearfishing)
                 && HasCondition(ConditionFlag.Diving) && !HasCondition(ConditionFlag.Fishing))

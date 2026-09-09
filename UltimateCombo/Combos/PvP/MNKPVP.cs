@@ -46,7 +46,7 @@ internal static class MNKPvP
     {
         protected internal override Presets Preset { get; } = Presets.MNKPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is DragonKick or TwinSnakes or Demolish or LeapingOpo or RisingRaptor or PouncingCoeurl or PhantomRush)
                 && IsEnabled(Presets.MNKPvP_Combo))

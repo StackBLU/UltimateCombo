@@ -615,6 +615,12 @@ internal static class UserConfigItems
 
         #endregion
 
+        #region BEASTMASTER
+
+
+
+        #endregion
+
         #endregion
 
         #region Physical Ranged DPS

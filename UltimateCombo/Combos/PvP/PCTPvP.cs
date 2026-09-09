@@ -96,7 +96,7 @@ internal static class PCTPvP
     {
         protected internal override Presets Preset { get; } = Presets.PCTPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is FireInRed or AeroInGreen or WaterInBlue or BlizzardInCyan or StoneInYellow or ThunderInMagenta)
                 && IsEnabled(Presets.PCTPvP_Combo))

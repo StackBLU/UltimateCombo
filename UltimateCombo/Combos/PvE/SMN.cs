@@ -118,7 +118,7 @@ internal class SMN
     {
         protected internal override Presets Preset { get; } = Presets.SMN_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Ruin or Ruin2 or Ruin3) && IsEnabled(Presets.SMN_ST_DPS))
             {
@@ -183,7 +183,7 @@ internal class SMN
                     return OriginalHook(AstralFlow);
                 }
 
-                if (lastComboMove is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Ifrit))
+                if (ComboAction is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_ST_Astral_Ifrit))
                 {
                     return OriginalHook(AstralFlow);
                 }
@@ -247,7 +247,7 @@ internal class SMN
     {
         protected internal override Presets Preset { get; } = Presets.SMN_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Outburst or Tridisaster) && IsEnabled(Presets.SMN_AoE_DPS))
             {
@@ -314,7 +314,7 @@ internal class SMN
                     return OriginalHook(AstralFlow);
                 }
 
-                if (lastComboMove is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Ifrit))
+                if (ComboAction is CrimsonCyclone && IsEnabled(Presets.SMN_ST_Astral) && !GetOptionBool(Config.SMN_AoE_Astral_Ifrit))
                 {
                     return OriginalHook(AstralFlow);
                 }
@@ -378,7 +378,7 @@ internal class SMN
     {
         protected internal override Presets Preset { get; } = Presets.SMN_EnergyDrain;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is EnergyDrain or Fester or Necrotize) && IsEnabled(Presets.SMN_EnergyDrain))
             {
@@ -398,7 +398,7 @@ internal class SMN
     {
         protected internal override Presets Preset { get; } = Presets.SMN_EnergySiphon;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is EnergySiphon or Painflare) && IsEnabled(Presets.SMN_EnergySiphon))
             {
@@ -418,7 +418,7 @@ internal class SMN
     {
         protected internal override Presets Preset { get; } = Presets.SMN_Enkindle;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SummonBahamut or SummonPhoenix or SummonSolarBahamut) && IsEnabled(Presets.SMN_Enkindle))
             {

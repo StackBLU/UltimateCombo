@@ -112,7 +112,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire or Fire3 or Fire4 or Blizzard or Blizzard3 or Blizzard4) && IsEnabled(Presets.BLM_ST_DPS))
             {
@@ -358,7 +358,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire2 or HighFire2 or Blizzard2 or HighBlizzard2) && IsEnabled(Presets.BLM_AoE_DPS))
             {
@@ -459,7 +459,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_Fire4Blizzard4;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire4 or Blizzard4) && IsEnabled(Presets.BLM_Fire4Blizzard4))
             {
@@ -482,7 +482,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_XenoParadox;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Xenoglossy or Paradox or Despair) && IsEnabled(Presets.BLM_XenoParadox))
             {
@@ -507,7 +507,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_TriplecastProtect;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Triplecast or Common.Swiftcast) && IsEnabled(Presets.BLM_TriplecastProtect))
             {
@@ -525,7 +525,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_UmbralTranspose;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is UmbralSoul && IsEnabled(Presets.BLM_UmbralTranspose))
             {
@@ -548,7 +548,7 @@ internal class BLM
     {
         protected internal override Presets Preset { get; } = Presets.BLM_LeyLines;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is LeyLines or BetweenTheLines) && IsEnabled(Presets.BLM_LeyLines))
             {

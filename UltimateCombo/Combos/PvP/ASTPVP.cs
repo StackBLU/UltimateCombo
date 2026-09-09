@@ -62,7 +62,7 @@ internal static class ASTPvP
     {
         protected internal override Presets Preset { get; } = Presets.ASTPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is FallMalefic && IsEnabled(Presets.ASTPvP_Combo))
             {

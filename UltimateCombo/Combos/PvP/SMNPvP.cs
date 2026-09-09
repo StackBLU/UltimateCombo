@@ -62,7 +62,7 @@ internal static class SMNPvP
     {
         protected internal override Presets Preset { get; } = Presets.SMNPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Ruin3 or Ruin4) && IsEnabled(Presets.SMNPvP_Combo))
             {

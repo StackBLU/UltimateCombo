@@ -65,7 +65,7 @@ internal static class BLMPvP
     {
         protected internal override Presets Preset { get; } = Presets.BLMPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Fire or Fire3 or Fire4 or HighFire2 or Flare or Blizzard or Blizzard3 or Blizzard4 or HighBlizzard2 or Freeze)
                 && IsEnabled(Presets.BLMPvP_Combo))

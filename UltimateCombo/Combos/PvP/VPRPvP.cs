@@ -76,7 +76,7 @@ internal static class VPRPvP
     {
         protected internal override Presets Preset { get; } = Presets.VPRPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SteelFangs or HuntersSting or BarbarousBite or PiercingFangs or SwiftskinsSting or RavenousBite)
                 && IsEnabled(Presets.VPRPvP_Combo))

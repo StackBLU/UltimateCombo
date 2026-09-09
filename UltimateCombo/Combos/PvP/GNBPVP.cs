@@ -69,7 +69,7 @@ internal static class GNBPvP
     {
         protected internal override Presets Preset { get; } = Presets.GNBPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is KeenEdge or BrutalShell or SolidBarrel or BurstStrike) && IsEnabled(Presets.GNBPvP_Combo))
             {

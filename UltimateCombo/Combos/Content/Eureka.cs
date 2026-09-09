@@ -93,7 +93,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Wisdoms;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Wisdoms) && IsComboAction(actionID))
             {
@@ -181,7 +181,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Offensive;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Offensive) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -214,7 +214,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Curative;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Curative) && SafeToUse() && IsComboAction(actionID))
             {
@@ -241,7 +241,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Tactical;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Tactical) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -269,7 +269,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Inimical;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Inimical) && InCombat() && SafeToUse() && IsComboAction(actionID))
             {
@@ -297,7 +297,7 @@ internal static class Eureka
     {
         protected internal override Presets Preset { get; } = Presets.Eureka_Mitigative;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if (IsEnabled(Presets.Eureka_Mitigative) && SafeToUse() && IsComboAction(actionID))
             {

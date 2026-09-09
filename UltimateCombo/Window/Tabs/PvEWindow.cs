@@ -22,7 +22,7 @@ internal class PvEWindow : ConfigWindow
     private static readonly Dictionary<string, byte[]> JobsByRole = new()
     {
         { "Tanks", new byte[] { PLD.JobID, WAR.JobID, DRK.JobID, GNB.JobID } },
-        { "Melee", new byte[] { MNK.JobID, DRG.JobID, NIN.JobID, SAM.JobID, RPR.JobID, VPR.JobID, FSH.JobID, Common.JobID } },
+        { "Melee", new byte[] { MNK.JobID, DRG.JobID, NIN.JobID, SAM.JobID, RPR.JobID, VPR.JobID, BST.JobID, FSH.JobID, Common.JobID } },
         { "Healers", new byte[] { WHM.JobID, SCH.JobID, AST.JobID, SGE.JobID } },
         { "Physical Ranged", new byte[] { BRD.JobID, MCH.JobID, DNC.JobID } },
         { "Magical Ranged", new byte[] { BLM.JobID, SMN.JobID, RDM.JobID, PCT.JobID, BLU.JobID } }
@@ -77,16 +77,25 @@ internal class PvEWindow : ConfigWindow
                     }
 
                     ImGui.SameLine(indentwidth);
+
                     if (icon != null)
                     {
                         ImGui.Image(icon.Handle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
                         ImGui.SameLine(indentwidth2);
-                        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
-                        ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
-                        _ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
-                        ImGui.PopStyleColor();
-                        ImGui.PopStyleVar();
                     }
+                    else
+                    {
+                        ImGui.Dummy(new Vector2(20f.Scale(), selectableSize.Y));
+                        ImGui.SameLine(indentwidth2);
+                    }
+
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
+                    ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
+
+                    _ = ImGui.Button(header, selectableSize);
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleVar();
                 }
             }
 
@@ -127,16 +136,25 @@ internal class PvEWindow : ConfigWindow
                     }
 
                     ImGui.SameLine(indentwidth);
+
                     if (icon != null)
                     {
                         ImGui.Image(icon.Handle, new Vector2(icon.Size.X.Scale(), icon.Size.Y.Scale()) / 2f);
                         ImGui.SameLine(indentwidth2);
-                        ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
-                        ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
-                        _ = ImGui.Button($"{header}", new Vector2(0, icon.Size.Y.Scale()) / 2f);
-                        ImGui.PopStyleColor();
-                        ImGui.PopStyleVar();
                     }
+                    else
+                    {
+                        ImGui.Dummy(new Vector2(20f.Scale(), selectableSize.Y));
+                        ImGui.SameLine(indentwidth2);
+                    }
+
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0, 0, 0, 0));
+                    ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, new Vector2(0, 0.5f));
+
+                    _ = ImGui.Button(header, selectableSize);
+
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleVar();
                 }
             }
 

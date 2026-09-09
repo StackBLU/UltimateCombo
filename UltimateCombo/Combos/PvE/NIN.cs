@@ -120,7 +120,7 @@ internal class NIN
     {
         protected internal override Presets Preset { get; } = Presets.NIN_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush)
                 && IsEnabled(Presets.NIN_ST_DPS))
@@ -341,27 +341,24 @@ internal class NIN
                     return ThrowingDagger;
                 }
 
-                if (ComboTime > 0)
+                if (ComboAction is GustSlash)
                 {
-                    if (lastComboActionID is GustSlash)
+                    if (ActionReady(AeolianEdge) && (Gauge.Kazematoi >= 4 || !LevelChecked(ArmorCrush)
+                        || (Gauge.Kazematoi >= 1
+                        && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || BossAlmostDead()))))
                     {
-                        if (ActionReady(AeolianEdge) && (Gauge.Kazematoi >= 4 || !LevelChecked(ArmorCrush)
-                            || (Gauge.Kazematoi >= 1
-                            && (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || TargetHasEffectAny(MugList[OriginalHook(Mug)]) || BossAlmostDead()))))
-                        {
-                            return AeolianEdge;
-                        }
-
-                        if (ActionReady(ArmorCrush))
-                        {
-                            return ArmorCrush;
-                        }
+                        return AeolianEdge;
                     }
 
-                    if (lastComboActionID is SpinningEdge && ActionReady(GustSlash))
+                    if (ActionReady(ArmorCrush))
                     {
-                        return GustSlash;
+                        return ArmorCrush;
                     }
+                }
+
+                if (ComboAction is SpinningEdge && ActionReady(GustSlash))
+                {
+                    return GustSlash;
                 }
 
                 return SpinningEdge;
@@ -375,7 +372,7 @@ internal class NIN
     {
         protected internal override Presets Preset { get; } = Presets.NIN_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(Presets.NIN_AoE_DPS))
             {
@@ -556,7 +553,7 @@ internal class NIN
                     return PhantomKamaitachi;
                 }
 
-                if (lastComboActionID is DeathBlossom && ComboTime > 0 && ActionReady(HakkeMujinsatsu))
+                if (ComboAction is DeathBlossom && ComboTime > 0 && ActionReady(HakkeMujinsatsu))
                 {
                     return HakkeMujinsatsu;
                 }
@@ -572,7 +569,7 @@ internal class NIN
     {
         protected internal override Presets Preset { get; } = Presets.NIN_Raijus;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is FleetingRaiju or ForkedRaiju) && IsEnabled(Presets.NIN_Raijus))
             {
@@ -595,7 +592,7 @@ internal class NIN
     {
         protected internal override Presets Preset { get; } = Presets.NIN_Doton;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is Chi && IsEnabled(Presets.NIN_Doton))
             {
@@ -636,7 +633,7 @@ internal class NIN
     {
         protected internal override Presets Preset { get; } = Presets.NIN_MudraProtection;
 
-        protected override uint Invoke(uint actionID, uint lastComboActionID)
+        protected override uint Invoke(uint actionID)
         {
             if (actionID is not SpinningEdge && actionID is not GustSlash && actionID is not AeolianEdge && actionID is not ArmorCrush
                 && actionID is not DeathBlossom && actionID is not HakkeMujinsatsu && actionID is not Ten && actionID is not Chi && actionID is not Jin

@@ -85,7 +85,7 @@ internal static class WHM
     {
         protected internal override Presets Preset { get; } = Presets.WHM_ST_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Stone1 or Stone2 or Stone3 or Stone4 or Glare1 or Glare3) && IsEnabled(Presets.WHM_ST_DPS))
             {
@@ -142,7 +142,7 @@ internal static class WHM
     {
         protected internal override Presets Preset { get; } = Presets.WHM_AoE_DPS;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Holy or Holy3) && IsEnabled(Presets.WHM_AoE_DPS))
             {
@@ -186,7 +186,7 @@ internal static class WHM
     {
         protected internal override Presets Preset { get; } = Presets.WHM_ST_Heals;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Cure1 or Cure2) && IsEnabled(Presets.WHM_ST_Heals))
             {
@@ -232,7 +232,7 @@ internal static class WHM
     {
         protected internal override Presets Preset { get; } = Presets.WHM_AoE_Heals;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Medica1 or Medica2 or Medica3) && IsEnabled(Presets.WHM_AoE_Heals))
             {

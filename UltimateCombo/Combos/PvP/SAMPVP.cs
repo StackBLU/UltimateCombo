@@ -56,7 +56,7 @@ internal static class SAMPvP
     {
         protected internal override Presets Preset { get; } = Presets.SAMPvP_Combo;
 
-        protected override uint Invoke(uint actionID, uint lastComboMove)
+        protected override uint Invoke(uint actionID)
         {
             if ((actionID is Yukikaze or Gekko or Kasha or Hyosetsu or Mangetsu or Oka)
                 && IsEnabled(Presets.SAMPvP_Combo))
