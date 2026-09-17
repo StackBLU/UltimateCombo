@@ -73,7 +73,7 @@ internal class DebugWindow : ConfigWindow
                 //ImGui.TextUnformatted($"Distance from Target Hitbox to Hitbox: {CustomComboFunctions.GetTargetDistanceHitboxToHitbox()}");
                 //ImGui.TextUnformatted($"Target Hitbox Radius: {CustomComboFunctions.PlayerTargetObject?.HitboxRadius}");
                 //ImGui.TextUnformatted($"Player Hitbox Radius: {CustomComboFunctions.LocalPlayer?.HitboxRadius}");
-                //ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
+                ImGui.TextUnformatted($"Enemy Rank: {CustomComboFunctions.EnemyRank()}");
                 ImGui.TextUnformatted($"Target is Boss: {CustomComboFunctions.TargetIsBoss()}");
                 ImGui.TextUnformatted($"Target is DoT-worthy: {CustomComboFunctions.TargetWorthDoT()}");
                 ImGui.TextUnformatted($"Target Debuff Count: {CustomComboFunctions.DebuffCullCheck()}");
@@ -99,14 +99,11 @@ internal class DebugWindow : ConfigWindow
                 {
                     ImGui.TextUnformatted("\n");
                     ImGui.TextUnformatted($"Player TP: {BST.Gauge.PlayerTP}");
-                    ImGui.TextUnformatted($"Beast TP: {BST.Gauge.BeastTP}");
+                    ImGui.TextUnformatted($"Beast TP: {BST.Gauge.PetTP}");
                     ImGui.TextUnformatted($"Battle Horn: {BST.Gauge.BattleHorn}");
-                    ImGui.TextUnformatted($"Affinity Status: {BST.Gauge.AffinityStatus}");
                     ImGui.TextUnformatted($"Active Affinity: {BST.Gauge.ActiveAffinity}");
-                    ImGui.TextUnformatted($"Kinship Type: {BST.Gauge.KinshipKinType}");
-                    ImGui.TextUnformatted($"Kinship Battle Horn: {BST.Gauge.KinshipBattlehorn}");
                     ImGui.TextUnformatted($"Pet Instinct: {BST.Gauge.PetInstinct}");
-                    ImGui.TextUnformatted($"Master Instinct: {BST.Gauge.MasterInstinct}");
+                    ImGui.TextUnformatted($"Master Instinct: {BST.Gauge.PlayerInstinct}");
                 }
 
                 if (localPlayer.ClassJob.RowId == BLU.JobID)

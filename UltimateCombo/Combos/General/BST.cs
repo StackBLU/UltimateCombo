@@ -55,7 +55,7 @@ internal class BST
     internal struct TmpBSTGauge
     {
         [FieldOffset(0x08)] internal byte PlayerTP;
-        [FieldOffset(0x09)] internal byte BeastTP;
+        [FieldOffset(0x09)] internal byte PetTP;
         [FieldOffset(0x0B)] internal byte BattleHorn;
 
         [FieldOffset(0x0C)] internal InstinctualAffinity AffinityStatus;
@@ -70,7 +70,7 @@ internal class BST
 
         internal int PetInstinct => Instinct & 0x3;
 
-        internal int MasterInstinct => (Instinct & 0xC) >> 2;
+        internal int PlayerInstinct => (Instinct & 0xC) >> 2;
     }
 
     internal static unsafe TmpBSTGauge* GaugePtr => (TmpBSTGauge*) ((nint) JobGaugeManager.StaticAddressPointers.pInstance + 0x08);
@@ -115,7 +115,7 @@ internal class BST
             Eldritch = 4598,
             Sunstrider = 4599,
             Moonstalker = 4600,
-            Nature = 4601,
+            OneWithNature = 4601,
 
             Beast = 4644,
             Vile = 4645,
@@ -316,7 +316,7 @@ internal class BST
 
     //internal static BSTGauge Gauge => CustomComboFunctions.GetJobGauge<BSTGauge>();
 
-    internal class BST_DPS : CustomComboBase
+    internal class BST_Basic : CustomComboBase
     {
         protected internal override Presets Preset { get; } = Presets.BST_DPS;
 
@@ -324,56 +324,74 @@ internal class BST
         {
             if ((actionID is SmashAxe or AxebladeBite or Shieldsplitter) && IsEnabled(Presets.BST_DPS))
             {
-                /*
-                if (HasEffect(Buffs.Rampant) && Gauge.PlayerTP >= 100)
+                if (CanWeave(actionID, SmashAxe))
                 {
-                    return OriginalHook(MistralAxe);
-                }
-
-                if (HasEffect(Buffs.Durant) && Gauge.PlayerTP >= 100)
-                {
-                    return OriginalHook(SpinningAxe);
-                }
-
-                if (HasEffect(Buffs.Eldritch) && Gauge.PlayerTP >= 100)
-                {
-                    return OriginalHook(GaleAxe);
-                }
-
-                if (HasEffect(Buffs.Volant) && Gauge.PlayerTP >= 100)
-                {
-                    return OriginalHook(AvalancheAxe);
-                }
-
-                if (Gauge.MasterInstinct < 3 && Gauge.MasterInstinct >= Gauge.PetInstinct && ((Gauge.PlayerTP >= 100 && Gauge.BeastTP >= 100)
-                    || HasEffect(Buffs.Rampant) || HasEffect(Buffs.Durant) || HasEffect(Buffs.Eldritch) || HasEffect(Buffs.Volant)))
-                {
-                    if (TrickType is TrickTypes.Rampant)
+                    if (IsEnabled(Presets.BST_Rally) && ActionReady(Rally) && Gauge.PlayerInstinct == 3 && Gauge.PlayerTP < 100)
                     {
-                        return OriginalHook(GaleAxe);
+                        return Rally;
                     }
 
-                    if (TrickType is TrickTypes.Durant)
+                    if (IsEnabled(Presets.BST_Cheer) && ActionReady(RallyingCheer) && Gauge.PetInstinct == 3 && Gauge.PetTP < 100)
                     {
-                        return OriginalHook(AvalancheAxe);
+                        return RallyingCheer;
                     }
 
-                    if (TrickType is TrickTypes.Eldritch)
+                    if (IsEnabled(Presets.BST_Combo) && Gauge.BattleHorn != 0 && !WasLastAction(PartingBlow))
                     {
-                        return OriginalHook(MistralAxe);
-                    }
+                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Rampant))
+                        {
+                            return OriginalHook(MistralAxe);
+                        }
 
-                    if (TrickType is TrickTypes.Volant)
-                    {
-                        return OriginalHook(SpinningAxe);
+                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Durant))
+                        {
+                            return OriginalHook(SpinningAxe);
+                        }
+
+                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Eldritch))
+                        {
+                            return OriginalHook(GaleAxe);
+                        }
+
+                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Volant))
+                        {
+                            return OriginalHook(AvalancheAxe);
+                        }
+
+                        if (Gauge.PetTP >= 100 && (HasEffect(Buffs.Rampant) || HasEffect(Buffs.Durant) || HasEffect(Buffs.Eldritch) || HasEffect(Buffs.Volant)))
+                        {
+                            return OriginalHook(Trick);
+                        }
+
+                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PlayerInstinct >= Gauge.PetInstinct)
+                        {
+                            if (TrickType is TrickTypes.Rampant)
+                            {
+                                return OriginalHook(GaleAxe);
+                            }
+
+                            if (TrickType is TrickTypes.Durant)
+                            {
+                                return OriginalHook(AvalancheAxe);
+                            }
+
+                            if (TrickType is TrickTypes.Eldritch)
+                            {
+                                return OriginalHook(MistralAxe);
+                            }
+
+                            if (TrickType is TrickTypes.Volant)
+                            {
+                                return OriginalHook(SpinningAxe);
+                            }
+                        }
+
+                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PetInstinct >= Gauge.PlayerInstinct)
+                        {
+                            return OriginalHook(Trick);
+                        }
                     }
                 }
-
-                if (Gauge.PetInstinct < 3 && Gauge.PetInstinct >= Gauge.MasterInstinct && ((Gauge.PlayerTP >= 100 && Gauge.BeastTP >= 100)
-                    || HasEffect(Buffs.Rampant) || HasEffect(Buffs.Durant) || HasEffect(Buffs.Eldritch) || HasEffect(Buffs.Volant)))
-                {
-                    return OriginalHook(Trick);
-                }*/
 
                 if (ComboAction is SmashAxe && ActionReady(AxebladeBite))
                 {
@@ -386,6 +404,78 @@ internal class BST
                 }
 
                 return SmashAxe;
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class BST_Borrow : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.BST_Borrow;
+
+        protected override uint Invoke(uint actionID)
+        {
+            if ((actionID is Borrow) && IsEnabled(Presets.BST_Borrow))
+            {
+                if (HasEffect(Buffs.OneWithNature))
+                {
+                    return OriginalHook(Borrow);
+                }
+
+                return OriginalHook(BeastMode);
+            }
+
+            return actionID;
+        }
+    }
+
+    internal class BST_Horn : CustomComboBase
+    {
+        protected internal override Presets Preset { get; } = Presets.BST_Horn;
+
+        protected override uint Invoke(uint actionID)
+        {
+            if (IsEnabled(Presets.BST_Horn))
+            {
+                if (actionID is FirstBattlehorn)
+                {
+                    if (HasEffect(Buffs.OneWithNature))
+                    {
+                        return OriginalHook(TemperedRelease);
+                    }
+
+                    if (Gauge.BattleHorn == 1)
+                    {
+                        return PartingBlow;
+                    }
+                }
+
+                if (actionID is SecondBattlehorn)
+                {
+                    if (HasEffect(Buffs.OneWithNature))
+                    {
+                        return OriginalHook(TemperedRelease);
+                    }
+
+                    if (Gauge.BattleHorn == 2)
+                    {
+                        return PartingBlow;
+                    }
+                }
+
+                if (actionID is ThirdBattlehorn)
+                {
+                    if (HasEffect(Buffs.OneWithNature))
+                    {
+                        return OriginalHook(TemperedRelease);
+                    }
+
+                    if (Gauge.BattleHorn == 3)
+                    {
+                        return PartingBlow;
+                    }
+                }
             }
 
             return actionID;

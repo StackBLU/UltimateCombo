@@ -129,6 +129,11 @@ internal abstract partial class CustomComboFunctions
         var weaveTime = 0.6;
         var skillToUse = lastGCD;
 
+        if (lastGCD is BST.SmashAxe or BST.AxebladeBite or BST.Shieldsplitter)
+        {
+            skillToUse = actionID;
+        }
+
         if (GetCooldown(lastGCD).CooldownTotal >= 6.5)
         {
             skillToUse = actionID;

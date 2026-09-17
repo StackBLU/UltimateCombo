@@ -167,7 +167,7 @@ internal static class SGE
                     return OriginalHook(Phlegma);
                 }
 
-                if (IsEnabled(Presets.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(Toxikon)
+                if (IsEnabled(Presets.SGE_ST_DPS_Toxikon) && IsMoving && ActionReady(OriginalHook(Toxikon))
                      && !HasEffect(Buffs.Eukrasia) && Gauge.Addersting > 0 && !HasEffect(Common.Buffs.Swiftcast))
                 {
                     return OriginalHook(Toxikon);

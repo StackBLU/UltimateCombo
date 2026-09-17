@@ -2418,6 +2418,26 @@ public enum Presets
     [CustomComboInfo("Single Target DPS", "", BST.JobID)]
     BST_DPS = 62000,
 
+    [ParentCombo(BST_DPS)]
+    [CustomComboInfo("Master Axes and Beast Trick Combos", "", BST.JobID)]
+    BST_Combo = 62001,
+
+    [ParentCombo(BST_DPS)]
+    [CustomComboInfo("Rally", "", BST.JobID)]
+    BST_Rally = 62002,
+
+    [ParentCombo(BST_DPS)]
+    [CustomComboInfo("Rallying Cheer", "", BST.JobID)]
+    BST_Cheer = 62003,
+
+    [ReplaceSkill(BST.Borrow)]
+    [CustomComboInfo("Borrow & Beast Mode", "", BST.JobID)]
+    BST_Borrow = 62004,
+
+    [ReplaceSkill(BST.FirstBattlehorn, BST.SecondBattlehorn, BST.ThirdBattlehorn)]
+    [CustomComboInfo("Horn Tempered Release & Parting Blow", "", BST.JobID)]
+    BST_Horn = 62005,
+
     #endregion
 
     #endregion
