@@ -1,4 +1,6 @@
 using FFXIVClientStructs.FFXIV.Client.Game;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.General;
@@ -11,11 +13,23 @@ namespace UltimateCombo.ComboHelper.Functions;
 
 internal abstract partial class CustomComboFunctions
 {
-    private const float BaseActionQueue = 0.5f;
+    internal static unsafe float ComboTime
+    {
+        get
+        {
+            ActionManager* actionManager = ActionManager.Instance();
+            return actionManager == null ? 0 : actionManager->Combo.Timer;
+        }
+    }
 
-    public static unsafe float ComboTime => ActionManager.Instance()->Combo.Timer;
-
-    public static unsafe uint ComboAction => ActionManager.Instance()->Combo.Action;
+    internal static unsafe uint ComboAction
+    {
+        get
+        {
+            ActionManager* actionManager = ActionManager.Instance();
+            return actionManager == null ? 0 : actionManager->Combo.Action;
+        }
+    }
 
     internal static uint OriginalHook(uint actionID)
     {
@@ -27,9 +41,9 @@ internal abstract partial class CustomComboFunctions
         return PresetStorage.IsEnabled(preset);
     }
 
-    internal static bool LevelChecked(uint actionid)
+    internal static bool LevelChecked(uint actionID)
     {
-        return Level >= ActionWatching.GetLevel(actionid) && IsActionUnlocked(actionid);
+        return Level >= ActionWatching.GetLevel(actionID) && IsActionUnlocked(actionID);
     }
 
     internal static bool InActionRange(uint id)
@@ -42,7 +56,7 @@ internal abstract partial class CustomComboFunctions
             return true;
         }
 
-        if (!HasTarget())
+        if (CurrentTarget == null)
         {
             return false;
         }
@@ -57,7 +71,7 @@ internal abstract partial class CustomComboFunctions
             return true;
         }
 
-        if (range == 0 && GetTargetDistanceCenterToCenter() <= radius + PlayerTargetObject?.HitboxRadius)
+        if (range == 0 && GetTargetDistanceCenterToCenter() <= radius + CurrentTarget.HitboxRadius)
         {
             return true;
         }
@@ -67,26 +81,45 @@ internal abstract partial class CustomComboFunctions
 
     internal static unsafe bool ActionReady(uint actionID)
     {
-        if (actionID == 0 || !LevelChecked(actionID))
+        var recording = PerformanceProfiler.IsRecording;
+        var startedAt = recording ? Stopwatch.GetTimestamp() : 0;
+
+        try
         {
-            return false;
+            if (actionID == 0 || !LevelChecked(actionID))
+            {
+                return false;
+            }
+
+            ActionWatching.ActionAttackType attackType = ActionWatching.GetAttackType(actionID);
+
+            if (attackType == ActionWatching.ActionAttackType.Ability && !HasCharges(actionID))
+            {
+                return false;
+            }
+
+            if (attackType != ActionWatching.ActionAttackType.Ability && !HasCharges(actionID) && GetCooldownRemainingTime(actionID) > RemainingGCD + 0.05f)
+            {
+                return false;
+            }
+
+            ActionManager* actionManager = ActionManager.Instance();
+            if (actionManager == null)
+            {
+                return false;
+            }
+
+            var status = actionManager->GetActionStatus(ActionType.Action, actionID, checkRecastActive: false, checkCastingActive: false);
+
+            return status is 0 or 580 or 582;
         }
-
-        ActionWatching.ActionAttackType attackType = ActionWatching.GetAttackType(actionID);
-
-        if (attackType == ActionWatching.ActionAttackType.Ability && !HasCharges(actionID))
+        finally
         {
-            return false;
+            if (recording)
+            {
+                PerformanceProfiler.RecordActionReady(Stopwatch.GetTimestamp() - startedAt);
+            }
         }
-
-        if (attackType != ActionWatching.ActionAttackType.Ability && !HasCharges(actionID) && GetCooldownRemainingTime(actionID) > RemainingGCD + BaseActionQueue)
-        {
-            return false;
-        }
-
-        var status = ActionManager.Instance()->GetActionStatus(ActionType.Action, actionID, checkRecastActive: false, checkCastingActive: false);
-
-        return status is 0 or 580 or 582;
     }
 
     internal static bool DutyActionReady(uint id)
@@ -121,116 +154,120 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool BLUActionReady(uint id)
     {
-        return IsSpellActive(id) && IsOffCooldown(id);
+        return IsSpellActive(id) && ActionReady(id);
     }
 
     internal static bool CanWeave(uint actionID, uint lastGCD)
     {
-        var weaveTime = 0.6;
-        var skillToUse = lastGCD;
-
-        if (lastGCD is BST.SmashAxe or BST.AxebladeBite or BST.Shieldsplitter)
-        {
-            skillToUse = actionID;
-        }
-
-        if (GetCooldown(lastGCD).CooldownTotal >= 6.5)
-        {
-            skillToUse = actionID;
-        }
+        const float weaveTime = 0.6f;
+        var skillToUse = GetWeaveCooldownAction(actionID, lastGCD);
 
         if (HasSilence() || HasPacification())
         {
             return true;
         }
 
-        if (Service.Configuration.DisableTripleWeaving)
-        {
-            return GetCooldown(skillToUse).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved();
-        }
-
-        return GetCooldown(skillToUse).CooldownRemaining >= weaveTime;
+        var canWeave = GetCooldown(skillToUse).CooldownRemaining >= weaveTime;
+        return canWeave && (!Service.Configuration.DisableTripleWeaving || !ActionWatching.HasDoubleWeaved());
     }
 
     internal static bool CanLateWeave(uint actionID, uint lastGCD)
     {
-        var weaveTime = 0.6;
-        var weaveStart = 0.8;
-        var skillToUse = lastGCD;
-
-        if (GetCooldown(lastGCD).CooldownTotal >= 6.5)
-        {
-            skillToUse = actionID;
-        }
+        const float weaveTime = 0.6f;
+        const float weaveStart = 0.8f;
+        var skillToUse = GetWeaveCooldownAction(actionID, lastGCD);
 
         if (HasSilence() || HasPacification())
         {
             return true;
         }
 
-        if (Service.Configuration.DisableTripleWeaving)
-        {
-            return GetCooldown(skillToUse).CooldownRemaining >= weaveTime && !ActionWatching.HasDoubleWeaved();
-        }
-
-        return GetCooldown(skillToUse).CooldownRemaining <= weaveStart && GetCooldown(skillToUse).CooldownRemaining >= weaveTime;
+        var cooldownRemaining = GetCooldown(skillToUse).CooldownRemaining;
+        var canLateWeave = cooldownRemaining is >= weaveTime and <= weaveStart;
+        return canLateWeave && (!Service.Configuration.DisableTripleWeaving || !ActionWatching.HasDoubleWeaved());
     }
 
     internal static unsafe bool UseAction(ActionType actionType, uint actionID)
     {
-        return ActionManager.Instance()->UseAction(actionType, actionID);
+        ActionManager* actionManager = ActionManager.Instance();
+        return actionManager != null && actionManager->UseAction(actionType, actionID);
     }
 
     internal static unsafe bool ActionQueued()
     {
-        return ActionManager.Instance()->ActionQueued;
+        ActionManager* actionManager = ActionManager.Instance();
+        return actionManager != null && actionManager->ActionQueued;
     }
 
     internal static unsafe void AssignBlueMageActionToSlot(int slot, uint actionID)
     {
-        ActionManager.Instance()->AssignBlueMageActionToSlot(slot, actionID);
+        ActionManager* actionManager = ActionManager.Instance();
+        if (actionManager != null)
+        {
+            actionManager->AssignBlueMageActionToSlot(slot, actionID);
+        }
     }
 
     internal static unsafe uint GetActiveBlueMageActionInSlot(int slot)
     {
-        return ActionManager.Instance()->GetActiveBlueMageActionInSlot(slot);
+        ActionManager* actionManager = ActionManager.Instance();
+        return actionManager == null ? 0 : actionManager->GetActiveBlueMageActionInSlot(slot);
     }
 
     internal static unsafe void PopulateBLUSpells()
     {
-        var prevList = Service.Configuration.ActiveBLUSpells.ToList();
-        Service.Configuration.ActiveBLUSpells.Clear();
-
-        for (var i = 0; i <= 24; i++)
+        ActionManager* actionManager = ActionManager.Instance();
+        if (actionManager == null)
         {
-            var id = ActionManager.Instance()->GetActiveBlueMageActionInSlot(i);
+            return;
+        }
+
+        var previousSpells = Service.Configuration.ActiveBLUSpells.ToHashSet();
+        List<uint> activeSpells = [];
+
+        for (var i = 0; i < 24; i++)
+        {
+            var id = actionManager->GetActiveBlueMageActionInSlot(i);
             if (id != 0)
             {
-                Service.Configuration.ActiveBLUSpells.Add(id);
+                activeSpells.Add(id);
             }
         }
 
-        if (Service.Configuration.ActiveBLUSpells.Except(prevList).Any())
+        if (!previousSpells.SetEquals(activeSpells))
         {
+            Service.Configuration.ActiveBLUSpells = activeSpells;
             Service.Configuration.Save();
         }
     }
 
+    private static uint GetWeaveCooldownAction(uint actionID, uint lastGCD)
+    {
+        if (lastGCD is BST.SmashAxe or BST.AxebladeBite or BST.Shieldsplitter)
+        {
+            return actionID;
+        }
+
+        return GetCooldown(lastGCD).CooldownTotal >= 6.5f ? actionID : lastGCD;
+    }
+
     internal static bool SafeToUse()
     {
-        var rdmSafe = !WasLastGCD(RDM.Verflare) && !WasLastGCD(RDM.Verholy) && !WasLastGCD(RDM.Scorch)
+        var jobID = CurrentJobId;
+
+        var rdmSafe = jobID != RDM.JobID || (!WasLastGCD(RDM.Verflare) && !WasLastGCD(RDM.Verholy) && !WasLastGCD(RDM.Scorch)
                    && !WasLastGCD(RDM.EnchantedRiposte) && !WasLastGCD(RDM.EnchantedZwerchhau) && !WasLastGCD(RDM.EnchantedRedoublement)
-                   && !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois);
+                   && !WasLastGCD(RDM.EnchantedMoulinet) && !WasLastGCD(RDM.EnchantedMoulinetDeux) && !WasLastGCD(RDM.EnchantedMoulinetTrois));
 
-        var ninSafe = !HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin);
+        var ninSafe = jobID != NIN.JobID || (!HasEffect(NIN.Buffs.Mudra) && !HasEffect(NIN.Buffs.TenChiJin));
 
-        var vprSafe = !HasEffect(VPR.Buffs.Reawakened);
+        var vprSafe = jobID != VPR.JobID || !HasEffect(VPR.Buffs.Reawakened);
 
-        var sgeSafe = !WasLastGCD(SGE.Eukrasia) && !WasLastGCD(SGE.EukrasianDosis1)
+        var sgeSafe = jobID != SGE.JobID || (!WasLastGCD(SGE.Eukrasia) && !WasLastGCD(SGE.EukrasianDosis1)
                    && !WasLastGCD(SGE.EukrasianDosis2) && !WasLastGCD(SGE.EukrasianDosis3)
-                   && !WasLastGCD(SGE.EukrasianDyskrasia);
+                   && !WasLastGCD(SGE.EukrasianDyskrasia));
 
-        var dncSafe = !HasEffect(DNC.Buffs.StandardStep) && !HasEffect(DNC.Buffs.TechnicalStep);
+        var dncSafe = jobID != DNC.JobID || (!HasEffect(DNC.Buffs.StandardStep) && !HasEffect(DNC.Buffs.TechnicalStep));
 
         return rdmSafe && ninSafe && vprSafe && sgeSafe && dncSafe;
     }

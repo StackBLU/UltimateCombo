@@ -13,12 +13,7 @@ internal static class GNB
 
     internal static int MaxCartridges(byte level)
     {
-        if (level >= 88)
-        {
-            return 3;
-        }
-
-        return 2;
+        return level >= 88 ? 3 : 2;
     }
 
     internal const uint
@@ -130,7 +125,7 @@ internal static class GNB
 
                         if (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         {
-                            if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock) && InActionRange(BowShock))
+                            if (IsEnabled(Presets.GNB_ST_BowShock) && ActionReady(BowShock) && InActionRange(BowShock) && HasEffect(Buffs.NoMercy))
                             {
                                 return BowShock;
                             }
@@ -170,12 +165,12 @@ internal static class GNB
                 }
 
                 if (IsEnabled(Presets.GNB_ST_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && HasEffect(Buffs.NoMercy)
-                    && InActionRange(DoubleDown))
+                    && InActionRange(DoubleDown) && !WasLastGCD(ReignOfBeasts) && !WasLastGCD(NobleBlood))
                 {
                     return DoubleDown;
                 }
 
-                if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak))
+                if (IsEnabled(Presets.GNB_ST_NoMercy) && ActionReady(SonicBreak) && HasEffect(Buffs.ReadyToBreak) && !WasLastGCD(ReignOfBeasts) && !WasLastGCD(NobleBlood))
                 {
                     return SonicBreak;
                 }
@@ -265,7 +260,7 @@ internal static class GNB
                         return OriginalHook(BlastingZone);
                     }
 
-                    if (IsEnabled(Presets.GNB_AoE_BowShock) && ActionReady(BowShock) && InActionRange(BowShock))
+                    if (IsEnabled(Presets.GNB_AoE_BowShock) && ActionReady(BowShock) && InActionRange(BowShock) && HasEffect(Buffs.NoMercy))
                     {
                         return BowShock;
                     }
@@ -286,12 +281,13 @@ internal static class GNB
                     }
                 }
 
-                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && InActionRange(DoubleDown))
+                if (IsEnabled(Presets.GNB_AoE_DoubleDown) && ActionReady(DoubleDown) && Gauge.Ammo >= 2 && InActionRange(DoubleDown)
+                    && !WasLastGCD(ReignOfBeasts) && !WasLastGCD(NobleBlood))
                 {
                     return DoubleDown;
                 }
 
-                if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(ReignOfBeasts)
+                if (IsEnabled(Presets.GNB_AoE_Bloodfest) && ActionReady(OriginalHook(ReignOfBeasts))
                     && (HasEffect(Buffs.ReadyToReign) || WasLastGCD(ReignOfBeasts) || WasLastGCD(NobleBlood)))
                 {
                     return OriginalHook(ReignOfBeasts);

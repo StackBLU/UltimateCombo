@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UltimateCombo.Core;
 
 namespace UltimateCombo.Attributes;
@@ -7,25 +8,26 @@ namespace UltimateCombo.Attributes;
 [AttributeUsage(AttributeTargets.Field)]
 internal sealed class BlueInactiveAttribute : Attribute
 {
+    private readonly uint[] _actionIDs;
+
     internal BlueInactiveAttribute(params uint[] actionIDs)
     {
-        if (Service.Configuration is null)
-        {
-            return;
-        }
+        _actionIDs = actionIDs;
+    }
 
-        NoneSet = true;
-        foreach (var id in actionIDs)
+    internal List<uint> Actions
+    {
+        get
         {
-            if (Service.Configuration.ActiveBLUSpells.Contains(id))
+            if (Service.Configuration == null)
             {
-                NoneSet = false;
-                continue;
+                return [];
             }
-            Actions.Add(id);
+
+            return [.. _actionIDs.Where(actionID => !Service.Configuration.ActiveBLUSpells.Contains(actionID))];
         }
     }
 
-    internal List<uint> Actions { get; set; } = [];
-    internal bool NoneSet { get; set; } = false;
+    internal bool NoneSet => Service.Configuration != null
+                && !_actionIDs.Any(Service.Configuration.ActiveBLUSpells.Contains);
 }

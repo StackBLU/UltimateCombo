@@ -19,81 +19,32 @@ namespace UltimateCombo.Window;
 
 internal class ConfigWindow : Dalamud.Interface.Windowing.Window
 {
+    private static readonly uint[] JobOrder =
+    [
+        PLD.JobID, WAR.JobID, DRK.JobID, GNB.JobID,
+        WHM.JobID, SCH.JobID, AST.JobID, SGE.JobID,
+        MNK.JobID, DRG.JobID, NIN.JobID, SAM.JobID, RPR.JobID, VPR.JobID,
+        BST.JobID,
+        BRD.JobID, MCH.JobID, DNC.JobID,
+        BLM.JobID, SMN.JobID, RDM.JobID, PCT.JobID,
+        BLU.JobID, FSH.JobID
+    ];
+
     internal static readonly Dictionary<string, List<(Presets Preset, CustomComboInfoAttribute Info)>> GroupedPresets = GetGroupedPresets();
+    internal static readonly Dictionary<byte, List<(Presets Preset, CustomComboInfoAttribute Info)>> PresetsByJobID = GroupedPresets.Values
+        .Where(presets => presets.Count > 0)
+        .GroupBy(presets => presets[0].Info.JobID)
+        .ToDictionary(
+            group => group.Key,
+            group => group.First());
+
     internal static readonly Dictionary<Presets, (Presets Preset, CustomComboInfoAttribute Info)[]> PresetChildren = GetPresetChildren();
-
-    internal static Dictionary<string, List<(Presets Preset, CustomComboInfoAttribute Info)>> GetGroupedPresets()
-    {
-        return Enum
-            .GetValues<Presets>()
-            .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-            .Where(tpl => tpl.Info != null && PresetStorage.GetParent(tpl.Preset) == null)
-            .OrderByDescending(tpl => tpl.Info!.JobID == PLD.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == WAR.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == DRK.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == GNB.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == WHM.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == SCH.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == AST.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == SGE.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == MNK.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == DRG.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == NIN.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == SAM.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == RPR.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == VPR.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == BST.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == BRD.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == MCH.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == DNC.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == BLM.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == SMN.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == RDM.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == PCT.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == BLU.JobID)
-            .ThenByDescending(tpl => tpl.Info!.JobID == FSH.JobID)
-            .ThenByDescending(tpl => tpl.Info!.Role == 1)
-            .ThenByDescending(tpl => tpl.Info!.Role == 4)
-            .ThenByDescending(tpl => tpl.Info!.Role == 2)
-            .ThenByDescending(tpl => tpl.Info!.Role == 3)
-            .ThenBy(tpl => tpl.Info!.ClassJobCategory)
-            .ThenBy(tpl => tpl.Info!.JobName)
-            .ThenBy(tpl => tpl.Info!.Order)
-            .GroupBy(tpl => tpl.Info!.JobName)
-            .ToDictionary(
-                tpl => tpl.Key,
-                tpl => tpl.ToList())!;
-    }
-
-    internal static Dictionary<Presets, (Presets Preset, CustomComboInfoAttribute Info)[]> GetPresetChildren()
-    {
-        Dictionary<Presets, List<Presets>> childCombos = Enum.GetValues<Presets>().ToDictionary(
-            tpl => tpl,
-            tpl => new List<Presets>());
-
-        foreach (Presets preset in Enum.GetValues<Presets>())
-        {
-            Presets? parent = preset.GetAttribute<ParentComboAttribute>()?.ParentPreset;
-            if (parent != null)
-            {
-                childCombos[parent.Value].Add(preset);
-            }
-        }
-
-        return childCombos.ToDictionary(
-            kvp => kvp.Key,
-            kvp => kvp.Value
-                .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
-                .Where(tpl => tpl.Info != null)
-                .OrderBy(tpl => tpl.Info!.Order).ToArray())!;
-    }
 
     internal OpenWindow OpenWindow { get; set; } = OpenWindow.PvE;
 
     internal ConfigWindow() : base($"UltimateCombo v{P?.GetType().Assembly.GetName().Version}")
     {
         RespectCloseHotkey = true;
-
         SizeCondition = ImGuiCond.FirstUseEver;
         Size = new Vector2(700, 1000);
         SetMinSize();
@@ -101,90 +52,76 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
         Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged += SetMinSize;
     }
 
-    private void SetMinSize(IFontHandle? fontHandle = null, ILockedImFont? lockedFont = null)
+    internal static Dictionary<string, List<(Presets Preset, CustomComboInfoAttribute Info)>> GetGroupedPresets()
     {
-        SizeConstraints = new()
+        return Enum.GetValues<Presets>()
+            .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
+            .Where(item => item.Info != null && PresetStorage.GetParent(item.Preset) == null)
+            .Select(item => (item.Preset, Info: item.Info!))
+            .OrderBy(item => GetJobOrder(item.Info.JobID))
+            .ThenBy(item => GetRoleOrder(item.Info.Role))
+            .ThenBy(item => item.Info.ClassJobCategory)
+            .ThenBy(item => item.Info.JobName)
+            .GroupBy(item => item.Info.JobName)
+            .ToDictionary(group => group.Key, group => group.ToList());
+    }
+
+    internal static Dictionary<Presets, (Presets Preset, CustomComboInfoAttribute Info)[]> GetPresetChildren()
+    {
+        Presets[] presets = Enum.GetValues<Presets>();
+        Dictionary<Presets, List<Presets>> childCombos = presets.ToDictionary(
+            preset => preset,
+            _ => new List<Presets>());
+
+        foreach (Presets preset in presets)
         {
-            MinimumSize = new Vector2(700f.Scale(), 10f.Scale())
-        };
+            Presets? parent = PresetStorage.GetParent(preset);
+            if (parent != null)
+            {
+                childCombos[parent.Value].Add(preset);
+            }
+        }
+
+        return childCombos.ToDictionary(
+            pair => pair.Key,
+            pair => pair.Value
+                .Select(preset => (Preset: preset, Info: preset.GetAttribute<CustomComboInfoAttribute>()))
+                .Where(item => item.Info != null)
+                .Select(item => (item.Preset, Info: item.Info!))
+                .ToArray());
     }
 
     public override void Draw()
     {
         Vector2 region = ImGui.GetContentRegionAvail();
-        var topLeftSideHeight = region.Y;
+        var leftSideHeight = region.Y;
 
-        using ImRaii.StyleDisposable style = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0));
+        using ImRaii.StyleDisposable tableStyle = ImRaii.PushStyle(ImGuiStyleVar.CellPadding, new Vector2(4, 0));
         using ImRaii.TableDisposable table = ImRaii.Table("###MainTable", 2, ImGuiTableFlags.BordersInnerV);
         if (!table)
         {
             return;
         }
 
-        ImGui.TableSetupColumn("##LeftColumn", ImGuiTableColumnFlags.WidthFixed, ImGui.GetWindowWidth() / 6);
+        ImGui.TableSetupColumn("##LeftColumn", ImGuiTableColumnFlags.WidthFixed, ImGui.GetWindowWidth() / 6f);
         _ = ImGui.TableNextColumn();
-        Vector2 regionSize = ImGui.GetContentRegionAvail();
-        ImGui.PushStyleVar(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f));
+        Vector2 leftRegion = ImGui.GetContentRegionAvail();
 
-        using (ImRaii.ChildDisposable leftChild = ImRaii.Child($"###LeftSide", regionSize with { Y = topLeftSideHeight }, false))
+        using (ImRaii.StyleDisposable selectableStyle = ImRaii.PushStyle(ImGuiStyleVar.SelectableTextAlign, new Vector2(0.5f, 0.5f)))
+        using (ImRaii.ChildDisposable leftChild = ImRaii.Child("###LeftSide", leftRegion with { Y = leftSideHeight }, false))
         {
-            if (ImGui.Selectable("PvE", OpenWindow == OpenWindow.PvE))
-            {
-                OpenWindow = OpenWindow.PvE;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("PvP", OpenWindow == OpenWindow.PvP))
-            {
-                OpenWindow = OpenWindow.PvP;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Eureka", OpenWindow == OpenWindow.Eureka))
-            {
-                OpenWindow = OpenWindow.Eureka;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Bozja", OpenWindow == OpenWindow.Bozja))
-            {
-                OpenWindow = OpenWindow.Bozja;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Occult", OpenWindow == OpenWindow.Occult))
-            {
-                OpenWindow = OpenWindow.Occult;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Variant", OpenWindow == OpenWindow.Variant))
-            {
-                OpenWindow = OpenWindow.Variant;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Settings & Help", OpenWindow == OpenWindow.Settings))
-            {
-                OpenWindow = OpenWindow.Settings;
-            }
-
-            ImGui.Spacing();
-
-            if (ImGui.Selectable("Debug", OpenWindow == OpenWindow.Debug))
-            {
-                OpenWindow = OpenWindow.Debug;
-            }
+            DrawNavigationItem("PvE", OpenWindow.PvE);
+            DrawNavigationItem("PvP", OpenWindow.PvP);
+            DrawNavigationItem("Eureka", OpenWindow.Eureka);
+            DrawNavigationItem("Bozja", OpenWindow.Bozja);
+            DrawNavigationItem("Occult", OpenWindow.Occult);
+            DrawNavigationItem("Variant", OpenWindow.Variant);
+            DrawNavigationItem("Settings & Help", OpenWindow.Settings);
+            DrawNavigationItem("Debug", OpenWindow.Debug);
 
             ImGuiEx.LineCentered(() =>
             {
-                ImGui.SetCursorPosY(ImGui.GetWindowHeight() - 30);
+                ImGui.SetCursorPosY(ImGui.GetWindowHeight() - 30f);
                 if (ImGui.Button("Close"))
                 {
                     Toggle();
@@ -192,9 +129,9 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
             });
         }
 
-        ImGui.PopStyleVar();
         _ = ImGui.TableNextColumn();
-        using ImRaii.ChildDisposable rightChild = ImRaii.Child($"###RightSide", Vector2.Zero, false);
+        using ImRaii.ChildDisposable rightChild = ImRaii.Child("###RightSide", Vector2.Zero, false);
+
         switch (OpenWindow)
         {
             case OpenWindow.PvE:
@@ -222,9 +159,7 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
                 DebugWindow.Draw();
                 break;
             case OpenWindow.None:
-                break;
             case OpenWindow.About:
-                break;
             default:
                 break;
         }
@@ -233,6 +168,42 @@ internal class ConfigWindow : Dalamud.Interface.Windowing.Window
     internal void Dispose()
     {
         Svc.PluginInterface.UiBuilder.DefaultFontHandle.ImFontChanged -= SetMinSize;
+    }
+
+    private static int GetJobOrder(uint jobId)
+    {
+        var index = Array.IndexOf(JobOrder, jobId);
+        return index >= 0 ? index : int.MaxValue;
+    }
+
+    private static int GetRoleOrder(int role)
+    {
+        return role switch
+        {
+            1 => 0,
+            4 => 1,
+            2 => 2,
+            3 => 3,
+            _ => int.MaxValue
+        };
+    }
+
+    private void DrawNavigationItem(string label, OpenWindow window)
+    {
+        if (ImGui.Selectable(label, OpenWindow == window))
+        {
+            OpenWindow = window;
+        }
+
+        ImGui.Spacing();
+    }
+
+    private void SetMinSize(IFontHandle? fontHandle = null, ILockedImFont? lockedFont = null)
+    {
+        SizeConstraints = new()
+        {
+            MinimumSize = new Vector2(700f.Scale(), 10f.Scale())
+        };
     }
 }
 

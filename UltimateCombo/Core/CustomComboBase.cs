@@ -1,6 +1,3 @@
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using ECommons.DalamudServices;
-using FFXIVClientStructs.FFXIV.Client.Game;
 using UltimateCombo.ComboHelper.Functions;
 using UltimateCombo.Combos;
 using UltimateCombo.Combos.General;
@@ -10,38 +7,38 @@ namespace UltimateCombo.Core;
 internal abstract partial class CustomComboBase : CustomComboFunctions
 {
     protected internal abstract Presets Preset { get; }
-    protected byte ClassID { get; }
-    protected byte JobID { get; }
+    private byte _jobID;
 
-    internal unsafe bool TryInvoke(uint actionID, uint ComboAction, out uint newActionID)
+    internal int ProfilerIndex { get; set; }
+
+    internal void InitializeJobID(byte jobID)
+    {
+        _jobID = jobID;
+    }
+
+    internal bool AppliesToJob(uint classJobID)
+    {
+        // Base class IDs differ from their job IDs, so keep their existing behavior.
+        return classJobID < 19 || _jobID == Common.JobID || _jobID == classJobID;
+    }
+
+    internal bool TryInvoke(uint actionID, out uint newActionID)
     {
         newActionID = 0;
-        if (ActionManager.Instance()->QueuedActionType == ActionType.Action
-            && ActionManager.Instance()->QueuedActionId != actionID
-            && !Svc.ClientState.IsPvP)
-        {
-            return false;
-        }
 
         if (!IsEnabled(Preset))
         {
             return false;
         }
 
-        IPlayerCharacter? lp = LocalPlayer;
-        if (lp == null)
-        {
-            return false;
-        }
-
-        var classJobID = lp.ClassJob.Value.RowId;
-        if (JobID != Common.JobID && JobID != classJobID && ClassID != classJobID)
+        var classJobID = IconReplacer.ThreadSafeCache.LocalPlayerClassJobID;
+        if (!AppliesToJob(classJobID))
         {
             return false;
         }
 
         var resultingActionID = Invoke(actionID);
-        if (resultingActionID == 0 || actionID == resultingActionID)
+        if (resultingActionID == 0 || resultingActionID == actionID)
         {
             return false;
         }

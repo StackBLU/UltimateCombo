@@ -17,13 +17,15 @@ internal abstract partial class CustomComboFunctions
         return Service.ComboCache.GetJobGauge<T>();
     }
 
-    internal unsafe ushort GetLimitBreakCurrentValue()
+    internal static unsafe ushort GetLimitBreakCurrentValue()
     {
-        return UIState.Instance()->LimitBreakController.CurrentUnits;
+        UIState* uiState = UIState.Instance();
+        return uiState == null ? (ushort) 0 : uiState->LimitBreakController.CurrentUnits;
     }
 
-    internal unsafe uint GetLimitBreakMaxValue()
+    internal static unsafe uint GetLimitBreakMaxValue()
     {
-        return UIState.Instance()->LimitBreakController.BarUnits;
+        UIState* uiState = UIState.Instance();
+        return uiState == null ? 0u : uiState->LimitBreakController.BarUnits;
     }
 }

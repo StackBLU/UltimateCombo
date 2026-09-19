@@ -109,6 +109,11 @@ internal static class AllPvP
 
         protected override uint Invoke(uint actionID)
         {
+            if (!InPvP())
+            {
+                return actionID;
+            }
+
             if (HasEffect(Buffs.Guard))
             {
                 if (actionID is Guard)
@@ -119,7 +124,7 @@ internal static class AllPvP
                 return OriginalHook(11);
             }
 
-            if (InPvP() && !GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
+            if (!GlobalSkills.Contains(actionID) && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
                 && IsOffCooldown(Purify) && CurrentMP >= GetResourceCost(Purify)
                 && !HasEffect(NINPvP.Buffs.Hidden) && !HasEffect(Buffs.Resilience)
                 && ((HasEffectAny(Debuffs.Stun) && PluginConfiguration.GetCustomBoolValue(Config.Purify_Stun))
@@ -142,6 +147,11 @@ internal static class AllPvP
 
         protected override uint Invoke(uint actionID)
         {
+            if (!InPvP())
+            {
+                return actionID;
+            }
+
             if (HasEffect(Buffs.Guard))
             {
                 if (actionID is Guard)
@@ -152,7 +162,7 @@ internal static class AllPvP
                 return OriginalHook(11);
             }
 
-            if (InPvP() && !GlobalSkills.Contains(actionID)
+            if (!GlobalSkills.Contains(actionID)
                 && IsOffCooldown(Guard) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Guard)
                 && !HasEffect(DRKPvP.Buffs.UndeadRedemption) && !HasEffectAny(Debuffs.Unguarded) && !HasEffect(WARPvP.Buffs.InnerRelease)
                 && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted) && !HasEffect(NINPvP.Buffs.Hidden)
@@ -176,6 +186,11 @@ internal static class AllPvP
 
         protected override uint Invoke(uint actionID)
         {
+            if (!InPvP())
+            {
+                return actionID;
+            }
+
             if (HasEffect(Buffs.Guard))
             {
                 if (actionID is Guard)
@@ -186,7 +201,7 @@ internal static class AllPvP
                 return OriginalHook(11);
             }
 
-            if (InPvP() && !GlobalSkills.Contains(actionID)
+            if (!GlobalSkills.Contains(actionID)
                 && CurrentMP >= GetResourceCost(Recuperate) && PlayerHealthPercentageHpPvP() <= GetOptionValue(Config.Recuperate)
                 && !HasEffect(Buffs.DRGLBInAir) && !HasEffect(Buffs.RivalWingsMounted)
                 && !HasEffect(NINPvP.Buffs.Hidden) && actionID != VPRPvP.SnakeScales)

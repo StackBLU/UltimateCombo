@@ -103,7 +103,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_Cure) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_Cure) && VariantCure != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (ActionReady(VariantCure) && IsActionEnabled(VariantCure) && PlayerHealthPercentageHp() <= GetOptionValue(Config.Variant_Cure))
                 {
@@ -121,7 +121,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_Raise) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_Raise) && VariantRaise != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (IsActionEnabled(VariantCure)
                     && actionID is WHM.Raise or SCH.Resurrection or AST.Ascend
@@ -149,7 +149,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_Ultimatum) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_Ultimatum) && VariantUltimatum != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (ActionReady(VariantUltimatum) && IsActionEnabled(VariantUltimatum) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
@@ -167,7 +167,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_SpiritDart) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_SpiritDart) && VariantSpiritDart != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (ActionReady(VariantSpiritDart) && IsActionEnabled(VariantSpiritDart)
                     && CanWeave(actionID, ActionWatching.LastGCD) && !TargetHasEffectAny(Debuffs.SustainedDamage))
@@ -186,7 +186,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_Rampart) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_Rampart) && VariantRampart != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (ActionReady(VariantRampart) && IsActionEnabled(VariantRampart) && CanWeave(actionID, ActionWatching.LastGCD))
                 {
@@ -204,7 +204,7 @@ internal static class Variant
 
         protected override uint Invoke(uint actionID)
         {
-            if (IsEnabled(Presets.Variant_EagleEyeShot) && SafeToUse() && IsComboAction(actionID))
+            if (IsEnabled(Presets.Variant_EagleEyeShot) && VariantEagleEyeShot != 0 && IsComboAction(actionID) && SafeToUse())
             {
                 if (ActionReady(VariantEagleEyeShot) && IsActionEnabled(VariantEagleEyeShot) && CanWeave(actionID, ActionWatching.LastGCD))
                 {

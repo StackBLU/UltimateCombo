@@ -4,10 +4,13 @@ using Dalamud.Hooking;
 using ECommons.DalamudServices;
 using ECommons.GameFunctions;
 using FFXIVClientStructs.FFXIV.Client.Game;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.Sheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using UltimateCombo.ComboHelper.Functions;
@@ -31,18 +34,31 @@ internal static class ActionWatching
         .ToDictionary(i => i.RowId, i => i);
 
     private static readonly Dictionary<string, List<uint>> StatusCache = [];
+    private static readonly Dictionary<uint, string> BlueMageIndexCache = [];
+    private static readonly Dictionary<uint, ActionAttackType> AttackTypeCache = ActionSheet.ToDictionary(
+        pair => pair.Key,
+        pair => pair.Value.ActionCategory.Value.RowId switch
+        {
+            2 => ActionAttackType.Spell,
+            3 => ActionAttackType.Weaponskill,
+            4 => ActionAttackType.Ability,
+            _ => ActionAttackType.Unknown,
+        });
+
     internal static readonly List<uint> CombatActions = [];
 
-    private delegate void ReceiveActionEffectDelegate(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail);
-    private static Hook<ReceiveActionEffectDelegate>? _receiveActionEffectHook;
+    private static Hook<ActionEffectHandler.Delegates.Receive>? _receiveActionEffectHook;
 
     private static bool _enabled;
+    private static int _numberOfGcdsUsed;
+    private static int _recordedCombatActionCount;
 
 
-    private static void ReceiveActionEffectDetour(ulong sourceObjectId, IntPtr sourceActor, IntPtr position, IntPtr effectHeader, IntPtr effectArray, IntPtr effectTrail)
+    private static unsafe void ReceiveActionEffectDetour(uint sourceObjectId, Character* sourceActor, Vector3* position,
+        ActionEffectHandler.Header* effectHeader, ActionEffectHandler.TargetEffects* effectArray, GameObjectId* effectTrail)
     {
         _receiveActionEffectHook!.Original(sourceObjectId, sourceActor, position, effectHeader, effectArray, effectTrail);
-        ActionEffectHeader header = Marshal.PtrToStructure<ActionEffectHeader>(effectHeader);
+        ActionEffectHandler.Header header = *effectHeader;
 
         if (ActionType is 13 or 2)
         {
@@ -53,6 +69,7 @@ internal static class ActionWatching
             header.ActionId != 8 &&
             sourceObjectId == Service.ObjectTable.LocalPlayer?.GameObjectId)
         {
+            SynchronizeGcdCount();
             TimeLastActionUsed = DateTime.Now;
             LastActionUseCount++;
             if (header.ActionId != LastAction)
@@ -69,10 +86,12 @@ internal static class ActionWatching
                     case 2:
                         LastSpell = header.ActionId;
                         LastGCD = header.ActionId;
+                        _numberOfGcdsUsed++;
                         break;
                     case 3:
                         LastWeaponskill = header.ActionId;
                         LastGCD = header.ActionId;
+                        _numberOfGcdsUsed++;
                         break;
                     case 4:
                         LastAbility = header.ActionId;
@@ -83,6 +102,7 @@ internal static class ActionWatching
             }
 
             CombatActions.Add(header.ActionId);
+            _recordedCombatActionCount = CombatActions.Count;
 
             if (Service.Configuration.EnabledOutputLog)
             {
@@ -116,26 +136,15 @@ internal static class ActionWatching
 
     internal static uint WhichOfTheseActionsWasLast(params uint[] actions)
     {
-        if (CombatActions.Count == 0)
+        for (var i = CombatActions.Count - 1; i >= 0; i--)
         {
-            return 0;
-        }
-
-        var currentLastIndex = 0;
-        foreach (var action in actions)
-        {
-            if (CombatActions.Any(x => x == action))
+            if (Array.IndexOf(actions, CombatActions[i]) >= 0)
             {
-                var index = CombatActions.LastIndexOf(action);
-
-                if (index > currentLastIndex)
-                {
-                    currentLastIndex = index;
-                }
+                return CombatActions[i];
             }
         }
 
-        return CombatActions[currentLastIndex];
+        return 0;
     }
 
     internal static int HowManyTimesUsedAfterAnotherAction(uint lastUsedIDToCheck, uint idToCheckAgainst)
@@ -168,7 +177,26 @@ internal static class ActionWatching
         return count;
     }
 
-    internal static int NumberOfGcdsUsed => CombatActions.Count(x => GetAttackType(x) is ActionAttackType.Weaponskill or ActionAttackType.Spell);
+    internal static int NumberOfGcdsUsed
+    {
+        get
+        {
+            SynchronizeGcdCount();
+            return _numberOfGcdsUsed;
+        }
+    }
+
+    private static void SynchronizeGcdCount()
+    {
+        if (CombatActions.Count == _recordedCombatActionCount)
+        {
+            return;
+        }
+
+        _numberOfGcdsUsed = CombatActions.Count(actionID =>
+            GetAttackType(actionID) is ActionAttackType.Spell or ActionAttackType.Weaponskill);
+        _recordedCombatActionCount = CombatActions.Count;
+    }
 
     internal static bool HasDoubleWeaved()
     {
@@ -177,10 +205,12 @@ internal static class ActionWatching
             return false;
         }
 
-        var lastAction = CombatActions.Last();
+        var lastAction = CombatActions[^1];
         var secondLastAction = CombatActions[^2];
+        var lastAttackType = GetAttackType(lastAction);
+        var secondLastAttackType = GetAttackType(secondLastAction);
 
-        return GetAttackType(lastAction) == GetAttackType(secondLastAction) && GetAttackType(lastAction) == ActionAttackType.Ability;
+        return lastAttackType == ActionAttackType.Ability && secondLastAttackType == ActionAttackType.Ability;
     }
 
     internal static uint LastAction { get; set; } = 0;
@@ -200,11 +230,11 @@ internal static class ActionWatching
         Service.ChatGui.Print($"You just used: {GetActionName(LastAction)} x{LastActionUseCount}");
     }
 
-    private static void EnsureHooks()
+    private static unsafe void EnsureHooks()
     {
         // Create only once per process, but allow recreation after Dispose by setting fields null.
-        _receiveActionEffectHook ??= Service.GameInteropProvider.HookFromSignature<ReceiveActionEffectDelegate>(
-            "E8 ?? ?? ?? ?? 48 8B 8D ?? ?? ?? ?? 48 33 CC E8 ?? ?? ?? ?? 48 81 C4 00 05 00 00",
+        _receiveActionEffectHook ??= Service.GameInteropProvider.HookFromAddress<ActionEffectHandler.Delegates.Receive>(
+            ActionEffectHandler.MemberFunctionPointers.Receive,
             ReceiveActionEffectDetour);
 
         _sendActionHook ??= Service.GameInteropProvider.HookFromSignature<SendActionDelegate>(
@@ -221,10 +251,18 @@ internal static class ActionWatching
 
         _enabled = true;
 
-        EnsureHooks();
-        _receiveActionEffectHook?.Enable();
-        _sendActionHook?.Enable();
-        Svc.Condition.ConditionChange += ResetActions;
+        try
+        {
+            EnsureHooks();
+            _receiveActionEffectHook?.Enable();
+            _sendActionHook?.Enable();
+            Svc.Condition.ConditionChange += ResetActions;
+        }
+        catch
+        {
+            Dispose();
+            throw;
+        }
     }
 
     internal static void Disable()
@@ -237,18 +275,18 @@ internal static class ActionWatching
         _enabled = false;
 
         Svc.Condition.ConditionChange -= ResetActions;
-        _receiveActionEffectHook?.Disable();
-        _sendActionHook?.Disable();
+        try { _receiveActionEffectHook?.Disable(); } catch { }
+        try { _sendActionHook?.Disable(); } catch { }
     }
 
     internal static void Dispose()
     {
         Disable();
 
-        _receiveActionEffectHook?.Dispose();
+        try { _receiveActionEffectHook?.Dispose(); } catch { }
         _receiveActionEffectHook = null;
 
-        _sendActionHook?.Dispose();
+        try { _sendActionHook?.Dispose(); } catch { }
         _sendActionHook = null;
     }
 
@@ -262,11 +300,7 @@ internal static class ActionWatching
         if (flag is ConditionFlag.BeingMoved or ConditionFlag.BetweenAreas or ConditionFlag.Mounted
             or ConditionFlag.OccupiedInCutSceneEvent or ConditionFlag.Unconscious or ConditionFlag.WatchingCutscene)
         {
-            CombatActions.Clear();
-            LastAbility = 0;
-            LastAction = 0;
-            LastWeaponskill = 0;
-            LastSpell = 0;
+            ResetActionHistory();
         }
     }
 
@@ -275,11 +309,7 @@ internal static class ActionWatching
         await Task.Delay(5000);
         if (!CustomComboFunctions.InCombat())
         {
-            CombatActions.Clear();
-            LastAbility = 0;
-            LastAction = 0;
-            LastWeaponskill = 0;
-            LastSpell = 0;
+            ResetActionHistory();
         }
     }
 
@@ -345,10 +375,17 @@ internal static class ActionWatching
 
     internal static string GetBLUIndex(uint id)
     {
+        if (BlueMageIndexCache.TryGetValue(id, out string? cachedIndex))
+        {
+            return cachedIndex;
+        }
+
         var aozKey = Svc.Data.GetExcelSheet<AozAction>().First(x => x.Action.RowId == id).RowId;
         var index = Svc.Data.GetExcelSheet<AozActionTransient>().GetRow(aozKey).Number;
+        var displayIndex = $"#{index} ";
 
-        return $"#{index} ";
+        BlueMageIndexCache[id] = displayIndex;
+        return displayIndex;
     }
 
     internal static string GetStatusName(uint id)
@@ -382,18 +419,20 @@ internal static class ActionWatching
 
     internal static ActionAttackType GetAttackType(uint id)
     {
-        if (!ActionSheet.TryGetValue(id, out Lumina.Excel.Sheets.Action action))
-        {
-            return ActionAttackType.Unknown;
-        }
+        return AttackTypeCache.TryGetValue(id, out ActionAttackType attackType)
+            ? attackType
+            : ActionAttackType.Unknown;
+    }
 
-        return action.ActionCategory.Value.RowId switch
-        {
-            2 => ActionAttackType.Spell,
-            3 => ActionAttackType.Weaponskill,
-            4 => ActionAttackType.Ability,
-            _ => ActionAttackType.Unknown,
-        };
+    private static void ResetActionHistory()
+    {
+        CombatActions.Clear();
+        _numberOfGcdsUsed = 0;
+        _recordedCombatActionCount = 0;
+        LastAbility = 0;
+        LastAction = 0;
+        LastWeaponskill = 0;
+        LastSpell = 0;
     }
 
     internal enum ActionAttackType
@@ -481,14 +520,4 @@ internal static class ActionManagerHelper
     {
         ActionMgrPtr = (IntPtr) ActionManager.Instance();
     }
-}
-
-[StructLayout(LayoutKind.Explicit)]
-internal struct ActionEffectHeader
-{
-    [FieldOffset(0x0)] internal long TargetObjectId;
-    [FieldOffset(0x8)] internal uint ActionId;
-    [FieldOffset(0x14)] internal uint UnkObjectId;
-    [FieldOffset(0x18)] internal ushort Sequence;
-    [FieldOffset(0x1A)] internal ushort Unk_1A;
 }

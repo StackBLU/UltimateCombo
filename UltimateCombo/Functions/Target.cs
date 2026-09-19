@@ -1,14 +1,12 @@
+
 using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.Types;
-using ECommons;
-using ECommons.DalamudServices;
 using Lumina.Excel.Sheets;
 using System;
 using System.Numerics;
 using UltimateCombo.Combos.General;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
-using ObjectKind = Dalamud.Game.ClientState.Objects.Enums.ObjectKind;
 
 namespace UltimateCombo.ComboHelper.Functions;
 
@@ -56,7 +54,9 @@ internal abstract partial class CustomComboFunctions
 
     internal static float EnemyPercentHP()
     {
-        return EnemyCurrentHP() / EnemyMaxHP() * 100;
+        return CurrentTarget is IBattleChara character && character.MaxHp > 0
+            ? (float) character.CurrentHp / character.MaxHp * 100f
+            : 0;
     }
 
     internal static bool TargetIsCasting()
@@ -81,186 +81,154 @@ internal abstract partial class CustomComboFunctions
 
     internal static float GetTargetDistanceCenterToCenter()
     {
-        if (CurrentTarget is null || LocalPlayer is null)
+        IGameObject? target = CurrentTarget;
+        IGameObject? player = LocalPlayer;
+
+        if (target is not IBattleChara character || player == null || target.GameObjectId == player.GameObjectId)
         {
             return 0;
         }
 
-        if (CurrentTarget is not IBattleChara chara)
-        {
-            return 0;
-        }
+        var position = new Vector2(character.Position.X, character.Position.Z);
+        var selfPosition = new Vector2(player.Position.X, player.Position.Z);
 
-        if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
-        {
-            return 0;
-        }
-
-        var position = new Vector2(chara.Position.X, chara.Position.Z);
-        var selfPosition = new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
-
-        return Math.Max(0, Vector2.Distance(position, selfPosition));
+        return Vector2.Distance(position, selfPosition);
     }
 
     internal static float GetTargetDistanceHitboxToHitbox()
     {
-        if (CurrentTarget is null || LocalPlayer is null)
+        IGameObject? target = CurrentTarget;
+        IGameObject? player = LocalPlayer;
+
+        if (target is not IBattleChara character || player == null || target.GameObjectId == player.GameObjectId)
         {
             return 0;
         }
 
-        if (CurrentTarget is not IBattleChara chara)
-        {
-            return 0;
-        }
+        var position = new Vector2(character.Position.X, character.Position.Z);
+        var selfPosition = new Vector2(player.Position.X, player.Position.Z);
 
-        if (CurrentTarget.GameObjectId == LocalPlayer.GameObjectId)
-        {
-            return 0;
-        }
-
-        var position = new Vector2(chara.Position.X, chara.Position.Z);
-        var selfPosition = new Vector2(LocalPlayer.Position.X, LocalPlayer.Position.Z);
-
-        return Math.Max(0, Vector2.Distance(position, selfPosition) - chara.HitboxRadius - LocalPlayer.HitboxRadius);
+        return MathF.Max(0, Vector2.Distance(position, selfPosition) - character.HitboxRadius - player.HitboxRadius);
     }
 
     internal static bool InMeleeRange()
     {
-        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() <= 3;
+        return CurrentTarget is IBattleChara && GetTargetDistanceHitboxToHitbox() <= 3f;
     }
 
     internal static bool InMeleeRangeNoMovement()
     {
-        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() == 0;
+        return CurrentTarget is IBattleChara && GetTargetDistanceHitboxToHitbox() <= 0;
     }
 
     internal static bool ProjectileThresholdDistance()
     {
-        return PlayerTargetObject != null && GetTargetDistanceHitboxToHitbox() >= Service.Configuration.RangedAttackRange;
+        return CurrentTarget is IBattleChara
+            && GetTargetDistanceHitboxToHitbox() >= Service.Configuration.RangedAttackRange;
     }
 
     internal static bool OnTargetsRear()
     {
-        if (CurrentTarget is null || LocalPlayer is null)
+        IGameObject? target = CurrentTarget;
+        IGameObject? player = LocalPlayer;
+
+        if (target is not IBattleChara || target.ObjectKind != ObjectKind.BattleNpc || player == null)
         {
             return false;
         }
 
-        if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
-        {
-            return false;
-        }
-
-        var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
-        var regionDegrees = PositionalMath.Degrees(angle);
-        if (regionDegrees < 0)
-        {
-            regionDegrees = 360 + regionDegrees;
-        }
-
+        var regionDegrees = GetPositionDegrees(target, player);
         return regionDegrees is >= 135 and <= 225;
     }
 
     internal static bool OnTargetsFlank()
     {
-        if (CurrentTarget is null || LocalPlayer is null)
+        IGameObject? target = CurrentTarget;
+        IGameObject? player = LocalPlayer;
+
+        if (target is not IBattleChara || target.ObjectKind != ObjectKind.BattleNpc || player == null)
         {
             return false;
         }
 
-        if (CurrentTarget is not IBattleChara || CurrentTarget.ObjectKind != ObjectKind.BattleNpc)
-        {
-            return false;
-        }
-
-        var angle = PositionalMath.AngleXZ(CurrentTarget.Position, LocalPlayer.Position) - CurrentTarget.Rotation;
-        var regionDegrees = PositionalMath.Degrees(angle);
-        if (regionDegrees < 0)
-        {
-            regionDegrees = 360 + regionDegrees;
-        }
-
+        var regionDegrees = GetPositionDegrees(target, player);
         return regionDegrees is (>= 45 and <= 135) or (>= 225 and <= 315);
     }
 
     internal static byte EnemyRank()
     {
-        return TargetDataId.HasValue ? Svc.Data.GetExcelSheet<BNpcBase>().GetRow(TargetDataId.Value).Rank : (byte) 0;
+        return TargetDataId.HasValue && ActionWatching.BNpcSheet.TryGetValue(TargetDataId.Value, out BNpcBase enemy)
+            ? enemy.Rank
+            : (byte) 0;
     }
 
     internal static bool LevelIgnoreGCD()
     {
-        if (CurrentTarget is null || LocalPlayer is null)
+        if (CurrentTarget is not IBattleChara target || LocalPlayer is not { } player)
         {
             return false;
         }
 
-        if (EnemyName() == "Striking Dummy")
+        if (target.Name.ToString() == "Striking Dummy" || target.CurrentHp == 1)
         {
             return false;
         }
 
-        if (EnemyCurrentHP() == 1)
-        {
-            return false;
-        }
-
-        if (LocalPlayer.Level == 100 && LocalPlayer.Level - EnemyLevel() >= 10)
-        {
-            return true;
-        }
-
-        return false;
+        return player.Level == 100 && player.Level - target.Level >= 10;
     }
 
     internal static bool TargetIsBoss()
     {
-        if (HasBattleTarget() && TargetDataId.HasValue)
+        if (CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Combatant } target)
         {
-            if (EnemyName() == "Striking Dummy" || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD() || HasEffect(Common.Buffs.EpicEcho))
+            if (target.Name.ToString() == "Striking Dummy" || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD() || HasEffect(Common.Buffs.EpicEcho))
             {
                 return true;
             }
 
-            if (EnemyCurrentHP() == 1)
+            if (target.CurrentHp == 1)
             {
                 return false;
             }
 
-            if (HasEffect(BLU.Buffs.BasicInstinct) && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 10)
+            var maxHP = target.MaxHp;
+            var percentHP = maxHP > 0 ? (float) target.CurrentHp / maxHP * 100f : 0;
+            var partySize = EffectivePartySize();
+            var rank = ActionWatching.BNpcSheet.TryGetValue(target.BaseId, out BNpcBase enemy) ? enemy.Rank : (byte) 0;
+
+            if (HasEffect(BLU.Buffs.BasicInstinct) && maxHP > MaxHP * 10 && percentHP > 10)
             {
                 return true;
             }
 
-            if (EnemyRank() == 2)
+            if (rank == 2)
             {
                 return true;
             }
 
-            if (EnemyRank() != 2)
+            if (rank != 2)
             {
-                if (PartyMemberLength() == 1 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 15)
+                if (partySize == 1 && maxHP > MaxHP * 10 && percentHP > 15)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() is 2 or 3 && EnemyMaxHP() > MaxHP * 10)
+                if (partySize is 2 or 3 && maxHP > MaxHP * 10)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() == 4 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                if (partySize == 4 && maxHP > MaxHP * 10 && percentHP > 50)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 10)
+                if (partySize is 5 or 6 or 7 && maxHP > MaxHP * 10)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 25 && EnemyPercentHP() > 20)
+                if (partySize == 8 && maxHP > MaxHP * 25 && percentHP > 20)
                 {
                     return true;
                 }
@@ -272,59 +240,64 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool TargetWorthDoT()
     {
-        if (HasBattleTarget() && TargetDataId.HasValue)
+        if (CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Combatant } target)
         {
-            if (EnemyName() == "Striking Dummy")
+            if (target.Name.ToString() == "Striking Dummy")
             {
                 return true;
             }
 
-            if (EnemyCurrentHP() == 1)
+            if (target.CurrentHp == 1)
             {
                 return false;
             }
 
-            if (HasEffect(BLU.Buffs.BasicInstinct) && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 10)
+            var maxHP = target.MaxHp;
+            var percentHP = maxHP > 0 ? (float) target.CurrentHp / maxHP * 100f : 0;
+            var partySize = EffectivePartySize();
+            var rank = ActionWatching.BNpcSheet.TryGetValue(target.BaseId, out BNpcBase enemy) ? enemy.Rank : (byte) 0;
+
+            if (HasEffect(BLU.Buffs.BasicInstinct) && maxHP > MaxHP * 10 && percentHP > 10)
             {
                 return true;
             }
 
-            if (EnemyRank() == 2)
+            if (rank == 2)
             {
-                if (PartyMemberLength() == 4 && EnemyPercentHP() > 10)
+                if (partySize == 4 && percentHP > 10)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() != 4 && EnemyPercentHP() > 5)
+                if (partySize != 4 && percentHP > 5)
                 {
                     return true;
                 }
             }
 
-            if (EnemyRank() != 2)
+            if (rank != 2)
             {
-                if (PartyMemberLength() == 1 && EnemyMaxHP() > MaxHP * 5 && EnemyPercentHP() > 75)
+                if (partySize == 1 && maxHP > MaxHP * 5 && percentHP > 75)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() is 2 or 3 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                if (partySize is 2 or 3 && maxHP > MaxHP * 10 && percentHP > 50)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() == 4 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 50)
+                if (partySize == 4 && maxHP > MaxHP * 10 && percentHP > 50)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() is 5 or 6 or 7 && EnemyMaxHP() > MaxHP * 10 && EnemyPercentHP() > 75)
+                if (partySize is 5 or 6 or 7 && maxHP > MaxHP * 10 && percentHP > 75)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() == 8 && EnemyMaxHP() > MaxHP * 8 && EnemyPercentHP() > 75)
+                if (partySize == 8 && maxHP > MaxHP * 8 && percentHP > 75)
                 {
                     return true;
                 }
@@ -336,26 +309,30 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool BossAlmostDead()
     {
-        if (HasBattleTarget() && TargetDataId.HasValue)
+        if (CurrentTarget is IBattleNpc { BattleNpcKind: BattleNpcSubKind.Combatant } target)
         {
-            if (EnemyName() == "Striking Dummy")
+            if (target.Name.ToString() == "Striking Dummy")
             {
                 return false;
             }
 
-            if (EnemyCurrentHP() == 1)
+            if (target.CurrentHp == 1)
             {
                 return false;
             }
 
-            if (EnemyRank() == 2)
+            var rank = ActionWatching.BNpcSheet.TryGetValue(target.BaseId, out BNpcBase enemy) ? enemy.Rank : (byte) 0;
+            if (rank == 2)
             {
-                if (PartyMemberLength() == 4 && EnemyPercentHP() < 10)
+                var percentHP = target.MaxHp > 0 ? (float) target.CurrentHp / target.MaxHp * 100f : 0;
+                var partySize = EffectivePartySize();
+
+                if (partySize == 4 && percentHP < 10)
                 {
                     return true;
                 }
 
-                if (PartyMemberLength() != 4 && EnemyPercentHP() < 5)
+                if (partySize != 4 && percentHP < 5)
                 {
                     return true;
                 }
@@ -367,7 +344,7 @@ internal abstract partial class CustomComboFunctions
 
     internal static bool TargetNeedsPositionals()
     {
-        if (!HasBattleTarget() || !TargetDataId.HasValue)
+        if (CurrentTarget is not IBattleNpc { BattleNpcKind: BattleNpcSubKind.Combatant } target)
         {
             return false;
         }
@@ -377,7 +354,20 @@ internal abstract partial class CustomComboFunctions
             return false;
         }
 
-        return Svc.Data.Excel.GetSheet<BNpcBase>().TryGetFirst(x => x.RowId == TargetDataId.Value, out BNpcBase bnpc) && !bnpc.IsOmnidirectional;
+        return ActionWatching.BNpcSheet.TryGetValue(target.BaseId, out BNpcBase enemy)
+            && !enemy.IsOmnidirectional;
+    }
+
+    private static int EffectivePartySize()
+    {
+        return Math.Max(1, Service.PartyList.Length);
+    }
+
+    private static double GetPositionDegrees(IGameObject target, IGameObject player)
+    {
+        var angle = PositionalMath.AngleXZ(target.Position, player.Position) - target.Rotation;
+        var degrees = PositionalMath.Degrees(angle);
+        return degrees < 0 ? degrees + 360 : degrees;
     }
 
     internal static class PositionalMath
@@ -403,3 +393,4 @@ internal abstract partial class CustomComboFunctions
         return ActionWatching.NumberOfGcdsUsed >= requiredGCDs || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD();
     }
 }
+

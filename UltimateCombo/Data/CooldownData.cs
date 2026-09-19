@@ -5,9 +5,20 @@ namespace UltimateCombo.Data;
 
 internal class CooldownData
 {
+    internal uint ActionID { get; init; }
     internal bool IsCooldown => CooldownRemaining > 0;
-    internal uint ActionID;
-    internal unsafe float CooldownElapsed => ActionManager.Instance()->GetRecastTimeElapsed(ActionType.Action, ActionID);
+
+    internal unsafe float CooldownElapsed
+    {
+        get
+        {
+            ActionManager* actionManager = ActionManager.Instance();
+            return actionManager == null
+                ? 0
+                : actionManager->GetRecastTimeElapsed(ActionType.Action, ActionID);
+        }
+    }
+
     internal float CooldownTotal => ActionManager.GetAdjustedRecastTime(ActionType.Action, ActionID) / 1000f * MaxCharges;
     internal unsafe float AdjustedCastTime => ActionManager.GetAdjustedCastTime(ActionType.Action, ActionID) / 1000f;
 
@@ -15,12 +26,8 @@ internal class CooldownData
     {
         get
         {
-            if (CooldownElapsed == 0)
-            {
-                return 0;
-            }
-
-            return Math.Max(0, CooldownTotal - CooldownElapsed);
+            var elapsed = CooldownElapsed;
+            return elapsed <= 0 ? 0 : MathF.Max(0, CooldownTotal - elapsed);
         }
     }
 
@@ -31,18 +38,39 @@ internal class CooldownData
     {
         get
         {
-            if (MaxCharges == 1)
+            var maxCharges = MaxCharges;
+            if (maxCharges == 0)
             {
-                if (CooldownRemaining == 0)
-                {
-                    return 1;
-                }
-
-                return 0u;
+                return 0;
             }
-            return ActionManager.Instance()->GetCurrentCharges(ActionID);
+
+            if (maxCharges == 1)
+            {
+                return CooldownRemaining == 0 ? 1u : 0u;
+            }
+
+            ActionManager* actionManager = ActionManager.Instance();
+            return actionManager == null ? 0 : actionManager->GetCurrentCharges(ActionID);
         }
     }
 
-    internal float ChargeCooldownRemaining => CooldownRemaining % (CooldownTotal / MaxCharges);
+    internal float ChargeCooldownRemaining
+    {
+        get
+        {
+            var maxCharges = MaxCharges;
+            var total = CooldownTotal;
+            var remaining = CooldownRemaining;
+
+            if (maxCharges == 0 || total <= 0 || remaining <= 0)
+            {
+                return 0;
+            }
+
+            var cooldownPerCharge = total / maxCharges;
+            var chargeRemaining = remaining % cooldownPerCharge;
+
+            return chargeRemaining <= 0.001f ? cooldownPerCharge : chargeRemaining;
+        }
+    }
 }

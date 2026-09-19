@@ -60,7 +60,7 @@ internal static class MCHPvP
         {
             if ((actionID is BlastCharge or BlazingShot) && IsEnabled(Presets.MCHPvP_Combo))
             {
-                if (IsEnabled(Presets.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill)) && !HasEffect(Buffs.Overheated) && !HasEffect(Buffs.Overheated)
+                if (IsEnabled(Presets.MCHPvP_Weapons) && ActionReady(OriginalHook(Drill)) && !HasEffect(Buffs.Overheated)
                     && OriginalHook(Drill) == Drill && !WasLastGCD(Drill) && (TargetHasEffectAny(AllPvP.Buffs.Guard) || HasEffect(Buffs.Analysis))
                     && (ActionReady(Analysis) || HasEffect(Buffs.Analysis) || WasLastAction(Analysis)))
                 {

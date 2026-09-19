@@ -1,3 +1,4 @@
+
 using Dalamud.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -14,27 +15,76 @@ public class PluginConfiguration : IPluginConfiguration
     [JsonProperty("EnabledActionsV6")]
     public HashSet<Presets> EnabledActions { get; set; } = [];
 
-    public bool EnabledOutputLog { get; set; } = false;
-    public bool OpenOnLaunch { get; set; } = false;
-    public bool HideChildren { get; set; } = false;
-    public bool HideConflictedCombos { get; set; } = false;
-    public bool ShowInternalNames { get; set; } = false;
-    public bool IgnoreGCDChecks { get; set; } = false;
-    public bool DisableTripleWeaving { get; set; } = false;
+    public bool EnabledOutputLog { get; set; }
+    public bool OpenOnLaunch { get; set; }
+    public bool HideChildren { get; set; }
+    public bool HideConflictedCombos { get; set; }
+    public bool ShowInternalNames { get; set; }
+    public bool IgnoreGCDChecks { get; set; }
+    public bool DisableTripleWeaving { get; set; }
     public double RangedAttackRange { get; set; } = 7;
 
     [JsonProperty("CustomFloatValuesV6")]
-    public static Dictionary<string, float> CustomFloatValues { get; set; } = [];
+    public Dictionary<string, float> SavedCustomFloatValues { get; set; } = [];
 
-    public static float GetCustomFloatValue(string config, float defaultMinValue = 0)
+    [JsonProperty("CustomIntValuesV6")]
+    public Dictionary<string, int> SavedCustomIntValues { get; set; } = [];
+
+    [JsonProperty("CustomIntArrayValuesV6")]
+    public Dictionary<string, int[]> SavedCustomIntArrayValues { get; set; } = [];
+
+    [JsonProperty("CustomBoolValuesV6")]
+    public Dictionary<string, bool> SavedCustomBoolValues { get; set; } = [];
+
+    [JsonProperty("CustomBoolArrayValuesV6")]
+    public Dictionary<string, bool[]> SavedCustomBoolArrayValues { get; set; } = [];
+
+    [JsonIgnore]
+    public static Dictionary<string, float> CustomFloatValues
     {
-        if (!CustomFloatValues.TryGetValue(config, out var configValue))
+        get => Service.Configuration.SavedCustomFloatValues;
+        set => Service.Configuration.SavedCustomFloatValues = value;
+    }
+
+    [JsonIgnore]
+    public static Dictionary<string, int> CustomIntValues
+    {
+        get => Service.Configuration.SavedCustomIntValues;
+        set => Service.Configuration.SavedCustomIntValues = value;
+    }
+
+    [JsonIgnore]
+    public static Dictionary<string, int[]> CustomIntArrayValues
+    {
+        get => Service.Configuration.SavedCustomIntArrayValues;
+        set => Service.Configuration.SavedCustomIntArrayValues = value;
+    }
+
+    [JsonIgnore]
+    public static Dictionary<string, bool> CustomBoolValues
+    {
+        get => Service.Configuration.SavedCustomBoolValues;
+        set => Service.Configuration.SavedCustomBoolValues = value;
+    }
+
+    [JsonIgnore]
+    public static Dictionary<string, bool[]> CustomBoolArrayValues
+    {
+        get => Service.Configuration.SavedCustomBoolArrayValues;
+        set => Service.Configuration.SavedCustomBoolArrayValues = value;
+    }
+
+    public List<uint> ActiveBLUSpells { get; set; } = [];
+
+    public static float GetCustomFloatValue(string config, float defaultValue = 0)
+    {
+        if (!CustomFloatValues.TryGetValue(config, out var value))
         {
-            SetCustomFloatValue(config, defaultMinValue);
-            return defaultMinValue;
+            value = defaultValue;
+            CustomFloatValues[config] = value;
         }
 
-        return configValue;
+        return value;
     }
 
     public static void SetCustomFloatValue(string config, float value)
@@ -42,18 +92,15 @@ public class PluginConfiguration : IPluginConfiguration
         CustomFloatValues[config] = value;
     }
 
-    [JsonProperty("CustomIntValuesV6")]
-    public static Dictionary<string, int> CustomIntValues { get; set; } = [];
-
-    public static int GetCustomIntValue(string config, int defaultMinVal = 0)
+    public static int GetCustomIntValue(string config, int defaultValue = 0)
     {
-        if (!CustomIntValues.TryGetValue(config, out var configValue))
+        if (!CustomIntValues.TryGetValue(config, out var value))
         {
-            SetCustomIntValue(config, defaultMinVal);
-            return defaultMinVal;
+            value = defaultValue;
+            CustomIntValues[config] = value;
         }
 
-        return configValue;
+        return value;
     }
 
     public static void SetCustomIntValue(string config, int value)
@@ -61,18 +108,15 @@ public class PluginConfiguration : IPluginConfiguration
         CustomIntValues[config] = value;
     }
 
-    [JsonProperty("CustomIntArrayValuesV6")]
-    public static Dictionary<string, int[]> CustomIntArrayValues { get; set; } = [];
-
     public static int[] GetCustomIntArrayValue(string config)
     {
-        if (!CustomIntArrayValues.TryGetValue(config, out var configValue))
+        if (!CustomIntArrayValues.TryGetValue(config, out var value))
         {
-            SetCustomIntArrayValue(config, []);
-            return [];
+            value = [];
+            CustomIntArrayValues[config] = value;
         }
 
-        return configValue;
+        return value;
     }
 
     public static void SetCustomIntArrayValue(string config, int[] value)
@@ -80,18 +124,14 @@ public class PluginConfiguration : IPluginConfiguration
         CustomIntArrayValues[config] = value;
     }
 
-    [JsonProperty("CustomBoolValuesV6")]
-    public static Dictionary<string, bool> CustomBoolValues { get; set; } = [];
-
     public static bool GetCustomBoolValue(string config)
     {
-        if (!CustomBoolValues.TryGetValue(config, out var configValue))
+        if (!CustomBoolValues.TryGetValue(config, out var value))
         {
-            SetCustomBoolValue(config, false);
-            return false;
+            CustomBoolValues[config] = false;
         }
 
-        return configValue;
+        return value;
     }
 
     public static void SetCustomBoolValue(string config, bool value)
@@ -99,18 +139,15 @@ public class PluginConfiguration : IPluginConfiguration
         CustomBoolValues[config] = value;
     }
 
-    [JsonProperty("CustomBoolArrayValuesV6")]
-    public static Dictionary<string, bool[]> CustomBoolArrayValues { get; set; } = [];
-
     public static bool[] GetCustomBoolArrayValue(string config)
     {
-        if (!CustomBoolArrayValues.TryGetValue(config, out var configValue))
+        if (!CustomBoolArrayValues.TryGetValue(config, out var value))
         {
-            SetCustomBoolArrayValue(config, []);
-            return [];
+            value = [];
+            CustomBoolArrayValues[config] = value;
         }
 
-        return configValue;
+        return value;
     }
 
     public static void SetCustomBoolArrayValue(string config, bool[] value)
@@ -118,12 +155,10 @@ public class PluginConfiguration : IPluginConfiguration
         CustomBoolArrayValues[config] = value;
     }
 
-    public List<uint> ActiveBLUSpells { get; set; } = [];
-
-    int IPluginConfiguration.Version { get => Version; set => Version = value; }
-
     public void Save()
     {
+        Service.IconReplacer?.RefreshEnabledCombos();
         Service.Interface.SavePluginConfig(this);
     }
 }
+

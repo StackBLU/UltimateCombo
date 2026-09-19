@@ -363,7 +363,7 @@ internal static class Occult
 
     internal class Occult_Ranger : CustomComboBase
     {
-        protected internal override Presets Preset { get; } = Presets.Occult_Thief;
+        protected internal override Presets Preset { get; } = Presets.Occult_Ranger;
 
         protected override uint Invoke(uint actionID)
         {

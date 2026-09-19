@@ -1,3 +1,4 @@
+
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Colors;
 using Dalamud.Utility;
@@ -6,7 +7,6 @@ using ECommons.ImGuiMethods;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using UltimateCombo.Attributes;
 using UltimateCombo.Combos;
 using UltimateCombo.Core;
@@ -16,14 +16,13 @@ namespace UltimateCombo.Window;
 
 internal class PresetHandler : ConfigWindow
 {
+    private static readonly Dictionary<Presets, string> PresetPathCache = [];
+
     internal static void DrawPreset(Presets preset, CustomComboInfoAttribute info, ref int i)
     {
         var enabled = PresetStorage.IsEnabled(preset);
-        var secret = PresetStorage.IsPvP(preset);
         Presets[] conflicts = PresetStorage.GetConflicts(preset);
-        Presets? parent = PresetStorage.GetParent(preset);
         BlueInactiveAttribute? blueAttr = preset.GetAttribute<BlueInactiveAttribute>();
-
         var internalName = preset.ToString();
 
         if (ImGui.Checkbox($"{info.FancyName}###{internalName}", ref enabled))
@@ -32,6 +31,7 @@ internal class PresetHandler : ConfigWindow
             {
                 EnableParentPresets(preset);
                 _ = Service.Configuration.EnabledActions.Add(preset);
+
                 foreach (Presets conflict in conflicts)
                 {
                     _ = Service.Configuration.EnabledActions.Remove(conflict);
@@ -48,7 +48,7 @@ internal class PresetHandler : ConfigWindow
         if (Service.Configuration.ShowInternalNames)
         {
             ImGui.SameLine();
-            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.45f, 0.45f, 0.45f, 1.0f));
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0.45f, 0.45f, 0.45f, 1f));
             ImGui.TextUnformatted($"- {internalName}");
             ImGui.PopStyleColor();
         }
@@ -58,144 +58,151 @@ internal class PresetHandler : ConfigWindow
         if (conflicts.Length > 0)
         {
             ImGui.TextColored(ImGuiColors.DalamudRed, "Conflicts with:");
-            var conflictBuilder = new StringBuilder();
             ImGui.Indent();
 
             foreach (Presets conflict in conflicts)
             {
-                CustomComboInfoAttribute? comboInfo = conflict.GetAttribute<CustomComboInfoAttribute>();
-                _ = conflictBuilder.Insert(0, $"{comboInfo?.FancyName}");
-                Presets par2 = conflict;
-
-                while (PresetStorage.GetParent(par2) != null)
-                {
-                    Presets? subpar = PresetStorage.GetParent(par2);
-                    _ = conflictBuilder.Insert(0, $"{subpar?.GetAttribute<CustomComboInfoAttribute>()?.FancyName} -> ");
-                    par2 = subpar!.Value;
-                }
-
-                if (!string.IsNullOrEmpty(comboInfo?.JobShorthand))
-                {
-                    _ = conflictBuilder.Insert(0, $"[{comboInfo.JobShorthand}] ");
-                }
-
-                Vector4 color = ComboHelper.Functions.CustomComboFunctions.IsEnabled(conflict)
+                Vector4 color = PresetStorage.IsEnabled(conflict)
                     ? GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.HealerGreen, 1500)
-                    : GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudRed, 1500);
+                    : ImGuiColors.DalamudRed;
 
-                ImGuiEx.Text(color, $"- {conflictBuilder}");
-                _ = conflictBuilder.Clear();
+                ImGuiEx.Text(color, $"- {GetPresetPath(conflict)}");
             }
+
             ImGui.Unindent();
             ImGui.Spacing();
         }
 
         if (blueAttr != null)
         {
-            if (blueAttr.Actions.Count > 0)
+            List<uint> missingActions = blueAttr.Actions;
+
+            if (missingActions.Count > 0)
             {
                 Vector4 textColor = blueAttr.NoneSet ? ImGuiColors.DPSRed : ImGuiColors.DalamudOrange;
-                ImGui.PushStyleColor(ImGuiCol.Text, textColor);
+                var displayText = blueAttr.NoneSet ? "No required spells active:" : "Missing active spells:";
+                var actions = string.Join(", ", missingActions.Select(action => ActionWatching.GetBLUIndex(action) + ActionWatching.GetActionName(action)));
 
-                var displayText = blueAttr.NoneSet ? "No Required Spells Active:" : "Missing active spells:";
-                ImGui.Text($"{displayText} {string.Join(", ", blueAttr.Actions.Select(x => ActionWatching.GetBLUIndex(x) + ActionWatching.GetActionName(x)))}");
+                ImGui.PushStyleColor(ImGuiCol.Text, textColor);
+                ImGui.TextUnformatted($"{displayText} {actions}");
                 ImGui.PopStyleColor();
             }
             else
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
-                ImGui.Text($"All required spells active!");
+                ImGui.TextUnformatted("All required spells active!");
                 ImGui.PopStyleColor();
             }
         }
 
         UserConfigItems.Draw(preset, enabled);
-
         i++;
 
-        var hideChildren = Service.Configuration.HideChildren;
         (Presets Preset, CustomComboInfoAttribute Info)[] children = PresetChildren[preset];
-
-        if (children.Length > 0)
+        if (children.Length == 0)
         {
-            if (enabled || !hideChildren)
+            return;
+        }
+
+        if (!enabled && Service.Configuration.HideChildren)
+        {
+            i += AllChildren(children);
+            return;
+        }
+
+        ImGui.Indent();
+        ImGui.Indent();
+
+        foreach ((Presets childPreset, CustomComboInfoAttribute childInfo) in children)
+        {
+            Presets[] childConflicts = PresetStorage.GetConflicts(childPreset);
+            var hideForConflict = Service.Configuration.HideConflictedCombos && childConflicts.Any(PresetStorage.IsEnabled);
+
+            if (hideForConflict)
             {
-                ImGui.Indent();
-                ImGui.Indent();
-
-                foreach ((Presets childPreset, CustomComboInfoAttribute childInfo) in children)
+                if (Service.Configuration.EnabledActions.Remove(childPreset))
                 {
-                    if (Service.Configuration.HideConflictedCombos)
-                    {
-                        Presets[] conflictOriginals = PresetStorage.GetConflicts(childPreset);
-                        List<Presets> conflictsSource = PresetStorage.GetAllConflicts();
-
-                        if (!conflictsSource.Any(x => x == childPreset || x == preset) || conflictOriginals.Length == 0)
-                        {
-                            DrawPreset(childPreset, childInfo, ref i);
-                            continue;
-                        }
-
-                        if (conflictOriginals.Any(PresetStorage.IsEnabled))
-                        {
-                            _ = Service.Configuration.EnabledActions.Remove(childPreset);
-                            Service.Configuration.Save();
-                        }
-                        else
-                        {
-                            DrawPreset(childPreset, childInfo, ref i);
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        DrawPreset(childPreset, childInfo, ref i);
-                    }
+                    Service.Configuration.Save();
                 }
 
-                ImGui.Unindent();
-                ImGui.Unindent();
+                continue;
             }
-            else
-            {
-                i += AllChildren(PresetChildren[preset]);
-            }
+
+            DrawPreset(childPreset, childInfo, ref i);
         }
+
+        ImGui.Unindent();
+        ImGui.Unindent();
+    }
+
+    private static string GetPresetPath(Presets preset)
+    {
+        if (PresetPathCache.TryGetValue(preset, out string? path))
+        {
+            return path;
+        }
+
+        List<string> names = [];
+        CustomComboInfoAttribute? comboInfo = preset.GetAttribute<CustomComboInfoAttribute>();
+        Presets? current = preset;
+
+        while (current != null)
+        {
+            CustomComboInfoAttribute? currentInfo = current.Value.GetAttribute<CustomComboInfoAttribute>();
+            names.Insert(0, currentInfo?.FancyName ?? current.Value.ToString());
+            current = PresetStorage.GetParent(current.Value);
+        }
+
+        var jobPrefix = string.IsNullOrEmpty(comboInfo?.JobShorthand) ? "" : $"[{comboInfo.JobShorthand}] ";
+        path = jobPrefix + string.Join(" -> ", names);
+        PresetPathCache[preset] = path;
+        return path;
     }
 
     private static void DrawReplaceAttribute(Presets preset)
     {
-        ReplaceSkillAttribute? att = preset.GetReplaceAttribute();
-        if (att != null)
+        ReplaceSkillAttribute? attribute = preset.GetReplaceAttribute();
+        if (attribute == null)
         {
-            ImGui.Spacing();
-            for (var i = 0; i < att.ActionIcons.Count; i++)
-            {
-                Dalamud.Interface.Textures.TextureWraps.IDalamudTextureWrap img = Svc.Texture.GetFromGameIcon(new(att.ActionIcons[i])).GetWrapOrEmpty();
-                ImGui.Image(img.Handle, img.Size / 2f * ImGui.GetIO().FontGlobalScale);
-                ImGui.SameLine();
-                if (i == 8)
-                {
-                    ImGui.Spacing();
-                }
-
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.BeginTooltip();
-                    ImGui.Text(att.ActionNames[i]);
-                    ImGui.EndTooltip();
-                }
-            }
-            ImGui.Spacing();
-            ImGui.Spacing();
+            return;
         }
+
+        ImGui.Spacing();
+
+        for (var i = 0; i < attribute.ActionIcons.Count; i++)
+        {
+            Dalamud.Interface.Textures.TextureWraps.IDalamudTextureWrap image = Svc.Texture
+                .GetFromGameIcon(new(attribute.ActionIcons[i]))
+                .GetWrapOrEmpty();
+
+            ImGui.Image(image.Handle, image.Size / 2f * ImGui.GetIO().FontGlobalScale);
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.TextUnformatted(attribute.ActionNames[i]);
+                ImGui.EndTooltip();
+            }
+
+            if (i == 8)
+            {
+                ImGui.NewLine();
+            }
+            else
+            {
+                ImGui.SameLine();
+            }
+        }
+
+        ImGui.Spacing();
+        ImGui.Spacing();
     }
 
     internal static int AllChildren((Presets Preset, CustomComboInfoAttribute Info)[] children)
     {
         var output = 0;
 
-        foreach ((Presets preset, CustomComboInfoAttribute info) in children)
+        foreach ((Presets preset, _) in children)
         {
             output++;
             output += AllChildren(PresetChildren[preset]);
@@ -212,9 +219,8 @@ internal class PresetHandler : ConfigWindow
         {
             Presets parent = parentMaybe.Value;
 
-            if (!Service.Configuration.EnabledActions.Contains(parent))
+            if (Service.Configuration.EnabledActions.Add(parent))
             {
-                _ = Service.Configuration.EnabledActions.Add(parent);
                 foreach (Presets conflict in PresetStorage.GetConflicts(parent))
                 {
                     _ = Service.Configuration.EnabledActions.Remove(conflict);
@@ -228,22 +234,17 @@ internal class PresetHandler : ConfigWindow
 
 internal static class PresetExtensions
 {
-    private static readonly Dictionary<Presets, ReplaceSkillAttribute> ReplaceSkillCache = [];
+    private static readonly Dictionary<Presets, ReplaceSkillAttribute?> ReplaceSkillCache = [];
 
     internal static ReplaceSkillAttribute? GetReplaceAttribute(this Presets preset)
     {
-        if (ReplaceSkillCache.TryGetValue(preset, out ReplaceSkillAttribute? replaceSkillAttribute))
+        if (!ReplaceSkillCache.TryGetValue(preset, out ReplaceSkillAttribute? attribute))
         {
-            return replaceSkillAttribute;
+            attribute = preset.GetAttribute<ReplaceSkillAttribute>();
+            ReplaceSkillCache[preset] = attribute;
         }
 
-        ReplaceSkillAttribute? att = preset.GetAttribute<ReplaceSkillAttribute>();
-
-        if (att != null && ReplaceSkillCache.TryAdd(preset, att))
-        {
-            return ReplaceSkillCache[preset];
-        }
-
-        return null;
+        return attribute;
     }
 }
+

@@ -27,6 +27,7 @@ namespace UltimateCombo;
 internal sealed partial class UltimateComboClass : IDalamudPlugin
 {
     private readonly ConfigWindow _configWindow;
+    private long _nextBlueMageSpellCheck;
     internal static UltimateComboClass? P = null;
     internal WindowSystem ws;
     internal static readonly List<uint> DisabledJobsPVE =
@@ -122,8 +123,22 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         PresetStorage.Init();
 
         Service.ComboCache = new CustomComboCache();
-        Service.IconReplacer = new IconReplacer();
-        ActionWatching.Enable();
+
+        try
+        {
+            Service.IconReplacer = new IconReplacer();
+            ActionWatching.Enable();
+        }
+        catch
+        {
+            ActionWatching.Dispose();
+            Service.IconReplacer?.Dispose();
+            Service.ComboCache?.Dispose();
+            ECommonsMain.Dispose();
+            P = null;
+            throw;
+        }
+
         _configWindow = new ConfigWindow();
         ws = new();
         ws.AddWindow(_configWindow);
@@ -133,15 +148,16 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         _ = Service.CommandManager.AddHandler("/uc", new CommandInfo(OnCommand)
         {
             HelpMessage = "Opens the main plugin window, where you can enable and disable options"
-                + "\n/uc enable <featureName> → Turns a specific option on by referring to its internal name"
-                + "\n/uc disable <featureName> → Turns a specific option off by referring to its internal name"
-                + "\n/uc toggle <featureName> → Toggles a specific option by referring to its internal name"
-                + "\n/uc enableall → Turns all options on"
-                + "\n/uc disableall → Turns all options off"
-                + "\n/uc gcd → Toggles the GCD Counting setting"
-                + "\n/uc enabled → Prints a list of every enabled option into the game chat"
-                + "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
-                + "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
+                + "\n/uc enable <featureName> â†’ Turns a specific option on by referring to its internal name"
+                + "\n/uc disable <featureName> â†’ Turns a specific option off by referring to its internal name"
+                + "\n/uc toggle <featureName> â†’ Toggles a specific option by referring to its internal name"
+                + "\n/uc enableall â†’ Turns all options on"
+                + "\n/uc disableall â†’ Turns all options off"
+                + "\n/uc gcd â†’ Toggles the GCD Counting setting"
+                + "\n/uc enabled â†’ Prints a list of every enabled option into the game chat"
+                + "\n/uc debug â†’ Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
+                + "\n/uc debug <jobShort> â†’ Outputs a debug file to your desktop containing only job-relevant options"
+                + "\n/uc perf start|stop â†’ Measures combo checks and lookups; saves a report to your desktop"
         });
 
         Service.Framework.Update += OnFrameworkUpdate;
@@ -165,6 +181,8 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
     private static void HandleConflictedCombos()
     {
         HashSet<Presets> enabledCopy = [.. Service.Configuration.EnabledActions];
+        var configurationChanged = false;
+
         foreach (Presets preset in enabledCopy)
         {
             if (!PresetStorage.IsEnabled(preset))
@@ -179,45 +197,55 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                 {
                     if (PresetStorage.IsEnabled(conflict))
                     {
-                        _ = Service.Configuration.EnabledActions.Remove(conflict);
-                        Service.Configuration.Save();
+                        configurationChanged |= Service.Configuration.EnabledActions.Remove(conflict);
                     }
                 }
             }
+        }
+
+        if (configurationChanged)
+        {
+            Service.Configuration.Save();
         }
     }
 
     private void OnFrameworkUpdate(IFramework framework)
     {
-        IPlayerCharacter? p = Service.ObjectTable.LocalPlayer;
-        IconReplacer.ThreadSafeCache.LocalPlayerAvailable = p != null;
-        IconReplacer.ThreadSafeCache.LocalPlayerObjectId = p?.GameObjectId ?? 0;
+        PerformanceProfiler.RecordFrameworkThread();
+        IPlayerCharacter? player = Service.ObjectTable.LocalPlayer;
+        IconReplacer.ThreadSafeCache.LocalPlayerAvailable = player != null;
+        IconReplacer.ThreadSafeCache.LocalPlayerObjectID = player?.GameObjectId ?? 0;
+        IconReplacer.ThreadSafeCache.LocalPlayerClassJobID = player?.ClassJob.Value.RowId ?? 0;
+        Service.IconReplacer.RefreshJobCombos(IconReplacer.ThreadSafeCache.LocalPlayerClassJobID);
+        JobID = player?.ClassJob.Value.RowId;
 
-        if (Service.ObjectTable.LocalPlayer is not null)
+        if (JobID == BLU.JobID && Environment.TickCount64 >= _nextBlueMageSpellCheck)
         {
-            JobID = Service.ObjectTable.LocalPlayer?.ClassJob.Value.RowId;
-
-            if (JobID == BLU.JobID)
-            {
-                CustomComboFunctions.PopulateBLUSpells();
-            }
+            _nextBlueMageSpellCheck = Environment.TickCount64 + 500;
+            CustomComboFunctions.PopulateBLUSpells();
         }
     }
 
     private static void KillRedundantIDs()
     {
         var redundantIDs = Service.Configuration.EnabledActions.Where(x => int.TryParse(x.ToString(), out _)).OrderBy(x => x).Cast<int>().ToList();
+        var removedIDs = 0;
+
         foreach (var id in redundantIDs)
         {
-            _ = Service.Configuration.EnabledActions.RemoveWhere(x => (int) x == id);
+            removedIDs += Service.Configuration.EnabledActions.RemoveWhere(x => (int) x == id);
         }
 
-        Service.Configuration.Save();
-
+        if (removedIDs > 0)
+        {
+            Service.Configuration.Save();
+        }
     }
 
     public void Dispose()
     {
+        Service.IconReplacer?.Dispose();
+
         Service.Interface.UiBuilder.Draw -= ws.Draw;
         Service.Interface.UiBuilder.OpenConfigUi -= OnOpenConfigUi;
         Service.Interface.UiBuilder.OpenMainUi -= OnOpenConfigUi;
@@ -233,7 +261,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         ActionWatching.Disable();
         ActionWatching.Dispose();
 
-        Service.IconReplacer?.Dispose();
+        Icons.Dispose();
         Service.ComboCache?.Dispose();
 
         ECommonsMain.Dispose();
@@ -268,7 +296,6 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                         Service.ChatGui.Print($"{preset} enabled!");
                     }
 
-                    Service.Configuration.Save();
                     break;
                 }
 
@@ -286,7 +313,6 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                         Service.ChatGui.Print($"{preset} disabled!");
                     }
 
-                    Service.Configuration.Save();
                     break;
                 }
 
@@ -312,7 +338,6 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                         }
                     }
 
-                    Service.Configuration.Save();
                     break;
                 }
 
@@ -324,7 +349,6 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                     }
 
                     Service.ChatGui.Print("All presets disabled!");
-                    Service.Configuration.Save();
                     break;
                 }
 
@@ -336,15 +360,13 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                     }
 
                     Service.ChatGui.Print("All presets enabled!");
-                    Service.Configuration.Save();
                     break;
                 }
 
             case "gcd":
                 {
                     Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
-                    Service.Configuration.Save();
-                    Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
+                    Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "âœ“");
 
                     break;
                 }
@@ -359,6 +381,50 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
                         }
 
                         Service.ChatGui.Print($"{(int) preset} - {preset}");
+                    }
+
+                    break;
+                }
+
+            case "perf":
+                {
+                    if (argumentsParts.Length < 2)
+                    {
+                        Service.ChatGui.Print("Use /uc perf start or /uc perf stop.");
+                        break;
+                    }
+
+                    if (argumentsParts[1].Equals("start", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Service.ChatGui.Print(PerformanceProfiler.Start()
+                            ? "Performance sample started. Play normally, then type /uc perf stop."
+                            : "A performance sample is already running.");
+                    }
+                    else if (argumentsParts[1].Equals("stop", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var report = PerformanceProfiler.Stop();
+                        if (report == null)
+                        {
+                            Service.ChatGui.Print("Start a performance sample with /uc perf start first.");
+                            break;
+                        }
+
+                        try
+                        {
+                            var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+                            var path = Path.Combine(desktop, "UltimateComboPerformance.txt");
+                            File.WriteAllText(path, report);
+                            Service.ChatGui.Print("Performance report saved to your desktop as UltimateComboPerformance.txt.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Service.PluginLog.Error(ex, "Performance report");
+                            Service.ChatGui.Print("Unable to save the performance report. Type /xllog to see why.");
+                        }
+                    }
+                    else
+                    {
+                        Service.ChatGui.Print("Use /uc perf start or /uc perf stop.");
                     }
 
                     break;

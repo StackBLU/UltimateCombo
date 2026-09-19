@@ -95,12 +95,10 @@ internal class Common
 
         protected override uint Invoke(uint actionID)
         {
-            if (actionID is Reprisal && IsEnabled(Presets.All_Tank_Reprisal) && SafeToUse())
+            if (actionID is Reprisal && IsEnabled(Presets.All_Tank_Reprisal)
+                && TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal) && SafeToUse())
             {
-                if (TargetHasEffectAny(Debuffs.Reprisal) && IsOffCooldown(Reprisal))
-                {
-                    return OriginalHook(11);
-                }
+                return OriginalHook(11);
             }
 
             return actionID;
@@ -113,12 +111,10 @@ internal class Common
 
         protected override uint Invoke(uint actionID)
         {
-            if (actionID is Addle && IsEnabled(Presets.All_Caster_Addle) && SafeToUse())
+            if (actionID is Addle && IsEnabled(Presets.All_Caster_Addle)
+                && TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle) && SafeToUse())
             {
-                if (TargetHasEffectAny(Debuffs.Addle) && IsOffCooldown(Addle))
-                {
-                    return OriginalHook(11);
-                }
+                return OriginalHook(11);
             }
 
             return actionID;
@@ -131,12 +127,10 @@ internal class Common
 
         protected override uint Invoke(uint actionID)
         {
-            if (actionID is Feint && IsEnabled(Presets.All_Melee_Feint) && SafeToUse())
+            if (actionID is Feint && IsEnabled(Presets.All_Melee_Feint)
+                && TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint) && SafeToUse())
             {
-                if (TargetHasEffectAny(Debuffs.Feint) && IsOffCooldown(Feint))
-                {
-                    return OriginalHook(11);
-                }
+                return OriginalHook(11);
             }
 
             return actionID;
@@ -149,12 +143,10 @@ internal class Common
 
         protected override uint Invoke(uint actionID)
         {
-            if (actionID is TrueNorth && IsEnabled(Presets.All_Melee_TrueNorth) && SafeToUse())
+            if (actionID is TrueNorth && IsEnabled(Presets.All_Melee_TrueNorth)
+                && HasEffect(Buffs.TrueNorth) && SafeToUse())
             {
-                if (HasEffect(Buffs.TrueNorth))
-                {
-                    return OriginalHook(11);
-                }
+                return OriginalHook(11);
             }
 
             return actionID;
@@ -195,7 +187,7 @@ internal class Common
 
                 if (CurrentJobId is BLU.JobID)
                 {
-                    if (ActionReady(Swiftcast) && ActionReady(BLU.AngelsSnack))
+                    if (ActionReady(Swiftcast) && ActionReady(BLU.AngelWhisper))
                     {
                         return Swiftcast;
                     }
@@ -269,10 +261,12 @@ internal class Common
             if (IsEnabled(Presets.All_RoleActions) && IsComboAction(actionID))
             {
                 //True North
-                if (CanLateWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
+                if (IsEnabled(Presets.All_TrueNorth)
+                    && (CurrentJobId is MNK.JobID or DRG.JobID or NIN.JobID or SAM.JobID or RPR.JobID or VPR.JobID)
+                    && ActionReady(TrueNorth) && IsActionEnabled(TrueNorth)
+                    && CanLateWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
                 {
-                    if (IsEnabled(Presets.All_TrueNorth) && ActionReady(TrueNorth) && IsActionEnabled(TrueNorth)
-                        && TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || EffectRemainingTime(Buffs.TrueNorth) < 1))
+                    if (TargetNeedsPositionals() && (!HasEffect(Buffs.TrueNorth) || EffectRemainingTime(Buffs.TrueNorth) < 1))
                     {
                         if (CurrentJobId is MNK.JobID)
                         {
@@ -411,7 +405,10 @@ internal class Common
                 }
 
                 //Interject and Head Graze
-                if (IsEnabled(Presets.All_Interrupt) && SafeToUse() && CanInterrupt() && ShouldInterrupt())
+                if (IsEnabled(Presets.All_Interrupt)
+                    && (CurrentJobId is PLD.JobID or WAR.JobID or DRK.JobID or GNB.JobID
+                        or BRD.JobID or MCH.JobID or DNC.JobID)
+                    && CanInterrupt() && ShouldInterrupt() && SafeToUse())
                 {
                     if (ActionReady(Interject) && InActionRange(Interject) && CurrentJobId is PLD.JobID or WAR.JobID or DRK.JobID or GNB.JobID)
                     {
@@ -425,7 +422,16 @@ internal class Common
                 }
 
                 //Second Wind, Bloodbath, Arm's Length
-                if (CanWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
+                if (((IsEnabled(Presets.All_SecondWind)
+                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.All_SecondWind)
+                        && ActionReady(SecondWind) && IsActionEnabled(SecondWind))
+                    || (IsEnabled(Presets.All_Bloodbath)
+                        && PlayerHealthPercentageHp() <= GetOptionValue(Config.All_Bloodbath)
+                        && ActionReady(Bloodbath) && IsActionEnabled(Bloodbath))
+                    || (IsEnabled(Presets.All_ArmsLength)
+                        && (ActionWatching.NumberOfGcdsUsed >= 5 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
+                        && ActionReady(ArmsLength) && IsActionEnabled(ArmsLength)))
+                    && CanWeave(actionID, ActionWatching.LastGCD) && SafeToUse())
                 {
                     if (IsEnabled(Presets.All_SecondWind) && ActionReady(SecondWind) && IsActionEnabled(SecondWind)
                         && PlayerHealthPercentageHp() <= GetOptionValue(Config.All_SecondWind))

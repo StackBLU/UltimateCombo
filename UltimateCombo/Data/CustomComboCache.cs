@@ -5,6 +5,7 @@ using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using UltimateCombo.Core;
 
 namespace UltimateCombo.Data;
@@ -13,96 +14,112 @@ internal partial class CustomComboCache : IDisposable
 {
     private const uint InvalidObjectID = 0xE000_0000;
 
-    private readonly ConcurrentDictionary<(uint StatusID, ulong? TargetID, ulong? SourceID), IStatus?> _statusCache = new();
-    private readonly ConcurrentDictionary<uint, CooldownData?> _cooldownCache = new();
+    private readonly ConcurrentDictionary<(uint StatusID, ulong? TargetID, ulong? SourceID), StatusCacheEntry> _statusCache = new();
+    private readonly ConcurrentDictionary<uint, CooldownData> _cooldownCache = new();
     private readonly ConcurrentDictionary<Type, JobGaugeBase> _jobGaugeCache = new();
+    private bool _disposed;
 
     internal CustomComboCache()
     {
-        Service.Framework.Update += Framework_Update;
+        Service.Framework.Update += OnFrameworkUpdate;
     }
-
-    private delegate IntPtr GetActionCooldownSlotDelegate(IntPtr actionManager, int cooldownGroup);
 
     internal void Dispose()
     {
-        Service.Framework.Update -= Framework_Update;
+        if (_disposed)
+        {
+            return;
+        }
+
+        _disposed = true;
+        Service.Framework.Update -= OnFrameworkUpdate;
+        _statusCache.Clear();
+        _cooldownCache.Clear();
+        _jobGaugeCache.Clear();
     }
 
     internal T GetJobGauge<T>() where T : JobGaugeBase
     {
-        if (!_jobGaugeCache.TryGetValue(typeof(T), out JobGaugeBase? gauge))
-        {
-            gauge = _jobGaugeCache[typeof(T)] = Service.JobGauges.Get<T>();
-        }
-
+        JobGaugeBase gauge = _jobGaugeCache.GetOrAdd(typeof(T), _ => Service.JobGauges.Get<T>());
         return (T) gauge;
     }
 
-    internal IStatus? GetStatus(uint statusID, IGameObject? obj, ulong? sourceID)
+    internal IStatus? GetStatus(uint statusID, IGameObject? target, ulong? sourceID)
     {
-        (uint statusID, ulong? GameObjectId, ulong? sourceID) key = (statusID, obj?.GameObjectId, sourceID);
-        if (_statusCache.TryGetValue(key, out IStatus? found))
+        var recording = PerformanceProfiler.IsRecording;
+        var startedAt = recording ? Stopwatch.GetTimestamp() : 0;
+        var cacheHit = false;
+
+        try
         {
+            (uint StatusID, ulong? TargetID, ulong? SourceID) key = (StatusID: statusID, TargetID: target?.GameObjectId, SourceID: sourceID);
+            if (_statusCache.TryGetValue(key, out StatusCacheEntry cached))
+            {
+                cacheHit = true;
+                return cached.Status;
+            }
+
+            IStatus? found = null;
+
+            if (target is IBattleChara character)
+            {
+                foreach (IStatus status in character.StatusList)
+                {
+                    if (status.StatusId == statusID && IsMatchingSource(status, sourceID))
+                    {
+                        found = status;
+                        break;
+                    }
+                }
+            }
+
+            _statusCache[key] = new StatusCacheEntry(found);
             return found;
         }
-
-        if (obj is null)
+        finally
         {
-            return _statusCache[key] = null;
-        }
-
-        if (obj is not IBattleChara chara)
-        {
-            return _statusCache[key] = null;
-        }
-
-        foreach (IStatus status in chara.StatusList)
-        {
-            if (status.StatusId == statusID && (!sourceID.HasValue || status.SourceId == 0 || status.SourceId == InvalidObjectID || status.SourceId == sourceID))
+            if (recording)
             {
-                return _statusCache[key] = status;
+                PerformanceProfiler.RecordStatusLookup(Stopwatch.GetTimestamp() - startedAt, cacheHit);
             }
         }
-
-        return _statusCache[key] = null;
     }
 
     internal CooldownData GetCooldown(uint actionID)
     {
-        if (_cooldownCache.TryGetValue(actionID, out CooldownData? found))
+        return _cooldownCache.GetOrAdd(actionID, static id => new CooldownData
         {
-            return found!;
-        }
-
-        var data = new CooldownData()
-        {
-            ActionID = actionID,
-        };
-
-        return _cooldownCache[actionID] = data;
+            ActionID = id
+        });
     }
 
     internal static unsafe int GetResourceCost(uint actionID)
     {
-        ActionManager* actionManager = ActionManager.Instance();
-        if (actionManager == null)
+        if (ActionManager.Instance() == null)
         {
             return 0;
         }
 
-        var cost = ActionManager.GetActionCost(ActionType.Action, actionID, 0, 0, 0, 0);
-        return cost;
+        return ActionManager.GetActionCost(ActionType.Action, actionID, 0, 0, 0, 0);
     }
 
-    private void Framework_Update(IFramework framework)
+    private static bool IsMatchingSource(IStatus status, ulong? sourceID)
+    {
+        return !sourceID.HasValue
+            || status.SourceId == 0
+            || status.SourceId == InvalidObjectID
+            || status.SourceId == sourceID;
+    }
+
+    private void OnFrameworkUpdate(IFramework framework)
     {
         _statusCache.Clear();
-        _cooldownCache.Clear();
     }
 
     void IDisposable.Dispose()
     {
         Dispose();
     }
+
+    private readonly record struct StatusCacheEntry(IStatus? Status);
 }

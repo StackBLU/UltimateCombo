@@ -1,4 +1,5 @@
 using FFXIVClientStructs.FFXIV.Client.Game;
+using System;
 using UltimateCombo.Core;
 using UltimateCombo.Data;
 
@@ -53,21 +54,22 @@ internal abstract partial class CustomComboFunctions
 
     internal static unsafe bool IsActionEnabled(uint actionID)
     {
-        return ActionManager.Instance()->GetActionStatus(ActionType.Action, actionID) == 0;
+        ActionManager* actionManager = ActionManager.Instance();
+        return actionManager != null && actionManager->GetActionStatus(ActionType.Action, actionID) == 0;
     }
 
     internal static unsafe float RemainingGCD
     {
         get
         {
-            RecastDetail* recastGCD = ActionManager.Instance()->GetRecastGroupDetail(57);
-
-            if (recastGCD == null)
+            ActionManager* actionManager = ActionManager.Instance();
+            if (actionManager == null)
             {
                 return 0;
             }
 
-            return recastGCD->Total - recastGCD->Elapsed;
+            RecastDetail* recastGCD = actionManager->GetRecastGroupDetail(57);
+            return recastGCD == null ? 0 : MathF.Max(0, recastGCD->Total - recastGCD->Elapsed);
         }
     }
 }

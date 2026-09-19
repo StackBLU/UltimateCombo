@@ -4,7 +4,7 @@ using UltimateCombo.Combos;
 namespace UltimateCombo.Attributes;
 
 [AttributeUsage(AttributeTargets.Field)]
-internal class ParentComboAttribute : Attribute
+internal sealed class ParentComboAttribute : Attribute
 {
     internal ParentComboAttribute(Presets parentPreset)
     {
