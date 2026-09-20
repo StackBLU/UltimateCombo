@@ -371,7 +371,7 @@ internal static class AST
                     return SunSign;
                 }
 
-                if (ActionReady(AspectedHelios) && (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
+                if (ActionReady(OriginalHook(AspectedHelios)) && (!HasEffect(HeliosList[OriginalHook(AspectedHelios)])
                     || EffectRemainingTime(HeliosList[OriginalHook(AspectedHelios)]) <= 3 || HasEffect(Buffs.NeutralSect)
                     || HasEffect(Buffs.Horoscope) || WasLastAbility(NeutralSect)))
                 {

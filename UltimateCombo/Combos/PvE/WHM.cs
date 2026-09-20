@@ -210,8 +210,7 @@ internal static class WHM
                     return Regen;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
-                    && !WasLastGCD(AfflatusSolace) && !WasLastGCD(AfflatusMisery))
+                if (IsEnabled(Presets.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
                 {
                     return ThinAir;
                 }
@@ -246,13 +245,12 @@ internal static class WHM
                     return AfflatusMisery;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily >= 1 && Gauge.BloodLily != 3 && HasBattleTarget())
+                if (IsEnabled(Presets.WHM_AoE_Heals_Rapture) && ActionReady(AfflatusRapture) && Gauge.Lily >= 1 && Gauge.BloodLily != 3)
                 {
                     return AfflatusRapture;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
-                    && !WasLastGCD(AfflatusRapture) && !WasLastGCD(AfflatusMisery))
+                if (IsEnabled(Presets.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
                 {
                     return ThinAir;
                 }

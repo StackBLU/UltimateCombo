@@ -42,9 +42,9 @@ internal class SettingsWindow : ConfigWindow
             + "X / A - Select\n"
             + "Circle / B - Back\n"
             + "Square / X (Hold) - Select window\n"
-            + "    L1 / R1 - Up / Down\n"
-            + "    D-pad - Resize window\n"
-            + "    Left stick - Move window");
+            + "  - L1 / R1 - Up / Down\n"
+            + "  - D-pad - Resize window\n"
+            + "  - Left stick - Move window");
         ImGui.Spacing();
     }
 
@@ -102,7 +102,7 @@ internal class SettingsWindow : ConfigWindow
         }
 
         ImGui.Spacing();
-        ImGui.TextWrapped("Minimum distance from the target before melee jobs use ranged attacks. Default: 7. Minimum: 3.");
+        ImGui.TextWrapped("Minimum distance from the target before melee jobs use ranged attacks.\nDefault: 7\nMinimum: 3");
 
         var rangedAttackRange = Service.Configuration.RangedAttackRange;
         ImGui.SetNextItemWidth(150f * ImGuiHelpers.GlobalScale);

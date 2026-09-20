@@ -104,7 +104,7 @@ internal static class SAM
                     return Common.TrueNorth;
                 }
 
-                if (IsEnabled(Presets.SAM_ST_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget())
+                if (IsEnabled(Presets.SAM_ST_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget() && !IsMoving)
                 {
                     return Meditate;
                 }
@@ -173,12 +173,13 @@ internal static class SAM
 
                 if (TargetHasEffect(Debuffs.Higanbana))
                 {
-                    if (IsEnabled(Presets.SAM_ST_Kaeshi) && WasLastGCD(OgiNamikiri))
+                    if (IsEnabled(Presets.SAM_ST_Kaeshi) && ActionReady(OriginalHook(KaeshiNamikiri)) && !IsMoving)
                     {
                         return KaeshiNamikiri;
                     }
 
-                    if (IsEnabled(Presets.SAM_ST_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady) && GetRemainingCharges(MeikyoShisui) == 0)
+                    if (IsEnabled(Presets.SAM_ST_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady) && !IsMoving
+                        && (GetRemainingCharges(MeikyoShisui) == 0 || EffectRemainingTime(Buffs.OgiNamikiriReady) < 5))
                     {
                         return OgiNamikiri;
                     }
@@ -191,7 +192,7 @@ internal static class SAM
                     return OriginalHook(TsubameGaeshi);
                 }
 
-                if (IsEnabled(Presets.SAM_ST_Higanbana) && TargetEffectRemainingTime(Debuffs.Higanbana) < 5
+                if (IsEnabled(Presets.SAM_ST_Higanbana) && TargetEffectRemainingTime(Debuffs.Higanbana) < 5 && !IsMoving
                     && (!IsMoving || WasLastGCD(OriginalHook(Gyofu)))
                     && OriginalHook(Iaijutsu) != TenkaGoken && OriginalHook(Iaijutsu) != TendoGoken
                     && (Gauge.HasGetsu || Gauge.HasKa || Gauge.HasSetsu)
@@ -201,7 +202,7 @@ internal static class SAM
                     return OriginalHook(Iaijutsu);
                 }
 
-                if (Gauge.HasGetsu && Gauge.HasKa && Gauge.HasSetsu
+                if (Gauge.HasGetsu && Gauge.HasKa && Gauge.HasSetsu && !IsMoving
                     && (!IsMoving || WasLastGCD(Jinpu) || WasLastGCD(Shifu))
                     && IsEnabled(Presets.SAM_ST_Iaijutsu)
                     && (ActionWatching.NumberOfGcdsUsed > 2 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD()))
@@ -281,7 +282,7 @@ internal static class SAM
                     return MeikyoShisui;
                 }
 
-                if (IsEnabled(Presets.SAM_AoE_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget())
+                if (IsEnabled(Presets.SAM_AoE_Meditate) && ActionReady(Meditate) && InCombat() && !HasBattleTarget() && !IsMoving)
                 {
                     return Meditate;
                 }
@@ -335,12 +336,12 @@ internal static class SAM
                     }
                 }
 
-                if (IsEnabled(Presets.SAM_AoE_Kaeshi) && WasLastGCD(OgiNamikiri))
+                if (IsEnabled(Presets.SAM_AoE_Kaeshi) && ActionReady(OriginalHook(KaeshiNamikiri)) && !IsMoving)
                 {
                     return KaeshiNamikiri;
                 }
 
-                if (IsEnabled(Presets.SAM_AoE_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady))
+                if (IsEnabled(Presets.SAM_AoE_Kaeshi) && HasEffect(Buffs.OgiNamikiriReady) && !IsMoving)
                 {
                     return OgiNamikiri;
                 }
@@ -352,7 +353,7 @@ internal static class SAM
                     return OriginalHook(TsubameGaeshi);
                 }
 
-                if (IsEnabled(Presets.SAM_AoE_Iaijutsu)
+                if (IsEnabled(Presets.SAM_AoE_Iaijutsu) && !IsMoving
                     && ((Gauge.HasGetsu && Gauge.HasKa) || (Gauge.HasGetsu && Gauge.HasSetsu) || (Gauge.HasSetsu && Gauge.HasKa)))
                 {
                     return OriginalHook(Iaijutsu);

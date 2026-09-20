@@ -148,16 +148,16 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
         _ = Service.CommandManager.AddHandler("/uc", new CommandInfo(OnCommand)
         {
             HelpMessage = "Opens the main plugin window, where you can enable and disable options"
-                + "\n/uc enable <featureName> â†’ Turns a specific option on by referring to its internal name"
-                + "\n/uc disable <featureName> â†’ Turns a specific option off by referring to its internal name"
-                + "\n/uc toggle <featureName> â†’ Toggles a specific option by referring to its internal name"
-                + "\n/uc enableall â†’ Turns all options on"
-                + "\n/uc disableall â†’ Turns all options off"
-                + "\n/uc gcd â†’ Toggles the GCD Counting setting"
-                + "\n/uc enabled â†’ Prints a list of every enabled option into the game chat"
-                + "\n/uc debug â†’ Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
-                + "\n/uc debug <jobShort> â†’ Outputs a debug file to your desktop containing only job-relevant options"
-                + "\n/uc perf start|stop â†’ Measures combo checks and lookups; saves a report to your desktop"
+                + "\n/uc enable <featureName> → Turns a specific option on by referring to its internal name"
+                + "\n/uc disable <featureName> → Turns a specific option off by referring to its internal name"
+                + "\n/uc toggle <featureName> → Toggles a specific option by referring to its internal name"
+                + "\n/uc enableall → Turns all options on"
+                + "\n/uc disableall → Turns all options off"
+                + "\n/uc gcd → Toggles the GCD Counting setting"
+                + "\n/uc enabled → Prints a list of every enabled option into the game chat"
+                + "\n/uc debug → Outputs a full debug file to your desktop that can be sent to developers to assist in bug fixing"
+                + "\n/uc debug <jobShort> → Outputs a debug file to your desktop containing only job-relevant options"
+                + "\n/uc perf start|stop → Measures combo checks and lookups; saves a report to your desktop"
         });
 
         Service.Framework.Update += OnFrameworkUpdate;
@@ -366,7 +366,7 @@ internal sealed partial class UltimateComboClass : IDalamudPlugin
             case "gcd":
                 {
                     Service.Configuration.IgnoreGCDChecks = !Service.Configuration.IgnoreGCDChecks;
-                    Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "âœ“");
+                    Service.DtrBarEntry.Text = "GCD Counting  " + (Service.Configuration.IgnoreGCDChecks ? "X" : "✓");
 
                     break;
                 }

@@ -74,7 +74,7 @@ internal static class JobTab
 
         foreach (JobRole role in roles)
         {
-            ImGui.TextDisabled(role.Name);
+            ImGui.TextColored(Colors.Orange, role.Name);
 
             foreach (var jobID in role.JobIDs)
             {

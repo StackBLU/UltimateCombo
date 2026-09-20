@@ -338,6 +338,18 @@ internal class BST
 
                     if (IsEnabled(Presets.BST_Combo) && Gauge.BattleHorn != 0 && !WasLastAction(PartingBlow))
                     {
+                        //Infinitive
+                        if (HasEffect(Buffs.Sunstrider) && Gauge.PlayerTP == 250)
+                        {
+                            return OriginalHook(GaleAxe);
+                        }
+
+                        if (HasEffect(Buffs.Moonstalker) && Gauge.PlayerTP == 250)
+                        {
+                            return OriginalHook(SpinningAxe);
+                        }
+
+                        //Intentional
                         if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Rampant))
                         {
                             return OriginalHook(MistralAxe);
@@ -363,7 +375,8 @@ internal class BST
                             return OriginalHook(Trick);
                         }
 
-                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PlayerInstinct >= Gauge.PetInstinct)
+                        //Starter
+                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PlayerInstinct >= Gauge.PetInstinct && LevelChecked(RallyingCheer))
                         {
                             if (TrickType is TrickTypes.Rampant)
                             {
@@ -386,7 +399,7 @@ internal class BST
                             }
                         }
 
-                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PetInstinct >= Gauge.PlayerInstinct)
+                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && (Gauge.PetInstinct >= Gauge.PlayerInstinct || !LevelChecked(RallyingCheer)))
                         {
                             return OriginalHook(Trick);
                         }
@@ -404,26 +417,6 @@ internal class BST
                 }
 
                 return SmashAxe;
-            }
-
-            return actionID;
-        }
-    }
-
-    internal class BST_Borrow : CustomComboBase
-    {
-        protected internal override Presets Preset { get; } = Presets.BST_Borrow;
-
-        protected override uint Invoke(uint actionID)
-        {
-            if ((actionID is Borrow) && IsEnabled(Presets.BST_Borrow))
-            {
-                if (HasEffect(Buffs.OneWithNature))
-                {
-                    return OriginalHook(Borrow);
-                }
-
-                return OriginalHook(BeastMode);
             }
 
             return actionID;
