@@ -54,7 +54,7 @@ internal class BST
     [StructLayout(LayoutKind.Explicit, Size = 0x11)]
     internal struct TmpBSTGauge
     {
-        [FieldOffset(0x08)] internal byte PlayerTP;
+        [FieldOffset(0x08)] internal byte MasterTP;
         [FieldOffset(0x09)] internal byte PetTP;
         [FieldOffset(0x0B)] internal byte BattleHorn;
 
@@ -70,7 +70,7 @@ internal class BST
 
         internal int PetInstinct => Instinct & 0x3;
 
-        internal int PlayerInstinct => (Instinct & 0xC) >> 2;
+        internal int MasterInstinct => (Instinct & 0xC) >> 2;
     }
 
     internal static unsafe TmpBSTGauge* GaugePtr => (TmpBSTGauge*) ((nint) JobGaugeManager.StaticAddressPointers.pInstance + 0x08);
@@ -271,32 +271,21 @@ internal class BST
         TrickActions.Zu_FlyingFrenzy,
     ];
 
-    internal static unsafe Buddy.BuddyMember? CurrentPet =>
-        *UIState.Instance()->Buddy.PetInfo.Pet;
+    internal static unsafe Buddy.BuddyMember? CurrentPet => *UIState.Instance()->Buddy.PetInfo.Pet;
 
-    internal static bool CurrentPetIsBMPet =>
-        CurrentPet?.DataId > 0 &&
-        Svc.Data.GetExcelSheet<XBMPet>().Any(x => x.Pet.RowId == CurrentPet?.DataId);
+    internal static bool CurrentPetIsBMPet => CurrentPet?.DataId > 0 && Svc.Data.GetExcelSheet<XBMPet>().Any(x => x.Pet.RowId == CurrentPet?.DataId);
 
-    internal static Pet? CurrentPetSheet =>
-        CurrentPetIsBMPet
-            ? Svc.Data.GetExcelSheet<Pet>().GetRow(CurrentPet?.DataId ?? 0)
-            : null;
+    internal static Pet? CurrentPetSheet => CurrentPetIsBMPet ? Svc.Data.GetExcelSheet<Pet>().GetRow(CurrentPet?.DataId ?? 0) : null;
 
-    internal static uint CurrentPetTrickAction =>
-        CurrentPetSheet?.Abilities[0].RowId ?? 0;
+    internal static uint CurrentPetTrickAction => CurrentPetSheet?.Abilities[0].RowId ?? 0;
 
-    private static bool TrickIsDurant =>
-        DurantTricks.Any(x => x == CurrentPetTrickAction);
+    private static bool TrickIsDurant => DurantTricks.Any(x => x == CurrentPetTrickAction);
 
-    private static bool TrickIsEldritch =>
-        EldritchTricks.Any(x => x == CurrentPetTrickAction);
+    private static bool TrickIsEldritch => EldritchTricks.Any(x => x == CurrentPetTrickAction);
 
-    private static bool TrickIsVolant =>
-        VolantTricks.Any(x => x == CurrentPetTrickAction);
+    private static bool TrickIsVolant => VolantTricks.Any(x => x == CurrentPetTrickAction);
 
-    private static bool TrickIsRampant =>
-        RampantTricks.Any(x => x == CurrentPetTrickAction);
+    private static bool TrickIsRampant => RampantTricks.Any(x => x == CurrentPetTrickAction);
 
     internal enum TrickTypes
     {
@@ -326,12 +315,15 @@ internal class BST
             {
                 if (CanWeave(actionID, SmashAxe))
                 {
-                    if (IsEnabled(Presets.BST_Rally) && ActionReady(Rally) && Gauge.PlayerInstinct == 3 && Gauge.PlayerTP < 100)
+                    if (IsEnabled(Presets.BST_Rally) && ActionReady(Rally) && Gauge.MasterInstinct == 3 && Gauge.MasterTP < 100 && Gauge.PetInstinct == 1
+                        && (HasEffect(Buffs.Sunstrider) || HasEffect(Buffs.Moonstalker))
+                        && (EffectRemainingTime(Buffs.Sunstrider) > 2 || EffectRemainingTime(Buffs.Moonstalker) > 2))
                     {
                         return Rally;
                     }
 
-                    if (IsEnabled(Presets.BST_Cheer) && ActionReady(RallyingCheer) && Gauge.PetInstinct == 3 && Gauge.PetTP < 100)
+                    if (IsEnabled(Presets.BST_Cheer) && ActionReady(RallyingCheer) && Gauge.PetInstinct == 3 && Gauge.PetTP < 100 && Gauge.MasterInstinct == 2
+                        && (HasEffect(Buffs.Rampant) || HasEffect(Buffs.Durant) || HasEffect(Buffs.Eldritch) || HasEffect(Buffs.Volant)))
                     {
                         return RallyingCheer;
                     }
@@ -339,33 +331,33 @@ internal class BST
                     if (IsEnabled(Presets.BST_Combo) && Gauge.BattleHorn != 0 && !WasLastAction(PartingBlow))
                     {
                         //Infinitive
-                        if (HasEffect(Buffs.Sunstrider) && Gauge.PlayerTP == 250)
+                        if (HasEffect(Buffs.Sunstrider) && Gauge.MasterTP == 250)
                         {
                             return OriginalHook(GaleAxe);
                         }
 
-                        if (HasEffect(Buffs.Moonstalker) && Gauge.PlayerTP == 250)
+                        if (HasEffect(Buffs.Moonstalker) && Gauge.MasterTP == 250)
                         {
                             return OriginalHook(SpinningAxe);
                         }
 
                         //Intentional
-                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Rampant))
+                        if (Gauge.MasterTP >= 100 && HasEffect(Buffs.Rampant) && (Gauge.MasterInstinct != 2 || Gauge.PetInstinct != 0))
                         {
                             return OriginalHook(MistralAxe);
                         }
 
-                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Durant))
+                        if (Gauge.MasterTP >= 100 && HasEffect(Buffs.Durant) && (Gauge.MasterInstinct != 2 || Gauge.PetInstinct != 0))
                         {
                             return OriginalHook(SpinningAxe);
                         }
 
-                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Eldritch))
+                        if (Gauge.MasterTP >= 100 && HasEffect(Buffs.Eldritch) && (Gauge.MasterInstinct != 2 || Gauge.PetInstinct != 0))
                         {
                             return OriginalHook(GaleAxe);
                         }
 
-                        if (Gauge.PlayerTP >= 100 && HasEffect(Buffs.Volant))
+                        if (Gauge.MasterTP >= 100 && HasEffect(Buffs.Volant) && (Gauge.MasterInstinct != 2 || Gauge.PetInstinct != 0))
                         {
                             return OriginalHook(AvalancheAxe);
                         }
@@ -376,7 +368,7 @@ internal class BST
                         }
 
                         //Starter
-                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && Gauge.PlayerInstinct >= Gauge.PetInstinct && LevelChecked(RallyingCheer))
+                        if (Gauge.MasterTP >= 100 && Gauge.PetTP >= 100 && Gauge.MasterInstinct >= Gauge.PetInstinct && LevelChecked(RallyingCheer))
                         {
                             if (TrickType is TrickTypes.Rampant)
                             {
@@ -399,7 +391,7 @@ internal class BST
                             }
                         }
 
-                        if (Gauge.PlayerTP >= 100 && Gauge.PetTP >= 100 && (Gauge.PetInstinct >= Gauge.PlayerInstinct || !LevelChecked(RallyingCheer)))
+                        if (Gauge.MasterTP >= 100 && Gauge.PetTP >= 100 && (Gauge.PetInstinct >= Gauge.MasterInstinct || !LevelChecked(RallyingCheer)))
                         {
                             return OriginalHook(Trick);
                         }
@@ -433,7 +425,7 @@ internal class BST
             {
                 if (actionID is FirstBattlehorn)
                 {
-                    if (HasEffect(Buffs.OneWithNature))
+                    if (HasEffect(Buffs.OneWithNature) && Gauge.BattleHorn != 0)
                     {
                         return OriginalHook(TemperedRelease);
                     }
@@ -446,7 +438,7 @@ internal class BST
 
                 if (actionID is SecondBattlehorn)
                 {
-                    if (HasEffect(Buffs.OneWithNature))
+                    if (HasEffect(Buffs.OneWithNature) && Gauge.BattleHorn != 0)
                     {
                         return OriginalHook(TemperedRelease);
                     }
@@ -459,7 +451,7 @@ internal class BST
 
                 if (actionID is ThirdBattlehorn)
                 {
-                    if (HasEffect(Buffs.OneWithNature))
+                    if (HasEffect(Buffs.OneWithNature) && Gauge.BattleHorn != 0)
                     {
                         return OriginalHook(TemperedRelease);
                     }

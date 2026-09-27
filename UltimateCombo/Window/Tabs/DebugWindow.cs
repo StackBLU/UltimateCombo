@@ -84,12 +84,12 @@ internal class DebugWindow : ConfigWindow
             ImGui.Spacing();
             ImGui.Separator();
             ImGui.TextUnformatted("Beastmaster Gauge");
-            ImGui.TextUnformatted($"Player TP: {BST.Gauge.PlayerTP}");
+            ImGui.TextUnformatted($"Player TP: {BST.Gauge.MasterTP}");
             ImGui.TextUnformatted($"Beast TP: {BST.Gauge.PetTP}");
             ImGui.TextUnformatted($"Battle Horn: {BST.Gauge.BattleHorn}");
             ImGui.TextUnformatted($"Active Affinity: {BST.Gauge.ActiveAffinity}");
             ImGui.TextUnformatted($"Pet Instinct: {BST.Gauge.PetInstinct}");
-            ImGui.TextUnformatted($"Master Instinct: {BST.Gauge.PlayerInstinct}");
+            ImGui.TextUnformatted($"Master Instinct: {BST.Gauge.MasterInstinct}");
         }
 
         if (localPlayer.ClassJob.RowId == BLU.JobID)

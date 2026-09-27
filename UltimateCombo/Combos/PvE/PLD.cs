@@ -88,8 +88,7 @@ internal static class PLD
         {
             if ((actionID is FastBlade or RiotBlade or RageOfHalone or RoyalAuthority) && IsEnabled(Presets.PLD_ST_DPS))
             {
-                if (IsEnabled(Presets.PLD_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_ST_Invuln)
-                    && ActionReady(HallowedGround))
+                if (IsEnabled(Presets.PLD_ST_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_ST_Invuln) && ActionReady(HallowedGround))
                 {
                     return HallowedGround;
                 }
@@ -116,8 +115,7 @@ internal static class PLD
                         return CircleOfScorn;
                     }
 
-                    if (IsEnabled(Presets.PLD_ST_SpiritsWithin) && ActionReady(OriginalHook(Expiacion))
-                        && InActionRange(OriginalHook(Expiacion)))
+                    if (IsEnabled(Presets.PLD_ST_SpiritsWithin) && ActionReady(OriginalHook(Expiacion)) && InActionRange(OriginalHook(Expiacion)))
                     {
                         return OriginalHook(Expiacion);
                     }
@@ -129,8 +127,7 @@ internal static class PLD
                         return Intervene;
                     }
 
-                    if (IsEnabled(Presets.PLD_ST_Intervention) && !IsTargetOfTarget()
-                        && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget)
+                    if (IsEnabled(Presets.PLD_ST_Intervention) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget)
                         && ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Intervention))
                     {
                         if (ActionReady(Common.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
@@ -146,9 +143,8 @@ internal static class PLD
                         return Intervention;
                     }
 
-                    if (IsEnabled(Presets.PLD_ST_Sheltron) && ActionReady(Sheltron)
-                        && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                        Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
+                    if (IsEnabled(Presets.PLD_ST_Sheltron) && ActionReady(OriginalHook(Sheltron)) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron)
+                        && Gauge.OathGauge >= GetOptionValue(Config.PLD_ST_Sheltron))
                     {
                         return OriginalHook(Sheltron);
                     }
@@ -176,8 +172,7 @@ internal static class PLD
                     }
 
                     if (IsEnabled(Presets.PLD_ST_HolySpirit) && ActionReady(OriginalHook(HolySpirit))
-                        && (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith)))
-                        && CurrentMP >= GetResourceCost(HolySpirit))
+                        && (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith))) && CurrentMP >= GetResourceCost(HolySpirit))
                     {
                         return HolySpirit;
                     }
@@ -213,14 +208,12 @@ internal static class PLD
         {
             if ((actionID is TotalEclipse or Prominence) && IsEnabled(Presets.PLD_AoE_DPS))
             {
-                if (IsEnabled(Presets.PLD_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_AoE_Invuln)
-                    && ActionReady(HallowedGround))
+                if (IsEnabled(Presets.PLD_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.PLD_AoE_Invuln) && ActionReady(HallowedGround))
                 {
                     return HallowedGround;
                 }
 
-                if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange()
-                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
+                if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange() && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
                 {
                     return Intervene;
                 }
@@ -242,8 +235,7 @@ internal static class PLD
                         return CircleOfScorn;
                     }
 
-                    if (IsEnabled(Presets.PLD_AoE_SpiritsWithin) && ActionReady(OriginalHook(Expiacion))
-                        && InActionRange(OriginalHook(Expiacion)))
+                    if (IsEnabled(Presets.PLD_AoE_SpiritsWithin) && ActionReady(OriginalHook(Expiacion)) && InActionRange(OriginalHook(Expiacion)))
                     {
                         return OriginalHook(Expiacion);
                     }
@@ -255,8 +247,7 @@ internal static class PLD
                         return Intervene;
                     }
 
-                    if (IsEnabled(Presets.PLD_AoE_Intervention) && !IsTargetOfTarget()
-                        && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget)
+                    if (IsEnabled(Presets.PLD_AoE_Intervention) && !IsTargetOfTarget() && GetPartyMembers().Any(x => x.GameObject == TargetOfTarget)
                         && ActionReady(Intervention) && Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Intervention))
                     {
                         if (ActionReady(Common.Rampart) && !HasEffect(Buffs.Sentinel) && !HasEffect(Buffs.Guardian) && !WasLastAbility(OriginalHook(Sentinel)))
@@ -272,9 +263,8 @@ internal static class PLD
                         return Intervention;
                     }
 
-                    if (IsEnabled(Presets.PLD_AoE_Sheltron) && ActionReady(Sheltron)
-                        && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron) &&
-                        Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Sheltron))
+                    if (IsEnabled(Presets.PLD_AoE_Sheltron) && ActionReady(OriginalHook(Sheltron)) && !HasEffect(Buffs.Sheltron) && !HasEffect(Buffs.HolySheltron)
+                        && Gauge.OathGauge >= GetOptionValue(Config.PLD_AoE_Sheltron))
                     {
                         return OriginalHook(Sheltron);
                     }
@@ -285,8 +275,7 @@ internal static class PLD
                     return OriginalHook(Confiteor);
                 }
 
-                if (IsEnabled(Presets.PLD_AoE_HolyCircle) && ActionReady(HolyCircle)
-                    && CurrentMP >= GetResourceCost(HolyCircle)
+                if (IsEnabled(Presets.PLD_AoE_HolyCircle) && ActionReady(HolyCircle) && CurrentMP >= GetResourceCost(HolyCircle)
                     && (HasEffect(Buffs.DivineMight) || (HasEffect(Buffs.Requiescat) && !LevelChecked(BladeOfFaith))))
                 {
                     return HolyCircle;
