@@ -124,6 +124,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_ST_DPS;
 
+        [System.Obsolete]
         protected override uint Invoke(uint actionID)
         {
             if ((actionID is Malefic or Malefic2 or Malefic3 or Malefic4 or FallMalefic) && IsEnabled(Presets.AST_ST_DPS))
@@ -212,6 +213,11 @@ internal static class AST
                         {
                             return SunSign;
                         }
+
+                        if (IsEnabled(Presets.AST_ST_DPS_Intersection) && ActionReady(CelestialIntersection) && GetRemainingCharges(CelestialIntersection) == 2)
+                        {
+                            return CelestialIntersection;
+                        }
                     }
                 }
 
@@ -235,6 +241,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_AoE_DPS;
 
+        [System.Obsolete]
         protected override uint Invoke(uint actionID)
         {
             if ((actionID is Gravity or Gravity2) && IsEnabled(Presets.AST_AoE_DPS))
@@ -312,6 +319,11 @@ internal static class AST
                     if (IsEnabled(Presets.AST_AoE_DPS_SunSign) && HasEffect(Buffs.Suntouched))
                     {
                         return SunSign;
+                    }
+
+                    if (IsEnabled(Presets.AST_AoE_DPS_Intersection) && ActionReady(CelestialIntersection) && GetRemainingCharges(CelestialIntersection) == 2)
+                    {
+                        return CelestialIntersection;
                     }
                 }
 
@@ -410,6 +422,7 @@ internal static class AST
     {
         protected internal override Presets Preset { get; } = Presets.AST_DrawCooldown;
 
+        [System.Obsolete]
         protected override uint Invoke(uint actionID)
         {
             if (actionID is Play1)

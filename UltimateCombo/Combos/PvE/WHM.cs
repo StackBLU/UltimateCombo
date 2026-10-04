@@ -105,6 +105,11 @@ internal static class WHM
                     {
                         return Assize;
                     }
+
+                    if (IsEnabled(Presets.WHM_ST_DPS_Benison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) == 2)
+                    {
+                        return DivineBenison;
+                    }
                 }
 
                 if (IsEnabled(Presets.WHM_ST_DPS_Misery) && ActionReady(AfflatusMisery) && Gauge.BloodLily == 3
@@ -156,6 +161,11 @@ internal static class WHM
                     if (IsEnabled(Presets.WHM_AoE_DPS_Assize) && ActionReady(Assize))
                     {
                         return Assize;
+                    }
+
+                    if (IsEnabled(Presets.WHM_AoE_DPS_Benison) && ActionReady(DivineBenison) && GetRemainingCharges(DivineBenison) == 2)
+                    {
+                        return DivineBenison;
                     }
                 }
 
@@ -210,7 +220,8 @@ internal static class WHM
                     return Regen;
                 }
 
-                if (IsEnabled(Presets.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
+                if (IsEnabled(Presets.WHM_ST_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
+                    && (CanLateWeave(actionID, ActionWatching.LastGCD) || (!WasLastGCD(AfflatusMisery) && !WasLastGCD(AfflatusRapture) && !WasLastGCD(AfflatusSolace))))
                 {
                     return ThinAir;
                 }
@@ -250,7 +261,8 @@ internal static class WHM
                     return AfflatusRapture;
                 }
 
-                if (IsEnabled(Presets.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir))
+                if (IsEnabled(Presets.WHM_AoE_Heals_ThinAir) && ActionReady(ThinAir) && !HasEffect(Buffs.ThinAir)
+                    && (CanLateWeave(actionID, ActionWatching.LastGCD) || (!WasLastGCD(AfflatusMisery) && !WasLastGCD(AfflatusRapture) && !WasLastGCD(AfflatusSolace))))
                 {
                     return ThinAir;
                 }

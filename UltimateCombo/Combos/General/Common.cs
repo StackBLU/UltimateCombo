@@ -77,9 +77,9 @@ internal class Common
         internal static UserInt
             All_SecondWind = new("All_SecondWind", 30),
             All_Bloodbath = new("All_Bloodbath", 50),
-            All_Healer_Lucid = new("All_Healer_Lucid", 7500),
-            All_Mage_Lucid = new("All_Mage_Lucid", 7500),
-            All_BLU_Lucid = new("All_BLU_Lucid", 7500),
+            All_Healer_Lucid = new("All_Healer_Lucid", 6000),
+            All_Mage_Lucid = new("All_Mage_Lucid", 6000),
+            All_BLU_Lucid = new("All_BLU_Lucid", 6000),
             All_ChocoHP = new("All_ChocoHP", 75),
             All_ChocoMode = new("All_ChocoMode", 1);
 

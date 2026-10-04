@@ -1161,10 +1161,6 @@ public enum Presets
     DRK_AoE_Shadowbringer = 5027,
 
     [ParentCombo(DRK_AoE_DPS)]
-    [CustomComboInfo("Shadowstride", DRK.JobID)]
-    DRK_AoE_Shadowstride = 5028,
-
-    [ParentCombo(DRK_AoE_DPS)]
     [CustomComboInfo("The Blackest Night - only out of combat", DRK.JobID)]
     DRK_AoE_BlackestNight = 5029,
 
@@ -1281,10 +1277,6 @@ public enum Presets
     GNB_AoE_Aurora = 7027,
 
     [ParentCombo(GNB_AoE_DPS)]
-    [CustomComboInfo("Trajectory", GNB.JobID)]
-    GNB_AoE_Trajectory = 7028,
-
-    [ParentCombo(GNB_AoE_DPS)]
     [CustomComboInfo("Heart of Stone / Heart of Corundum", GNB.JobID)]
     GNB_AoE_HeartOfStone = 7029,
 
@@ -1344,6 +1336,10 @@ public enum Presets
     [CustomComboInfo("Afflatus Misery", WHM.JobID)]
     WHM_ST_DPS_Misery = 19004,
 
+    [ParentCombo(WHM_ST_DPS)]
+    [CustomComboInfo("Divine Benison", WHM.JobID)]
+    WHM_ST_DPS_Benison = 19005,
+
     #endregion
 
     #region AoE DPS
@@ -1363,6 +1359,10 @@ public enum Presets
     [ParentCombo(WHM_AoE_DPS)]
     [CustomComboInfo("Afflatus Misery", WHM.JobID)]
     WHM_AoE_DPS_Misery = 19023,
+
+    [ParentCombo(WHM_AoE_DPS)]
+    [CustomComboInfo("Divine Benison", WHM.JobID)]
+    WHM_AoE_DPS_Benison = 19024,
 
     #endregion
 
@@ -1582,6 +1582,10 @@ public enum Presets
     [CustomComboInfo("Sun Sign", AST.JobID)]
     AST_ST_DPS_SunSign = 1008,
 
+    [ParentCombo(AST_ST_DPS)]
+    [CustomComboInfo("Celestial Intersection", AST.JobID)]
+    AST_ST_DPS_Intersection = 1009,
+
     #endregion
 
     #region AoE DPS
@@ -1617,6 +1621,10 @@ public enum Presets
     [ParentCombo(AST_AoE_DPS)]
     [CustomComboInfo("Sun Sign", AST.JobID)]
     AST_AoE_DPS_SunSign = 1027,
+
+    [ParentCombo(AST_AoE_DPS)]
+    [CustomComboInfo("Celestial Intersection", AST.JobID)]
+    AST_AoE_DPS_Intersection = 1028,
 
     #endregion
 
@@ -3023,10 +3031,6 @@ public enum Presets
     [ParentCombo(RDM_ST_DPS)]
     [CustomComboInfo("Swiftcast", RDM.JobID)]
     RDM_ST_Swift = 13009,
-
-    [ParentCombo(RDM_ST_DPS)]
-    [CustomComboInfo("Verthunder & Veraero Start", RDM.JobID)]
-    RDM_ST_Opener = 13011,
 
     #endregion
 

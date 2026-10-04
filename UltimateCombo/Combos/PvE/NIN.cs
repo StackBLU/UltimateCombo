@@ -10,6 +10,19 @@ internal class NIN
 {
     internal const byte JobID = 30;
 
+    private enum MudraSequence
+    {
+        None,
+        FumaShuriken,
+        Raiton,
+        RaitonKassatsu,
+        Suiton,
+        HyoshoRanryu,
+        Katon,
+        GokaMekkyaku,
+        Huton,
+    }
+
     internal static List<uint> MudraCheck = ActionWatching.CombatActions;
 
     internal const uint
@@ -118,6 +131,8 @@ internal class NIN
 
     internal class NIN_ST_DPS : CustomComboBase
     {
+        private MudraSequence _mudraSequence;
+
         protected internal override Presets Preset { get; } = Presets.NIN_ST_DPS;
 
         protected override uint Invoke(uint actionID)
@@ -125,6 +140,94 @@ internal class NIN
             if ((actionID is SpinningEdge or GustSlash or AeolianEdge or ArmorCrush)
                 && IsEnabled(Presets.NIN_ST_DPS))
             {
+                if (IsEnabled(Presets.NIN_ST_Mudras))
+                {
+                    if (HasEffect(Buffs.TenChiJin))
+                    {
+                        if (OriginalHook(Jin) is TCJSuiton)
+                        {
+                            return TCJSuiton;
+                        }
+
+                        if (OriginalHook(Chi) is TCJRaiton)
+                        {
+                            return TCJRaiton;
+                        }
+
+                        if (OriginalHook(Ten) is TCJFumaShurikenTen)
+                        {
+                            return TCJFumaShurikenTen;
+                        }
+                    }
+
+                    if (!HasEffect(Buffs.Mudra))
+                    {
+                        _mudraSequence = MudraSequence.None;
+                    }
+
+                    if (_mudraSequence is MudraSequence.FumaShuriken && WasLastAction(Ten))
+                    {
+                        return OriginalHook(Ninjutsu);
+                    }
+
+                    if (_mudraSequence is MudraSequence.Raiton)
+                    {
+                        if (WasLastAction(ChiCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(Jin))
+                        {
+                            return ChiCombo;
+                        }
+                    }
+
+                    if (_mudraSequence is MudraSequence.RaitonKassatsu)
+                    {
+                        if (WasLastAction(ChiCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(JinCombo))
+                        {
+                            return ChiCombo;
+                        }
+                    }
+
+                    if (_mudraSequence is MudraSequence.Suiton)
+                    {
+                        if (WasLastAction(JinCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(ChiCombo))
+                        {
+                            return JinCombo;
+                        }
+
+                        if (WasLastAction(Ten))
+                        {
+                            return ChiCombo;
+                        }
+                    }
+
+                    if (_mudraSequence is MudraSequence.HyoshoRanryu)
+                    {
+                        if (WasLastAction(JinCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(TenCombo))
+                        {
+                            return JinCombo;
+                        }
+                    }
+                }
+
                 if (IsEnabled(Presets.NIN_ST_Mudras) && ActionReady(Ten) && LevelChecked(Jin)
                     && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
@@ -143,6 +246,7 @@ internal class NIN
                         return ChiCombo;
                     }
 
+                    _mudraSequence = MudraSequence.Suiton;
                     return Ten;
                 }
 
@@ -217,29 +321,12 @@ internal class NIN
 
                 if (IsEnabled(Presets.NIN_ST_Mudras))
                 {
-                    if (HasEffect(Buffs.TenChiJin))
-                    {
-                        if (OriginalHook(Jin) is TCJSuiton)
-                        {
-                            return TCJSuiton;
-                        }
-
-                        if (OriginalHook(Chi) is TCJRaiton)
-                        {
-                            return TCJRaiton;
-                        }
-
-                        if (OriginalHook(Ten) is TCJFumaShurikenTen)
-                        {
-                            return TCJFumaShurikenTen;
-                        }
-                    }
-
                     if (HasEffect(Buffs.Kassatsu) || WasLastAbility(Kassatsu))
                     {
                         if (LevelChecked(HyoshoRanryu))
                         {
-                            if (OriginalHook(Ninjutsu) == HyoshoRanryu && MudraCheck[^2] == TenCombo && MudraCheck[^1] == JinCombo)
+                            if (OriginalHook(Ninjutsu) == HyoshoRanryu && MudraCheck.Count >= 2
+                                && MudraCheck[^2] == TenCombo && MudraCheck[^1] == JinCombo)
                             {
                                 return OriginalHook(Ninjutsu);
                             }
@@ -251,11 +338,13 @@ internal class NIN
 
                             if (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || (EffectRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
                             {
+                                _mudraSequence = MudraSequence.HyoshoRanryu;
                                 return TenCombo;
                             }
                         }
 
-                        if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == JinCombo && MudraCheck[^1] == ChiCombo)
+                        if (OriginalHook(Ninjutsu) == Raiton && MudraCheck.Count >= 2
+                            && MudraCheck[^2] == JinCombo && MudraCheck[^1] == ChiCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -268,6 +357,7 @@ internal class NIN
                         if (HasEffect(TrickList[OriginalHook(TrickAttack)])
                             || (EffectRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
                         {
+                            _mudraSequence = MudraSequence.RaitonKassatsu;
                             return JinCombo;
                         }
                     }
@@ -276,7 +366,8 @@ internal class NIN
                         && (ActionWatching.NumberOfGcdsUsed >= 4 || Service.Configuration.IgnoreGCDChecks || LevelIgnoreGCD())
                         && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Jin)))
                     {
-                        if (OriginalHook(Ninjutsu) == Raiton && MudraCheck[^2] == Jin && MudraCheck[^1] == ChiCombo)
+                        if (OriginalHook(Ninjutsu) == Raiton && MudraCheck.Count >= 2
+                            && MudraCheck[^2] == Jin && MudraCheck[^1] == ChiCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -288,13 +379,15 @@ internal class NIN
 
                         if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20)
                         {
+                            _mudraSequence = MudraSequence.Raiton;
                             return Jin;
                         }
                     }
 
                     if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Jin) && (HasEffect(Buffs.Mudra) || HasCharges(Ten) || WasLastAction(Ten)))
                     {
-                        if (OriginalHook(Ninjutsu) == Suiton && MudraCheck[^3] == Ten && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == JinCombo)
+                        if (OriginalHook(Ninjutsu) == Suiton && MudraCheck.Count >= 3
+                            && MudraCheck[^3] == Ten && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == JinCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -311,6 +404,7 @@ internal class NIN
 
                         if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker))
                         {
+                            _mudraSequence = MudraSequence.Suiton;
                             return Ten;
                         }
                     }
@@ -322,6 +416,7 @@ internal class NIN
                             return OriginalHook(Ninjutsu);
                         }
 
+                        _mudraSequence = MudraSequence.FumaShuriken;
                         return Ten;
                     }
                 }
@@ -366,16 +461,94 @@ internal class NIN
 
             return actionID;
         }
+
     }
 
     internal class NIN_AoE_DPS : CustomComboBase
     {
+        private MudraSequence _mudraSequence;
+
         protected internal override Presets Preset { get; } = Presets.NIN_AoE_DPS;
 
         protected override uint Invoke(uint actionID)
         {
             if ((actionID is DeathBlossom or HakkeMujinsatsu) && IsEnabled(Presets.NIN_AoE_DPS))
             {
+                if (IsEnabled(Presets.NIN_AoE_Mudras))
+                {
+                    if (HasEffect(Buffs.TenChiJin))
+                    {
+                        if (OriginalHook(Chi) is TCJDoton)
+                        {
+                            return TCJDoton;
+                        }
+
+                        if (OriginalHook(Ten) is TCJKaton)
+                        {
+                            return TCJKaton;
+                        }
+
+                        if (OriginalHook(Jin) is TCJFumaShurikenJin)
+                        {
+                            return TCJFumaShurikenJin;
+                        }
+                    }
+
+                    if (!HasEffect(Buffs.Mudra))
+                    {
+                        _mudraSequence = MudraSequence.None;
+                    }
+
+                    if (_mudraSequence is MudraSequence.FumaShuriken && WasLastAction(Ten))
+                    {
+                        return OriginalHook(Ninjutsu);
+                    }
+
+                    if (_mudraSequence is MudraSequence.Katon)
+                    {
+                        if (WasLastAction(TenCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(Chi))
+                        {
+                            return TenCombo;
+                        }
+                    }
+
+                    if (_mudraSequence is MudraSequence.GokaMekkyaku)
+                    {
+                        if (WasLastAction(TenCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(ChiCombo))
+                        {
+                            return TenCombo;
+                        }
+                    }
+
+                    if (_mudraSequence is MudraSequence.Huton)
+                    {
+                        if (WasLastAction(TenCombo))
+                        {
+                            return OriginalHook(Ninjutsu);
+                        }
+
+                        if (WasLastAction(JinCombo))
+                        {
+                            return TenCombo;
+                        }
+
+                        if (WasLastAction(Chi))
+                        {
+                            return JinCombo;
+                        }
+                    }
+                }
+
                 if (IsEnabled(Presets.NIN_AoE_Mudras) && ActionReady(Ten) && LevelChecked(Jin)
                     && (!InCombat() || (ActionWatching.NumberOfGcdsUsed == 0 && HasEffect(Buffs.Mudra))))
                 {
@@ -394,6 +567,7 @@ internal class NIN
                         return JinCombo;
                     }
 
+                    _mudraSequence = MudraSequence.Huton;
                     return Chi;
                 }
 
@@ -459,28 +633,10 @@ internal class NIN
 
                 if (IsEnabled(Presets.NIN_AoE_Mudras))
                 {
-                    if (HasEffect(Buffs.TenChiJin))
-                    {
-                        if (OriginalHook(Chi) is TCJDoton)
-                        {
-                            return TCJDoton;
-                        }
-
-                        if (OriginalHook(Ten) is TCJKaton)
-                        {
-                            return TCJKaton;
-                        }
-
-                        if (OriginalHook(Jin) is TCJFumaShurikenJin)
-                        {
-                            return TCJFumaShurikenJin;
-                        }
-                    }
-
                     if (HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu))
                     {
                         if ((OriginalHook(Ninjutsu) == GokaMekkyaku || OriginalHook(Ninjutsu) == Katon)
-                            && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == TenCombo)
+                            && MudraCheck.Count >= 2 && MudraCheck[^2] == ChiCombo && MudraCheck[^1] == TenCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -492,13 +648,15 @@ internal class NIN
 
                         if (TargetHasEffectAny(TrickList[OriginalHook(TrickAttack)]) || (EffectRemainingTime(Buffs.Kassatsu) < 5 && !WasLastAbility(Kassatsu)))
                         {
+                            _mudraSequence = MudraSequence.GokaMekkyaku;
                             return ChiCombo;
                         }
                     }
 
                     if (!HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Chi) && (HasEffect(Buffs.Mudra) || HasCharges(Ten)))
                     {
-                        if (OriginalHook(Ninjutsu) == Katon && MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
+                        if (OriginalHook(Ninjutsu) == Katon && MudraCheck.Count >= 2
+                            && MudraCheck[^2] == Chi && MudraCheck[^1] == TenCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -510,13 +668,15 @@ internal class NIN
 
                         if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) > 20)
                         {
+                            _mudraSequence = MudraSequence.Katon;
                             return Chi;
                         }
                     }
 
                     if ((HasEffect(Buffs.Mudra) || HasCharges(Ten)) && !HasEffect(Buffs.Kassatsu) && !WasLastAbility(Kassatsu) && LevelChecked(Chi))
                     {
-                        if (OriginalHook(Ninjutsu) == Huton && MudraCheck[^3] == Chi && MudraCheck[^2] == JinCombo && MudraCheck[^1] == TenCombo)
+                        if (OriginalHook(Ninjutsu) == Huton && MudraCheck.Count >= 3
+                            && MudraCheck[^3] == Chi && MudraCheck[^2] == JinCombo && MudraCheck[^1] == TenCombo)
                         {
                             return OriginalHook(Ninjutsu);
                         }
@@ -533,6 +693,7 @@ internal class NIN
 
                         if (GetCooldownRemainingTime(OriginalHook(TrickAttack)) <= 15 && !HasEffect(Buffs.ShadowWalker))
                         {
+                            _mudraSequence = MudraSequence.Huton;
                             return Chi;
                         }
                     }
@@ -544,6 +705,7 @@ internal class NIN
                             return OriginalHook(Ninjutsu);
                         }
 
+                        _mudraSequence = MudraSequence.FumaShuriken;
                         return Ten;
                     }
                 }
@@ -563,6 +725,7 @@ internal class NIN
 
             return actionID;
         }
+
     }
 
     internal class NIN_Raijus : CustomComboBase

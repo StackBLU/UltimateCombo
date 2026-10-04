@@ -226,16 +226,9 @@ internal static class GNB
         {
             if ((actionID is DemonSlice or DemonSlaughter) && IsEnabled(Presets.GNB_AoE_DPS))
             {
-                if (IsEnabled(Presets.GNB_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_AoE_Invuln)
-                    && ActionReady(Superbolide))
+                if (IsEnabled(Presets.GNB_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.GNB_AoE_Invuln) && ActionReady(Superbolide))
                 {
                     return Superbolide;
-                }
-
-                if (IsEnabled(Presets.GNB_AoE_Trajectory) && ActionReady(Trajectory) && !InMeleeRange()
-                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
-                {
-                    return Trajectory;
                 }
 
                 if (CanWeave(actionID, ActionWatching.LastGCD))

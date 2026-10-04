@@ -190,28 +190,19 @@ internal static class DRK
         {
             if ((actionID is Unleash or StalwartSoul) && IsEnabled(Presets.DRK_AoE_DPS))
             {
-                if (IsEnabled(Presets.DRK_AoE_Abyssal) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_AoE_Abyssal)
-                    && ActionReady(AbyssalDrain))
+                if (IsEnabled(Presets.DRK_AoE_Abyssal) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_AoE_Abyssal) && ActionReady(AbyssalDrain))
                 {
                     return AbyssalDrain;
                 }
 
-                if (IsEnabled(Presets.DRK_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_AoE_Invuln)
-                    && ActionReady(LivingDead))
+                if (IsEnabled(Presets.DRK_AoE_Invuln) && PlayerHealthPercentageHp() <= GetOptionValue(Config.DRK_AoE_Invuln) && ActionReady(LivingDead))
                 {
                     return LivingDead;
                 }
 
-                if (IsEnabled(Presets.DRK_AoE_Shadowstride) && ActionReady(Shadowstride) && !InMeleeRange()
-                    && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
-                {
-                    return Shadowstride;
-                }
-
                 if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
-                    if (IsEnabled(Presets.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight)
-                        && CurrentMP >= GetResourceCost(TheBlackestNight))
+                    if (IsEnabled(Presets.DRK_AoE_BlackestNight) && ActionReady(TheBlackestNight) && CurrentMP >= GetResourceCost(TheBlackestNight))
                     {
                         return TheBlackestNight;
                     }
@@ -242,8 +233,7 @@ internal static class DRK
                         return OriginalHook(Delirium);
                     }
 
-                    if (IsEnabled(Presets.DRK_AoE_Oblation) && ActionReady(Oblation)
-                        && (GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
+                    if (IsEnabled(Presets.DRK_AoE_Oblation) && ActionReady(Oblation) && (GetRemainingCharges(Oblation) == GetMaxCharges(Oblation)
                         || (GetRemainingCharges(Oblation) == 1 && GetCooldownChargeRemainingTime(Oblation) < 30)))
                     {
                         return Oblation;

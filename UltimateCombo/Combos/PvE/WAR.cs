@@ -212,12 +212,6 @@ internal static class WAR
                         return Infuriate;
                     }
 
-                    if (IsEnabled(Presets.WAR_AoE_Onslaught) && ActionReady(Onslaught) && !InMeleeRange()
-                        && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
-                    {
-                        return Onslaught;
-                    }
-
                     if (EffectRemainingTime(Buffs.SurgingTempest) > GetOptionValue(Config.WAR_SurgingRefresh) || !LevelChecked(StormsEye))
                     {
                         if (IsEnabled(Presets.WAR_AoE_InnerRelease) && ActionReady(OriginalHook(InnerRelease)))

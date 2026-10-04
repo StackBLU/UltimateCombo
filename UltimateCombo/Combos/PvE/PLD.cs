@@ -213,11 +213,6 @@ internal static class PLD
                     return HallowedGround;
                 }
 
-                if (IsEnabled(Presets.PLD_AoE_Intervene) && ActionReady(Intervene) && !InMeleeRange() && !DutyActionEquipped(Bozja.Buffs.BloodRage) && !InCombat())
-                {
-                    return Intervene;
-                }
-
                 if (CanWeave(actionID, ActionWatching.LastGCD))
                 {
                     if (IsEnabled(Presets.PLD_AoE_FightOrFlight) && ActionReady(FightOrFlight))
