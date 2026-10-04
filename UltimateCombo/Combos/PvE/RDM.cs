@@ -211,9 +211,11 @@ internal class RDM
 
                 if (IsEnabled(Presets.RDM_ST_Swords) && !HasEffect(Buffs.Dualcast)
                     && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50) || HasEffect(Buffs.MagickedSwordPlay)
-                    || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2 || !LevelChecked(Verflare)))
+                    || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2
+                    || (!LevelChecked(Verflare) && (WasLastGCD(EnchantedRiposte) || WasLastGCD(EnchantedZwerchhau)))))
                 {
-                    if (LevelChecked(Redoublement) && (Gauge.ManaStacks == 2 || !LevelChecked(Verflare))
+                    if (LevelChecked(Redoublement) && (Gauge.ManaStacks == 2
+                        || (!LevelChecked(Verflare) && WasLastGCD(EnchantedZwerchhau)))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         if (IsEnabled(Presets.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedRedoublement))
@@ -224,7 +226,8 @@ internal class RDM
                         return OriginalHook(EnchantedRedoublement);
                     }
 
-                    if (LevelChecked(Zwerchhau) && (Gauge.ManaStacks == 1 || !LevelChecked(Verflare))
+                    if (LevelChecked(Zwerchhau) && (Gauge.ManaStacks == 1
+                        || (!LevelChecked(Verflare) && WasLastGCD(EnchantedRiposte)))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         if (IsEnabled(Presets.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedZwerchhau))
@@ -237,7 +240,9 @@ internal class RDM
 
                     if ((Gauge.ManaStacks == 0 || !LevelChecked(Verflare))
                         && (GetCooldownRemainingTime(Manafication) > 15 || !LevelChecked(Manafication) || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
-                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                        && ((LevelChecked(Verflare) && Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+                        || (!LevelChecked(Verflare) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+                        || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         if (IsEnabled(Presets.RDM_ST_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedRiposte))
                         {
@@ -376,7 +381,8 @@ internal class RDM
                 }
 
                 if (IsEnabled(Presets.RDM_AoE_Swords) && !HasEffect(Buffs.Dualcast) && LevelChecked(Moulinet) && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50)
-                    || HasEffect(Buffs.MagickedSwordPlay) || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2 || !LevelChecked(Verflare)))
+                    || HasEffect(Buffs.MagickedSwordPlay) || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2
+                    || (!LevelChecked(Verflare) && (WasLastGCD(EnchantedMoulinet) || WasLastGCD(EnchantedMoulinetDeux)))))
                 {
                     if (WasLastGCD(OriginalHook(EnchantedMoulinetDeux)) && (Gauge.ManaStacks == 2 || !LevelChecked(Verflare))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
@@ -402,7 +408,9 @@ internal class RDM
 
                     if ((Gauge.ManaStacks == 0 || !LevelChecked(Verflare))
                         && (GetCooldownRemainingTime(Manafication) > 15 || !LevelChecked(Manafication) || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
-                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                        && ((LevelChecked(Verflare) && Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+                        || (!LevelChecked(Verflare) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+                        || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         if (IsEnabled(Presets.RDM_AoE_Corps) && ActionReady(Corpsacorps) && !InActionRange(EnchantedMoulinet))
                         {
@@ -465,15 +473,18 @@ internal class RDM
                 }
 
                 if (!HasEffect(Buffs.Dualcast) && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50) || HasEffect(Buffs.MagickedSwordPlay)
-                    || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2 || !LevelChecked(Verflare)))
+                    || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2
+                    || (!LevelChecked(Verflare) && (WasLastGCD(EnchantedRiposte) || WasLastGCD(EnchantedZwerchhau)))))
                 {
-                    if (LevelChecked(Redoublement) && (Gauge.ManaStacks == 2 || !LevelChecked(Verflare))
+                    if (LevelChecked(Redoublement) && (Gauge.ManaStacks == 2
+                        || (!LevelChecked(Verflare) && WasLastGCD(EnchantedZwerchhau)))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         return OriginalHook(EnchantedRedoublement);
                     }
 
-                    if (LevelChecked(Zwerchhau) && (Gauge.ManaStacks == 1 || !LevelChecked(Verflare))
+                    if (LevelChecked(Zwerchhau) && (Gauge.ManaStacks == 1
+                        || (!LevelChecked(Verflare) && WasLastGCD(EnchantedRiposte)))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         return OriginalHook(EnchantedZwerchhau);
@@ -481,7 +492,9 @@ internal class RDM
 
                     if ((Gauge.ManaStacks == 0 || !LevelChecked(Verflare))
                         && (GetCooldownRemainingTime(Manafication) > 15 || !LevelChecked(Manafication) || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
-                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                        && ((LevelChecked(Verflare) && Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+                        || (!LevelChecked(Verflare) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+                        || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         if (InActionRange(EnchantedRiposte))
                         {
@@ -526,7 +539,8 @@ internal class RDM
                 }
 
                 if (!HasEffect(Buffs.Dualcast) && LevelChecked(Moulinet) && ((Gauge.BlackMana >= 50 && Gauge.WhiteMana >= 50)
-                    || HasEffect(Buffs.MagickedSwordPlay) || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2 || !LevelChecked(Verflare)))
+                    || HasEffect(Buffs.MagickedSwordPlay) || Gauge.ManaStacks == 1 || Gauge.ManaStacks == 2
+                    || (!LevelChecked(Verflare) && (WasLastGCD(EnchantedMoulinet) || WasLastGCD(EnchantedMoulinetDeux)))))
                 {
                     if (WasLastGCD(EnchantedMoulinetDeux) && (Gauge.ManaStacks == 2 || !LevelChecked(Verflare))
                         && ((Gauge.WhiteMana >= 15 && Gauge.BlackMana >= 15) || HasEffect(Buffs.MagickedSwordPlay)))
@@ -542,7 +556,9 @@ internal class RDM
 
                     if ((Gauge.ManaStacks == 0 || !LevelChecked(Verflare))
                         && (GetCooldownRemainingTime(Manafication) > 15 || !LevelChecked(Manafication) || Gauge.WhiteMana == 100 || Gauge.BlackMana == 100)
-                        && ((Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20) || HasEffect(Buffs.MagickedSwordPlay)))
+                        && ((LevelChecked(Verflare) && Gauge.WhiteMana >= 20 && Gauge.BlackMana >= 20)
+                        || (!LevelChecked(Verflare) && Gauge.WhiteMana >= 50 && Gauge.BlackMana >= 50)
+                        || HasEffect(Buffs.MagickedSwordPlay)))
                     {
                         return OriginalHook(EnchantedMoulinet);
                     }
